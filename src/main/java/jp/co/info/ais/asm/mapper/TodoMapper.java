@@ -1,8 +1,8 @@
-package com.example.demo.mapper;
+package jp.co.info.ais.asm.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.demo.domain.Todo;
+import jp.co.info.ais.asm.domain.Todo;
 
 @Mapper
 public interface TodoMapper {

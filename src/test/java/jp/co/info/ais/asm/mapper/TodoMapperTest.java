@@ -1,4 +1,4 @@
-package com.example.demo.mapper;
+package jp.co.info.ais.asm.mapper;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,7 +14,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.example.demo.domain.Todo;
+import jp.co.info.ais.asm.domain.Todo;
+import jp.co.info.ais.asm.mapper.TodoMapper;
 
 @RunWith(SpringRunner.class)
 @MybatisTest

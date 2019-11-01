@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package jp.co.info.ais.asm.domain;
 
 import lombok.*;
 

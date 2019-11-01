@@ -1,4 +1,4 @@
-package com.example.demo.aop;
+package jp.co.info.ais.asm.aop;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

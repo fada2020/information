@@ -40,8 +40,12 @@
                 <h3>Tables <small>Some examples to get you started</small></h3>
                 <span th:text="${message}">!!!</span>
               </div>
+            </div>
 
-              <div class="title_right">
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
@@ -50,13 +54,6 @@
                     </span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Basic Tables <small>basic table subtitle</small></h2>
@@ -129,16 +126,28 @@
     /*<![CDATA[*/
         var modalesectiondata = null;
         $(function(){
+
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
-            	"searching": false,
-                "bPaginate": true,
-                "bLengthChange": false,
-                "bFilter": true,
-                "bSort": false,
-                "bInfo": false,
-                "bAutoWidth": false,
-                "ajax": { url: /*[[@{/getuserlist}]]*/ 'getuserlist', dataSrc: '' },
+            	fixedHeader: true,
+            	"processing": true,
+            	"serverSide": true,
+            	"start": 0,
+                "length": 10,
+                "searching": false,
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "ajax": {
+                	url: /*[[@{/getuserlist}]]*/ 'getuserlist',
+                	type: "POST",
+                	dataType: "json",
+                	contentType: 'application/JSON',
+                	data: function ( d ) {
+                        //d.extra_search = $('#extra').val();
+                        return JSON.stringify(d);
+                    }
+                },
                 "columns": [
                     { data: "username" },
                     { data: "mailaddress" },
@@ -148,6 +157,23 @@
                     { targets: 1, width: 180 }
                 ]
             });
+
+            // Setup - add a text input to each footer cell
+            $('#table1 thead tr').clone(true).appendTo( '#table1 thead' );
+            $('#table1 thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( modalesectiontable.column(i).search() !== this.value ) {
+                    	modalesectiontable
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
         })
     /*]]>*/
     </script>

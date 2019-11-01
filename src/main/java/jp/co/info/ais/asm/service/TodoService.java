@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package jp.co.info.ais.asm.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Todo;
-import com.example.demo.mapper.TodoMapper;
+import jp.co.info.ais.asm.domain.Todo;
+import jp.co.info.ais.asm.mapper.TodoMapper;
 
 @Service
 public class TodoService {
