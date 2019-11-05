@@ -10,13 +10,13 @@ import lombok.ToString;
 @ToString
 public class ITAsset {
 	String assetNumber;
-	int classificationCode;
+	int psNum;
 	Date purchaseDate;
 	int warrantyPeriod;
 	String buyTo;
 	int purchasePrice;
 	String storageLocation;
-	int stateCode;
+	int sNumber;
 	String maker;
 	String model;
 	String serialNum;

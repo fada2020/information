@@ -1,5 +1,7 @@
 package jp.co.info.ais.asm.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -39,14 +41,38 @@ public class ITAssetController {
     	ITAsset.setStart(page.getStart());
 
     	String assetNumber = page.getColumns().get(0).getSearch().getValue();
-    	if(null != assetNumber){
+    	if(null != assetNumber && !assetNumber.equals("")){
     		logger.debug(page.getColumns().get(0).getSearch().getValue());
     		ITAsset.setAssetNumber(assetNumber);
     	}
 
-    	String maker = page.getColumns().get(1).getSearch().getValue();
-    	if(null != maker){
+    	int psNum = Integer.parseInt(page.getColumns().get(1).getSearch().getValue());
+    	ITAsset.setPsNum(psNum);
+
+    	int sNumber = Integer.parseInt(page.getColumns().get(2).getSearch().getValue());
+    	ITAsset.setSNumber(sNumber);
+
+    	String maker = page.getColumns().get(3).getSearch().getValue();
+    	if(null != maker && !maker.equals("")){
+    		logger.debug(page.getColumns().get(3).getSearch().getValue());
     		ITAsset.setMaker(maker);
+    	}
+
+    	String model = page.getColumns().get(4).getSearch().getValue();
+    	if(null != model && !model.equals("")){
+    		logger.debug(page.getColumns().get(4).getSearch().getValue());
+    		ITAsset.setModel(model);
+    	}
+
+    	String date = page.getColumns().get(5).getSearch().getValue();
+    	if(null != date && !date.equals("")){
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    		logger.debug(page.getColumns().get(5).getSearch().getValue());
+    		try {
+				ITAsset.setPurchaseDate(sdf.parse(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
     	}
 
         List<ITAsset> list = ITAssetService.select(ITAsset);

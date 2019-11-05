@@ -58,8 +58,8 @@
                     <span class="pull-right" style="font-size: 18px;">区分</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control">
-                		<option>区分</option>
+                	<select class="form-control" id="psNum_search">
+                		<option value="-1">区分</option>
                 		<option th:each="code : ${productCode}" th:value="${code.psNum}"
                 		th:inline="text">[[${code.pName}]]</option>
 					</select>
@@ -68,8 +68,8 @@
                     <span class="pull-right" style="font-size: 18px;">状態</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control">
-						<option>状態</option>
+                	<select class="form-control" id="sNumber_search">
+						<option value="-1">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.sNumber}"
                 		th:inline="text">[[${code.state}]]</option>
 					</select>
@@ -78,20 +78,20 @@
                     <span class="pull-right" style="font-size: 18px;">Maker</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Maker">
+                    <input type="text" class="form-control" placeholder="Maker" id="maker_search">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">Model</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Model">
+                    <input type="text" class="form-control" placeholder="Model" id="model_search">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">購入日</span>
                 </div>
                 <div class="col-md-2">
 					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" id="date_search">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					 </span>
@@ -151,7 +151,7 @@
 								  				<span>区分</span>
 								  			</div>
 								  			<div class="col-md-3">
-								  				<span id="classificationCode_view"></span>
+								  				<span id="psNum_view"></span>
 								  			</div>
 						  				</div>
 						  			</div>
@@ -200,7 +200,7 @@
 						  						<span>状態</span>
 						  					</div>
 						  					<div class="col-md-3">
-						  						<span id="stateCode_view"></span>
+						  						<span id="sNumber_view"></span>
 						  					</div>
 						  				</div>
 						  			</div>
@@ -403,7 +403,7 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
         $('#myDatepicker').datetimepicker({
-            format: 'YYYY-MM-DD'
+            format: 'YYYY/MM/DD'
         });
 
         var modalesectiondata = null;
@@ -416,7 +416,7 @@
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.sNumber, value.state);
+    		stateCodeMap.set(value.snumber, value.state);
     	});
 
         $(function(){
@@ -439,13 +439,18 @@
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
                 		d.columns[0].search.value = $('#assetNumber_search').val();
+                		d.columns[1].search.value = $('#psNum_search').val();
+                		d.columns[2].search.value = $('#sNumber_search').val();
+                		d.columns[3].search.value = $('#maker_search').val();
+                		d.columns[4].search.value = $('#model_search').val();
+                		d.columns[5].search.value = $('#date_search').val();
                         return JSON.stringify(d);
                     }
                 },
                 "columnDefs": [
                     { targets: 0, data: "assetNumber"},
                     { targets: 1, data: function ( d ) {
-                    	return productCodeMap.get(d.classificationCode);
+                    	return productCodeMap.get(d.psNum);
                     }},
                     { targets: 2, data: "model"},
                     { targets: 3, data: "maker"},
@@ -456,7 +461,9 @@
                     	return yyyy + "/" + mm + "/" + dd;
                     }},
                     { targets: 5, data: "storageLocation"},
-                    { targets: 6, data: "stateCode"},
+                    { targets: 6, data: function ( d ) {
+                    	return stateCodeMap.get(d.snumber);
+                    }},
                     {
                     	targets: 7,
                     	data: "description",
@@ -467,13 +474,52 @@
                 ]
             });
 
-            // Setup - add a text input to each footer cell
+            // Search
             $('#assetNumber_search').on( 'keyup', function () {
             	modalesectiontable
                 .column(0)
                 .search( this.value )
                 .draw();
             } );
+
+            $('#psNum_search').change(function() {
+            	modalesectiontable
+                .column(1)
+                .search( this.value )
+                .draw();
+            });
+
+            $('#sNumber_search').change(function() {
+            	modalesectiontable
+                .column(2)
+                .search( this.value )
+                .draw();
+            });
+
+            $('#maker_search').on( 'keyup', function () {
+            	modalesectiontable
+                .column(3)
+                .search( this.value )
+                .draw();
+            });
+
+            $('#model_search').on( 'keyup', function () {
+            	modalesectiontable
+                .column(4)
+                .search( this.value )
+                .draw();
+            });
+
+            $("#myDatepicker").on("dp.change", function(e) {
+                var d = new Date(e.date);
+                var mm = d.getMonth() + 1;
+                var dd = d.getDate();
+                var yyyy = d.getFullYear();
+            	modalesectiontable
+                .column(5)
+                .search( yyyy + "/" + mm + "/" + dd )
+                .draw();
+            });
 
             $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
@@ -485,14 +531,14 @@
             		var dd = purchaseDate.getDate();
 
             		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#classificationCode_view').text(productCodeMap.get(rowData.classificationCode));
+            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
             		$('#purchaseDate_view').text(yyyy + "/" + mm + "/" + dd);
             		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
 
             		$('#buyTo_view').text(rowData.buyTo);
             		$('#purchasePrice_view').text(rowData.purchasePrice);
             		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#stateCode_view').text(stateCodeMap.get(rowData.stateCode));
+            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
 
             		$('#maker_view').text(rowData.maker);
             		$('#model_view').text(rowData.model);

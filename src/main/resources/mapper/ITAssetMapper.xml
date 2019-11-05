@@ -7,13 +7,13 @@
     SELECT A.* FROM(
         SELECT
         	AssetNumber
-			,Classification_Code
+			,P_S_NUM
 			,PurchaseDate
 			,WarrantyPeriod
 			,BuyTo
 			,PurchasePrice
 			,StorageLocation
-			,State_Code
+			,S_NUMBER
 			,Maker
 			,Model
 			,SerialNum
@@ -39,8 +39,22 @@
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND AssetNumber like '%${assetNumber}%'
 		</if>
+		<if test="psNum != -1">
+		AND P_S_NUM = #{psNum}
+		</if>
+		<if test="sNumber != -1">
+		AND S_NUMBER = #{sNumber}
+		</if>
 		<if test="maker != null and !maker.equals('')">
 		AND Maker like '%${maker}%'
+		</if>
+		<if test="model != null and !model.equals('')">
+		AND Model like '%${model}%'
+		</if>
+		<if test="purchaseDate != null">
+		<![CDATA[
+		AND PurchaseDate = DATE_FORMAT(#{purchaseDate}, '%Y-%m-%d' )
+		]]>
 		</if>
 	LIMIT #{length} OFFSET #{start}
     </select>
@@ -52,8 +66,17 @@
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND AssetNumber like '%${assetNumber}%'
 		</if>
+		<if test="psNum != -1">
+		AND P_S_NUM = #{psNum}
+		</if>
+		<if test="sNumber != -1">
+		AND S_NUMBER = #{sNumber}
+		</if>
 		<if test="maker != null and !maker.equals('')">
 		AND Maker like '%${maker}%'
+		</if>
+		<if test="model != null and !model.equals('')">
+		AND Model like '%${model}%'
 		</if>
     </select>
 
