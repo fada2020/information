@@ -20,12 +20,22 @@ public class ITAssetService {
 	@Autowired
 	ITAssetMapper ITAssetMapper;
 
-	public List<ITAsset> select(ITAsset ITAsset) {
-		return ITAssetMapper.select(ITAsset);
+	public ITAsset select(String assetNumber) {
+		ITAsset condition = new ITAsset();
+		condition.setAssetNumber(assetNumber);
+		List<ITAsset> result = ITAssetMapper.select(condition);
+		ITAsset asset = null;
+		if(result != null)
+			asset = result.get(0);
+		return asset;
 	}
 
-	public int selectCount(ITAsset ITAsset) {
-		return ITAssetMapper.selectCount(ITAsset);
+	public List<ITAsset> selectList(ITAsset condition) {
+		return ITAssetMapper.select(condition);
+	}
+
+	public int selectCount(ITAsset condition) {
+		return ITAssetMapper.selectCount(condition);
 	}
 
 	public List<ProductCode> selectProductCode() {

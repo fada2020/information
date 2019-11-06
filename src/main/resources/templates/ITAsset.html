@@ -23,6 +23,13 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <style>
+		#table1 tbody tr{
+		    cursor:pointer;
+		}
+	</style>
+
   </head>
   <body class="nav-md">
     <div class="container body">
@@ -468,7 +475,8 @@
                     	targets: 7,
                     	data: "description",
                         render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-primary">更新/削除</button>';
+                          return '<button type="button" class="btn btn-primary" onclick = "location.href =\'' +
+                          'ITAsset/' + row.assetNumber + '\'">更新/削除</button>';
                         }
                     }
                 ]

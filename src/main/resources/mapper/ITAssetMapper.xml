@@ -53,7 +53,7 @@
 		</if>
 		<if test="purchaseDate != null">
 		<![CDATA[
-		AND PurchaseDate = DATE_FORMAT(#{purchaseDate}, '%Y-%m-%d' )
+		AND DATE_FORMAT(PurchaseDate, '%Y/%m/%d' ) = DATE_FORMAT(#{purchaseDate}, '%Y/%m/%d' )
 		]]>
 		</if>
 	LIMIT #{length} OFFSET #{start}
@@ -77,6 +77,11 @@
 		</if>
 		<if test="model != null and !model.equals('')">
 		AND Model like '%${model}%'
+		</if>
+		<if test="purchaseDate != null">
+		<![CDATA[
+		AND DATE_FORMAT(PurchaseDate, '%Y/%m/%d' ) = DATE_FORMAT(#{purchaseDate}, '%Y/%m/%d' )
+		]]>
 		</if>
     </select>
 
