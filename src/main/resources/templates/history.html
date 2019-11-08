@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Gentelella Alela!</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,15 +17,16 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
 	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
     <!-- bootstrap-datetimepicker -->
     <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <style>
-    	#table1 thead, th {text-align: center;}
+    	#table1 thead th{
+		    text-align:center;
+    	}
+
 		#table1 tbody tr{
 		    cursor:pointer;
 		}
@@ -48,7 +49,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>IT資産管理</h3>
+                <h3>資産支給履歴</h3>
               </div>
             </div>
 
@@ -56,62 +57,48 @@
 
             <div class="row">
               <div class="col">
-              	<div class="col-md-12"><br></div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">管理番号</span>
+
+                <div class="col-md-1" style="width:9%;">
+                    <span class="pull-right" style="margin-left:-1%; font-size: 18px;">管理番号</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search">
+                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" style="margin-left:-1%">
                 </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">区分</span>
+
+                <div class="col-md-1" style="margin-left:-2%;">
+                    <span class="pull-right" style="font-size: 18px;">貸出者</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control" id="psNum_search">
-                		<option value="-1">区分</option>
-                		<option th:each="code : ${productCode}" th:value="${code.psNum}"
-                		th:inline="text">[[${code.pName}]]</option>
-					</select>
+                	<input type="text" class="form-control" placeholder="貸出者" id="renter" style="margin-left:-1%">
                 </div>
-                <div class="col-md-1">
+
+                <div class="col-md-1" style="margin-left:-3%;">
                     <span class="pull-right" style="font-size: 18px;">状態</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control" id="sNumber_search">
+                	<select class="form-control" id="status_search" style="margin-left:-1%">
 						<option value="-1">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.sNumber}"
                 		th:inline="text">[[${code.state}]]</option>
 					</select>
                 </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">Maker</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Maker" id="maker_search">
-                </div>
 
-                <div class="col-md-12"><br></div>
-
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">Model</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Model" id="model_search">
-                </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">購入日</span>
+                <div class="col-md-1" style="margin-left:-2%;">
+                    <span class="pull-right" style="font-size: 18px;">貸与日</span>
                 </div>
                 <div class="col-md-2">
 					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="date_search">
+						<input type="text" class="form-control" id="date_search" style="margin-left:-1%">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					 </span>
 					</div>
                 </div>
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-success pull-right">登録</button>
+
+                <div class="col-md-1" style="width:5%; margin-left:-1%;">
+                	<button id="serchButton" class="btn btn-primary">検索</button>
                 </div>
+
                 <div class="x_panel">
                   <div class="x_title">
                     <ul class="nav navbar-right panel_toolbox">
@@ -124,18 +111,26 @@
                   </div>
                   <div class="x_content">
 
-					<div class="table-responsive">
-                    <table class="table table-bordered table-hover table-lg text-center" id="table1">
+                    <table class="table table-bordered table-hover table-lg" id="table1" style="width:100%;">
                       <thead class="thead-light">
+                      	<tr>
+                      		<th colspan="3">装置</th>
+                      		<th colspan="9">使用現況</th>
+                      	</tr>
                         <tr>
-                          <th class="col-md-2">管理番号</th>
-                          <th class="col-md-1">区分</th>
-                          <th class="col-md-2">Model</th>
-                          <th class="col-md-1">Maker</th>
-                          <th class="col-md-2">購入日</th>
-                          <th class="col-md-1">保管位置</th>
-                          <th class="col-md-1">状態</th>
-                          <th class="col-md-2"></th>
+                          <th>管理番号</th>
+                          <th>Maker</th>
+                          <th>Model</th>
+
+                          <th>状態</th>
+                          <th>貸与番号</th>
+                          <th>用途</th>
+                          <th>場所(Site名)</th>
+                          <th>貸出者</th>
+                          <th>使用者</th>
+                          <th>BP社名</th>
+                          <th>貸与日</th>
+                          <th>返却日</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -376,7 +371,6 @@
 					    </div>
 					  </div>
 					</div>
-					</div>
 					<!-- /modal -->
 
                   </div>
@@ -418,6 +412,16 @@
 
     <!-- page script -->
     <script th:inline="javascript">
+
+ 		//new Search
+        var searching = function(){
+          	alert("ff");
+        }
+
+        $(`#serchButton`).up(function(){
+        	alert("sagsdg");
+        });
+
     /*<![CDATA[*/
         $('#myDatepicker').datetimepicker({
             format: 'YYYY/MM/DD'
@@ -440,18 +444,7 @@
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
-            	"language": {
-            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
-            		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
-            	    "infoFiltered":   "",
-            	    "paginate": {
-            	        "first":      "最初",
-            	        "last":       "最後",
-            	        "next":       "次へ",
-            	        "previous":   "前の"
-            	    }
-                },
-            	"fixedHeader": true,
+            	fixedHeader: true,
             	"processing": true,
             	"serverSide": true,
             	"start": 0,
@@ -468,7 +461,7 @@
                 	data: function ( d ) {
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                 		d.columns[1].search.value = $('#psNum_search').val();
-                		d.columns[2].search.value = $('#sNumber_search').val();
+                		d.columns[2].search.value = $('#status_search').val();
                 		d.columns[3].search.value = $('#maker_search').val();
                 		d.columns[4].search.value = $('#model_search').val();
                 		d.columns[5].search.value = $('#date_search').val();
@@ -494,17 +487,16 @@
                     }},
                     {
                     	targets: 7,
-                    	data: "update",
+                    	data: "description",
                         render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">削除</button>';
+                          return '<button type="button" class="btn btn-primary" onclick = "location.href =\'' +
+                          'ITAsset/' + row.assetNumber + '\'">更新/削除</button>';
                         }
                     }
                 ]
             });
 
-            // Search
+            // old Search
             $('#assetNumber_search').on( 'keyup', function () {
             	modalesectiontable
                 .column(0)
@@ -519,7 +511,7 @@
                 .draw();
             });
 
-            $('#sNumber_search').change(function() {
+            $('#status_search').change(function() {
             	modalesectiontable
                 .column(2)
                 .search( this.value )

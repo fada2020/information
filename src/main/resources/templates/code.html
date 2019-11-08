@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+   <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+  </head>
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+      	<!-- sidebar -->
+		<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
+        <!-- sidebar -->
+
+        <!-- top navigation -->
+        <div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+
+
+
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>コ－ド登録</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                </div>
+                <div class="x_panel">
+                          <div class="x_title">
+                    <h2>会社の名前 </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left " method="get" >
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="companyname">会社の名前 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="c_name" required="required" name="c_name" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="companycode">会社のコ－ド <span class="required">*</span>
+                        </label>
+                         <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="c_code" required="required" name="c_code" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+						  <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-success" id="companySend" onclick="c_btn()">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="x_title">
+                    <h2>会社コ－ドリスト</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-bordered table-hover table-lg" id="table1">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>会社名前</th>
+                          <th>会社コ－ド</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+
+    <!-- page script -->
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        var modalesectiondata = null;
+        $(function(){
+
+            // datatableの設定を変更
+            var modalesectiontable = $("#table1").DataTable({
+            	fixedHeader: true,
+            	"processing": true,
+            	"serverSide": true,
+            	"start": 0,
+                "length": 10,
+                "searching": false,
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "ajax": {
+                	url: /*[[@{/getuserlist}]]*/ 'getuserlist',
+                	type: "POST",
+                	dataType: "json",
+                	contentType: 'application/JSON',
+                	data: function ( d ) {
+                        //d.extra_search = $('#extra').val();
+                        return JSON.stringify(d);
+                    }
+                },
+                "columns": [
+                    { data: "username" },
+                    { data: "mailaddress" },
+                ],
+                "columnDefs": [
+                    { targets: 0, width: 60 },
+                    { targets: 1, width: 180 }
+                ]
+            });
+
+            // Setup - add a text input to each footer cell
+            $('#table1 thead tr').clone(true).appendTo( '#table1 thead' );
+            $('#table1 thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( modalesectiontable.column(i).search() !== this.value ) {
+                    	modalesectiontable
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
+        })
+    /*]]>*/
+    </script>
+
+</body>
+</html>
