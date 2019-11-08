@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
+    <select id="select" resultType="jp.co.info.ais.asm.domain.Rental">
+
+        SELECT r.assetNumber,
+		r.rent_Number,
+		r.rent_Day,
+		r.rent_User,
+		r.applicant,
+		r.purpose,
+		r.speciality,
+		r.return_period,
+		r.purpose,
+		p.p_name,
+		p.p_code,
+		i.storageLocation,
+		i.p_s_num,
+		i.s_number,
+		k.p_c_name,
+		s.state
+		FROM rental r
+		JOIN itasset i ON r.assetNumber=i.assetNumber
+		JOIN  product p ON p.p_s_num=i.p_s_num
+		JOIN state s ON s.s_number= i.s_number
+		JOIN productkind k ON k.p_c_num=p.p_c_num
+		AND i.s_number = '0' ORDER BY assetNumber ASC
+
+
+
+
+		<if test="rentDay != null">
+		<![CDATA[
+		AND r.rent_Day = DATE_FORMAT(#{rentDay}, '%Y-%m-%d' )
+		]]>
+		</if>
+	LIMIT #{length} OFFSET #{start}
+    </select>
+
+    <select id="selectCount" resultType="int">
+    SELECT COUNT(1)
+    FROM ITAsset
+    WHERE 1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND AssetNumber like '%${assetNumber}%'
+		</if>
+		<if test="psNum != -1">
+		AND P_S_NUM = #{psNum}
+		</if>
+		<if test="sNumber != -1">
+		AND S_NUMBER = #{sNumber}
+		</if>
+
+
+    </select>
+
+  <select id="getSelectData" parameterType="String"
+		resultType="java.util.HashMap">
+		select    p_s_num||"" p_s_num , p_name from product where
+		p_c_num=#{pcNum}
+
+	</select>
+
+	<select id="getSelectProduct" parameterType="String"
+		resultType="java.util.HashMap">
+		select p.p_s_num, i.assetnumber from itasset i
+		join state s on s.s_number=i.s_number
+		join  product p on p.p_s_num=i.p_s_num
+		 where
+		i.p_s_num=#{psNum} and i.s_number='1'
+
+	</select>
+
+	<select id="writeProduct" parameterType="String"
+		resultType="java.util.HashMap">
+		select assetNumber from itasset i where
+		i.assetNumber=#{realCode}
+
+	</select>
+
+
+
+<select id="searchCode"
+		resultType="jp.co.info.ais.asm.domain.ProductKind">
+		select p_c_num,p_c_name from productkind
+
+	</select>
+
+
+</mapper>
