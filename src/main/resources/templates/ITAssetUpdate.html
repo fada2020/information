@@ -23,6 +23,14 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <style>
+    	#table1 thead, th {text-align: center;}
+		#table1 tbody tr{
+		    cursor:pointer;
+		}
+	</style>
+
   </head>
   <body class="nav-md">
     <div class="container body">
@@ -291,25 +299,26 @@
 						</div>
 						<div class="x_content" style="display: block;">
 							<div class="table-responsive">
-								<table class="table table-striped jambo_table bulk_action">
+								<table class="table table-striped jambo_table bulk_action text-center" id="table1">
 									<thead>
 										<tr class="headings">
-											<th class="column-title" style="display: table-cell;">No </th>
-											<th class="column-title" style="display: table-cell;">品名 </th>
-											<th class="column-title" style="display: table-cell;">仕樣 </th>
-											<th class="column-title" style="display: table-cell;">数量 </th>
-											<th colspan="2" class="column-title" style="display: table-cell;">備考 </th>
+											<th class="col-md-1">No </th>
+											<th class="col-md-2">品名 </th>
+											<th class="col-md-2">仕樣 </th>
+											<th class="col-md-1">数量 </th>
+											<th class="col-md-6">備考 </th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr class="even pointer">
-											<td class=" ">121000040</td>
-											<td class=" ">May 23, 2014 11:47:56 PM </td>
-											<td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
+											<td></td>
+											<td><input id="itemName" type="text" class="form-control"></td>
+											<td><input id="trick" type="text" class="form-control"></td>
+											<td><input id="quantity" type="text" class="form-control"></td>
+											<td><input id="remarks" type="text" class="form-control"></td>
 											<td class="a-center ">
-												<div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+												<a id="add" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
 									</tbody>
@@ -333,23 +342,24 @@
 						</div>
 						<div class="x_content" style="display: block;">
 							<div class="table-responsive">
-								<table class="table table-striped jambo_table bulk_action">
+								<table class="table table-striped jambo_table bulk_action" id="table2">
 									<thead>
 										<tr class="headings">
-											<th class="column-title" style="display: table-cell;">実施日 </th>
-											<th class="column-title" style="display: table-cell;">実施内容 </th>
-											<th class="column-title" style="display: table-cell;">担当 </th>
-											<th colspan="2" class="column-title" style="display: table-cell;">承認 </th>
+											<th class="col-md-2">実施日 </th>
+											<th class="col-md-6">実施内容 </th>
+											<th class="col-md-2">担当 </th>
+											<th class="col-md-2">承認 </th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr class="even pointer">
-											<td class="col-md-2"><input type="text" class="form-control"></td>
-											<td class="col-md-6"><input type="text" class="form-control"></td>
-											<td class="col-md-2"><input type="text" class="form-control"></td>
-											<td class="col-md-2"><input type="text" class="form-control"></td>
-											<td class="a-center ">
-												<a class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+											<td><input type="text" class="form-control"></td>
+											<td><input type="text" class="form-control"></td>
+											<td><input type="text" class="form-control"></td>
+											<td><input type="text" class="form-control"></td>
+											<td class="a-center">
+												<a id="add" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
 									</tbody>
@@ -412,8 +422,41 @@
     	});
 
         $(function(){
+            $('#add').on('click', function () {
+            	var selectTr = $(this).closest("tr");
 
+            	var accessories ={"no" : selectTr.find("#no").val(),
+            			"itemName" : selectTr.find("#itemName").val(),
+            			"trick" : selectTr.find("#trick").val(),
+            			"quantity" : selectTr.find("#quantity").val(),
+            			"remarks" : selectTr.find("#remarks").val()
+            	};
 
+            	$.ajax(/*[[@{/ITAsset/add}]]*/ 'ITAsset/add',
+            		      {
+		                	type: "POST",
+		                	dataType: "json",
+		                	contentType: 'application/JSON',
+		                	data : JSON.stringify(accessories)
+            		      }
+            		    )
+            		    .done(function(data) {
+            		    	 $('#table1 tbody').append(
+            		    			 '<tr>'
+            		    			 +'<td>'+data.no+'</td>'
+            		    			 +'<td><input type="text" class="form-control" value="'+data.itemName+'"></td>'
+            		    			 +'<td><input type="text" class="form-control" value="'+data.trick+'"></td>'
+            		    			 +'<td><input type="text" class="form-control" value="'+data.quantity+'"></td>'
+            		    			 +'<td><input type="text" class="form-control" value="'+data.remarks+'"></td>'
+            		    			 +'<td class="a-center"><a id="add2" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+            		    			 +'</tr>'
+            		    	 );
+            		    })
+            });
+
+            $('#table1 tbody').on("click","#add2", function() {
+                alert("クリック！");
+            });
         })
     /*]]>*/
     </script>
