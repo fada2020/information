@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.asm.mapper.CompanyMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO company (cname, ccode, cnum)
+        VALUES (#{cname}, #{ccode}, #{cnum})
+    </insert>
+    <select id="select" resultType="jp.co.info.ais.asm.domain.Company">
+        SELECT
+        	cname,ccode,cnum
+        FROM company
+        WHERE cname = #{cname}
+    </select>
+</mapper>

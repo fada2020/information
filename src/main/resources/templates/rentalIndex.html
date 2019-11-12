@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Gentelella Alela! |</title>
+
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+<!-- bootstrap-datetimepicker -->
+<link
+	href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
+	rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
+
+			<!-- top navigation -->
+			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>貸与一覧</h3>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="row">
+						<div class="col">
+							<div class="col-md-1">
+								<span class="pull-right" style="font-size: 18px;">管理番号</span>
+							</div>
+							<div class="col-md-2">
+								<input type="text" class="form-control" placeholder="管理番号"
+									id="assetNumber_search">
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button>登録</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button>削除</button>
+
+
+
+							<div class="col-md-1">
+								<span class="pull-right" style="font-size: 18px;">貸与日</span>
+							</div>
+							<div class="col-md-2">
+								<div class="input-group date" id="myDatepicker">
+									<input type="text" class="form-control" id="date_search">
+									<span class="input-group-addon"> <span
+										class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<div class="x_panel">
+								<div class="x_title">
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i
+												class="fa fa-chevron-up"></i></a></li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+									<table class="table table-bordered table-hover table-lg"
+										id="table1">
+										<thead class="thead-light">
+											<tr>
+
+												<th>貸与番号</th>
+												<th>管理番号</th>
+												<th>区分</th>
+												<th>品目</th>
+												<th>用途</th>
+												<th>貸与日</th>
+												<th>使用場所</th>
+												<th>使用者</th>
+												<th>貸与期間</th>
+
+
+												<th class="bulk-actions" colspan="7" style="display: none;">
+													<a class="antoo" style="color: #fff; font-weight: 500;">Bulk
+														Actions ( <span class="action-cnt">1 Records
+															Selected</span> ) <i class="fa fa-chevron-down"></i>
+												</a>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+
+									<!-- modal -->
+									<div class="modal" id="modal3d" tabindex="-1" role="dialog"
+										style="display: none;" aria-hidden="true">
+										<div class="modal-dialog modal-xl" style="width: 70%;"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">×</span>
+													</button>
+													<h3 class="modal-title">照会</h3>
+												</div>
+												<div class="modal-body">
+													<div class="container-fluid">
+														<div class="row">
+
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>管理番号</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="assetNumber_view"></span>
+																	</div>
+																	<div class="col-md-3">
+																		<span>区分</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="psNum_view"></span>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>貸与日</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="rentDay_view"></span>
+																	</div>
+
+																</div>
+															</div>
+
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>保管位置</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="storageLocation_view"></span>
+																	</div>
+
+																</div>
+															</div>
+
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /modal -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-datetimepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script
+		src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+
+	<!-- page script -->
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+        $('#myDatepicker').datetimepicker({
+            format: 'YYYY/MM/DD'
+        });
+
+        var modalesectiondata = null;
+
+    	var productCodeMap = new Map();
+		var productCode = /*[[${productCode}]]*/;
+    	productCode.forEach(function( value ) {
+    		productCodeMap.set(value.psNum, value.pname);
+    	});
+    	var stateCodeMap = new Map();
+    	var stateCode = /*[[${stateCode}]]*/;
+    	stateCode.forEach(function( value ) {
+    		stateCodeMap.set(value.snumber, value.state);
+    	});
+
+        $(function(){
+
+            // datatableの設定を変更
+            var modalesectiontable = $("#table1").DataTable({
+            	fixedHeader: true,
+            	"processing": true,
+            	"serverSide": true,
+            	"start": 0,
+                "length": 10,
+                "searching": false,
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "ajax": {
+                	url: /*[[@{/rental/getRentalList}]]*/ 'rental/getRentalList',
+                	type: "POST",
+                	dataType: "json",
+                	contentType: 'application/JSON',
+                	data: function ( d ) {
+                		d.columns[0].search.value = $('#assetNumber_search').val();
+                		d.columns[1].search.value = $('#date_search').val();
+                        return JSON.stringify(d);
+                    }
+                },
+
+                "columnDefs": [
+                	{ targets: 0, data:"select_option" , render: function ( data, type, row, meta ) {
+                		return {'<div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records"style="position: absolute; opacity: 0;"><ins class="iCheck-helper"style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>';}}},
+                	{ targets: 1, data: "rentNumber"},
+                    { targets: 2, data: "assetNumber"},
+                    { targets: 3, data: "pcName" },
+                    { targets: 4, data: "pName" },
+                    { targets: 5, data: "purpose" },
+                    { targets: 6, data: function ( d ) {
+                    	var rentDay = new Date(d.rentDay);
+                		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
+                		var dd = rentDay.getDate();
+                    	return yyyy + "/" + mm + "/" + dd;
+                    }},
+                    { targets: 7, data: "storageLocation"},
+                    { targets: 8, data: "rentUser"},
+                    { targets: 9, data: "returnPeriod"},
+                    { targets: 10,
+                    	data: "description",
+                        render: function ( data, type, row, meta ) {
+                          return '<button type="button" class="btn btn-primary">更新/削除</button>';
+                        }
+                    }
+                ]
+            });
+
+            // Search
+            $('#assetNumber_search').on( 'keyup', function () {
+            	modalesectiontable
+                .column(0)
+                .search( this.value )
+                .draw();
+            } );
+
+
+
+
+
+
+
+            $("#myDatepicker").on("dp.change", function(e) {
+                var d = new Date(e.date);
+                var mm = d.getMonth() + 1;
+                var dd = d.getDate();
+                var yyyy = d.getFullYear();
+            	modalesectiontable
+                .column(5)
+                .search( yyyy + "/" + mm + "/" + dd )
+                .draw();
+            });
+
+            $('#table1 tbody').on( 'click', 'tr td', function () {
+            	var rowData = modalesectiontable.row( this ).data();
+            	if(this._DT_CellIndex.column != 11) {
+            		$('#modal3d').modal();
+
+            		var rentDay = new Date(rowData.rentDay);
+            		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
+            		var dd = rentDay.getDate();
+
+
+            		/*<th>貸与番号</th>
+												<th>管理番号</th>
+												<th>区分</th>
+												<th>品目</th>
+												<th>用途</th>
+												<th>貸与日</th>
+												<th>仕様場所</th>
+												<th>使用者</th>
+												<th>貸与期間</th>
+												<th>状態</th>
+												<th></th>*/
+					$('#rentNumber_view').text(rowData.rentNumber);
+            		$('#assetNumber_view').text(rowData.assetNumber);
+            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
+            		$('#rentDay_view').text(yyyy + "/" + mm + "/" + dd);
+
+
+            		$('#storageLocation_view').text(rowData.storageLocation);
+            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
+
+
+
+            	} else {
+            		//alert(JSON.stringify(rowData));
+            	}
+            } );
+
+        })
+    /*]]>*/
+    </script>
+
+</body>
+</html>
