@@ -47,6 +47,8 @@ CREATE TABLE `company` (
 
 /*Table structure for table `itasset` */
 
+DROP TABLE IF EXISTS `itasset`;
+
 CREATE TABLE `itasset` (
   `ASSETNUMBER` varchar(15) NOT NULL,
   `P_S_NUM` int(2) DEFAULT NULL,
@@ -134,6 +136,8 @@ CREATE TABLE `productkind` (
 /*Data for the table `productkind` */
 
 /*Table structure for table `rental` */
+
+DROP TABLE IF EXISTS `rental`;
 
 CREATE TABLE `rental` (
   `RENT_DAY` date DEFAULT NULL,
