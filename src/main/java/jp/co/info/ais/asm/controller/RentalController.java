@@ -31,8 +31,10 @@ public class RentalController {
 
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
+	//資産管理
 	@Autowired
 	private ITAssetService ITAssetService;
+
 	@Autowired
 	private RentalService rentalService;
 
