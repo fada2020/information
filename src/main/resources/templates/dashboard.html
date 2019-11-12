@@ -29,15 +29,255 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+      	<!-- sidebar -->
+		<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
+        <!-- sidebar -->
+
+        <!-- top navigation -->
+        <div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+          <!-- top tiles -->
+          <div class="row tile_count" style="margin-bottom: -10px;">
+
+            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" ><div class="text-center">
+              <h3><b>総ハードウェア</b></h3>
+              <div class="count">352台</div></div>
+            </div>
+            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
+              <h3><b>総ソフトウェア</b></h3>
+              <div class="count">175台</div></div>
+            </div>
+            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
+             <h3><b> 総資産装置</b></h3>
+              <div class="count">527台</div></div>
+            </div>
+            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
+              <h3><b>新しい装置</b></h3>
+              <div class="count">51台</div></div>
+            </div>
+          </div>
+
+          <!-- /top tiles -->
+
+
+          <br />
+<!-- Graph  -->
+ <div class="col-md-12 col-sm-8 col-xs-12">
+          <div class="row">
+		<!-- Hardware Top5  -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2><b>ハードウェア保有現況</b></h2>
+
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>Top 5</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">デバイス</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">保有パーセント</p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square blue"></i>Desktop </p>
+                            </td>
+                            <td>40%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square green"></i>Mobile </p>
+                            </td>
+                            <td>20%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square purple"></i>Server </p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square aero"></i>Notebook </p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>Others </p>
+                            </td>
+                            <td>10%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+        <!-- Hardware Top5 -->
+		<!-- Software Top5  -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2><b>ソフトウェア保有現況</b></h2>
+
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>Top 5</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">デバイス</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">保有パーセント</p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut2" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square blue"></i>OS </p>
+                            </td>
+                            <td>30%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square green"></i>会計Package </p>
+                            </td>
+                            <td>25%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square purple"></i>Office </p>
+                            </td>
+                            <td>20%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square aero"></i>Virus Program </p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>Others </p>
+                            </td>
+                            <td>10%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+</div>
+ <!-- /Software Top5 -->
+	<div class="row">
+	 <div class="">
+	    <div class="row">
+  <!-- bar charts group -->
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><b>資産貸与現況</b><small></small></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+     <!-- init_morris_chart()：custom.min.js -->
+                  <div class="x_content2">
+                    <div id="bargraph" style="width:100%; height:300px;" ></div>
+                  </div>
+                  <div style="margin: 15px; padding-left: 10px;">
+					<table>
+                          <tr>
+                            <td width="200px">
+                              <p style="font-size : 15px;"><i class="fa fa-square" style="color : blue;"></i> 保管 </p>
+                            </td>
+                            <td width="200px" >
+                             <p style="font-size : 15px;"> <i class="fa fa-square" style="color: red;"></i>  貸与  </p>
+                            </td>
+                          </tr>
+                          </table>
+                          </div>
+     <!-- init_morris_chart()：custom.min.js -->
+                </div>
+              </div>
+              <!-- /bar charts group -->
+			</div>
+		</div>
+	</div>
+ </div>
+	 <!--/Graph  -->
+
+
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+        <!-- /footer content -->
+      </div>
+    </div>
+
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+	    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+
+	<script type="text/javascript">
 $(document).ready(function() {
-	init_skycons(),init_chart_doughnut(), init_gauge(), init_JQVmap(), init_daterangepicker(),
-	init_daterangepicker_right(), init_daterangepicker_single_call(), init_daterangepicker_reservation(),
-	init_charts(), init_morris_charts(), init_DataTables(), init_compose(), init_CustomNotification()
-	,init_chart_doughnut1()
+	init_chart_doughnut1(), init_chart_doughnut2(), init_charts(), init_morris_charts_dashboard(), init_DataTables(), init_compose()
 	});
 
 	function init_charts() {
@@ -246,8 +486,8 @@ $(document).ready(function() {
 	                }
 	            })
 	        }
-	        if ($("#canvasDoughnut").length) {
-	            var f = document.getElementById("canvasDoughnut"),
+	        if ($("#canvasDoughnut1").length) {
+	            var f = document.getElementById("canvasDoughnut1"),
 	                i = {
 	                    labels: ["Dark Grey", "Purple Color", "Gray Color", "Green Color", "Blue Color"],
 	                    datasets: [{
@@ -335,11 +575,11 @@ $(document).ready(function() {
 	}
 
 
-	function init_morris_charts() {
-	    "undefined" != typeof Morris && (console.log("init_morris_charts"), $("#graphx").length && Morris.Bar({
-	        element: "graphx",
+	function init_morris_charts_dashboard() {
+	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
+	        element: "bargraph",
 	        data: [{
-	            x: "DeskTop",
+	            x: "Desktop",
 	            y: 5,
 	            z: 7
 	        }, {
@@ -369,7 +609,7 @@ $(document).ready(function() {
 	        }],
 	        xkey: "x",
 	        ykeys: ["y", "z"],
-	        barColors: ["blue", "red", "#ACADAC", "#3498DB"],
+	        barColors: ["blue", "red"],
 	        hideHover: "auto",
 	        labels: ["保管", "貸与"],
 	        resize: !0
@@ -445,233 +685,11 @@ $(document).ready(function() {
 	    }))
 	}
 
-
-	function init_CustomNotification() {
-	    if (console.log("run_customtabs"), "undefined" != typeof CustomTabs) {
-	        console.log("init_CustomTabs");
-	        var a = 10;
-	        TabbedNotification = function(b) {
-	            var c = "<div id='ntf" + a + "' class='text alert-" + b.type + "' style='display:none'><h2><i class='fa fa-bell'></i> " + b.title + "</h2><div class='close'><a href='javascript:;' class='notification_close'><i class='fa fa-close'></i></a></div><p>" + b.text + "</p></div>";
-	            document.getElementById("custom_notifications") ? ($("#custom_notifications ul.notifications").append("<li><a id='ntlink" + a + "' class='alert-" + b.type + "' href='#ntf" + a + "'><i class='fa fa-bell animated shake'></i></a></li>"), $("#custom_notifications #notif-group").append(c), a++, CustomTabs(b)) : alert("doesnt exists")
-	        }, CustomTabs = function(a) {
-	            $(".tabbed_notifications > div").hide(), $(".tabbed_notifications > div:first-of-type").show(), $("#custom_notifications").removeClass("dsp_none"), $(".notifications a").click(function(a) {
-	                a.preventDefault();
-	                var b = $(this),
-	                    c = "#" + b.parents(".notifications").data("tabbed_notifications"),
-	                    d = b.closest("li").siblings().children("a"),
-	                    e = b.attr("href");
-	                d.removeClass("active"), b.addClass("active"), $(c).children("div").hide(), $(e).show()
-	            })
-	        }, CustomTabs();
-	        var b = idname = "";
-	        $(document).on("click", ".notification_close", function(a) {
-	            idname = $(this).parent().parent().attr("id"), b = idname.substr(-2), $("#ntf" + b).remove(), $("#ntlink" + b).parent().remove(), $(".notifications a").first().addClass("active"), $("#notif-group div").first().css("display", "block")
-	        })
-	    }
-	}
 /* doughnut */
-function init_JQVmap() {
-    "undefined" != typeof jQuery.fn.vectorMap && (console.log("init_JQVmap"), $("#world-map-gdp").length && $("#world-map-gdp").vectorMap({
-        map: "world_en",
-        backgroundColor: null,
-        color: "#ffffff",
-        hoverOpacity: .7,
-        selectedColor: "#666666",
-        enableZoom: !0,
-        showTooltip: !0,
-        values: sample_data,
-        scaleColors: ["#E6F2F0", "#149B7E"],
-        normalizeFunction: "polynomial"
-    }), $("#usa_map").length && $("#usa_map").vectorMap({
-        map: "usa_en",
-        backgroundColor: null,
-        color: "#ffffff",
-        hoverOpacity: .7,
-        selectedColor: "#666666",
-        enableZoom: !0,
-        showTooltip: !0,
-        values: sample_data,
-        scaleColors: ["#E6F2F0", "#149B7E"],
-        normalizeFunction: "polynomial"
-    }))
-}
 
 
-function init_daterangepicker() {
-    if ("undefined" != typeof $.fn.daterangepicker) {
-        console.log("init_daterangepicker");
-        var a = function(a, b, c) {
-                console.log(a.toISOString(), b.toISOString(), c), $("#reportrange span").html(a.format("MMMM D, YYYY") + " - " + b.format("MMMM D, YYYY"))
-            },
-            b = {
-                startDate: moment().subtract(29, "days"),
-                endDate: moment(),
-                minDate: "01/01/2012",
-                maxDate: "12/31/2015",
-                dateLimit: {
-                    days: 60
-                },
-                showDropdowns: !0,
-                showWeekNumbers: !0,
-                timePicker: !1,
-                timePickerIncrement: 1,
-                timePicker12Hour: !0,
-                ranges: {
-                    Today: [moment(), moment()],
-                    Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                    "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                    "Last 30 Days": [moment().subtract(29, "days"), moment()],
-                    "This Month": [moment().startOf("month"), moment().endOf("month")],
-                    "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-                },
-                opens: "left",
-                buttonClasses: ["btn btn-default"],
-                applyClass: "btn-small btn-primary",
-                cancelClass: "btn-small",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                locale: {
-                    applyLabel: "Submit",
-                    cancelLabel: "Clear",
-                    fromLabel: "From",
-                    toLabel: "To",
-                    customRangeLabel: "Custom",
-                    daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                    firstDay: 1
-                }
-            };
-        $("#reportrange span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), $("#reportrange").daterangepicker(b, a), $("#reportrange").on("show.daterangepicker", function() {
-            console.log("show event fired")
-        }), $("#reportrange").on("hide.daterangepicker", function() {
-            console.log("hide event fired")
-        }), $("#reportrange").on("apply.daterangepicker", function(a, b) {
-            console.log("apply event fired, start/end dates are " + b.startDate.format("MMMM D, YYYY") + " to " + b.endDate.format("MMMM D, YYYY"))
-        }), $("#reportrange").on("cancel.daterangepicker", function(a, b) {
-            console.log("cancel event fired")
-        }), $("#options1").click(function() {
-            $("#reportrange").data("daterangepicker").setOptions(b, a)
-        }), $("#options2").click(function() {
-            $("#reportrange").data("daterangepicker").setOptions(optionSet2, a)
-        }), $("#destroy").click(function() {
-            $("#reportrange").data("daterangepicker").remove()
-        })
-    }
-}
-
-
-function init_daterangepicker_right() {
-    if ("undefined" != typeof $.fn.daterangepicker) {
-        console.log("init_daterangepicker_right");
-        var a = function(a, b, c) {
-                console.log(a.toISOString(), b.toISOString(), c), $("#reportrange_right span").html(a.format("MMMM D, YYYY") + " - " + b.format("MMMM D, YYYY"))
-            },
-            b = {
-                startDate: moment().subtract(29, "days"),
-                endDate: moment(),
-                minDate: "01/01/2012",
-                maxDate: "12/31/2020",
-                dateLimit: {
-                    days: 60
-                },
-                showDropdowns: !0,
-                showWeekNumbers: !0,
-                timePicker: !1,
-                timePickerIncrement: 1,
-                timePicker12Hour: !0,
-                ranges: {
-                    Today: [moment(), moment()],
-                    Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                    "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                    "Last 30 Days": [moment().subtract(29, "days"), moment()],
-                    "This Month": [moment().startOf("month"), moment().endOf("month")],
-                    "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-                },
-                opens: "right",
-                buttonClasses: ["btn btn-default"],
-                applyClass: "btn-small btn-primary",
-                cancelClass: "btn-small",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                locale: {
-                    applyLabel: "Submit",
-                    cancelLabel: "Clear",
-                    fromLabel: "From",
-                    toLabel: "To",
-                    customRangeLabel: "Custom",
-                    daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                    firstDay: 1
-                }
-            };
-        $("#reportrange_right span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), $("#reportrange_right").daterangepicker(b, a), $("#reportrange_right").on("show.daterangepicker", function() {
-            console.log("show event fired")
-        }), $("#reportrange_right").on("hide.daterangepicker", function() {
-            console.log("hide event fired")
-        }), $("#reportrange_right").on("apply.daterangepicker", function(a, b) {
-            console.log("apply event fired, start/end dates are " + b.startDate.format("MMMM D, YYYY") + " to " + b.endDate.format("MMMM D, YYYY"))
-        }), $("#reportrange_right").on("cancel.daterangepicker", function(a, b) {
-            console.log("cancel event fired")
-        }), $("#options1").click(function() {
-            $("#reportrange_right").data("daterangepicker").setOptions(b, a)
-        }), $("#options2").click(function() {
-            $("#reportrange_right").data("daterangepicker").setOptions(optionSet2, a)
-        }), $("#destroy").click(function() {
-            $("#reportrange_right").data("daterangepicker").remove()
-        })
-    }
-}
-
-function init_daterangepicker_single_call() {
-    "undefined" != typeof $.fn.daterangepicker && (console.log("init_daterangepicker_single_call"), $("#single_cal1").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_1"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal2").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_2"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal3").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_3"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal4").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_4"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }))
-}
-
-function init_daterangepicker_reservation() {
-    "undefined" != typeof $.fn.daterangepicker && (console.log("init_daterangepicker_reservation"), $("#reservation").daterangepicker(null, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#reservation-time").daterangepicker({
-        timePicker: !0,
-        timePickerIncrement: 30,
-        locale: {
-            format: "MM/DD/YYYY h:mm A"
-        }
-    }))
-}
-
-function init_skycons() {
-    if ("undefined" != typeof Skycons) {
-        console.log("init_skycons");
-        var c, a = new Skycons({
-                color: "#73879C"
-            }),
-            b = ["clear-day", "clear-night", "partly-cloudy-day", "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind", "fog"];
-        for (c = b.length; c--;) a.set(b[c], b[c]);
-        a.play()
-    }
-}
-
-function init_chart_doughnut() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut"), $(".canvasDoughnut").length)) {
+function init_chart_doughnut1() {
+    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -688,15 +706,15 @@ function init_chart_doughnut() {
                 responsive: !1
             }
         };
-        $(".canvasDoughnut").each(function() {
+        $(".canvasDoughnut1").each(function() {
             var b = $(this);
             new Chart(b, a)
         })
     }
 }
 
-function init_chart_doughnut1() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut"), $(".canvasDoughnut1").length)) {
+function init_chart_doughnut2() {
+    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -713,277 +731,15 @@ function init_chart_doughnut1() {
                 responsive: !1
             }
         };
-        $(".canvasDoughnut1").each(function() {
+        $(".canvasDoughnut2").each(function() {
             var b = $(this);
             new Chart(b, a)
         })
     }
 }
 
-function init_gauge() {
-    if ("undefined" != typeof Gauge) {
-        console.log("init_gauge [" + $(".gauge-chart").length + "]"), console.log("init_gauge");
-        var a = {
-            lines: 12,
-            angle: 0,
-            lineWidth: .4,
-            pointer: {
-                length: .75,
-                strokeWidth: .042,
-                color: "#1D212A"
-            },
-            limitMax: "false",
-            colorStart: "#1ABC9C",
-            colorStop: "#1ABC9C",
-            strokeColor: "#F0F3F3",
-            generateGradient: !0
-        };
-        if ($("#chart_gauge_01").length) var b = document.getElementById("chart_gauge_01"),
-            c = new Gauge(b).setOptions(a);
-        if ($("#gauge-text").length && (c.maxValue = 6e3, c.animationSpeed = 32, c.set(3200), c.setTextField(document.getElementById("gauge-text"))), $("#chart_gauge_02").length) var d = document.getElementById("chart_gauge_02"),
-            e = new Gauge(d).setOptions(a);
-        $("#gauge-text2").length && (e.maxValue = 9e3, e.animationSpeed = 32, e.set(2400), e.setTextField(document.getElementById("gauge-text2")))
-    }
-}
-
-
 </script>
 
-
-  </head>
-
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-      	<!-- sidebar -->
-		<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
-        <!-- sidebar -->
-
-        <!-- top navigation -->
-        <div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
-        <!-- /top navigation -->
-
-        <!-- page content -->
-        <div class="right_col" role="main">
-
-          <!-- top tiles -->
-          <div class="row tile_count" style="margin-bottom: -10px;">
-
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" ><div class="text-center">
-              <h3><b>総ハードウェア</b></h3>
-              <div class="count">352台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-              <h3><b>総ソフトウェア</b></h3>
-              <div class="count">175台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-             <h3><b> 総資産装置</b></h3>
-              <div class="count">527台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-              <h3><b>新しい装置</b></h3>
-              <div class="count">51台</div></div>
-            </div>
-          </div>
-
-          <!-- /top tiles -->
-
-
-          <br />
-<!-- Graph  -->
- <div class="col-md-12 col-sm-8 col-xs-12">
-          <div class="row">
-		<!-- Hardware Top5  -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2><b>ハードウェア</b></h2>
-
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">PERCENT</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>Desktop </p>
-                            </td>
-                            <td>40%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Mobile </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Server </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Notebook </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-        <!-- Hardware Top5 -->
-		<!-- Software Top5  -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2><b>ソフトウェア</b></h2>
-
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">PERCENT</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>OS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>会計Package </p>
-                            </td>
-                            <td>25%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Office </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Virus Program </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-</div>
- <!-- /Software Top5 -->
-	<div class="row">
-	 <div class="">
-	    <div class="row">
-  <!-- bar charts group -->
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2><b>資産貸与現況</b><small></small></h2>
-
-                    <div class="clearfix"></div>
-                  </div>
-     <!-- init_morris_chart()：custom.min.js -->
-                  <div class="x_content2">
-                    <div id="graphx" style="width:100%; height:300px;" ></div>
-                  </div>
-     <!-- init_morris_chart()：custom.min.js -->
-                </div>
-              </div>
-              <!-- /bar charts group -->
-			</div>
-		</div>
-	</div>
- </div>
-	 <!--/Graph  -->
-
-
-        </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
-        <!-- /footer content -->
-      </div>
-    </div>
-
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- jquery-ui -->
-	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
 
     <!-- Chart.js -->
     <script src="../vendors/Chart.js/dist/Chart.min.js"></script>

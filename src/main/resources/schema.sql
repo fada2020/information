@@ -16,56 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`supplies` /*!40100 DEFAULT CHARACTER SE
 
 USE `supplies`;
 
-/*Table structure for table `board` */
-
-DROP TABLE IF EXISTS `board`;
-
-CREATE TABLE `board` (
-  `boardnum` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `inputdate` datetime DEFAULT CURRENT_TIMESTAMP,
-  `cnt` int(11) DEFAULT '0',
-  `state` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `classification` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`boardnum`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-/*Data for the table `board` */
-
-insert  into `board`(`boardnum`,`title`,`inputdate`,`cnt`,`state`,`classification`) values
-(1,'PowerEdge R410SVR1GB558GBSVR','2019-10-31 13:46:21',0,'新規','Server'),
-(2,'R410Intel Xeon E56202 Processor1GB558GBSVR','2019-10-31 17:09:33',0,'新規','Server'),
-(3,'PowerEdge R410DT64GB256GBWindow Server 2018 R2 Standard','2019-11-01 10:59:00',0,'新規','Server'),
-(4,'R410DT64GB256GBWindow Server 2012 R2 Standard','2019-11-01 11:37:27',0,'新規','Server'),
-(5,'PowerEdge R410SVR64GB256GBSVR','2019-11-01 11:49:06',0,'新規','Server'),
-(6,'Edge R410 SilverIntel Peon E4902 Processor32GB256GBWindow Server 2012 X2 Standard','2019-11-01 16:44:48',0,'新規','Server'),
-(7,'PowerEdge R410SVR64GB558GBWindow Server 2012 R2 Standard','2019-11-01 16:45:34',0,'新規','Server'),
-(8,'Sony Edge R410 SilverIntel Xeon E6202 Processor64GB256GBWindow Server 2018 E8 Standard','2019-11-06 10:31:50',0,'新規','Server'),
-(9,'Sony Edge R410 SilverDT32GB256GBWindow Server 2012 X2 ExtraVersion','2019-11-06 10:38:47',0,'新規','Server'),
-(10,'Edge R410 SilverDT32GB558GBWindow Server 2012 R2 Standard','2019-11-06 10:39:25',0,'新規','Server'),
-(11,'Sony Edge R410 SilverDT32GB256GBWindow Server 2018 E8 Standard','2019-11-06 10:39:45',0,'新規','Server'),
-(12,'PowerEdge R410DT32GB256GBSVR','2019-11-06 10:40:21',0,'新規','Server'),
-(13,'R410DT32GB256GBWindow Server 2012 R2 Standard','2019-11-06 10:40:48',0,'新規','Server'),
-(14,'R410DT32GB256GBSVR','2019-11-06 11:14:42',0,'新規','Server');
-
-/*Table structure for table `classification` */
-
-DROP TABLE IF EXISTS `classification`;
-
-CREATE TABLE `classification` (
-  `cltNumber` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `cltCode` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `cltName` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `lifecycle` int(11) DEFAULT '0',
-  PRIMARY KEY (`cltNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-/*Data for the table `classification` */
-
-insert  into `classification`(`cltNumber`,`cltCode`,`cltName`,`lifecycle`) values
-(1,'MS','Mouse',0),
-(2,'DT','DestTop',15);
-
 /*Table structure for table `company` */
 
 DROP TABLE IF EXISTS `company`;
@@ -80,8 +30,6 @@ CREATE TABLE `company` (
 /*Data for the table `company` */
 
 /*Table structure for table `itasset` */
-
-DROP TABLE IF EXISTS `itasset`;
 
 CREATE TABLE `itasset` (
   `AssetNumber` varchar(15) NOT NULL,
@@ -144,8 +92,6 @@ insert  into `product`(`p_c_num`,`p_s_num`,`p_name`,`p_code`,`P_TIME`) values
 
 /*Table structure for table `rental` */
 
-DROP TABLE IF EXISTS `rental`;
-
 CREATE TABLE `rental` (
   `rent_day` datetime DEFAULT NULL,
   `rent_user` varchar(20) DEFAULT NULL,
@@ -183,30 +129,12 @@ insert  into `state`(`S_NUMBER`,`STATE`) values
 (3,'故障'),
 (4,'廃棄');
 
-/*Table structure for table `todo` */
-
-DROP TABLE IF EXISTS `todo`;
-
-CREATE TABLE `todo` (
-  `id` decimal(10,0) NOT NULL,
-  `title` text,
-  `details` text,
-  `finished` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `todo` */
-
-insert  into `todo`(`id`,`title`,`details`,`finished`) values
-(1,'飲み会','銀座 19:00',0),
-(2,'飲み会','銀座 19:00',0),
-(3,'飲み会','銀座 19:00',0),
-(4,'飲み会','銀座 19:00',0),
-(5,'飲み会','銀座 19:00',0),
-(6,'飲み会','銀座 19:00',0),
-(7,'飲み会','銀座 19:00',0),
-(10,'飲み会','銀座 19:00',0),
-(11,'飲み会','銀座 19:00',0);
+/*Table structure for table `PRODUCTKIND` */
+CREATE TABLE PRODUCTKIND (
+P_C_NUM	INT(4) PRIMARY KEY,
+P＿C_NAME VARCHAR(20) NOT NULL,
+P＿C_CODE VARCHAR(20) NOT NULL
+);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
