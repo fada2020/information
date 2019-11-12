@@ -15,13 +15,15 @@ public interface RentalMapper {
 
 	public int selectCount(Rental rental) throws Exception;
 
-	public List<Map<String, String>> getSelectData(String pcNum)throws Exception;
+	public List<Rental> getSelectData(int pcNum)throws Exception;
 
-	public List<Map<String, String>> getSelectProduct(String psNum)throws Exception;
+	public List<Rental> getSelectProduct(String psNum)throws Exception;
 
 	public Map<String, String> writeProduct(String realCode)throws Exception;
 
 	public List<ProductKind> searchCode()throws Exception;
+
+	public Rental researchRental(String assetNumber)throws Exception;
 
 
 }

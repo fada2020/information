@@ -29,24 +29,29 @@ public class RentalService {
 		return rentalMapper.selectCount(rental);
 	}
 
-	public List<Map<String, String>> getSelectData(String pcNum)throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+	public List<Rental> getSelectData(int pcNum)throws Exception {
+
 		return rentalMapper.getSelectData(pcNum);
 	}
 
-	public List<Map<String, String>> getSelectProduct(String psNum)throws Exception{
-		// TODO 自動生成されたメソッド・スタブ
+	public List<Rental> getSelectProduct(String psNum)throws Exception{
+
 		return rentalMapper.getSelectProduct(psNum);
 	}
 
 	public Map<String, String> writeProduct(String realCode)throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+
 		return rentalMapper.writeProduct(realCode);
 	}
 
 	public List<ProductKind> searchCode()throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+
 		return rentalMapper.searchCode();
+	}
+
+	public Rental researchRental(String assetNumber)throws Exception  {
+		// TODO 自動生成されたメソッド・スタブ
+		return rentalMapper.researchRental(assetNumber);
 	}
 
 
