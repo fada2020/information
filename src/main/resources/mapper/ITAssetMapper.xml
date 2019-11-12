@@ -6,38 +6,39 @@
     <select id="select" resultType="jp.co.info.ais.asm.domain.ITAsset">
     SELECT A.* FROM(
         SELECT
-        	AssetNumber
+			ASSETNUMBER
 			,P_S_NUM
-			,PurchaseDate
-			,WarrantyPeriod
-			,BuyTo
-			,PurchasePrice
-			,StorageLocation
+			,PURCHASEDATE
+			,WARRANTYPERIOD
+			,BUYTO
+			,PURCHASEPRICE
+			,STORAGELOCATION
 			,S_NUMBER
-			,Maker
-			,Model
-			,SerialNum
-			,InterFaceCol
-			,OS_Name
-			,OS_ProductKey
-			,CPU_Processor
-			,Operating_Frequency
-			,Memory
-			,Memory_Upgarde
+			,MAKER
+			,MODEL
+			,SERIALNUM
+			,INTERFACECOL
+			,OS_NAME
+			,OS_PRODUCTKEY
+			,CPU_PROCESSOR
+			,OPERATING_FREQUENCY
+			,MEMORY
+			,MEMORY_UPGARDE
 			,HDD
-			,HDD_Upgarde
+			,HDD_UPGARDE
 			,MAC_LAN
-			,MAC_Wireless
-			,Other
-			,Security_BIOS
-			,Security_HDD
-			,AdminAccount_ID
-			,AdminAccount_PW
-		FROM ITAsset order by AssetNumber asc
+			,MAC_WIRELESS
+			,OTHER
+			,SECURITY_BIOS
+			,SECURITY_HDD
+			,ADMINACCOUNT_ID
+			,ADMINACCOUNT_PW
+		FROM ITASSET
+		ORDER BY ASSETNUMBER ASC
 	) A
 	WHERE 1 = 1
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND AssetNumber like '%${assetNumber}%'
+		AND ASSETNUMBER like '%${assetNumber}%'
 		</if>
 		<if test="psNum != -1">
 		AND P_S_NUM = #{psNum}
@@ -46,25 +47,23 @@
 		AND S_NUMBER = #{sNumber}
 		</if>
 		<if test="maker != null and !maker.equals('')">
-		AND Maker like '%${maker}%'
+		AND MAKER like '%${maker}%'
 		</if>
 		<if test="model != null and !model.equals('')">
-		AND Model like '%${model}%'
+		AND MODEL like '%${model}%'
 		</if>
-		<if test="purchaseDate != null">
-		<![CDATA[
-		AND DATE_FORMAT(PurchaseDate, '%Y/%m/%d' ) = DATE_FORMAT(#{purchaseDate}, '%Y/%m/%d' )
-		]]>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND PURCHASEDATE BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
 		</if>
 	LIMIT #{length} OFFSET #{start}
     </select>
 
     <select id="selectCount" resultType="int">
     SELECT COUNT(1)
-    FROM ITAsset
-    WHERE 1 = 1
+    FROM ITASSET
+	WHERE 1 = 1
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND AssetNumber like '%${assetNumber}%'
+		AND ASSETNUMBER like '%${assetNumber}%'
 		</if>
 		<if test="psNum != -1">
 		AND P_S_NUM = #{psNum}
@@ -73,15 +72,13 @@
 		AND S_NUMBER = #{sNumber}
 		</if>
 		<if test="maker != null and !maker.equals('')">
-		AND Maker like '%${maker}%'
+		AND MAKER like '%${maker}%'
 		</if>
 		<if test="model != null and !model.equals('')">
-		AND Model like '%${model}%'
+		AND MODEL like '%${model}%'
 		</if>
-		<if test="purchaseDate != null">
-		<![CDATA[
-		AND DATE_FORMAT(PurchaseDate, '%Y/%m/%d' ) = DATE_FORMAT(#{purchaseDate}, '%Y/%m/%d' )
-		]]>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND PURCHASEDATE BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
 		</if>
     </select>
 
@@ -96,8 +93,7 @@
     	SELECT
     		P_S_NUM,
     		P_NAME,
-    		P_CODE,
-    		P_TIME
+    		P_CODE
     	FROM PRODUCT
     </select>
 

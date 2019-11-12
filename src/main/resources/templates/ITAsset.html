@@ -18,8 +18,8 @@
     <!-- iCheck -->
 	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-    <!-- bootstrap-datetimepicker -->
-    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
@@ -102,12 +102,16 @@
                     <span class="pull-right" style="font-size: 18px;">購入日</span>
                 </div>
                 <div class="col-md-2">
-					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="date_search">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
-					</div>
+					<fieldset>
+						<div class="control-group ">
+							<div class="controls">
+								<div class="input-prepend input-group">
+									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control">
+								</div>
+							</div>
+						</div>
+					</fieldset>
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="btn btn-success pull-right">登録</button>
@@ -410,19 +414,15 @@
     <script src="../vendors/nprogress/nprogress.js"></script>
     <!-- iCheck -->
     <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-datetimepicker -->
+    <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
     <!-- page script -->
     <script th:inline="javascript">
     /*<![CDATA[*/
-        $('#myDatepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
-
         var modalesectiondata = null;
 
     	var productCodeMap = new Map();
@@ -437,6 +437,16 @@
     	});
 
         $(function(){
+
+			$('#reservation').daterangepicker({
+				startDate: moment().add(-12, "months"),
+				endDate: moment(),
+			 locale: {
+			       format: 'YYYY-MM-DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			});
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
@@ -471,7 +481,7 @@
                 		d.columns[2].search.value = $('#sNumber_search').val();
                 		d.columns[3].search.value = $('#maker_search').val();
                 		d.columns[4].search.value = $('#model_search').val();
-                		d.columns[5].search.value = $('#date_search').val();
+                		d.columns[5].search.value = $('#reservation').val();
                         return JSON.stringify(d);
                     }
                 },
@@ -486,7 +496,7 @@
                     	var purchaseDate = new Date(d.purchaseDate);
                 		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
                 		var dd = purchaseDate.getDate();
-                    	return yyyy + "/" + mm + "/" + dd;
+                    	return yyyy + "-" + mm + "-" + dd;
                     }},
                     { targets: 5, data: "storageLocation"},
                     { targets: 6, data: function ( d ) {
@@ -540,14 +550,12 @@
                 .draw();
             });
 
-            $("#myDatepicker").on("dp.change", function(e) {
-                var d = new Date(e.date);
-                var mm = d.getMonth() + 1;
-                var dd = d.getDate();
-                var yyyy = d.getFullYear();
-            	modalesectiontable
+            $("#reservation").change(function () {
+                var date = $("#reservation").val();
+                alert(date);
+                modalesectiontable
                 .column(5)
-                .search( yyyy + "/" + mm + "/" + dd )
+                .search(date)
                 .draw();
             });
 
@@ -562,7 +570,7 @@
 
             		$('#assetNumber_view').text(rowData.assetNumber);
             		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#purchaseDate_view').text(yyyy + "/" + mm + "/" + dd);
+            		$('#purchaseDate_view').text(yyyy + "-" + mm + "-" + dd);
             		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
 
             		$('#buyTo_view').text(rowData.buyTo);

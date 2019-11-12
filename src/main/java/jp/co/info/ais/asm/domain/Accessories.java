@@ -6,8 +6,11 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-public class ProductCode {
-	int psNum;
-	String pName;
-	String pCode;
+public class Accessories {
+	String assetnumber;
+	int no;
+	String itemName;
+	String trick;
+	int quantity;
+	String remarks;
 }

@@ -1,7 +1,5 @@
 package jp.co.info.ais.asm.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,15 +56,15 @@ public class HistoryController {
     		condition.setModel(model);
     	}
 
-    	String date = page.getColumns().get(5).getSearch().getValue();
-    	if(null != date && !date.equals("")){
-    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-    		try {
-    			condition.setPurchaseDate(sdf.parse(date));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-    	}
+		/*    	String date = page.getColumns().get(5).getSearch().getValue();
+		    	if(null != date && !date.equals("")){
+		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		    		try {
+		    			condition.setPurchaseDate(sdf.parse(date));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+		    	}*/
 
         List<ITAsset> list = ITAssetService.selectList(condition);
 
