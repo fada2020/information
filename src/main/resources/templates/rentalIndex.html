@@ -59,10 +59,7 @@
 								<input type="text" class="form-control" placeholder="管理番号"
 									id="assetNumber_search">
 							</div>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button>登録</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button>削除</button>
+
 
 
 
@@ -77,34 +74,47 @@
 									</span>
 								</div>
 							</div>
+							<div class="buttons">
+								<a href="/rental/rentalBoardInsert">
+									<button type="button">遷移！</button>
+								</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button>削除</button>
+
+							</div>
 							<div class="x_panel">
 								<div class="x_title">
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a>
-										</li>
-									</ul>
+
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-
-									<table class="table table-bordered table-hover table-lg"
+									<table class="table table-striped jambo_table bulk_action"
 										id="table1">
+
+
 										<thead class="thead-light">
-											<tr>
-
-												<th>貸与番号</th>
-												<th>管理番号</th>
-												<th>区分</th>
-												<th>品目</th>
-												<th>用途</th>
-												<th>貸与日</th>
-												<th>使用場所</th>
-												<th>使用者</th>
-												<th>貸与期間</th>
 
 
+											<tr class="headings">
+
+
+												<th>
+													<div class="icheckbox_flat-green"
+														style="position: relative;">
+														<input type="checkbox" id="check-all" class="flat"
+															style="position: absolute; opacity: 0;">
+														<ins class="iCheck-helper"
+															style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+													</div>
+												</th>
+												<th class="column-title" style="display: table-cell;">貸与番号</th>
+												<th class="column-title" style="display: table-cell;">管理番号</th>
+												<th class="column-title" style="display: table-cell;">品目</th>
+												<th class="column-title" style="display: table-cell;">場所</th>
+												<th class="column-title" style="display: table-cell;">使用者</th>
+												<th class="column-title" style="display: table-cell;">貸与日</th>
+												<th class="column-title" style="display: table-cell;">貸与期間</th>
+												<th class="column-title no-link last"
+													style="display: table-cell;"><span class="nobr">Action</span></th>
 												<th class="bulk-actions" colspan="7" style="display: none;">
 													<a class="antoo" style="color: #fff; font-weight: 500;">Bulk
 														Actions ( <span class="action-cnt">1 Records
@@ -112,6 +122,7 @@
 												</a>
 												</th>
 											</tr>
+
 										</thead>
 										<tbody>
 										</tbody>
@@ -130,53 +141,92 @@
 													</button>
 													<h3 class="modal-title">照会</h3>
 												</div>
-												<div class="modal-body">
-													<div class="container-fluid">
-														<div class="row">
+												<form th:action="@{/bookinfo}" method="post">
+													<div class="modal-body">
+														<div class="container-fluid">
+															<div class="row">
 
-															<div class="col-md-6">
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>管理番号</span>
+																<div class="col-md-6">
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>貸与番号</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="rentNumber_view"></span>
+																		</div>
 																	</div>
-																	<div class="col-md-3">
-																		<span id="assetNumber_view"></span>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>管理番号</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="assetNumber_view"></span>
+																		</div>
 																	</div>
-																	<div class="col-md-3">
-																		<span>区分</span>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>区分</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="psNum_view"></span>
+																		</div>
 																	</div>
-																	<div class="col-md-3">
-																		<span id="psNum_view"></span>
+
+
+
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>用途</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="purpose_view"></span>
+																		</div>
 																	</div>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>保管位置</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="storageLocation_view"></span>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>貸与日</span>
+																		</div>
+																		<div class="col-md-4">
+																			<span id="rentDay_view"></span>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>特記事項</span>
+																		</div>
+																		<div class="col-md-3">
+																			<span id="speciality_view"></span>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-md-3">
+																			<span>貸与期間</span>
+																		</div>
+																		<div class="col-md-4">
+																			<span id="returnPeriod_view"></span>
+																		</div>
+
+																	</div>
+
 																</div>
+
 															</div>
-															<div class="col-md-6">
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>貸与日</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="rentDay_view"></span>
-																	</div>
-
-																</div>
-															</div>
-
-															<div class="col-md-6">
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>保管位置</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="storageLocation_view"></span>
-																	</div>
-
-																</div>
-															</div>
-
 														</div>
 													</div>
-												</div>
+
+												</form>
+												<hr>
+
+												<div></div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">Close</button>
@@ -248,6 +298,17 @@
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
+            	"language": {
+            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+            		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
+            	    "infoFiltered":   "",
+            	    "paginate": {
+            	        "first":      "最初",
+            	        "last":       "最後",
+            	        "next":       "次へ",
+            	        "previous":   "前の"
+            	    }
+                },
             	fixedHeader: true,
             	"processing": true,
             	"serverSide": true,
@@ -257,6 +318,7 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
+
                 "ajax": {
                 	url: /*[[@{/rental/getRentalList}]]*/ 'rental/getRentalList',
                 	type: "POST",
@@ -270,26 +332,38 @@
                 },
 
                 "columnDefs": [
-                	{ targets: 0, data:"select_option" , render: function ( data, type, row, meta ) {
-                		return {'<div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records"style="position: absolute; opacity: 0;"><ins class="iCheck-helper"style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>';}}},
-                	{ targets: 1, data: "rentNumber"},
+
+                	 { targets: 0, data: "cription",   render: function ( data, type, row, meta ) {
+                         return '<div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>';
+                     }},
+                		{ targets: 1, data: "rentNumber"},
                     { targets: 2, data: "assetNumber"},
-                    { targets: 3, data: "pcName" },
-                    { targets: 4, data: "pName" },
-                    { targets: 5, data: "purpose" },
+
+                    { targets: 3, data: function ( d ) {
+                    	return productCodeMap.get(d.psNum);
+                    }},
+
+
+                    { targets: 4, data: "storageLocation"},
+                    { targets: 5, data: "rentUser"},
                     { targets: 6, data: function ( d ) {
                     	var rentDay = new Date(d.rentDay);
                 		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
                 		var dd = rentDay.getDate();
-                    	return yyyy + "/" + mm + "/" + dd;
+                    	return yyyy + "-" + mm + "-" + dd;
                     }},
-                    { targets: 7, data: "storageLocation"},
-                    { targets: 8, data: "rentUser"},
-                    { targets: 9, data: "returnPeriod"},
-                    { targets: 10,
+                    { targets: 7, data: function ( d ) {
+                    	var returnPeriod = new Date(d.returnPeriod);
+                		var yyyy = returnPeriod.getFullYear(); var mm = returnPeriod.getMonth()+1;
+                		var dd = returnPeriod.getDate();
+                    	return yyyy + "-" + mm + "-" + dd;
+                    }},
+                    { targets: 8,
                     	data: "description",
                         render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-primary">更新/削除</button>';
+                          return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
+                          'rental/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
+                          'rental/' + row.assetNumber + '\'">削除</button>';
                         }
                     }
                 ]
@@ -316,41 +390,33 @@
                 var yyyy = d.getFullYear();
             	modalesectiontable
                 .column(5)
-                .search( yyyy + "/" + mm + "/" + dd )
+                .search( yyyy + "-" + mm + "-" + dd )
                 .draw();
             });
 
             $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column != 11) {
+            	if(this._DT_CellIndex.column !=8 &&this._DT_CellIndex.column !=0) {
             		$('#modal3d').modal();
 
             		var rentDay = new Date(rowData.rentDay);
             		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
             		var dd = rentDay.getDate();
 
-
-            		/*<th>貸与番号</th>
-												<th>管理番号</th>
-												<th>区分</th>
-												<th>品目</th>
-												<th>用途</th>
-												<th>貸与日</th>
-												<th>仕様場所</th>
-												<th>使用者</th>
-												<th>貸与期間</th>
-												<th>状態</th>
-												<th></th>*/
+            		var returnPeriod = new Date(rowData.returnPeriod);
+            		var y = returnPeriod.getFullYear();  var m= returnPeriod.getMonth()+1;
+            		var d = returnPeriod.getDate();
 					$('#rentNumber_view').text(rowData.rentNumber);
             		$('#assetNumber_view').text(rowData.assetNumber);
             		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#rentDay_view').text(yyyy + "/" + mm + "/" + dd);
-
-
+            		$('#purpose_view').text((rowData.purpose));
+            		$('#rentDay_view').text(yyyy + "-" + mm + "-" + dd);
+            		$('#speciality_view').text(rowData.speciality);
+            		$('#purpose_view').text(rowData.purpose);
             		$('#storageLocation_view').text(rowData.storageLocation);
             		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
 
-
+            		$('#returnPeriod_view').text(y + "-" + m+ "-" + d);
 
             	} else {
             		//alert(JSON.stringify(rowData));

@@ -56,15 +56,15 @@
 
     </select>
 
-  <select id="getSelectData" parameterType="String"
-		resultType="java.util.HashMap">
-		select    p_s_num||"" p_s_num , p_name from product where
+  <select id="getSelectData" parameterType="Integer"
+		resultType="jp.co.info.ais.asm.domain.Rental">
+		select    p_s_num, p_name from product where
 		p_c_num=#{pcNum}
 
 	</select>
 
 	<select id="getSelectProduct" parameterType="String"
-		resultType="java.util.HashMap">
+		resultType="jp.co.info.ais.asm.domain.Rental">
 		select p.p_s_num, i.assetnumber from itasset i
 		join state s on s.s_number=i.s_number
 		join  product p on p.p_s_num=i.p_s_num
@@ -86,6 +86,12 @@
 		resultType="jp.co.info.ais.asm.domain.ProductKind">
 		select p_c_num,p_c_name from productkind
 
+	</select>
+
+<select id="researchRental" parameterType="String"
+		resultType="jp.co.info.ais.asm.domain.Rental">
+		select * from Rental
+			where assetNumber=#{assetNumber}
 	</select>
 
 
