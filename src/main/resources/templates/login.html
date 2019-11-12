@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AMS</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+	function check() {
+		var checkId = document.frm.assetId.value;
+		var checkPass = document.frm.assetPass.value;
+
+		if(checkId	== '' || checkId == null){
+
+			alert("社員番号を入力してください。")
+
+			return false;
+		}
+		if(checkPass	== '' || checkPass == null){
+
+			alert("パスワードを入力してください。")
+
+			return false;
+		}
+	}
+	</script>
+
+
+  </head>
+
+  <body class="login">
+    <div>
+
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form method="POST" action="/loginCheck" class="form-horizontal" th:object="${login}" name = "frm" onsubmit="return check();">
+
+                <div>
+                  <h1>IT資産管理システム </h1>
+
+                </div>
+
+            <br>
+
+              <br>
+
+              <div>
+                <input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" th:value="${emp_id}" />
+              </div>
+
+              <div>
+                <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" th:value="${emp_pass}" />
+              </div>
+
+
+			<button class ="btn btn-primary pull-center" id = "login" >Login</button>
+              <div class="separator">
+
+
+              </div>
+            </form>
+          </section>
+        </div>
+
+                   </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
