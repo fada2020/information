@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.asm.mapper.HistoryMapper">
+
+	<select id="selectHistory" resultType="jp.co.info.ais.asm.domain.History">
+		SELECT
+			rh.assetNumber,
+			ia.maker,
+			ia.model,
+			rh.status,
+			rh.rent_number,
+			rh.purpose,
+			rh.storageLocation,
+			rh.applicant,
+			rh.rent_user,
+			rh.BPPartner,
+			rh.rent_day,
+			rh.return_day
+		FROM ITAsset ia, RentalHistory rh
+		WHERE
+		rh.assetNumber = ia.assetNumber
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND rh.assetNumber LIKE #{assetNumber}
+		</if>
+		<if test="applicant != null and !applicant.equals('')">
+		AND rh.applicant LIKE #{applicant}
+		</if>
+		<if test="status != -1">
+		AND rh.status = #{status}
+		</if>
+		<if test="rentday != null">
+		<![CDATA[
+		AND DATE_FORMAT(rentday, '%Y/%m/%d') = DATE_FORMAT(#{rentday}, '%Y/%m/%d')
+		]]>
+		</if>
+		ORDER BY rh.assetNumber
+	</select>
+
+</mapper>

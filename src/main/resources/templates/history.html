@@ -69,7 +69,7 @@
                     <span class="pull-right" style="font-size: 18px;">貸出者</span>
                 </div>
                 <div class="col-md-2">
-                	<input type="text" class="form-control" placeholder="貸出者" id="renter" style="margin-left:-1%">
+                	<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" style="margin-left:-1%">
                 </div>
 
                 <div class="col-md-1" style="margin-left:-3%;">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-2">
 					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="date_search" style="margin-left:-1%">
+						<input type="text" class="form-control" id="returnDate_search" style="margin-left:-1%">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					 </span>
@@ -136,243 +136,6 @@
                       <tbody>
                       </tbody>
                     </table>
-
-					<!-- modal -->
-					<div class="modal" id="modal3d" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">×</span>
-					        </button>
-					        <h3 class="modal-title">照会</h3>
-					      </div>
-					      <div class="modal-body">
-					      	<div class="container-fluid">
-							  	<div class="row">
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>管理番号</span>
-						  					</div>
-						  					<div class="col-md-3">
-								  				<span id="assetNumber_view"></span>
-								  			</div>
-								  			<div class="col-md-3">
-								  				<span>区分</span>
-								  			</div>
-								  			<div class="col-md-3">
-								  				<span id="psNum_view"></span>
-								  			</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-							  					<span>購入日</span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span id="purchaseDate_view"></span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span>保証期間</span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span id="warrantyPeriod_view"></span>
-							  				</div>
-						  				</div>
-						  			</div>
-
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>購入先</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="buyTo_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>購入金額</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="purchasePrice_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>保管位置</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="storageLocation_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>状態</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="sNumber_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>Maker</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="maker_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>Model</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="model_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>S/N</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="serialNum_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>I/F</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="interFaceCol_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>OS</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>名(Edition)</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="OSName_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Product Key</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="OSProductKey_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>CPU</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Processor</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="CPUProcessor_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>動作周波数</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="operatingFrequency_view"></span>
-						  			</div>
-
-						  			<div class="col-md-6">
-						  				<span>Memory</span>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="memory_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="memoryUpgarde_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="HDD_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="HDDUpgarde_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>MAC</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>LAN</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="MACLAN_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Wireless</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="MACWireless_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>その他</span>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span id="other_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>Security</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>BIOS</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="securityBIOS_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="securityHDD_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>Admin.Account</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>ID</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="adminAccountID_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>PW</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="adminAccountPW_view"></span>
-						  			</div>
-
-
-							  	</div>
-						  	</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<!-- /modal -->
-
                   </div>
                 </div>
               </div>
@@ -413,15 +176,6 @@
     <!-- page script -->
     <script th:inline="javascript">
 
- 		//new Search
-        var searching = function(){
-          	alert("ff");
-        }
-
-        $(`#serchButton`).up(function(){
-        	alert("sagsdg");
-        });
-
     /*<![CDATA[*/
         $('#myDatepicker').datetimepicker({
             format: 'YYYY/MM/DD'
@@ -429,11 +183,6 @@
 
         var modalesectiondata = null;
 
-    	var productCodeMap = new Map();
-		var productCode = /*[[${productCode}]]*/;
-    	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.psNum, value.pname);
-    	});
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
@@ -454,147 +203,60 @@
                 "lengthChange": false,
                 "ordering": false,
                 "ajax": {
-                	url: /*[[@{/ITAsset/getITAssetlist}]]*/ 'ITAsset/getITAssetlist',
+                	url: /*[[@{/history/getHistorylist}]]*/ 'History/getHistorylist',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
                 		d.columns[0].search.value = $('#assetNumber_search').val();
-                		d.columns[1].search.value = $('#psNum_search').val();
+                		d.columns[1].search.value = $('#applicant_search').val();
                 		d.columns[2].search.value = $('#status_search').val();
-                		d.columns[3].search.value = $('#maker_search').val();
-                		d.columns[4].search.value = $('#model_search').val();
-                		d.columns[5].search.value = $('#date_search').val();
+                		d.columns[3].search.value = $('#returnDate_search').val();
+
                         return JSON.stringify(d);
                     }
                 },
                 "columnDefs": [
                     { targets: 0, data: "assetNumber"},
-                    { targets: 1, data: function ( d ) {
-                    	return productCodeMap.get(d.psNum);
-                    }},
+                    { targets: 1, data: "maker"},
                     { targets: 2, data: "model"},
-                    { targets: 3, data: "maker"},
-                    { targets: 4, data: function ( d ) {
-                    	var purchaseDate = new Date(d.purchaseDate);
-                		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-                		var dd = purchaseDate.getDate();
+
+                    /* { targets: 3, data: "status"}, */
+                    { targets: 3, data: function ( d ) {
+                    	return stateCodeMap.get(d.status);
+                    }},
+
+                    { targets: 4, data: "rentNumber"},
+                    { targets: 5, data: "purpose"},
+                    { targets: 6, data: "storageLocation"},
+                    { targets: 7, data: "applicant"},
+                    { targets: 8, data: "rentuser"},
+                    { targets: 9, data: "bpPartner"},
+                    { targets: 10, data: function ( d ) {
+                    	var rentDate = new Date(d.rentDate);
+                		var yyyy = rentDate.getFullYear();
+                		var mm = rentDate.getMonth()+1;
+                		var dd = rentDate.getDate();
                     	return yyyy + "/" + mm + "/" + dd;
                     }},
-                    { targets: 5, data: "storageLocation"},
-                    { targets: 6, data: function ( d ) {
-                    	return stateCodeMap.get(d.snumber);
+                    { targets: 11, data: function ( d ) {
+                    	var returnDate = new Date(d.returnDate);
+                		var yyyy = returnDate.getFullYear();
+                		var mm = returnDate.getMonth()+1;
+                		var dd = returnDate.getDate();
+                    	return yyyy + "/" + mm + "/" + dd;
                     }},
-                    {
-                    	targets: 7,
-                    	data: "description",
-                        render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-primary" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">更新/削除</button>';
-                        }
-                    }
                 ]
             });
 
-            // old Search
-            $('#assetNumber_search').on( 'keyup', function () {
-            	modalesectiontable
-                .column(0)
-                .search( this.value )
-                .draw();
+            //Search -S
+            $('#serchButton').on( 'click', function () {
+            	modalesectiontable.column(0).search( this.value ).draw();
             } );
 
-            $('#psNum_search').change(function() {
-            	modalesectiontable
-                .column(1)
-                .search( this.value )
-                .draw();
-            });
-
-            $('#status_search').change(function() {
-            	modalesectiontable
-                .column(2)
-                .search( this.value )
-                .draw();
-            });
-
-            $('#maker_search').on( 'keyup', function () {
-            	modalesectiontable
-                .column(3)
-                .search( this.value )
-                .draw();
-            });
-
-            $('#model_search').on( 'keyup', function () {
-            	modalesectiontable
-                .column(4)
-                .search( this.value )
-                .draw();
-            });
-
-            $("#myDatepicker").on("dp.change", function(e) {
-                var d = new Date(e.date);
-                var mm = d.getMonth() + 1;
-                var dd = d.getDate();
-                var yyyy = d.getFullYear();
-            	modalesectiontable
-                .column(5)
-                .search( yyyy + "/" + mm + "/" + dd )
-                .draw();
-            });
-
-            $('#table1 tbody').on( 'click', 'tr td', function () {
-            	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column != 7) {
-            		$('#modal3d').modal();
-
-            		var purchaseDate = new Date(rowData.purchaseDate);
-            		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-            		var dd = purchaseDate.getDate();
-
-            		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#purchaseDate_view').text(yyyy + "/" + mm + "/" + dd);
-            		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
-
-            		$('#buyTo_view').text(rowData.buyTo);
-            		$('#purchasePrice_view').text(rowData.purchasePrice);
-            		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
-
-            		$('#maker_view').text(rowData.maker);
-            		$('#model_view').text(rowData.model);
-            		$('#serialNum_view').text(rowData.serialNum);
-            		$('#interFaceCol_view').text(rowData.interFaceCol);
-
-            		$('#OSName_view').text(rowData.osname);
-            		$('#OSProductKey_view').text(rowData.osproductKey);
-            		$('#CPUProcessor_view').text(rowData.cpuprocessor);
-            		$('#operatingFrequency_view').text(rowData.operatingFrequency);
-
-            		$('#memory_view').text(rowData.memory + "GB");
-            		$('#memoryUpgarde_view').text(rowData.memoryUpgarde + "GB");
-            		$('#HDD_view').text(rowData.hdd + "GB");
-            		$('#HDDUpgarde_view').text(rowData.hddupgarde + "GB");
-
-            		$('#MACLAN_view').text(rowData.maclan);
-            		$('#MACWireless_view').text(rowData.macwireless);
-
-            		$('#other_view').text(rowData.other);
-
-            		$('#securityBIOS_view').text(rowData.securityBIOS);
-            		$('#securityHDD_view').text(rowData.securityHDD);
-
-            		$('#adminAccountID_view').text(rowData.adminAccountID);
-            		$('#adminAccountPW_view').text(rowData.adminAccountPW);
-
-            	} else {
-            		//alert(JSON.stringify(rowData));
-            	}
-            } );
 
         })
-    /*]]>*/
+
     </script>
 
 </body>
