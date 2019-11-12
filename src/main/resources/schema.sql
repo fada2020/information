@@ -202,8 +202,8 @@ insert  into `state`(`S_NUMBER`,`STATE`) values
 /*Table structure for table `PRODUCTKIND` */
 CREATE TABLE PRODUCTKIND (
 P_C_NUM	INT(4) PRIMARY KEY,
-P＿C_NAME VARCHAR(20) NOT NULL,
-P＿C_CODE VARCHAR(20) NOT NULL
+P_C_NAME VARCHAR(20) NOT NULL,
+P_C_CODE VARCHAR(20) NOT NULL
 );
 
 /*Table structure for table `todo` */
