@@ -16,63 +16,29 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`supplies` /*!40100 DEFAULT CHARACTER SE
 
 USE `supplies`;
 
-/*Table structure for table `board` */
+/*Table structure for table `accessories` */
 
-DROP TABLE IF EXISTS `board`;
+DROP TABLE IF EXISTS `accessories`;
 
-CREATE TABLE `board` (
-  `boardnum` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `inputdate` datetime DEFAULT CURRENT_TIMESTAMP,
-  `cnt` int(11) DEFAULT '0',
-  `state` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `classification` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`boardnum`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `accessories` (
+  `ASSETNUMBER` varchar(15) NOT NULL,
+  `NO` int(2) NOT NULL,
+  `ITEMNAME` varchar(50) DEFAULT NULL,
+  `TRICK` varchar(50) DEFAULT NULL,
+  `QUANTITY` int(3) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`ASSETNUMBER`,`NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `board` */
-
-insert  into `board`(`boardnum`,`title`,`inputdate`,`cnt`,`state`,`classification`) values
-(1,'PowerEdge R410SVR1GB558GBSVR','2019-10-31 13:46:21',0,'新規','Server'),
-(2,'R410Intel Xeon E56202 Processor1GB558GBSVR','2019-10-31 17:09:33',0,'新規','Server'),
-(3,'PowerEdge R410DT64GB256GBWindow Server 2018 R2 Standard','2019-11-01 10:59:00',0,'新規','Server'),
-(4,'R410DT64GB256GBWindow Server 2012 R2 Standard','2019-11-01 11:37:27',0,'新規','Server'),
-(5,'PowerEdge R410SVR64GB256GBSVR','2019-11-01 11:49:06',0,'新規','Server'),
-(6,'Edge R410 SilverIntel Peon E4902 Processor32GB256GBWindow Server 2012 X2 Standard','2019-11-01 16:44:48',0,'新規','Server'),
-(7,'PowerEdge R410SVR64GB558GBWindow Server 2012 R2 Standard','2019-11-01 16:45:34',0,'新規','Server'),
-(8,'Sony Edge R410 SilverIntel Xeon E6202 Processor64GB256GBWindow Server 2018 E8 Standard','2019-11-06 10:31:50',0,'新規','Server'),
-(9,'Sony Edge R410 SilverDT32GB256GBWindow Server 2012 X2 ExtraVersion','2019-11-06 10:38:47',0,'新規','Server'),
-(10,'Edge R410 SilverDT32GB558GBWindow Server 2012 R2 Standard','2019-11-06 10:39:25',0,'新規','Server'),
-(11,'Sony Edge R410 SilverDT32GB256GBWindow Server 2018 E8 Standard','2019-11-06 10:39:45',0,'新規','Server'),
-(12,'PowerEdge R410DT32GB256GBSVR','2019-11-06 10:40:21',0,'新規','Server'),
-(13,'R410DT32GB256GBWindow Server 2012 R2 Standard','2019-11-06 10:40:48',0,'新規','Server'),
-(14,'R410DT32GB256GBSVR','2019-11-06 11:14:42',0,'新規','Server');
-
-/*Table structure for table `classification` */
-
-DROP TABLE IF EXISTS `classification`;
-
-CREATE TABLE `classification` (
-  `cltNumber` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `cltCode` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `cltName` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `lifecycle` int(11) DEFAULT '0',
-  PRIMARY KEY (`cltNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-/*Data for the table `classification` */
-
-insert  into `classification`(`cltNumber`,`cltCode`,`cltName`,`lifecycle`) values
-(1,'MS','Mouse',0),
-(2,'DT','DestTop',15);
+/*Data for the table `accessories` */
 
 /*Table structure for table `company` */
 
 DROP TABLE IF EXISTS `company`;
 
 CREATE TABLE `company` (
-  `C_NAME` varchar(20) DEFAULT NULL,
-  `C_CODE` varchar(20) DEFAULT NULL,
+  `C_NAME` varchar(20) NOT NULL,
+  `C_CODE` varchar(20) NOT NULL,
   `C_NUM` int(3) NOT NULL,
   PRIMARY KEY (`C_NUM`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -84,93 +50,143 @@ CREATE TABLE `company` (
 DROP TABLE IF EXISTS `itasset`;
 
 CREATE TABLE `itasset` (
-  `AssetNumber` varchar(15) NOT NULL,
-  `P_S_NUM` tinyint(4) DEFAULT NULL,
-  `PurchaseDate` datetime DEFAULT NULL,
-  `WarrantyPeriod` smallint(6) DEFAULT NULL,
-  `BuyTo` varchar(30) DEFAULT NULL,
-  `PurchasePrice` int(11) DEFAULT NULL,
-  `StorageLocation` varchar(30) DEFAULT NULL,
-  `S_NUMBER` tinyint(4) DEFAULT NULL,
-  `Maker` varchar(30) DEFAULT NULL,
-  `Model` varchar(30) DEFAULT NULL,
-  `SerialNum` varchar(30) DEFAULT NULL,
-  `InterFaceCol` varchar(30) DEFAULT NULL,
-  `OS_Name` varchar(30) DEFAULT NULL,
-  `OS_ProductKey` varchar(30) DEFAULT NULL,
-  `CPU_Processor` varchar(30) DEFAULT NULL,
-  `Operating_Frequency` smallint(6) NOT NULL,
-  `Memory` smallint(6) DEFAULT NULL,
-  `Memory_Upgarde` smallint(6) DEFAULT NULL,
-  `HDD` smallint(6) NOT NULL,
-  `HDD_Upgarde` smallint(6) DEFAULT NULL,
+  `ASSETNUMBER` varchar(15) NOT NULL,
+  `P_S_NUM` int(2) DEFAULT NULL,
+  `PURCHASEDATE` date DEFAULT NULL,
+  `WARRANTYPERIOD` int(2) DEFAULT NULL,
+  `BUYTO` varchar(30) DEFAULT NULL,
+  `PURCHASEPRICE` int(12) DEFAULT NULL,
+  `S_NUMBER` int(2) DEFAULT NULL,
+  `MAKER` varchar(30) DEFAULT NULL,
+  `MODEL` varchar(30) DEFAULT NULL,
+  `SERIALNUM` varchar(30) DEFAULT NULL,
+  `INTERFACECOL` varchar(30) DEFAULT NULL,
+  `OS_NAME` varchar(30) DEFAULT NULL,
+  `OS_PRODUCTKEY` varchar(30) DEFAULT NULL,
+  `CPU_PROCESSOR` varchar(30) DEFAULT NULL,
+  `OPERATING_FREQUENCY` decimal(5,2) NOT NULL,
+  `MEMORY` decimal(5,2) DEFAULT NULL,
+  `MEMORY_UPGARDE` decimal(5,2) DEFAULT NULL,
+  `HDD` decimal(5,2) NOT NULL,
+  `HDD_UPGARDE` decimal(5,2) DEFAULT NULL,
   `MAC_LAN` varchar(30) DEFAULT NULL,
-  `MAC_Wireless` varchar(30) DEFAULT NULL,
-  `Other` varchar(200) DEFAULT NULL,
-  `Security_BIOS` varchar(30) DEFAULT NULL,
-  `Security_HDD` varchar(30) DEFAULT NULL,
-  `AdminAccount_ID` varchar(30) DEFAULT NULL,
-  `AdminAccount_PW` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`AssetNumber`,`Operating_Frequency`,`HDD`)
+  `MAC_WIRELESS` varchar(30) DEFAULT NULL,
+  `OTHER` varchar(200) DEFAULT NULL,
+  `SECURITY_BIOS` varchar(30) DEFAULT NULL,
+  `SECURITY_HDD` varchar(30) DEFAULT NULL,
+  `ADMINACCOUNT_ID` varchar(30) DEFAULT NULL,
+  `ADMINACCOUNT_PW` varchar(30) DEFAULT NULL,
+  `STORAGELOCATION` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`ASSETNUMBER`,`OPERATING_FREQUENCY`,`HDD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `itasset` */
 
-insert  into `itasset`(`AssetNumber`,`P_S_NUM`,`PurchaseDate`,`WarrantyPeriod`,`BuyTo`,`PurchasePrice`,`StorageLocation`,`S_NUMBER`,`Maker`,`Model`,`SerialNum`,`InterFaceCol`,`OS_Name`,`OS_ProductKey`,`CPU_Processor`,`Operating_Frequency`,`Memory`,`Memory_Upgarde`,`HDD`,`HDD_Upgarde`,`MAC_LAN`,`MAC_Wireless`,`Other`,`Security_BIOS`,`Security_HDD`,`AdminAccount_ID`,`AdminAccount_PW`) values
-('AIS-DT-001',0,'2019-10-29 14:37:19',3,NULL,500000,'本社',0,'DELL','DELL4242','dee22222',NULL,NULL,NULL,NULL,0,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-('AIS-DT-002',0,'2019-10-29 14:37:23',3,NULL,600000,'本社',0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-('AIS-DT-003',0,'2019-10-29 14:37:23',3,NULL,600000,'本社',0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `itasset`(`ASSETNUMBER`,`P_S_NUM`,`PURCHASEDATE`,`WARRANTYPERIOD`,`BUYTO`,`PURCHASEPRICE`,`S_NUMBER`,`MAKER`,`MODEL`,`SERIALNUM`,`INTERFACECOL`,`OS_NAME`,`OS_PRODUCTKEY`,`CPU_PROCESSOR`,`OPERATING_FREQUENCY`,`MEMORY`,`MEMORY_UPGARDE`,`HDD`,`HDD_UPGARDE`,`MAC_LAN`,`MAC_WIRELESS`,`OTHER`,`SECURITY_BIOS`,`SECURITY_HDD`,`ADMINACCOUNT_ID`,`ADMINACCOUNT_PW`,`STORAGELOCATION`) values
+('AIS-DT-001',0,'2019-10-29',3,NULL,500000,0,'DELL','DELL4242','dee22222',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+('AIS-DT-002',0,'2019-10-29',3,NULL,600000,0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+('AIS-DT-003',0,'2019-10-29',3,NULL,600000,0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+/*Table structure for table `maintenancehistory` */
+
+DROP TABLE IF EXISTS `maintenancehistory`;
+
+CREATE TABLE `maintenancehistory` (
+  `ASSETNUMBER` varchar(15) DEFAULT NULL,
+  `NO` int(2) DEFAULT NULL,
+  `DATEOFIMPLEMENTATION` date DEFAULT NULL,
+  `CONTENTOFIMPLEMENTATION` varchar(200) DEFAULT NULL,
+  `RESPONSIBLEPERSON` varchar(30) DEFAULT NULL,
+  `APPROVAL` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `maintenancehistory` */
 
 /*Table structure for table `product` */
 
 DROP TABLE IF EXISTS `product`;
 
 CREATE TABLE `product` (
-  `p_c_num` int(11) DEFAULT NULL,
-  `p_s_num` int(11) NOT NULL,
-  `p_name` varchar(20) DEFAULT NULL,
-  `p_code` varchar(11) DEFAULT NULL,
-  `P_TIME` int(2) DEFAULT NULL,
-  PRIMARY KEY (`p_s_num`)
+  `P_C_NUM` int(4) NOT NULL,
+  `P_S_NUM` int(5) NOT NULL,
+  `P_NAME` varchar(20) NOT NULL,
+  `P_CODE` varchar(20) NOT NULL,
+  PRIMARY KEY (`P_S_NUM`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
 
-insert  into `product`(`p_c_num`,`p_s_num`,`p_name`,`p_code`,`P_TIME`) values
-(0,0,'パソコン','dt',2),
-(0,1,'マウス','dt',2),
-(0,2,'モニター','jm',2),
-(0,3,'ケーブル','jm',2);
+insert  into `product`(`P_C_NUM`,`P_S_NUM`,`P_NAME`,`P_CODE`) values
+(0,0,'パソコン','dt'),
+(0,1,'マウス','dt'),
+(0,2,'モニター','jm'),
+(0,3,'ケーブル','jm');
+
+/*Table structure for table `productkind` */
+
+DROP TABLE IF EXISTS `productkind`;
+
+CREATE TABLE `productkind` (
+  `P＿C_NAME` varchar(20) NOT NULL,
+  `P＿C_CODE` varchar(20) NOT NULL,
+  `P_C_NUM` int(4) NOT NULL,
+  PRIMARY KEY (`P_C_NUM`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `productkind` */
 
 /*Table structure for table `rental` */
 
 DROP TABLE IF EXISTS `rental`;
 
 CREATE TABLE `rental` (
-  `rent_day` datetime DEFAULT NULL,
-  `rent_user` varchar(20) DEFAULT NULL,
-  `purpose` varchar(50) DEFAULT NULL,
-  `speciality` varchar(50) DEFAULT NULL,
-  `rent_number` varchar(30) NOT NULL,
-  `applicant` varchar(20) DEFAULT NULL,
-  `assetnumber` varchar(13) NOT NULL,
-  `return_day` datetime DEFAULT NULL,
-  `return_user` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`rent_number`,`assetnumber`)
+  `RENT_DAY` date DEFAULT NULL,
+  `RENT_USER` varchar(20) DEFAULT NULL,
+  `PURPOSE` varchar(50) DEFAULT NULL,
+  `SPECIALITY` varchar(50) DEFAULT NULL,
+  `RENT_NUMBER` varchar(10) NOT NULL,
+  `APPLICANT` varchar(20) DEFAULT NULL,
+  `ASSETNUMBER` varchar(15) NOT NULL,
+  `RETURN_PERIOD` datetime DEFAULT NULL,
+  `BPPARTNER` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`RENT_NUMBER`,`ASSETNUMBER`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `rental` */
 
-insert  into `rental`(`rent_day`,`rent_user`,`purpose`,`speciality`,`rent_number`,`applicant`,`assetnumber`,`return_day`,`return_user`) values
-('2019-11-06 10:10:08','ハミンホ','勤務',NULL,'20191106_001','イヒョクジュ','ais-dt-001',NULL,NULL),
-('2019-11-06 10:14:24','ソンジョンミン','勤務',NULL,'20191106_002','イヒョクジュ','ais-dt-002',NULL,NULL);
+insert  into `rental`(`RENT_DAY`,`RENT_USER`,`PURPOSE`,`SPECIALITY`,`RENT_NUMBER`,`APPLICANT`,`ASSETNUMBER`,`RETURN_PERIOD`,`BPPARTNER`) values
+('2019-11-06','ハミンホ','勤務',NULL,'20191106_0','イヒョクジュ','ais-dt-001',NULL,NULL),
+('2019-11-06','ソンジョンミン','勤務',NULL,'20191106_0','イヒョクジュ','ais-dt-002',NULL,NULL);
+
+/*Table structure for table `rentalhistory` */
+
+DROP TABLE IF EXISTS `rentalhistory`;
+
+CREATE TABLE `rentalhistory` (
+  `RENT_DAY` date DEFAULT NULL,
+  `RENT_USER` varchar(20) DEFAULT NULL,
+  `PURPOSE` varchar(50) DEFAULT NULL,
+  `SPECIALITY` varchar(50) DEFAULT NULL,
+  `RENT_NUMBER` varchar(10) NOT NULL,
+  `APPLICANT` varchar(20) DEFAULT NULL,
+  `ASSETNUMBER` varchar(15) NOT NULL,
+  `RETURN_DAY` date DEFAULT NULL,
+  `RETURN_USER` varchar(20) DEFAULT NULL,
+  `RETURN_PERIOD` date DEFAULT NULL,
+  `STATUS` int(2) DEFAULT NULL,
+  `STORAGELOCATION` varchar(30) DEFAULT NULL,
+  `BPPARTNER` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`RENT_NUMBER`,`ASSETNUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `rentalhistory` */
 
 /*Table structure for table `state` */
 
 DROP TABLE IF EXISTS `state`;
 
 CREATE TABLE `state` (
-  `S_NUMBER` int(1) NOT NULL,
+  `S_NUMBER` int(2) NOT NULL,
   `STATE` varchar(4) NOT NULL,
   PRIMARY KEY (`S_NUMBER`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -180,8 +196,8 @@ CREATE TABLE `state` (
 insert  into `state`(`S_NUMBER`,`STATE`) values
 (0,'保管'),
 (1,'貸与'),
-(3,'故障'),
-(4,'廃棄');
+(2,'故障'),
+(3,'廃棄');
 
 /*Table structure for table `todo` */
 
@@ -206,7 +222,26 @@ insert  into `todo`(`id`,`title`,`details`,`finished`) values
 (6,'飲み会','銀座 19:00',0),
 (7,'飲み会','銀座 19:00',0),
 (10,'飲み会','銀座 19:00',0),
-(11,'飲み会','銀座 19:00',0);
+(11,'飲み会','銀座 19:00',0),
+(12,'飲み会','銀座 19:00',0),
+(13,'飲み会','銀座 19:00',0),
+(14,'飲み会','銀座 19:00',0),
+(15,'飲み会','銀座 19:00',0),
+(16,'飲み会','銀座 19:00',0),
+(17,'飲み会','銀座 19:00',0),
+(18,'飲み会','銀座 19:00',0),
+(19,'飲み会','銀座 19:00',0),
+(20,'飲み会','銀座 19:00',0),
+(21,'飲み会','銀座 19:00',0),
+(22,'飲み会','銀座 19:00',0),
+(23,'飲み会','銀座 19:00',0),
+(24,'飲み会','銀座 19:00',0),
+(25,'飲み会','銀座 19:00',0),
+(26,'飲み会','銀座 19:00',0),
+(27,'飲み会','銀座 19:00',0),
+(28,'飲み会','銀座 19:00',0),
+(29,'飲み会','銀座 19:00',0),
+(30,'飲み会','銀座 19:00',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

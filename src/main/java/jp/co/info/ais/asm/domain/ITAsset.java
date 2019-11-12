@@ -12,6 +12,8 @@ public class ITAsset {
 	String assetNumber;
 	int psNum = -1;
 	Date purchaseDate;
+	Date startPurchaseDate;
+	Date endPurchaseDate;
 	int warrantyPeriod;
 	String buyTo;
 	int purchasePrice;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.asm.common.Page;
+import jp.co.info.ais.asm.domain.Accessories;
 import jp.co.info.ais.asm.domain.ITAsset;
 import jp.co.info.ais.asm.service.ITAssetService;
 
@@ -67,10 +68,13 @@ public class ITAssetController {
 
     	String date = page.getColumns().get(5).getSearch().getValue();
     	if(null != date && !date.equals("")){
-    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    		date = date.replaceAll(" ", "");
+    		String[] dateArr = date.split("-");
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     		logger.debug(page.getColumns().get(5).getSearch().getValue());
     		try {
-    			condition.setPurchaseDate(sdf.parse(date));
+    			condition.setStartPurchaseDate(sdf.parse(dateArr[0]+dateArr[1]+dateArr[2]));
+    			condition.setEndPurchaseDate(sdf.parse(dateArr[3]+dateArr[4]+dateArr[5]));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -102,5 +106,12 @@ public class ITAssetController {
     	model.addAttribute("stateCode", ITAssetService.selectStateCode());
     	model.addAttribute("asset", ITAssetService.select(asset.getAssetNumber()));
         return "ITAssetUpdate";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Accessories add(Model model,@RequestBody  Accessories accessories) {
+    	logger.debug(accessories.toString());
+        return accessories;
     }
 }
