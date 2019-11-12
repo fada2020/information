@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.asm.mapper.DashboardMapper">
+
+<!-- 資産種別貸与現況 -->
+	<select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
+		SELECT
+			P_NAME itemName
+			, STATE
+			,COUNT(assetnumber) itemCnt
+			 FROM ITASSET
+				JOIN STATE ON ITASSET.S_NUMBER = STATE.S_NUMBER
+				JOIN PRODUCT ON ITASSET.P_S_NUM = PRODUCT.P_S_NUM
+		 			GROUP BY ITASSET.P_S_NUM, ITASSET.S_NUMBER
+	</select>
+
+	<select id="possession" resultType="jp.co.info.ais.asm.domain.Dashboard">
+		SELECT ASSETNUMBER
+			,PURCHASEDATE
+			,PRODUCT.P_C_NUM
+			,P_C_CODE
+			,P_CODE
+			,ITASSET.P_S_NUM
+			,P_NAME
+		FROM ITASSET
+		JOIN PRODUCT ON ITASSET.P_S_NUM = PRODUCT.P_S_NUM JOIN PRODUCTKIND ON PRODUCT.P_C_NUM = PRODUCTKIND.P_C_NUM
+		GROUP BY ITASSET.P_S_NUM ORDER BY COUNT(*) DESC;
+	</select>
+
+</mapper>
