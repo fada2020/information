@@ -7,6 +7,12 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class StateCode {
-	int sNumber;
-	String state;
+
+		private String code_master_id;
+		private String code_detail_id;
+		private String code_detail_name;
+		private String item1;
+		private String item2;
+
+
 }

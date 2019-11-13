@@ -17,11 +17,11 @@ public class RentalService {
 	@Autowired
 	RentalMapper rentalMapper;
 
-	public  List<Rental> select(Rental rental)throws Exception {
+	public  List<Rental> selectAll(Rental rental)throws Exception {
 
 
 
-		return rentalMapper.select(rental);
+		return rentalMapper.selectAll(rental);
 	}
 
 	public int selectCount(Rental rental)throws Exception {
@@ -53,6 +53,12 @@ public class RentalService {
 		// TODO 自動生成されたメソッド・スタブ
 		return rentalMapper.researchRental(assetNumber);
 	}
+	public List<Rental> selectProductCode()throws Exception  {
+		return rentalMapper.selectProductCode();
+	}
 
+	public List<Rental> selectStateCode()throws Exception  {
+		return rentalMapper.selectStateCode();
+	}
 
 }

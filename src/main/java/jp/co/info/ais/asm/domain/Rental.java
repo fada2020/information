@@ -13,31 +13,31 @@ import lombok.ToString;
 @ToString
 public class Rental {
 
-	private int pcNum;
-	private int psNum;
-	private String pcName;
-	private String pcCode;
-	private String pCode;
-	private String pName;
-
-	private int sNumber;
-	private String state;
-
-	private String assetNumber;
-	private String storageLocation;
-
-	private String rentNumber;
+	//貸与情報管理の基本
+	private int rentalseq;
+	private int assetseq;
 	@DateTimeFormat
-	private Date rentDay;
+	private Date rentalDay;
+	private String rentalUserId;
+	private String purpose;
+	private String speciality;
+	private String applicantId;
 	@DateTimeFormat
 	private Date renturnDay;
-	private String rentUser;
-	private String renturnUser;
-	private String applicant;
-	private String purpose;
-	private String rentSpeciality;
-	@DateTimeFormat
-	private Date returnPeriod;
+	private String renturnUserId;
+	private String returnPeriod;
+	private int statusCode;
+	private String storageLocation;
+	private String bpName;
+
+	//資産マスタから持ち込む
+	private String assetNumber;
+	private int codeDetailId;
+	private String codeDetailName;
+	private int kubunNum;
+
+
+	//ページングする為のもの
 	private int length;
 	private int start;
 

@@ -40,9 +40,9 @@ public class RentalController {
 
 
 	 @RequestMapping(value = "", method = RequestMethod.GET)
-	    public String ITAssetList(Model model) {
-	    	model.addAttribute("productCode", ITAssetService.selectProductCode());
-	    	model.addAttribute("stateCode", ITAssetService.selectStateCode());
+	    public String ITAssetList(Model model) throws Exception {
+	    	model.addAttribute("productCode", rentalService.selectProductCode());
+	    	model.addAttribute("stateCode", rentalService.selectStateCode());
 	        return "rentalIndex";
 	    }
 
@@ -65,13 +65,13 @@ public class RentalController {
 	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    		logger.debug(page.getColumns().get(1).getSearch().getValue());
 	    		try {
-	    			rental.setRentDay(sdf.parse(date));
+	    			rental.setRentalDay(sdf.parse(date));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 	    	}
 
-	        List<Rental> list = rentalService.select(rental);
+	        List<Rental> list = rentalService.selectAll(rental);
 
 
 	        page.setData(list);

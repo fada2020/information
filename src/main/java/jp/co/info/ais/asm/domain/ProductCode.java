@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class ProductCode {
-	int psNum;
-	String pName;
-	String pCode;
+private String code_master_id;
+private String code_master_name;
+
 }

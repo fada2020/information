@@ -11,7 +11,7 @@ import jp.co.info.ais.asm.domain.Rental;
 @Mapper
 public interface RentalMapper {
 
-	public List<Rental> select(Rental rental)throws Exception;
+	public List<Rental> selectAll(Rental rental)throws Exception;
 
 	public int selectCount(Rental rental) throws Exception;
 
@@ -24,6 +24,10 @@ public interface RentalMapper {
 	public List<ProductKind> searchCode()throws Exception;
 
 	public Rental researchRental(String assetNumber)throws Exception;
+
+	public List<Rental> selectProductCode()throws Exception;
+
+	public List<Rental> selectStateCode()throws Exception;
 
 
 }
