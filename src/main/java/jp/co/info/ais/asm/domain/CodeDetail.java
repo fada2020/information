@@ -7,10 +7,12 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class CodeDetail {
-	String codeMasterId;
-	String codeDetailId;
-	String codeDetailName;
-	String item1;
-	String item2;
 
+private String codeMasterId;
+private String codeDetailId;
+private String codeDetailName;
+private String item1;
+private String item2;
+private String item3;
+private String item4;
 }
