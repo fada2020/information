@@ -15,7 +15,7 @@ import jp.co.info.ais.asm.mapper.LoginMapper;
 public class LoginService {
 
 
-	private static final Logger logger = LogManager.getLogger(ITAssetService.class);
+	private static final Logger logger = LogManager.getLogger(AssetService.class);
 
 
 	@Autowired

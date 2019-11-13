@@ -68,9 +68,9 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="psNum_search">
-                		<option value="-1">区分</option>
-                		<option th:each="code : ${productCode}" th:value="${code.psNum}"
-                		th:inline="text">[[${code.pName}]]</option>
+                		<option value="000">区分</option>
+                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
+                		th:inline="text">[[${code.item2}]]</option>
 					</select>
                 </div>
                 <div class="col-md-1">
@@ -78,9 +78,9 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="sNumber_search">
-						<option value="-1">状態</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.sNumber}"
-                		th:inline="text">[[${code.state}]]</option>
+						<option value="000">状態</option>
+                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
+                		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
                 <div class="col-md-1">
@@ -423,26 +423,24 @@
     <!-- page script -->
     <script th:inline="javascript">
     /*<![CDATA[*/
-        var modalesectiondata = null;
-
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
     	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.psNum, value.pname);
+    		productCodeMap.set(value.codeDetailId, value.item2);
     	});
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.snumber, value.state);
+    		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
         $(function(){
 
 			$('#reservation').daterangepicker({
-				startDate: moment().add(-12, "months"),
+				startDate: moment().add(-120, "months"),
 				endDate: moment(),
 			 locale: {
-			       format: 'YYYY-MM-DD'
+			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
@@ -471,7 +469,7 @@
                 "lengthChange": false,
                 "ordering": false,
                 "ajax": {
-                	url: /*[[@{/ITAsset/getITAssetlist}]]*/ 'ITAsset/getITAssetlist',
+                	url: /*[[@{/asset/getAssetlist}]]*/ 'asset/getAssetlist',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
@@ -488,27 +486,25 @@
                 "columnDefs": [
                     { targets: 0, data: "assetNumber"},
                     { targets: 1, data: function ( d ) {
-                    	return productCodeMap.get(d.psNum);
+                    	return productCodeMap.get(d.kubunCode);
                     }},
-                    { targets: 2, data: "model"},
-                    { targets: 3, data: "maker"},
+                    { targets: 2, data: "modelName"},
+                    { targets: 3, data: "makerName"},
                     { targets: 4, data: function ( d ) {
-                    	var purchaseDate = new Date(d.purchaseDate);
-                		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-                		var dd = purchaseDate.getDate();
-                    	return yyyy + "-" + mm + "-" + dd;
+                    	var str = d.purchaseDate;
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
                     { targets: 5, data: "storageLocation"},
                     { targets: 6, data: function ( d ) {
-                    	return stateCodeMap.get(d.snumber);
+                    	return stateCodeMap.get(d.statusCode);
                     }},
                     {
                     	targets: 7,
                     	data: "update",
                         render: function ( data, type, row, meta ) {
                           return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">削除</button>';
+                          'asset/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
+                          'asset/' + row.assetNumber + '\'">削除</button>';
                         }
                     }
                 ]
@@ -564,45 +560,43 @@
             	if(this._DT_CellIndex.column != 7) {
             		$('#modal3d').modal();
 
-            		var purchaseDate = new Date(rowData.purchaseDate);
-            		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-            		var dd = purchaseDate.getDate();
+                	var str = rowData.purchaseDate;
 
             		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#purchaseDate_view').text(yyyy + "-" + mm + "-" + dd);
+            		$('#psNum_view').text(productCodeMap.get(rowData.kubunCode));
+            		$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
             		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
 
             		$('#buyTo_view').text(rowData.buyTo);
             		$('#purchasePrice_view').text(rowData.purchasePrice);
             		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
+            		$('#sNumber_view').text(stateCodeMap.get(rowData.statusCode));
 
-            		$('#maker_view').text(rowData.maker);
-            		$('#model_view').text(rowData.model);
+            		$('#maker_view').text(rowData.makerName);
+            		$('#model_view').text(rowData.modelName);
             		$('#serialNum_view').text(rowData.serialNum);
             		$('#interFaceCol_view').text(rowData.interFaceCol);
 
             		$('#OSName_view').text(rowData.osname);
             		$('#OSProductKey_view').text(rowData.osproductKey);
             		$('#CPUProcessor_view').text(rowData.cpuprocessor);
-            		$('#operatingFrequency_view').text(rowData.operatingFrequency);
+            		$('#operatingFrequency_view').text(rowData.operatingFrequency + " GHz");
 
-            		$('#memory_view').text(rowData.memory + "GB");
-            		$('#memoryUpgarde_view').text(rowData.memoryUpgarde + "GB");
-            		$('#HDD_view').text(rowData.hdd + "GB");
-            		$('#HDDUpgarde_view').text(rowData.hddupgarde + "GB");
+            		$('#memory_view').text(rowData.memory + " GB");
+            		$('#memoryUpgarde_view').text(rowData.memoryUpgarde + " GB");
+            		$('#HDD_view').text(rowData.hdd + " GB");
+            		$('#HDDUpgarde_view').text(rowData.hddUpgarde + " GB");
 
             		$('#MACLAN_view').text(rowData.maclan);
             		$('#MACWireless_view').text(rowData.macwireless);
 
             		$('#other_view').text(rowData.other);
 
-            		$('#securityBIOS_view').text(rowData.securityBIOS);
-            		$('#securityHDD_view').text(rowData.securityHDD);
+            		$('#securityBIOS_view').text(rowData.securityBios);
+            		$('#securityHDD_view').text(rowData.securityHdd);
 
-            		$('#adminAccountID_view').text(rowData.adminAccountID);
-            		$('#adminAccountPW_view').text(rowData.adminAccountPW);
+            		$('#adminAccountID_view').text(rowData.adminAccountId);
+            		$('#adminAccountPW_view').text(rowData.adminAccountPwd);
 
             	} else {
             		//alert(JSON.stringify(rowData));
