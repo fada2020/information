@@ -99,6 +99,10 @@
                 	<button id="serchButton" class="btn btn-primary">検索</button>
                 </div>
 
+				<br>
+				<div>
+					<button id="exportExcel">Export</button>
+				</div>
                 <div class="x_panel">
                   <div class="x_title">
                     <ul class="nav navbar-right panel_toolbox">
@@ -220,12 +224,9 @@
                     { targets: 0, data: "assetNumber"},
                     { targets: 1, data: "maker"},
                     { targets: 2, data: "model"},
-
-                    /* { targets: 3, data: "status"}, */
                     { targets: 3, data: function ( d ) {
                     	return stateCodeMap.get(d.status);
                     }},
-
                     { targets: 4, data: "rentNumber"},
                     { targets: 5, data: "purpose"},
                     { targets: 6, data: "storageLocation"},
@@ -253,7 +254,17 @@
             $('#serchButton').on( 'click', function () {
             	modalesectiontable.column(0).search( this.value ).draw();
             } );
+          	//Search -E
 
+          	//table Exportion -S
+          	$('#exportExcel').click(function(){
+          		var link = document.createElement('export');
+          		link.download = 'exportionExample.xls';
+          		link.href = 'data :,' + $('#tblExport').text();
+          		link.click();
+          	});
+
+          	//table Exportion -E
 
         })
 
