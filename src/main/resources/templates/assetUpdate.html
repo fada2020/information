@@ -55,7 +55,7 @@
             <div class="clearfix"></div>
 
             <div class="row">
-            <form action="/ITAsset/update" method="POST" role="form" class="form-horizontal">
+            <form action="/asset/update" method="POST" role="form" class="form-horizontal">
 	  			<div class="col-md-6">
 	  				<div class="row">
 	  					<div class="col-md-3">
@@ -68,10 +68,10 @@
 			  				<span>区分</span>
 			  			</div>
 			  			<div class="col-md-3">
-		                	<select class="form-control" name="psNum">
-		                		<option value="-1">区分</option>
-		                		<option th:each="code : ${productCode}" th:value="${code.psNum}" th:selected="${code.psNum == asset.psNum}"
-		                		th:inline="text">[[${code.pName}]]</option>
+		                	<select class="form-control" id="psNum_search">
+		                		<option value="000">区分</option>
+		                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
+		                		th:inline="text">[[${code.item2}]]</option>
 							</select>
 			  			</div>
 	  				</div>
@@ -83,7 +83,7 @@
 		  				</div>
 		  				<div class="col-md-3">
 						<div class="input-group date" id="myDatepicker">
-							<input type="text" class="form-control" name="purchaseDate" th:value="${#dates.format(asset.purchaseDate, 'yyyy/MM/dd')}">
+							<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
 							<span class="input-group-addon">
 							<span class="glyphicon glyphicon-calendar"></span>
 						 </span>
@@ -126,10 +126,10 @@
 	  						<span>状態</span>
 	  					</div>
 	  					<div class="col-md-3">
-		                	<select class="form-control" name="sNumber">
-								<option value="-1">状態</option>
-		                		<option th:each="code : ${stateCode}" th:value="${code.sNumber}" th:selected="${code.sNumber == asset.sNumber}"
-		                		th:inline="text">[[${code.state}]]</option>
+		                	<select class="form-control" id="sNumber_search">
+								<option value="000">状態</option>
+		                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
+		                		th:inline="text">[[${code.codeDetailName}]]</option>
 							</select>
 	  					</div>
 	  				</div>
@@ -141,13 +141,13 @@
 	  						<span>Maker</span>
 	  					</div>
 	  					<div class="col-md-3">
-	  						<input type="text" class="form-control" name="maker" th:value="${asset.maker}">
+	  						<input type="text" class="form-control" name="maker" th:value="${asset.makerName}">
 	  					</div>
 	  					<div class="col-md-3">
 	  						<span>Model</span>
 	  					</div>
 	  					<div class="col-md-3">
-	  						<input type="text" class="form-control" name="model" th:value="${asset.model}">
+	  						<input type="text" class="form-control" name="model" th:value="${asset.modelName}">
 	  					</div>
 	  				</div>
 	  			</div>
@@ -175,13 +175,13 @@
 	  				<span>名(Edition)</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="OSName" th:value="${asset.OSName}">
+	  				<input type="text" class="form-control" name="OSName" th:value="${asset.osName}">
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>Product Key</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="OSProductKey" th:value="${asset.OSProductKey}">
+	  				<input type="text" class="form-control" name="OSProductKey" th:value="${asset.osProductKey}">
 	  			</div>
 
 	  			<div class="col-md-12">
@@ -191,7 +191,7 @@
 	  				<span>Processor</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="CPUProcessor" th:value="${asset.CPUProcessor}">
+	  				<input type="text" class="form-control" name="CPUProcessor" th:value="${asset.cpuProcessor}">
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>動作周波数</span>
@@ -216,13 +216,13 @@
 	  				<input type="text" class="form-control" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="HDD" th:value="${asset.HDD}">
+	  				<input type="text" class="form-control" name="HDD" th:value="${asset.hdd}">
 	  			</div>
 	  			<div class="col-md-2">
 	  				<span>Upgarde</span>
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="HDDUpgarde" th:value="${asset.HDDUpgarde}">
+	  				<input type="text" class="form-control" name="HDDUpgarde" th:value="${asset.hddUpgarde}">
 	  			</div>
 
 	  			<div class="col-md-12">
@@ -232,13 +232,13 @@
 	  				<span>LAN</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="MACLAN" th:value="${asset.MACLAN}">
+	  				<input type="text" class="form-control" name="MACLAN" th:value="${asset.macLan}">
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>Wireless</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="MACWireless" th:value="${asset.MACWireless}">
+	  				<input type="text" class="form-control" name="MACWireless" th:value="${asset.macWireless}">
 	  			</div>
 
 	  			<div class="col-md-12">
@@ -255,13 +255,13 @@
 	  				<span>BIOS</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="securityBIOS" th:value="${asset.securityBIOS}">
+	  				<input type="text" class="form-control" name="securityBIOS" th:value="${asset.securityBios}">
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>HDD</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="securityHDD" th:value="${asset.securityHDD}">
+	  				<input type="text" class="form-control" name="securityHDD" th:value="${asset.securityHdd}">
 	  			</div>
 
 	  			<div class="col-md-12">
@@ -271,16 +271,16 @@
 	  				<span>ID</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="adminAccountID" th:value="${asset.adminAccountID}">
+	  				<input type="text" class="form-control" name="adminAccountID" th:value="${asset.adminAccountId}">
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>PW</span>
 	  			</div>
 	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="adminAccountPW" th:value="${asset.adminAccountPW}">
+	  				<input type="text" class="form-control" name="adminAccountPW" th:value="${asset.adminAccountPwd}">
 	  			</div>
 	  			<div class="col-md-12 text-right">
-	  				<button type="button" class="btn btn-primary" onclick = "location.href ='/ITAsset'">戻る</button>
+	  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
 	  				<button type="submit" class="btn btn-primary pull-right">修正</button>
 	  			</div>
 	  		</form>

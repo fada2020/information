@@ -53,23 +53,24 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form method="POST" action="/loginCheck" class="form-horizontal" th:object="${login}" name = "frm" onsubmit="return check();">
+           <!--th:object="${login}"-->
+            <form method="POST" action="/loginCheck" class="form-horizontal" name = "frm" onsubmit="return check();">
 
                 <div>
                   <h1>IT資産管理システム </h1>
 
                 </div>
 
-            <br>
-
+              <br>
+				<div>[[${errorMessage}]]</div>
               <br>
 
               <div>
-                <input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" th:value="${emp_id}" />
+                <input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId"  />
               </div>
 
               <div>
-                <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" th:value="${emp_pass}" />
+                <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" />
               </div>
 
 

@@ -6,36 +6,36 @@
 
 	<select id="selectHistory" resultType="jp.co.info.ais.asm.domain.History">
 		SELECT
-			rh.assetNumber,
-			ia.maker,
-			ia.model,
-			rh.status,
-			rh.rent_number,
-			rh.purpose,
-			rh.storageLocation,
-			rh.applicant,
-			rh.rent_user,
-			rh.BPPartner,
-			rh.rent_day,
-			rh.return_day
-		FROM ITAsset ia, RentalHistory rh
+			as.asset_number,
+			as.maker_name,
+			as.model_name,
+			rt.status,
+			rt.rental_no,
+			rt.purpose,
+			rt.storage_location,
+			rt.applicant_id,
+			rt.rental_user_id,
+			rt.bp_name,
+			rt.rental_day,
+			rt.return_day
+		FROM asset as, Rental rt
 		WHERE
-		rh.assetNumber = ia.assetNumber
+		rt.asset_seq = as.asset_seq
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND rh.assetNumber LIKE #{assetNumber}
+		AND as.assetNumber LIKE #{assetNumber}
 		</if>
 		<if test="applicant != null and !applicant.equals('')">
-		AND rh.applicant LIKE #{applicant}
+		AND rt.applicant LIKE #{applicant}
 		</if>
 		<if test="status != -1">
-		AND rh.status = #{status}
+		AND rt.status = #{status}
 		</if>
 		<if test="rentday != null">
 		<![CDATA[
 		AND DATE_FORMAT(rentday, '%Y/%m/%d') = DATE_FORMAT(#{rentday}, '%Y/%m/%d')
 		]]>
 		</if>
-		ORDER BY rh.assetNumber
+		ORDER BY rt.assetNumber
 	</select>
 
 </mapper>

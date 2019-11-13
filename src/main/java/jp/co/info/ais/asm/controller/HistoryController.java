@@ -1,7 +1,5 @@
 package jp.co.info.ais.asm.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.History;
 import jp.co.info.ais.asm.service.HistoryService;
-import jp.co.info.ais.asm.service.ITAssetService;
+import jp.co.info.ais.asm.service.AssetService;
 
 @Controller
 @RequestMapping("/history")
@@ -28,11 +26,11 @@ public class HistoryController {
 	private HistoryService HistoryService;
 
 	@Autowired
-	private ITAssetService ITAssetService;
+	private AssetService ITAssetService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String ITAssetList(Model model) {
-    	model.addAttribute("stateCode", ITAssetService.selectStateCode());
+		/*model.addAttribute("stateCode", ITAssetService.selectStateCode());*/
     	return "history";
     }
 
@@ -62,15 +60,10 @@ public class HistoryController {
     		condition.setStatus(tempS);
     	}
 
-    	String date = page.getColumns().get(3).getSearch().getValue();
-    	if(null != date && !date.equals("")){
-    		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-    		logger.debug(page.getColumns().get(3).getSearch().getValue());
-    		try {
-    			condition.setRentday(df.parse(date));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+    	String rentalDay = page.getColumns().get(3).getSearch().getValue();
+    	if(null != rentalDay && !rentalDay.equals("")) {
+    		rentalDay = "%"+rentalDay+"%";
+    		condition.setRentalDay(rentalDay);
     	}
 
         List<History> list = HistoryService.selectHistory(condition);
