@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.Rental;
+import jp.co.info.ais.asm.service.AssetService;
 import jp.co.info.ais.asm.service.RentalService;
 
 @Controller
@@ -25,7 +26,10 @@ public class RentalController {
 
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
-	//常に連動
+	//資産管理
+	@Autowired
+	private AssetService ITAssetService;
+
 	@Autowired
 	private RentalService rentalService;
 	//1必須チェック
