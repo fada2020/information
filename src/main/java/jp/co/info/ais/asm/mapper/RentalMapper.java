@@ -17,7 +17,7 @@ public interface RentalMapper {
 
 	public int selectCount(Rental rental) throws Exception;
 
-	public List<Rental> getSelectData(int pcNum)throws Exception;
+	public List<CodeDetail> getSelectData()throws Exception;
 
 	public List<Rental> getSelectProduct(String psNum)throws Exception;
 

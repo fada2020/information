@@ -23,9 +23,11 @@
 		a.kubun_code
 		FROM rental r
 
-		JOIN asset a ON r.asset_seq = a.asset_seq
+		JOIN asset a ON
+		r.asset_seq = a.asset_seq
 
-		AND a.status_code = '002' ORDER BY asset_number ASC
+		AND a.status_code = '002' ORDER BY
+		asset_number ASC
 
 
 		LIMIT #{length} OFFSET #{start}
@@ -38,10 +40,13 @@
 
 	</select>
 
-	<select id="getSelectData" parameterType="Integer"
-		resultType="jp.co.info.ais.asm.domain.Rental">
-		select p_s_num, p_name from product where
-		p_c_num=#{pcNum}
+	<select id="getSelectData"
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		SELECT
+		code_detail_id,
+		code_detail_name,
+
+		FROM code_detail where code_master_id='003'
 
 	</select>
 
@@ -76,21 +81,23 @@
 		select * from Rental
 		where assetNumber=#{assetNumber}
 	</select>
-  <select id="selectStatusCode" resultType="jp.co.info.ais.asm.domain.StatusCode">
-    	SELECT
-    		code_detail_id,
-    		code_detail_name
-    	FROM code_detail where code_master_id='001'
-    </select>
+	<select id="selectStatusCode"
+		resultType="jp.co.info.ais.asm.domain.StatusCode">
+		SELECT
+		code_detail_id,
+		code_detail_name
+		FROM code_detail where code_master_id='001'
+	</select>
 
-    <select id="selectCodeDetail" resultType="jp.co.info.ais.asm.domain.CodeDetail">
-     	SELECT
-    		code_detail_id,
-    		code_detail_name,
-    		item1,
-    		item2
-    	FROM code_detail where code_master_id='002'
-    </select>
+	<select id="selectCodeDetail"
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		SELECT
+		code_detail_id,
+		code_detail_name,
+		item1,
+		item2
+		FROM code_detail where code_master_id='002'
+	</select>
 
 
 </mapper>

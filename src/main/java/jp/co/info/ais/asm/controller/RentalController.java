@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.asm.common.Page;
+import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.Rental;
 import jp.co.info.ais.asm.service.RentalService;
 
@@ -86,18 +87,17 @@ public class RentalController {
 		return page;
 	}
 
-	@RequestMapping("/rentalBoardInsert") //게시글 작성폼 호출
-	private String rentalBoardInsertForm(Model model) throws Exception {
+	@RequestMapping("") //게시글 작성폼 호출
+	private @ResponseBody List<CodeDetail> rentalBoardInsertForm() throws Exception {
+		List<CodeDetail> selectedMap = rentalService.getSelectData();
 
-
-		return "rentalInsert";
+		return selectedMap;
 	}
 
 	@RequestMapping(value = "/selectFirst", method = RequestMethod.GET)
-	public @ResponseBody List<Rental> getSelectData(
-			@RequestParam(value = "pcNum", required = true) int pcNum) throws Exception {
+	public @ResponseBody List<CodeDetail> getSelectData() throws Exception {
 
-		List<Rental> selectedMap = rentalService.getSelectData(pcNum);
+		List<CodeDetail> selectedMap = rentalService.getSelectData();
 
 		return selectedMap;
 	}

@@ -31,9 +31,9 @@ public class RentalService {
 		return rentalMapper.selectCount(rental);
 	}
 
-	public List<Rental> getSelectData(int pcNum)throws Exception {
+	public List<CodeDetail> getSelectData()throws Exception {
 
-		return rentalMapper.getSelectData(pcNum);
+		return rentalMapper.getSelectData();
 	}
 
 	public List<Rental> getSelectProduct(String psNum)throws Exception{

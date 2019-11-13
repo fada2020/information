@@ -283,9 +283,9 @@
 											<select class="form-control" id="singleSelect"
 												name="selectedItem" onchange="getSubItem()">
 												<option value="">選択</option>
-												<option th:each="productKindCode : ${productKindCode}"
-													th:value="${productKindCode.pcnum}"
-													th:text="${productKindCode.pcname}"></option>
+												<option th:each="productKindCode : ${statusCodeMap}"
+													th:value="${productKindCode.codedetailid}"
+													th:text="${productKindCode.codedetailname}"></option>
 											</select>
 
 										</div>
