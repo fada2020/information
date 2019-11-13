@@ -17,7 +17,7 @@ public class Rental {
 	private int psNum;
 	private String pcName;
 	private String pcCode;
-	private int pCode;
+	private String pCode;
 	private String pName;
 
 	private int sNumber;

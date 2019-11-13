@@ -199,6 +199,13 @@ insert  into `state`(`S_NUMBER`,`STATE`) values
 (2,'故障'),
 (3,'廃棄');
 
+/*Table structure for table `PRODUCTKIND` */
+CREATE TABLE PRODUCTKIND (
+P_C_NUM	INT(4) PRIMARY KEY,
+P_C_NAME VARCHAR(20) NOT NULL,
+P_C_CODE VARCHAR(20) NOT NULL
+);
+
 /*Table structure for table `todo` */
 
 DROP TABLE IF EXISTS `todo`;

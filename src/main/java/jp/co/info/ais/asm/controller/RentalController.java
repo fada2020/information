@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,19 +25,21 @@ import jp.co.info.ais.asm.service.RentalService;
 
 
 @Controller
-
+@RequestMapping("/rental")
 public class RentalController {
 
 
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
+	//資産管理
 	@Autowired
 	private ITAssetService ITAssetService;
+
 	@Autowired
 	private RentalService rentalService;
 
 
-	 @RequestMapping(value = "/rental", method = RequestMethod.GET)
+	 @RequestMapping(value = "", method = RequestMethod.GET)
 	    public String ITAssetList(Model model) {
 	    	model.addAttribute("productCode", ITAssetService.selectProductCode());
 	    	model.addAttribute("stateCode", ITAssetService.selectStateCode());
@@ -56,16 +59,11 @@ public class RentalController {
 	    		rental.setAssetNumber(assetNumber);
 	    	}
 
-	    	int psNum = Integer.parseInt(page.getColumns().get(1).getSearch().getValue());
-	    	rental.setPsNum(psNum);
 
-	    	int sNumber = Integer.parseInt(page.getColumns().get(2).getSearch().getValue());
-	    	rental.setSNumber(sNumber);
-
-	    	String date = page.getColumns().get(3).getSearch().getValue();
+	    	String date = page.getColumns().get(1).getSearch().getValue();
 	    	if(null != date && !date.equals("")){
-	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-	    		logger.debug(page.getColumns().get(3).getSearch().getValue());
+	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    		logger.debug(page.getColumns().get(1).getSearch().getValue());
 	    		try {
 	    			rental.setRentDay(sdf.parse(date));
 				} catch (ParseException e) {
@@ -74,6 +72,7 @@ public class RentalController {
 	    	}
 
 	        List<Rental> list = rentalService.select(rental);
+
 
 	        page.setData(list);
 
@@ -95,32 +94,49 @@ public class RentalController {
 
 
 
-	    @RequestMapping(value = "/select", method = RequestMethod.GET)
-		public @ResponseBody List<Map<String, String>> getSelectData(
-				@RequestParam(value = "pcNum", required = true) String pcNum) throws Exception {
+	    @RequestMapping(value = "/selectFirst", method = RequestMethod.GET)
+		public @ResponseBody List<Rental>  getSelectData(
+				@RequestParam(value = "pcNum", required = true) int pcNum) throws Exception {
 
-			List<Map<String, String>> selectedMap = rentalService.getSelectData(pcNum);
+	    	List<Rental>  selectedMap = rentalService.getSelectData(pcNum);
 
 			return selectedMap;
 		}
 
-		@RequestMapping(value = "/selectMini", method = RequestMethod.GET)
-		public @ResponseBody List<Map<String, String>> getSelectProduct(
-				@RequestParam(value = "psNum", required = true) String psNum) throws Exception {
-
-			List<Map<String, String>> selectedMap = rentalService.getSelectProduct(psNum);
+		@RequestMapping(value = "/selectSecond", method = RequestMethod.GET)
+		public @ResponseBody List<Rental> getSelectProduct(
+				@RequestParam(value = "psNum", required = true) int psNum) throws Exception {
+			String	p=Integer.toString(psNum);
+			System.out.println(p);
+			System.out.println(psNum);
+			List<Rental> selectedMap = rentalService.getSelectProduct(p);
 
 			return selectedMap;
 		}
 
 		@RequestMapping(value = "/selectWrite", method = RequestMethod.GET)
 		public @ResponseBody Map<String, String> writeProduct(
-				@RequestParam(value = "productCode", required = true) String realCode) throws Exception {
+				@RequestParam(value = "assetNumber", required = true) String realCode) throws Exception {
 
 			Map<String, String> selectedMap = rentalService.writeProduct(realCode);
 
 			return selectedMap;
 		}
 
+		 @RequestMapping(value = "/{assetNumber}", method = RequestMethod.GET)
+		    public String ITAssetInfo(@PathVariable("assetNumber") String assetNumber, Model model) throws Exception {
+		    	model.addAttribute("asset", rentalService.researchRental(assetNumber));
+		    	model.addAttribute("productCode", ITAssetService.selectProductCode());
+		    	model.addAttribute("stateCode", ITAssetService.selectStateCode());
+		        return "rentalIndex";
+		    }
 
+		@RequestMapping(value="/update",method=RequestMethod.GET)
+		private int rentalUpdate(Model model) {
+
+			int suc=0;
+
+
+			return suc;
+		}
 }
