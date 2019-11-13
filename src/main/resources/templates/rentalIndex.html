@@ -75,10 +75,10 @@
 								</div>
 							</div>
 							<div class="buttons">
-								<a href="/rental/rentalBoardInsert">
-									<button type="button">遷移！</button>
-								</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button>削除</button>
+
+									<button type="button" onclick="modalInsert()">貸与</button>
+
+
 
 							</div>
 							<div class="x_panel">
@@ -97,30 +97,16 @@
 											<tr class="headings">
 
 
-												<th>
-													<div class="icheckbox_flat-green"
-														style="position: relative;">
-														<input type="checkbox" id="check-all" class="flat"
-															style="position: absolute; opacity: 0;">
-														<ins class="iCheck-helper"
-															style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-													</div>
-												</th>
-												<th class="column-title" style="display: table-cell;">貸与番号</th>
-												<th class="column-title" style="display: table-cell;">管理番号</th>
-												<th class="column-title" style="display: table-cell;">品目</th>
-												<th class="column-title" style="display: table-cell;">場所</th>
-												<th class="column-title" style="display: table-cell;">使用者</th>
-												<th class="column-title" style="display: table-cell;">貸与日</th>
-												<th class="column-title" style="display: table-cell;">貸与期間</th>
-												<th class="column-title no-link last"
-													style="display: table-cell;"><span class="nobr">Action</span></th>
-												<th class="bulk-actions" colspan="7" style="display: none;">
-													<a class="antoo" style="color: #fff; font-weight: 500;">Bulk
-														Actions ( <span class="action-cnt">1 Records
-															Selected</span> ) <i class="fa fa-chevron-down"></i>
-												</a>
-												</th>
+
+												<th class="col-md-2">貸与番号</th>
+												<th class="col-md-2">管理番号</th>
+												<th class="col-md-1">品目</th>
+												<th class="col-md-1">場所</th>
+												<th class="col-md-1">使用者</th>
+												<th class="col-md-1">貸与日</th>
+												<th class="col-md-1">貸与期間</th>
+												<th class="col-md-2">Action</th>
+
 											</tr>
 
 										</thead>
@@ -142,86 +128,86 @@
 													<h3 class="modal-title">照会</h3>
 												</div>
 
-													<div class="modal-body">
-														<div class="container-fluid">
-															<div class="row">
+												<div class="modal-body">
+													<div class="container-fluid">
+														<div class="row">
 
-																<div class="col-md-6">
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>貸与番号</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="rentNumber_view"></span>
-																		</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>貸与番号</span>
 																	</div>
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>管理番号</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="assetNumber_view"></span>
-																		</div>
+																	<div class="col-md-3">
+																		<span id="rentNumber_view"></span>
 																	</div>
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>区分</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="psNum_view"></span>
-																		</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>管理番号</span>
 																	</div>
+																	<div class="col-md-3">
+																		<span id="assetNumber_view"></span>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>区分</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="psNum_view"></span>
+																	</div>
+																</div>
 
 
 
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>用途</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="purpose_view"></span>
-																		</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>用途</span>
 																	</div>
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>保管位置</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="storageLocation_view"></span>
-																		</div>
+																	<div class="col-md-3">
+																		<span id="purpose_view"></span>
 																	</div>
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>貸与日</span>
-																		</div>
-																		<div class="col-md-4">
-																			<span id="rentDay_view"></span>
-																		</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>保管位置</span>
 																	</div>
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>特記事項</span>
-																		</div>
-																		<div class="col-md-3">
-																			<span id="speciality_view"></span>
-																		</div>
+																	<div class="col-md-3">
+																		<span id="storageLocation_view"></span>
 																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>貸与日</span>
+																	</div>
+																	<div class="col-md-4">
+																		<span id="rentalDay_view"></span>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>特記事項</span>
+																	</div>
+																	<div class="col-md-3">
+																		<span id="speciality_view"></span>
+																	</div>
+																</div>
 
-																	<div class="row">
-																		<div class="col-md-3">
-																			<span>貸与期間</span>
-																		</div>
-																		<div class="col-md-4">
-																			<span id="returnPeriod_view"></span>
-																		</div>
-
+																<div class="row">
+																	<div class="col-md-3">
+																		<span>貸与期間</span>
+																	</div>
+																	<div class="col-md-4">
+																		<span id="returnPeriod_view"></span>
 																	</div>
 
 																</div>
 
 															</div>
+
 														</div>
 													</div>
+												</div>
 
 
 												<hr>
@@ -235,6 +221,145 @@
 										</div>
 									</div>
 									<!-- /update modal -->
+
+									<!--insert modal -->
+									<div class="modal" id="modal3d2" tabindex="-1" role="dialog"
+										style="display: none;" aria-hidden="true">
+										<div class="modal-dialog modal-xl" style="width: 70%;"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">×</span>
+													</button>
+													<h3 class="modal-title">貸与</h3>
+												</div>
+
+												<div class="modal-body">
+														<div class="x_content">
+									<br>
+									<div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">日付</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control col-md-10"
+												id="todayDate" th:value="${#dates.createNow()}"
+												readonly="readonly">
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">使用者</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" name="rentUser"
+												class="form-control col-md-10" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">用途</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control col-md-10"
+												id="purpose" value="勤務">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">場所</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" id="storageLocation" value="自社"
+												class="form-control col-md-10">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">特記事項</label>
+
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" id="speciality"
+												class="form-control col-md-10">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">分類</label>
+										<div class="col-md-9 col-sm-9 ">
+											<select class="form-control" id="singleSelect"
+												name="selectedItem" onchange="getSubItem()">
+												<option value="">選択</option>
+												<option th:each="productKindCode : ${productKindCode}"
+													th:value="${productKindCode.pcnum}"
+													th:text="${productKindCode.pcname}"></option>
+											</select>
+
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">種類</label>
+
+										<div class="col-md-9 col-sm-9 ">
+
+											<select class="select2_multiple form-control"
+												id="sub_singleSelect" name="sub_selectedItem"
+												onchange="getSubSubItem()">
+
+												<option value="">選択</option>
+											</select>
+
+										</div>
+
+									</div>
+
+
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">選択</label>
+										<div class="col-md-9 col-sm-9 ">
+											<select class="select2_multiple form-control"
+												id="sub_subSelect" name="selectedSubItem"
+												onchange="writeItem()">
+												<option value="">選択</option>
+
+											</select>
+										</div>
+									</div>
+
+
+
+
+
+									<div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">貸与目録</label><br>
+									</div>
+									<div class="form-group row">
+										<table id="selectedAsset">
+											<tr>
+												<th class="col-md-2">貸与番号</th>
+												<th class="col-md-1">貸与者</th>
+												<th class="col-md-1">分類</th>
+												<th class="col-md-1">種類</th>
+												<th class="col-md-1">管理番号</th>
+												<th class="col-md-1">用途</th>
+												<th class="col-md-1">場所</th>
+												<th class="col-md-1">特記事項</th>
+											</tr>
+
+											<tbody></tbody>
+										</table>
+
+									</div>
+
+
+								</div>
+												</div>
+
+
+												<hr>
+
+												<div></div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /insert modal -->
 
 								</div>
 							</div>
@@ -283,15 +408,19 @@
 
         var modalesectiondata = null;
 
-    	var productCodeMap = new Map();
-		var productCode = /*[[${productCode}]]*/;
-    	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.psNum, value.pname);
+    	var kubunCodeMap = new Map();
+    	var kubunItemMap = new Map();
+		var kubunCode = /*[[${kubunCode}]]*/;
+		kubunCode.forEach(function( value ) {
+			kubunCodeMap.set(value.codeDetailId,value.item1);
+
     	});
-    	var stateCodeMap = new Map();
-    	var stateCode = /*[[${stateCode}]]*/;
-    	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.snumber, value.state);
+		kubunCode.forEach(function( value ) {
+		kubunItemMap.set(value.codeDetailId, value.item2);	});
+    	var statusCodeMap = new Map();
+    	var statusCode = /*[[${statusCode}]]*/;
+    	statusCode.forEach(function( value ) {
+    		statusCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
         $(function(){
@@ -333,32 +462,24 @@
 
                 "columnDefs": [
 
-                	 { targets: 0, data: "cription",   render: function ( data, type, row, meta ) {
-                         return '<div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>';
-                     }},
-                		{ targets: 1, data: "rentNumber"},
-                    { targets: 2, data: "assetNumber"},
 
-                    { targets: 3, data: function ( d ) {
-                    	return productCodeMap.get(d.psNum);
+                	{ targets: 0, data: "rentalNo"},
+
+                    { targets: 1, data: "assetNumber"},
+
+                    { targets: 2, data: function ( d ) {
+                    	return kubunItemMap.get(d.kubunCode);
                     }},
 
+                    { targets: 3, data: "storageLocation"},
 
-                    { targets: 4, data: "storageLocation"},
-                    { targets: 5, data: "rentUser"},
-                    { targets: 6, data: function ( d ) {
-                    	var rentDay = new Date(d.rentDay);
-                		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
-                		var dd = rentDay.getDate();
-                    	return yyyy + "-" + mm + "-" + dd;
-                    }},
-                    { targets: 7, data: function ( d ) {
-                    	var returnPeriod = new Date(d.returnPeriod);
-                		var yyyy = returnPeriod.getFullYear(); var mm = returnPeriod.getMonth()+1;
-                		var dd = returnPeriod.getDate();
-                    	return yyyy + "-" + mm + "-" + dd;
-                    }},
-                    { targets: 8,
+                    { targets: 4, data: "rentalUserId"},
+
+                    { targets: 5, data: "rentalDay"},
+
+                    { targets: 6, data: "returnPeriod"},
+
+                    { targets: 7,
                     	data: "description",
                         render: function ( data, type, row, meta ) {
                           return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
@@ -388,13 +509,10 @@
                 var mm = d.getMonth() + 1;
                 var dd = d.getDate();
                 var yyyy = d.getFullYear();
-            	modalesectiontable
-                .column(5)
-                .search( yyyy + "-" + mm + "-" + dd )
-                .draw();
+            	modalesectiontable.column(5).search( yyyy + "-" + mm + "-" + dd ).draw();
             });
 
-            $('#table1 tbody').on( 'click', 'tr td', function () {
+          /*   $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
             	if(this._DT_CellIndex.column !=8 &&this._DT_CellIndex.column !=0) {
             		$('#modal3d').modal();
@@ -421,11 +539,84 @@
             	} else {
             		//alert(JSON.stringify(rowData));
             	}
-            } );
+            } ); */
 
         })
     /*]]>*/
     </script>
+	<script th:inline="javascript">
+	function modalInsert() {
+
+
+
+    		$('#modal3d2').modal();
+
+
+
+    	}
+		function getSubItem() {
+
+			$('#singleSelect').click(
+					function() {
+						$.getJSON("/rental/selectFirst", {
+							pcNum : $(this).val(),
+							ajax : 'true'
+						}, function(data) {
+							var html = '<option value="">選択</option>';
+							data.forEach(function(value) {
+
+								html += '<option value="' +value.psNum + '">'
+										+ value.pname + '</option>';
+							})
+							$('#sub_singleSelect').html(html);
+						});
+					});
+
+		}
+	</script>
+	<script th:inline="javascript">
+		function getSubSubItem() {
+
+			$('#sub_singleSelect').click(
+					function() {
+						$.getJSON("/rental/selectSecond", {
+							psNum : $(this).val(),
+							ajax : 'true'
+						}, function(data) {
+							var html = '<option value="">選択</option>';
+
+							data.forEach(function(value) {
+								html += '<option value="' + value.psNum + '">'
+										+ value.assetNumber + '</option>';
+							})
+							$('#sub_subSelect').html(html);
+
+						});
+					});
+
+		}
+	</script>
+	<script th:inline="javascript">
+
+		function writeItem() {
+
+			var assetNumber = $('#sub_subSelect').text();
+			alert(assetNumber);
+			var todayDate = $('#todayDate').val();
+			alert(todayDate);
+			var rentUser = $('#rentUser').val();
+			var pcCode = $('#singleSelect').val();
+			var psNum = $('#sub_singleSelect').val();
+
+			$('#sub_subSelect').click(
+							function() {
+
+
+	$('#selectedAsset tbody').append('<tr><td>'+assetNumber+'</td><td>'+pcCode+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td></tr>');
+												});
+		}
+
+	</script>
 
 </body>
 </html>

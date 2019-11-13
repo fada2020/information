@@ -6,9 +6,6 @@
 	<select id="selectAll"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 
-
-
-
 		SELECT a.asset_number,
 		r.rental_seq,
 		r.rental_day,
@@ -21,18 +18,16 @@
 		r.return_period,
 		a.status_code,
 		r.storage_Location,
-		r.bp_Name
+		r.bp_Name,
+		r.rental_no,
+		a.kubun_code
 		FROM rental r
 
 		JOIN asset a ON r.asset_seq = a.asset_seq
 
-		AND a.status_code = '0' ORDER BY asset_number ASC
+		AND a.status_code = '002' ORDER BY asset_number ASC
 
-		<if test="rentDay != null">
-		<![CDATA[
-		AND r.rental_Day = DATE_FORMAT(#{rentalDay}, '%Y-%m-%d' )
-		]]>
-		</if>
+
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
@@ -81,14 +76,14 @@
 		select * from Rental
 		where assetNumber=#{assetNumber}
 	</select>
-  <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.StateCode">
+  <select id="selectStatusCode" resultType="jp.co.info.ais.asm.domain.StatusCode">
     	SELECT
     		code_detail_id,
     		code_detail_name
     	FROM code_detail where code_master_id='001'
     </select>
 
-    <select id="selectProductCode" resultType="jp.co.info.ais.asm.domain.ProductCode">
+    <select id="selectCodeDetail" resultType="jp.co.info.ais.asm.domain.CodeDetail">
      	SELECT
     		code_detail_id,
     		code_detail_name,

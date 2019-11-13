@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.ProductKind;
 import jp.co.info.ais.asm.domain.Rental;
+import jp.co.info.ais.asm.domain.StatusCode;
 import jp.co.info.ais.asm.mapper.RentalMapper;
 
 @Service
@@ -50,15 +52,17 @@ public class RentalService {
 	}
 
 	public Rental researchRental(String assetNumber)throws Exception  {
-		// TODO 自動生成されたメソッド・スタブ
+
 		return rentalMapper.researchRental(assetNumber);
 	}
-	public List<Rental> selectProductCode()throws Exception  {
-		return rentalMapper.selectProductCode();
+	public List<CodeDetail> selectCodeDetail()throws Exception  {
+
+		return rentalMapper.selectCodeDetail();
 	}
 
-	public List<Rental> selectStateCode()throws Exception  {
-		return rentalMapper.selectStateCode();
+	public List<StatusCode> selectStatusCode()throws Exception  {
+
+		return rentalMapper.selectStatusCode();
 	}
 
 }

@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.ProductKind;
 import jp.co.info.ais.asm.domain.Rental;
+import jp.co.info.ais.asm.domain.StatusCode;
 
 @Mapper
 public interface RentalMapper {
@@ -25,9 +27,9 @@ public interface RentalMapper {
 
 	public Rental researchRental(String assetNumber)throws Exception;
 
-	public List<Rental> selectProductCode()throws Exception;
+	public List<CodeDetail> selectCodeDetail()throws Exception;
 
-	public List<Rental> selectStateCode()throws Exception;
+	public List<StatusCode> selectStatusCode()throws Exception;
 
 
 }
