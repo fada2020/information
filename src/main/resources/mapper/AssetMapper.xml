@@ -3,10 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.asm.mapper.AssetMapper">
-    <select id="select" resultType="jp.co.info.ais.asm.domain.Asset">
+
+	<resultMap id="assetResult" type="Asset">
+	  <id property="assetSeq" column="asset_seq" />
+	  <collection property="accessoriesList" ofType="Accessories">
+	    <id property="accessoriesSeq" column="acc_accessories_seq"/>
+	    <id property="assetSeq" column="acc_asset_seq"/>
+	    <result property="itemName" column="acc_item_name"/>
+	    <result property="itemSpec" column="acc_item_spec"/>
+	    <result property="itemQuantity" column="acc_item_quantity"/>
+	    <result property="remarks" column="acc_remarks"/>
+	  </collection>
+	</resultMap>
+
+    <select id="select" resultMap="assetResult">
     SELECT A.* FROM(
         SELECT
-			asset_seq
+			a.asset_seq
 			,asset_number
 			,kubun_code
 			,purchase_date
@@ -22,7 +35,7 @@
 			,os_product_key
 			,cpu_processor
 			,operating_frequency
-			,memory
+			,MEMORY
 			,memory_upgarde
 			,hdd
 			,hdd_upgarde
@@ -34,10 +47,20 @@
 			,admin_account_id
 			,admin_account_pwd
 			,storage_location
-		FROM asset
-		ORDER BY asset_seq ASC
+			,b.accessories_seq acc_accessories_seq
+			,b.asset_seq acc_asset_seq
+			,b.item_name acc_item_name
+			,b.item_spec acc_item_spec
+			,b.item_quantity acc_item_quantity
+			,b.remarks acc_remarks
+		FROM asset a, accessories b
+		WHERE a.asset_seq = b.asset_seq
+		ORDER BY asset_seq ASC, acc_accessories_seq ASC
 	) A
 	WHERE 1 = 1
+		<if test="assetSeq > 0">
+		AND asset_seq = #{assetSeq}
+		</if>
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND asset_number like '%${assetNumber}%'
 		</if>
@@ -100,5 +123,19 @@
     	FROM code_detail
 		WHERE code_master_id = '002'
     </select>
+
+    <insert id="insertAccessories" keyProperty="accessoriesSeq">
+        INSERT INTO accessories(
+        	(
+        		SELECT MAX(accessories_seq) + 1
+        		FROM accessories
+        		WHERE asset_seq = #{assetSeq}
+        	) accessoriesSeq,
+        asset_seq, item_name, item_spec, item_quantity, remarks,
+        insert_id, insert_date, update_id, update_date
+        )
+        VALUES (#{accessoriesSeq}, #{assetSeq}, #{itemName}, #{itemSpec}, #{itemQuantity}, #{remarks},
+        #{insertId}, NOW(), #{updateId}, NOW())
+    </insert>
 
 </mapper>
