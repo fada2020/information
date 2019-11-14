@@ -48,7 +48,7 @@
 		code_detail_id,
 		code_detail_name
 
-		FROM code_detail where item1='${codeDetailName}'
+		FROM code_detail where item1=${codeDetailName}
 
 	</select>
 
