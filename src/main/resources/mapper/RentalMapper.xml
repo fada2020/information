@@ -3,62 +3,44 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
-    <select id="select" resultType="jp.co.info.ais.asm.domain.Rental">
+	<select id="selectAll"
+		resultType="jp.co.info.ais.asm.domain.Rental">
 
-        SELECT r.assetNumber,
-		r.rent_Number,
-		r.rent_Day,
-		r.rent_User,
-		r.applicant,
+		SELECT a.asset_number,
+		r.rental_seq,
+		r.rental_day,
+		r.rental_user_id,
 		r.purpose,
 		r.speciality,
+		r.applicant_id,
+		r.return_day,
+		r.return_user_id,
 		r.return_period,
-		r.purpose,
-		p.p_name,
-		p.p_code,
-		i.storageLocation,
-		i.p_s_num,
-		i.s_number,
-		k.p_c_name,
-		s.state
+		a.status_code,
+		r.storage_Location,
+		r.bp_Name,
+		r.rental_no,
+		a.kubun_code
 		FROM rental r
-		JOIN itasset i ON r.assetNumber=i.assetNumber
-		JOIN  product p ON p.p_s_num=i.p_s_num
-		JOIN state s ON s.s_number= i.s_number
-		JOIN productkind k ON k.p_c_num=p.p_c_num
-		AND i.s_number = '0' ORDER BY assetNumber ASC
+
+		JOIN asset a ON r.asset_seq = a.asset_seq
+
+		AND a.status_code = '002' ORDER BY asset_number ASC
 
 
+		LIMIT #{length} OFFSET #{start}
+	</select>
+
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(1)
+		FROM rental
 
 
-		<if test="rentDay != null">
-		<![CDATA[
-		AND r.rent_Day = DATE_FORMAT(#{rentDay}, '%Y-%m-%d' )
-		]]>
-		</if>
-	LIMIT #{length} OFFSET #{start}
-    </select>
+	</select>
 
-    <select id="selectCount" resultType="int">
-    SELECT COUNT(1)
-    FROM ITAsset
-    WHERE 1 = 1
-		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND AssetNumber like '%${assetNumber}%'
-		</if>
-		<if test="psNum != -1">
-		AND P_S_NUM = #{psNum}
-		</if>
-		<if test="sNumber != -1">
-		AND S_NUMBER = #{sNumber}
-		</if>
-
-
-    </select>
-
-  <select id="getSelectData" parameterType="Integer"
+	<select id="getSelectData" parameterType="Integer"
 		resultType="jp.co.info.ais.asm.domain.Rental">
-		select    p_s_num, p_name from product where
+		select p_s_num, p_name from product where
 		p_c_num=#{pcNum}
 
 	</select>
@@ -66,9 +48,10 @@
 	<select id="getSelectProduct" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 		select p.p_s_num, i.assetnumber from itasset i
-		join state s on s.s_number=i.s_number
-		join  product p on p.p_s_num=i.p_s_num
-		 where
+		join state s
+		on s.s_number=i.s_number
+		join product p on p.p_s_num=i.p_s_num
+		where
 		i.p_s_num=#{psNum} and i.s_number='1'
 
 	</select>
@@ -82,17 +65,32 @@
 
 
 
-<select id="searchCode"
+	<select id="searchCode"
 		resultType="jp.co.info.ais.asm.domain.ProductKind">
 		select p_c_num,p_c_name from productkind
 
 	</select>
 
-<select id="researchRental" parameterType="String"
+	<select id="researchRental" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 		select * from Rental
-			where assetNumber=#{assetNumber}
+		where assetNumber=#{assetNumber}
 	</select>
+  <select id="selectStatusCode" resultType="jp.co.info.ais.asm.domain.StatusCode">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name
+    	FROM code_detail where code_master_id='001'
+    </select>
+
+    <select id="selectCodeDetail" resultType="jp.co.info.ais.asm.domain.CodeDetail">
+     	SELECT
+    		code_detail_id,
+    		code_detail_name,
+    		item1,
+    		item2
+    	FROM code_detail where code_master_id='002'
+    </select>
 
 
 </mapper>

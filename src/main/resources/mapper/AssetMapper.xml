@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.asm.mapper.AssetMapper">
+    <select id="select" resultType="jp.co.info.ais.asm.domain.Asset">
+    SELECT A.* FROM(
+        SELECT
+			asset_seq
+			,asset_number
+			,kubun_code
+			,purchase_date
+			,warranty_period
+			,buy_to
+			,purchase_price
+			,status_code
+			,maker_name
+			,model_name
+			,serial_num
+			,interface_col
+			,os_name
+			,os_product_key
+			,cpu_processor
+			,operating_frequency
+			,memory
+			,memory_upgarde
+			,hdd
+			,hdd_upgarde
+			,mac_lan
+			,mac_wireless
+			,other
+			,security_bios
+			,security_hdd
+			,admin_account_id
+			,admin_account_pwd
+			,storage_location
+		FROM asset
+		ORDER BY asset_seq ASC
+	) A
+	WHERE 1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND asset_number like '%${assetNumber}%'
+		</if>
+		<if test="kubunCode != null and !kubunCode.equals('000')">
+		AND kubun_code = #{kubunCode}
+		</if>
+		<if test="statusCode != null and !statusCode.equals('000')">
+		AND status_code = #{statusCode}
+		</if>
+		<if test="makerName != null and !makerName.equals('')">
+		AND maker_name like '%${makerName}%'
+		</if>
+		<if test="modelName != null and !modelName.equals('')">
+		AND model_name like '%${modelName}%'
+		</if>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND purchase_date BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
+		</if>
+	LIMIT #{length} OFFSET #{start}
+    </select>
+
+    <select id="selectCount" resultType="int">
+    SELECT COUNT(1)
+    FROM asset
+	WHERE 1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND asset_number like '%${assetNumber}%'
+		</if>
+		<if test="kubunCode != null and !kubunCode.equals('000')">
+		AND kubun_code = #{kubunCode}
+		</if>
+		<if test="statusCode != null and !statusCode.equals('000')">
+		AND status_code = #{statusCode}
+		</if>
+		<if test="makerName != null and !makerName.equals('')">
+		AND maker_name like '%${makerName}%'
+		</if>
+		<if test="modelName != null and !modelName.equals('')">
+		AND model_name like '%${modelName}%'
+		</if>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND purchase_date BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
+		</if>
+    </select>
+
+    <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name
+    	FROM code_detail
+		WHERE code_master_id = '001'
+    </select>
+
+    <select id="selectProductCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name,
+    		item1,
+    		item2
+    	FROM code_detail
+		WHERE code_master_id = '002'
+    </select>
+
+</mapper>

@@ -6,6 +6,8 @@ import jp.co.info.ais.asm.domain.Login;
 @Mapper
 public interface LoginMapper {
 
-	Login select(String id, String pass);
+	int selectId(String id);
+
+	Login selectLogin(String id, String pass);
 
 }

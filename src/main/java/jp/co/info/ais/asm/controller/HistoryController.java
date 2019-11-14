@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.History;
 import jp.co.info.ais.asm.service.HistoryService;
-import jp.co.info.ais.asm.service.ITAssetService;
+import jp.co.info.ais.asm.service.AssetService;
 
 @Controller
 @RequestMapping("/history")
@@ -26,7 +26,7 @@ public class HistoryController {
 	private HistoryService HistoryService;
 
 	@Autowired
-	private ITAssetService ITAssetService;
+	private AssetService ITAssetService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String ITAssetList(Model model) {

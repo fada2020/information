@@ -1,9 +1,5 @@
 package jp.co.info.ais.asm.domain;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,32 +9,33 @@ import lombok.ToString;
 @ToString
 public class Rental {
 
-	private int pcNum;
-	private int psNum;
-	private String pcName;
-	private String pcCode;
-	private String pCode;
-	private String pName;
+	//貸与情報管理の基本
+	private int rentalSeq;
+	private int assetSeq;
 
-	private int sNumber;
-	private String state;
-
-	private String assetNumber;
-	private String storageLocation;
-
-	private String rentNumber;
-	@DateTimeFormat
-	private Date rentDay;
-	@DateTimeFormat
-	private Date renturnDay;
-	private String rentUser;
-	private String renturnUser;
-	private String applicant;
+	private String rentalDay;
+	private String rentalUserId;
 	private String purpose;
-	private String rentSpeciality;
-	@DateTimeFormat
-	private Date returnPeriod;
-	private int length;
+	private String speciality;
+	private String applicantId;
+
+	private String renturnDay;
+	private String renturnUserId;
+	private String returnPeriod;
+	private int statusCode;
+	private String storageLocation;
+	private String bpName;
+	private String rentalNo;
+
+	//資産マスタから持ち込む
+	private String assetNumber;
+	private int codeDetailId;
+	private String codeDetailName;
+	private String kubunCode;
+
+
+	//ページングする為のもの
+	private int length=10;
 	private int start;
 
 }
