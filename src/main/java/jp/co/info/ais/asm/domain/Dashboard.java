@@ -8,9 +8,7 @@ import lombok.ToString;
 @ToString
 public class Dashboard {
 
-	private int totalHardware;
-	private int totalsoftware;
-	private int totalItem;
+	private int typeCnt;
 	private int newItem;
 	private String hardTop;
 	private int hardPercent;

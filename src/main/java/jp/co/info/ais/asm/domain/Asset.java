@@ -1,6 +1,7 @@
 package jp.co.info.ais.asm.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,6 +49,8 @@ public class Asset {
 	Date updateDate;
 
 	String typeCode;
+	
+	List<Accessories> accessoriesList;
 
 	int length = 10;
 	int start;

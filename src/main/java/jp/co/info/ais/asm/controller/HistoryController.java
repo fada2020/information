@@ -24,11 +24,9 @@ public class HistoryController {
 	@Autowired
 	private HistoryService HistoryService;
 
-
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String ITAssetList(Model model) {
-		/*model.addAttribute("stateCode", ITAssetService.selectStateCode());*/
+		model.addAttribute("stateCode", HistoryService.selectStateCode());
     	return "history";
     }
 
@@ -51,17 +49,29 @@ public class HistoryController {
     		condition.setApplicant(applicant);
     	}
 
-    	String status = page.getColumns().get(2).getSearch().getValue();
-    	int tempS = Integer.parseInt(status);
-    	logger.debug(tempS);
-    	if(tempS != -1){
-    		condition.setStatus(tempS);
+    	String statusCode = page.getColumns().get(2).getSearch().getValue();
+    	if(statusCode.equals("000")){
+    		condition.setStatusCode(statusCode);
     	}
 
-    	String rentalDay = page.getColumns().get(3).getSearch().getValue();
-    	if(null != rentalDay && !rentalDay.equals("")) {
-    		rentalDay = "%"+rentalDay+"%";
-    		condition.setRentalDay(rentalDay);
+    	String rentalDayS = page.getColumns().get(3).getSearch().getValue();
+    	if(null != rentalDayS && !rentalDayS.equals("")) {
+    		condition.setRentalDayS(rentalDayS);
+    	}
+
+    	String rentalDayE = page.getColumns().get(4).getSearch().getValue();
+    	if(null != rentalDayE && !rentalDayE.equals("")) {
+    		condition.setRentalDayE(rentalDayE);
+    	}
+
+    	String returnDayS = page.getColumns().get(5).getSearch().getValue();
+    	if(null != returnDayS && !returnDayS.equals("")) {
+    		condition.setReturnDayS(returnDayS);
+    	}
+
+    	String returnDayE = page.getColumns().get(6).getSearch().getValue();
+    	if(null != returnDayE && !returnDayE.equals("")) {
+    		condition.setReturnDayE(returnDayE);
     	}
 
         List<History> list = HistoryService.selectHistory(condition);

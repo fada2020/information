@@ -35,23 +35,32 @@ public class MainController {
 		}
 		messages.add("bobobobo");
 		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+
 		logger.debug(messages.toString());
-//		保有現況グラフ
+
+//		保有現況数値
 		ArrayList<Dashboard> possession = new ArrayList<Dashboard>();
 		possession = dashboardService.possession();
-		model.addAttribute("possession", possession);
+		int type1 = possession.get(0).getTypeCnt();
+		int type2 = possession.get(1).getTypeCnt();
+		model.addAttribute("type1", type1);
+		model.addAttribute("type2", type2);
+		model.addAttribute("totalCnt", type1 + type2);
+		for(int i = 0 ; i<possession.size(); i++) {
+			logger.debug("typeCnt:{}", possession.get(i).getTypeCnt());
+		}
 
 
 
 //		貸与現況グラフ
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-		rslist = dashboardService.rslist();
+//		rslist = dashboardService.rslist();
 		model.addAttribute("rslist", rslist);
 
-		for(int i = 0 ; i<rslist.size(); i++) {
-			logger.debug("itemName:{},state:{},itemCnt:{}",
-				rslist.get(i).getItemName(),rslist.get(i).getState(),rslist.get(i).getItemCnt());
-		}
+//		for(int i = 0 ; i<rslist.size(); i++) {
+//			logger.debug("itemName:{},state:{},itemCnt:{}",
+//				rslist.get(i).getItemName(),rslist.get(i).getState(),rslist.get(i).getItemCnt());
+//		}
 
         return "dashboard";
     }

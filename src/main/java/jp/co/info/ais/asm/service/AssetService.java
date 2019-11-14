@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.asm.domain.Accessories;
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.mapper.AssetMapper;
@@ -17,12 +18,12 @@ public class AssetService {
 	private static final Logger logger = LogManager.getLogger(AssetService.class);
 
 	@Autowired
-	AssetMapper ITAssetMapper;
+	AssetMapper assetMapper;
 
-	public Asset select(String assetNumber) {
+	public Asset select(int assetSeq) {
 		Asset condition = new Asset();
-		condition.setAssetNumber(assetNumber);
-		List<Asset> result = ITAssetMapper.select(condition);
+		condition.setAssetSeq(assetSeq);
+		List<Asset> result = assetMapper.select(condition);
 		Asset asset = null;
 		if(result != null)
 			asset = result.get(0);
@@ -30,19 +31,23 @@ public class AssetService {
 	}
 
 	public List<Asset> selectList(Asset condition) {
-		return ITAssetMapper.select(condition);
+		return assetMapper.select(condition);
 	}
 
 	public int selectCount(Asset condition) {
-		return ITAssetMapper.selectCount(condition);
+		return assetMapper.selectCount(condition);
 	}
 
 	public List<CodeDetail> selectProductCode() {
-		return ITAssetMapper.selectProductCode();
+		return assetMapper.selectProductCode();
 	}
 
 	public List<CodeDetail> selectStateCode() {
-		return ITAssetMapper.selectStateCode();
+		return assetMapper.selectStateCode();
+	}
+
+	public void insertAccessories(Accessories accessories) {
+		assetMapper.insertAccessories(accessories);
 	}
 
 }
