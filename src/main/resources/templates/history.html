@@ -30,6 +30,12 @@
 		#table1 tbody tr{
 		    cursor:pointer;
 		}
+
+		#exportExcel {
+			margin-top:10px;
+			background-color:#ff5050;
+			float:right;
+		}
 	</style>
 
   </head>
@@ -58,6 +64,9 @@
             <div class="row">
               <div class="col">
 
+				<!-- searching condition -S -->
+				<!-- 1st line -->
+				<div>
                 <div class="col-md-1" style="width:9%;">
                     <span class="pull-right" style="margin-left:-1%; font-size: 18px;">管理番号</span>
                 </div>
@@ -82,27 +91,70 @@
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
+				</div>
+				<!-- 1st line -->
 
-                <div class="col-md-1" style="margin-left:-2%;">
+				<br><br>
+				<!-- 2nd line -->
+				<div>
+
+				<div id="rentalDayDiv">
+				<div class="col-md-1" style="margin-left:-2%;">
                     <span class="pull-right" style="font-size: 18px;">貸与日</span>
                 </div>
                 <div class="col-md-2">
-					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="returnDate_search" style="margin-left:-1%">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="rentalDayS_search" style="margin-left:-1%">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					 </span>
 					</div>
                 </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="rentalDayE_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+				</div>
+
+				<div id="returnDayDiv">
+                <div class="col-md-1" style="margin-left:-2%;">
+                    <span class="pull-right" style="font-size: 18px;">返却日</span>
+                </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="returnDayS_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="returnDayE_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+				</div>
 
                 <div class="col-md-1" style="width:5%; margin-left:-1%;">
                 	<button id="serchButton" class="btn btn-primary">検索</button>
                 </div>
+                </div>
+				<!-- 2nd line -->
+
+				<!-- searching condition -S -->
+
 
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <button id=exportExcel>excel</button>
+                    <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
 
                   </div>
 
@@ -174,7 +226,7 @@
     <script th:inline="javascript">
 
     /*<![CDATA[*/
-        $('#myDatepicker').datetimepicker({
+        $('.input-group date').datetimepicker({
             format: 'YYYY/MM/DD'
         });
 
@@ -226,7 +278,10 @@
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                 		d.columns[1].search.value = $('#applicant_search').val();
                 		d.columns[2].search.value = $('#status_search').val();
-                		d.columns[3].search.value = $('#returnDate_search').val();
+                		d.columns[3].search.value = $('#rentalDayS_search').val();
+                		d.columns[4].search.value = $('#rentalDayE_search').val();
+                		d.columns[5].search.value = $('#returnDayS_search').val();
+                		d.columns[6].search.value = $('#returnDayE_search').val();
 
                         return JSON.stringify(d);
                     }
@@ -235,19 +290,19 @@
                     { targets: 0, data: "assetNumber"},
                     { targets: 1, data: "maker"},
                     { targets: 2, data: "model"},
-                    { targets: 3, data: "status"},
-                    { targets: 4, data: "rentNumber"},
+                    { targets: 3, data: "statusCode"},
+                    { targets: 4, data: "rentNo"},
                     { targets: 5, data: "purpose"},
                     { targets: 6, data: "storageLocation"},
                     { targets: 7, data: "applicant"},
-                    { targets: 8, data: "rentuser"},
-                    { targets: 9, data: "bpPartner"},
+                    { targets: 8, data: "rentUserId"},
+                    { targets: 9, data: "bpName"},
                     { targets: 10, data: function ( d ) {
-                    	var str = d.rentalDay;
+                    	var str = d.rentalDayS;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
                     { targets: 11, data: function ( d ) {
-                    	var str = d.returnDay;
+                    	var str = d.returnDayS;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }}
                 ]

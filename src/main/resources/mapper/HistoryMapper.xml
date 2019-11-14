@@ -6,9 +6,9 @@
 
 	<select id="selectHistory" resultType="jp.co.info.ais.asm.domain.History">
 		SELECT
-			as.asset_number,
-			as.maker_name,
-			as.model_name,
+			ast.asset_number,
+			ast.maker_name,
+			ast.model_name,
 			rt.status_code,
 			rt.rental_no,
 			rt.purpose,
@@ -16,26 +16,27 @@
 			rt.applicant_id,
 			rt.rental_user_id,
 			rt.bp_name,
-			rt.rental_day,
-			rt.return_day
-		FROM asset as, Rental rt
+			rt.rental_day rentalDayS,
+			rt.return_day returnDayS
+		FROM asset ast, rental rt
 		WHERE
-		rt.asset_seq = as.asset_seq
+		rt.asset_seq = ast.asset_seq
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND as.assetNumber LIKE #{assetNumber}
+		AND ast.asset_number LIKE #{assetNumber}
 		</if>
 		<if test="applicant != null and !applicant.equals('')">
-		AND rt.applicant LIKE #{applicant}
+		AND rt.applicant_id LIKE #{applicant}
 		</if>
-		<if test="statusCode != null and !applicant.equals('')">
-		AND rt.status_code LIKE #{statusCode}
+		<if test="statusCode != 000">
+		AND rt.status_code = #{statusCode}
 		</if>
-		<if test="rentalDay != null">
-		<![CDATA[
-		AND DATE_FORMAT(rentalDay, '%Y/%m/%d') = DATE_FORMAT(#{rentalDay}, '%Y/%m/%d')
-		]]>
+		<if test="rentalDayS != null and rentalDayE !=null">
+		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 		</if>
-		ORDER BY rt.assetNumber
+		<if test="returnDayS != null and returnDayE !=null">
+		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
+		</if>
+		ORDER BY ast.asset_number
 	</select>
 
     <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
@@ -43,6 +44,6 @@
     		code_detail_id,
     		code_detail_name
     	FROM code_detail
-		WHERE code_master_id = '001'
+		WHERE code_master_id = '002'
     </select>
 </mapper>

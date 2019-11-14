@@ -20,8 +20,10 @@ public class History {
 	String applicant;
 	String rentUserId;
 	String bpName;
-	String rentalDay;
-	String returnDay;
+	String rentalDayS;
+	String rentalDayE;
+	String returnDayS;
+	String returnDayE;
 
 	int length = 10;
 	int start;
