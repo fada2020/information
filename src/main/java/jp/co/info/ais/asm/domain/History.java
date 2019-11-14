@@ -13,7 +13,7 @@ public class History {
 	String model;
 
 
-	int status = -1;
+	String statusCode = "000";
 	String rentNo;
 	String purpose;
 	String storageLocation;
