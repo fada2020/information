@@ -6,7 +6,9 @@
 	<select id="selectAll"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 
-		SELECT a.asset_number,
+		SELECT
+		a.asset_seq,
+		a.asset_number,
 		r.rental_seq,
 		r.rental_day,
 		r.rental_user_id,
@@ -23,9 +25,11 @@
 		a.kubun_code
 		FROM rental r
 
-		JOIN asset a ON r.asset_seq = a.asset_seq
+		JOIN asset a ON
+		r.asset_seq = a.asset_seq
 
-		AND a.status_code = '002' ORDER BY asset_number ASC
+		AND a.status_code = '002' ORDER BY
+		asset_number ASC
 
 
 		LIMIT #{length} OFFSET #{start}
@@ -38,10 +42,13 @@
 
 	</select>
 
-	<select id="getSelectData" parameterType="Integer"
-		resultType="jp.co.info.ais.asm.domain.Rental">
-		select p_s_num, p_name from product where
-		p_c_num=#{pcNum}
+	<select id="getSelectCodeData" parameterType="String"
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		SELECT
+		code_detail_id,
+		code_detail_name
+
+		FROM code_detail where item1='${codeDetailName}'
 
 	</select>
 
@@ -74,23 +81,51 @@
 	<select id="researchRental" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 		select * from Rental
-		where assetNumber=#{assetNumber}
+		where asset_Number=#{assetNumber}
 	</select>
-  <select id="selectStatusCode" resultType="jp.co.info.ais.asm.domain.StatusCode">
-    	SELECT
-    		code_detail_id,
-    		code_detail_name
-    	FROM code_detail where code_master_id='001'
-    </select>
+	<select id="selectStatusCode"
+		resultType="jp.co.info.ais.asm.domain.StatusCode">
+		SELECT
+		code_detail_id,
+		code_detail_name
+		FROM code_detail where code_master_id='001'
+	</select>
 
-    <select id="selectCodeDetail" resultType="jp.co.info.ais.asm.domain.CodeDetail">
-     	SELECT
-    		code_detail_id,
-    		code_detail_name,
-    		item1,
-    		item2
-    	FROM code_detail where code_master_id='002'
-    </select>
+	<select id="selectCodeDetail"
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		SELECT
+		code_master_id,
+		code_detail_id,
+		code_detail_name,
+		item1,
+		item2
+		FROM code_detail where code_master_id='002'
+	</select>
+
+	<select id="selectCode"
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		SELECT
+		code_detail_id,
+		code_detail_name
+		FROM code_detail where code_master_id='003'
+	</select>
+<select id="selectAsset" parameterType="String"
+		resultType="jp.co.info.ais.asm.domain.Asset">
+		SELECT
+		asset_seq,
+		asset_number,
+		kubun_code
+		FROM asset where asset_number=#{number}
+	</select>
+
+<select id="selectAssetList" parameterType="String"
+		resultType="jp.co.info.ais.asm.domain.Asset">
+		SELECT
+		asset_seq,
+		asset_number,
+		kubun_code
+		FROM asset where status_code='001' and kubun_code=#{selectedItem}
+	</select>
 
 
 </mapper>
