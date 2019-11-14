@@ -52,6 +52,7 @@ public class LoginController {
 
 		session.setAttribute("organizationCode", user.getOrganizationCode());
 		session.setAttribute("name", user.getEmpName());
+		session.setAttribute("id", user.getEmpId());
 
 
 		return "index";

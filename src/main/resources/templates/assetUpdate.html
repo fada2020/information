@@ -29,6 +29,14 @@
 		#table1 tbody tr{
 		    cursor:pointer;
 		}
+		.my-custom-scrollbar {
+			position: relative;
+			height: 200px;
+			overflow: auto;
+		}
+		.table-wrapper-scroll-y {
+			display: block;
+		}
 	</style>
 
   </head>
@@ -289,16 +297,10 @@
 		  			<div class="x_panel">
 						<div class="x_title">
 							<h2>付属品</h2>
-							<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a>
-							</li>
-							</ul>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content" style="display: block;">
-							<div class="table-responsive">
+							<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 								<table class="table table-striped jambo_table bulk_action text-center" id="table1">
 									<thead>
 										<tr class="headings">
@@ -314,12 +316,20 @@
 										<tr class="even pointer">
 											<td></td>
 											<td><input id="itemName" type="text" class="form-control"></td>
-											<td><input id="trick" type="text" class="form-control"></td>
-											<td><input id="quantity" type="text" class="form-control"></td>
+											<td><input id="itemSpec" type="text" class="form-control"></td>
+											<td><input id="itemQuantity" type="text" class="form-control"></td>
 											<td><input id="remarks" type="text" class="form-control"></td>
-											<td class="a-center ">
-												<a id="add" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+											<td class="a-center">
+												<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
+										</tr>
+										<tr th:each="accessories : ${asset.accessoriesList}">
+											<td th:text="${accessories.accessoriesSeq}"></td>
+											<td><input type="text" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
+											<td><input type="text" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
+											<td><input type="text" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
+											<td><input type="text" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
+											<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -332,16 +342,10 @@
 		  			<div class="x_panel">
 						<div class="x_title">
 							<h2>保守履歴</h2>
-							<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a>
-							</li>
-							</ul>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content" style="display: block;">
-							<div class="table-responsive">
+							<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 								<table class="table table-striped jambo_table bulk_action" id="table2">
 									<thead>
 										<tr class="headings">
@@ -413,49 +417,77 @@
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
     	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.psNum, value.pname);
+    		productCodeMap.set(value.codeDetailId, value.item2);
     	});
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.snumber, value.state);
+    		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
         $(function(){
-            $('#add').on('click', function () {
+            $('#addAccessories').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
-            	var accessories ={"no" : selectTr.find("#no").val(),
+            	var accessories ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
             			"itemName" : selectTr.find("#itemName").val(),
-            			"trick" : selectTr.find("#trick").val(),
-            			"quantity" : selectTr.find("#quantity").val(),
+            			"itemSpec" : selectTr.find("#itemSpec").val(),
+            			"itemQuantity" : selectTr.find("#itemQuantity").val(),
             			"remarks" : selectTr.find("#remarks").val()
             	};
 
-            	$.ajax(/*[[@{/ITAsset/add}]]*/ 'ITAsset/add',
-            		      {
-		                	type: "POST",
-		                	dataType: "json",
-		                	contentType: 'application/JSON',
-		                	data : JSON.stringify(accessories)
-            		      }
-            		    )
-            		    .done(function(data) {
-            		    	 $('#table1 tbody').append(
-            		    			 '<tr>'
-            		    			 +'<td>'+data.no+'</td>'
-            		    			 +'<td><input type="text" class="form-control" value="'+data.itemName+'"></td>'
-            		    			 +'<td><input type="text" class="form-control" value="'+data.trick+'"></td>'
-            		    			 +'<td><input type="text" class="form-control" value="'+data.quantity+'"></td>'
-            		    			 +'<td><input type="text" class="form-control" value="'+data.remarks+'"></td>'
-            		    			 +'<td class="a-center"><a id="add2" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-            		    			 +'</tr>'
-            		    	 );
-            		    })
+            	$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+					{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(accessories)
+					}
+				)
+				.done(function(data) {
+					 $('#table1 tbody').append(
+							 '<tr>'
+							 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
+							 +'<td><input type="text" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
+							 +'<td><input type="text" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
+							 +'<td><input type="text" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
+							 +'<td><input type="text" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
+							 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+							 +'</tr>'
+					 );
+				});
+
             });
 
-            $('#table1 tbody').on("click","#add2", function() {
-                alert("クリック！");
+            $('#table1 tbody').on("click","#updateAccessories", function() {
+            	var selectTr = $(this).closest("tr");
+
+            	var accessories ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"accessoriesSeq" : selectTr.find("#accessoriesSeq").text(),
+            			"itemName" : selectTr.find("#itemName").val(),
+            			"itemSpec" : selectTr.find("#itemSpec").val(),
+            			"itemQuantity" : selectTr.find("#itemQuantity").val(),
+            			"remarks" : selectTr.find("#remarks").val()
+            	};
+
+            	$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
+					{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(accessories)
+					}
+            	)
+				.done(function(data) {
+					selectTr.find("#accessoriesSeq").text(data.accessoriesSeq);
+					selectTr.find("#itemName").val(data.itemName);
+					selectTr.find("#itemSpec").val(data.itemSpec);
+					selectTr.find("#itemQuantity").val(data.itemQuantity);
+					selectTr.find("#remarks").val(data.remarks);
+				});
+
             });
         })
     /*]]>*/

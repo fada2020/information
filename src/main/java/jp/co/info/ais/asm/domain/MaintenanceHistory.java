@@ -6,14 +6,15 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-public class Accessories {
-	int accessoriesSeq;
+public class MaintenanceHistory {
+	int historySeq;
 	int assetSeq;
-	String itemName;
-	String itemSpec;
-	int itemQuantity;
-	String remarks;
+	String implementationDate;
+	String implementationDetail;
+	String repId;
+	String approverId;
 
 	String insertId;
 	String updateId;
+
 }
