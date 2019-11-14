@@ -81,7 +81,7 @@
 	<select id="researchRental" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 		select * from Rental
-		where assetNumber=#{assetNumber}
+		where asset_Number=#{assetNumber}
 	</select>
 	<select id="selectStatusCode"
 		resultType="jp.co.info.ais.asm.domain.StatusCode">
@@ -109,15 +109,23 @@
 		code_detail_name
 		FROM code_detail where code_master_id='003'
 	</select>
-<select id="selectAsset"
+<select id="selectAsset" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
-		FROM asset where status_code='001'
+		FROM asset where asset_number=#{number}
 	</select>
 
+<select id="selectAssetList" parameterType="String"
+		resultType="jp.co.info.ais.asm.domain.Asset">
+		SELECT
+		asset_seq,
+		asset_number,
+		kubun_code
+		FROM asset where status_code='001' and kubun_code=#{selectedItem}
+	</select>
 
 
 </mapper>

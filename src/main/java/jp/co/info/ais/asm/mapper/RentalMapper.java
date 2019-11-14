@@ -37,6 +37,8 @@ public interface RentalMapper {
 
 	public List<CodeDetail> selectCode() throws Exception;
 
-	public List<Asset> selectAsset() throws Exception;
+	public Asset selectAsset(String number ) throws Exception;
+
+	public List<Asset> selectAssetList(String selectedItem)throws Exception;
 
 }

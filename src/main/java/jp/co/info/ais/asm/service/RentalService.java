@@ -71,9 +71,14 @@ public class RentalService {
 		return rentalMapper.selectCode();
 	}
 
-	public List<Asset> selectAsset() throws Exception  {
-		// TODO 自動生成されたメソッド・スタブ
-		return rentalMapper.selectAsset();
+	public Asset selectAsset(String number ) throws Exception  {
+
+		return rentalMapper.selectAsset(number);
+	}
+
+	public List<Asset> selectAssetList(String selectedItem) throws Exception  {
+
+		return rentalMapper.selectAssetList(selectedItem);
 	}
 
 

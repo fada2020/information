@@ -243,7 +243,8 @@
 															<label class="control-label col-md-3 col-sm-3 ">日付</label>
 															<div class="col-md-9 col-sm-9 ">
 																<input type="text" class="form-control col-md-10"
-																	id="todayDate" th:value="${#dates.createNow()}"
+																	id="todayDate"
+																	th:value="${#dates.format(date, 'yyyy/MM/dd')}"
 																	readonly="readonly">
 															</div>
 														</div>
@@ -251,7 +252,7 @@
 														<div class="form-group row">
 															<label class="control-label col-md-3 col-sm-3 ">使用者</label>
 															<div class="col-md-9 col-sm-9 ">
-																<input type="text" name="rentUser"
+																<input type="text" name="rentUser" id="rentUser"
 																	class="form-control col-md-10" />
 															</div>
 														</div>
@@ -313,16 +314,20 @@
 															<label class="control-label col-md-3 col-sm-3 ">選択</label>
 															<div class="col-md-9 col-sm-9 ">
 																<select class="select2_multiple form-control"
-																	id="sub_subSelect" name="selectedSubItem"
-																>
+																	id="sub_subSelect" name="selectedSubItem">
+
 																	<option value="">選択</option>
+
 
 																</select>
 															</div>
 														</div>
 
 
-<div><input type="button" id="button1" onclick="writeItem();" value="button"/></div>
+														<div>
+															<input type="button" id="button1" onclick="writeItem();"
+																value="button" />
+														</div>
 
 
 														<div class="form-group row">
@@ -330,18 +335,19 @@
 														</div>
 														<div class="form-group row">
 															<table id="selectedAsset">
-															<thead>
-																<tr>
-																	<th class="col-md-2">貸与番号</th>
-																	<th class="col-md-1">貸与者</th>
-																	<th class="col-md-1">分類</th>
-																	<th class="col-md-1">種類</th>
-																	<th class="col-md-1">管理番号</th>
-																	<th class="col-md-1">用途</th>
-																	<th class="col-md-1">場所</th>
-																	<th class="col-md-1">特記事項</th>
-																</tr>
-															</thead>
+																<thead>
+																	<tr>
+
+																		<th class="col-md-1">貸与者</th>
+																		<th class="col-md-1">分類</th>
+																		<th class="col-md-1">種類</th>
+																		<th class="col-md-1">管理番号</th>
+																		<th class="col-md-1">用途</th>
+																		<th class="col-md-1">場所</th>
+																		<th class="col-md-1">特記事項</th>
+																		<th class="col-md-1">選択</th>
+																	</tr>
+																</thead>
 																<tbody></tbody>
 															</table>
 
@@ -549,7 +555,7 @@
     </script>
 
 
-		<script th:inline="javascript">
+	<script th:inline="javascript">
 		function modalInsert() {
 
     		$('#modal3d2').modal();
@@ -564,7 +570,7 @@
 			$('#singleSelect').click(
 
 					function() {
-						var item=$(this).val();
+						var item=$('#singleSelect option:selected').val();
 							var html = '<option value="">選択</option>';
 							kub.forEach(function(value) {
 							if(value.item1==item){
@@ -575,100 +581,81 @@
 						});
 		}
 
-<!--
-	/* 	function getSubSubItem() {
-			var kub =/*[[${kubunCode}]]*/;
-			$('#sub_singleSelect').click(
-					function() {
 
-					var itemName=$(this).val();
-							var html = '<option value="">選択</option>';
-
-							kub.forEach(function(value) {
-								if(value.codeMasterId=='002'&&value.codeDetailId==itemName){
-								html += '<option value="' + value.codeDetailId + '">'
-										+ value.item2 + '</option>';
-							}});
-							$('#sub_subSelect').html(html);
-						});
-		} */
-		-->
 		function getSubSubItem() {
-			var kub =/*[[${kubunCode}]]*/;
+	
 
 
-
-			$.ajax(/*[[@{/rental/getasset}]]*/ 'ITAsset/add',
-      		      {
-	                	type: "POST",
-	                	dataType: "json",
-	                	contentType: 'application/JSON',
-	                	data : JSON.stringify(accessories)
-      		      }
-      		    )
-      		    .done(function(data) {
-      		    	 $('#table1 tbody').append(
-      		    			 '<tr>'
-      		    			 +'<td>'+data.no+'</td>'
-      		    			 +'<td><input type="text" class="form-control" value="'+data.itemName+'"></td>'
-      		    			 +'<td><input type="text" class="form-control" value="'+data.trick+'"></td>'
-      		    			 +'<td><input type="text" class="form-control" value="'+data.quantity+'"></td>'
-      		    			 +'<td><input type="text" class="form-control" value="'+data.remarks+'"></td>'
-      		    			 +'<td class="a-center"><a id="add2" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-      		    			 +'</tr>'
-      		    	 );
-      		    })
-      });
 			$('#sub_singleSelect').click(
 					function() {
+					var selectedItem =$("#sub_singleSelect option:selected").val();
+					$.ajax({
+	   			"url" : "/rental/getAssetList",
+	    		"type" : "post",
+	   	 		"dataType": "json",
+	   			"data" : selectedItem,
+	   		 	"success" : function(data){
 
-					var itemName=$(this).val();
-							var html = '<option value="">選択</option>';
+	   			var itemName=$('#sub_subSelect').val();
+				var html = '<option value="">選択</option>';
 
-							kub.forEach(function(value) {
-								if(value.codeMasterId=='002'&&value.codeDetailId==itemName){
-								html += '<option value="' + value.codeDetailId + '">'
-										+ value.item2 + '</option>';
-							}});
-							$('#sub_subSelect').html(html);
-						});
-		}
+				data.forEach(function(value) {
+
+					html += '<option value="' + value.assetSeq + '">'
+							+ value.assetNumber + '</option>';
+				});
+				$('#sub_subSelect').html(html);
+			}
+
+
+
+
+	});
+					}
+);
+
+      }
+
 		/*]]>*/
 	</script>
 	<script th:inline="javascript">
 	/*<![CDATA[*/
+ function deleteRow(btn) {
+  var row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+}
+
 		function writeItem() {
+			var number=$("#sub_subSelect option:selected").text();
+			$.ajax({
+			   			"url" : "/rental/getAsset",
+			    		"type" : "post",
+			   	 		"dataType": "json",
+			   			"data" : JSON.stringify(number),
+			   		 	"success" : function(data){
 
+			    },
 
-
-			var assetNumber = 	$("#sub_subSelect option:selected").val();
-
-			var todayDate = $('#todayDate').val();
-
-			var rentUser = $('#rentUser').val();
-			var pcCode = $('#singleSelect').val();
-			var psNum = $('#sub_singleSelect').val();
-
+			});
 
 
 
 	$('#selectedAsset tbody').append('<tr><td>'
-			+assetNumber+
+
+			+$('#rentUser').val()+
 			'</td><td>'
-			+pcCode+
+			+$("#singleSelect option:selected").val()+
 			'</td><td>'
-			+assetNumber+
+		+$("#sub_singleSelect option:selected").text()+
 			'</td><td>'
-			+assetNumber+
+		+$("#sub_subSelect option:selected").text()+
 			'</td><td>'
-			+assetNumber+
+			+$("#purpose").val()+
 			'</td><td>'
-			+assetNumber+
+			+$("#storageLocation").val()+
 			'</td><td>'
-			+assetNumber+
-			'</td><td>'
-			+assetNumber+
-			'</td></tr>');
+			+$("#speciality").val()+
+			'</td><td><input type="button" value="Delete" onclick="deleteRow(this)"/></td></tr>');
 
 		}
 		/*]]>*/
