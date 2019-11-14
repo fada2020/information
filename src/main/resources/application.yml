@@ -4,6 +4,14 @@ spring:
       url: jdbc:mysql://52.192.127.200:3306/amsdb?serverTimezone=JST
       username: ams
       password: ams!23456
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+          pool-name: ConnectionPool
+          leakDetectionThreshold: 5000
+          connection-test-query: SELECT 1
+          minimum-idle: 5
+          maximum-pool-size: 10
+          auto-commit: false
 
 mybatis:
    configuration:
