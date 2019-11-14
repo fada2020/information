@@ -14,19 +14,21 @@ public class DashboardService {
 	@Autowired
 	private DashboardMapper dashboardMapper;
 
-	public ArrayList<Dashboard> rslist() {
-
-		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-		rslist = dashboardMapper.rslist();
-
-		return rslist;
-	}
-
+//	保有現況数値
 	public ArrayList<Dashboard> possession() {
 		ArrayList<Dashboard> possession = new ArrayList<Dashboard>();
 		possession = dashboardMapper.possession();
 
 		return possession;
 	}
+
+	public ArrayList<Dashboard> rslist() {
+
+		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
+//		rslist = dashboardMapper.rslist();
+
+		return rslist;
+	}
+
 
 }

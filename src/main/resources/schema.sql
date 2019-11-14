@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.5  (64 bit)
-MySQL - 10.1.38-MariaDB : Database - supplies
+SQLyog Community v13.1.5  (32 bit)
+MySQL - 5.7.28 : Database - amsdb
 *********************************************************************
 */
 
@@ -12,243 +12,220 @@ MySQL - 10.1.38-MariaDB : Database - supplies
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`supplies` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`amsdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `supplies`;
+USE `amsdb`;
 
 /*Table structure for table `accessories` */
 
 DROP TABLE IF EXISTS `accessories`;
 
 CREATE TABLE `accessories` (
-  `ASSETNUMBER` varchar(15) NOT NULL,
-  `NO` int(2) NOT NULL,
-  `ITEMNAME` varchar(50) DEFAULT NULL,
-  `TRICK` varchar(50) DEFAULT NULL,
-  `QUANTITY` int(3) DEFAULT NULL,
-  `REMARKS` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`ASSETNUMBER`,`NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `accessories_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '付属品連番',
+  `asset_seq` int(11) NOT NULL COMMENT '資産連番',
+  `item_name` varchar(50) DEFAULT NULL COMMENT '付属品名',
+  `item_spec` varchar(50) DEFAULT NULL COMMENT '付属仕様',
+  `item_quantity` int(11) DEFAULT '0' COMMENT '付属数量',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '備考',
+  `insert_id` varchar(30) DEFAULT NULL COMMENT '登録者ID',
+  `insert_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(30) DEFAULT NULL COMMENT '更新者ID',
+  `update_date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`accessories_seq`,`asset_seq`),
+  KEY `IDX_01` (`accessories_seq`,`asset_seq`,`item_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='付属品マスタ								';
 
 /*Data for the table `accessories` */
+
+/*Table structure for table `asset` */
+
+DROP TABLE IF EXISTS `asset`;
+
+CREATE TABLE `asset` (
+  `asset_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '連番',
+  `asset_number` varchar(15) NOT NULL COMMENT '資産管理番号',
+  `kubun_num` int(11) DEFAULT NULL COMMENT '区分番号',
+  `purchase_date` varchar(10) DEFAULT NULL COMMENT '購入日',
+  `warranty_period` int(2) DEFAULT NULL COMMENT '保証期間',
+  `buy_to` varchar(30) DEFAULT NULL COMMENT '購入先',
+  `purchase_price` int(11) DEFAULT NULL COMMENT '購入金額',
+  `status_code` int(11) DEFAULT NULL COMMENT '状態コード',
+  `maker_name` varchar(50) DEFAULT NULL COMMENT 'メーカ名',
+  `model_name` varchar(50) DEFAULT NULL COMMENT 'モデル名',
+  `serial_num` varchar(30) DEFAULT NULL COMMENT 'シリアル番号',
+  `interface_col` varchar(30) DEFAULT NULL COMMENT 'I/F',
+  `os_name` varchar(30) DEFAULT NULL COMMENT 'OS名',
+  `os_product_key` varchar(30) DEFAULT NULL COMMENT 'OS製品キー',
+  `cpu_processor` varchar(30) DEFAULT NULL COMMENT 'CPU',
+  `operating_frequency` decimal(5,2) DEFAULT NULL COMMENT '動作周波数',
+  `memory` decimal(5,2) DEFAULT NULL COMMENT 'メモリ',
+  `memory_upgarde` decimal(5,2) DEFAULT NULL COMMENT 'メモリ増設',
+  `hdd` decimal(5,2) DEFAULT NULL COMMENT 'HDD',
+  `hdd_upgarde` decimal(5,2) DEFAULT NULL COMMENT 'HDD増設',
+  `mac_lan` varchar(30) DEFAULT NULL COMMENT 'MAC_LAN',
+  `mac_wireless` varchar(30) DEFAULT NULL COMMENT 'MAC_WIRELESS',
+  `other` varchar(200) DEFAULT NULL COMMENT '備考',
+  `security_bios` varchar(30) DEFAULT NULL COMMENT 'SECURITY_BIOS',
+  `security_hdd` varchar(30) DEFAULT NULL COMMENT 'SECURITY_HDD',
+  `admin_account_id` varchar(30) DEFAULT NULL COMMENT '管理者ID',
+  `admin_account_pwd` varchar(30) DEFAULT NULL COMMENT '管理者PWD',
+  `storage_location` varchar(30) DEFAULT NULL COMMENT '保管位置',
+  `insert_id` varchar(30) NOT NULL COMMENT '登録者ID',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(30) NOT NULL COMMENT '更新者ID',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`asset_seq`),
+  KEY `IDX_01` (`asset_seq`,`asset_number`,`maker_name`,`model_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='資産マスタ';
+
+/*Data for the table `asset` */
+
+/*Table structure for table `code_detail` */
+
+DROP TABLE IF EXISTS `code_detail`;
+
+CREATE TABLE `code_detail` (
+  `code_master_id` varchar(3) NOT NULL COMMENT 'マスタコード',
+  `code_detail_id` varchar(4) NOT NULL COMMENT 'サーブコード',
+  `code_detail_name` varchar(100) NOT NULL,
+  `item1` varchar(200) DEFAULT NULL,
+  `item2` varchar(200) DEFAULT NULL,
+  `item3` varchar(200) DEFAULT NULL,
+  `item4` varchar(200) DEFAULT NULL,
+  `item5` varchar(200) DEFAULT NULL,
+  `order_by` int(11) unsigned zerofill DEFAULT '00000000000',
+  `delete_flag` varchar(1) DEFAULT '0',
+  PRIMARY KEY (`code_master_id`,`code_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='システムコード詳細';
+
+/*Data for the table `code_detail` */
+
+/*Table structure for table `code_master` */
+
+DROP TABLE IF EXISTS `code_master`;
+
+CREATE TABLE `code_master` (
+  `code_master_id` varchar(3) NOT NULL COMMENT 'コードマスタ連番',
+  `code_maste_name` varchar(100) DEFAULT NULL COMMENT 'コードマスタ名',
+  `remart` varchar(300) DEFAULT NULL COMMENT '備考',
+  `use_flag` int(1) DEFAULT NULL COMMENT '使用フラグ',
+  PRIMARY KEY (`code_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='システムコードマスタ';
+
+/*Data for the table `code_master` */
+
+insert  into `code_master`(`code_master_id`,`code_maste_name`,`remart`,`use_flag`) values
+('001','状態コード',NULL,0),
+('002','製品名前',NULL,0),
+('003','製品区分',NULL,0);
 
 /*Table structure for table `company` */
 
 DROP TABLE IF EXISTS `company`;
 
 CREATE TABLE `company` (
-  `C_NAME` varchar(20) NOT NULL,
-  `C_CODE` varchar(20) NOT NULL,
-  `C_NUM` int(3) NOT NULL,
-  PRIMARY KEY (`C_NUM`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `company_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '連番',
+  `company_code` varchar(20) NOT NULL COMMENT '会社コード',
+  `company_name` varchar(20) NOT NULL COMMENT '会社名',
+  `use_flag` int(11) NOT NULL DEFAULT '0' COMMENT '削除フラグ',
+  `insert_id` varchar(50) NOT NULL COMMENT '登録者ID',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(50) NOT NULL COMMENT '更新者ID',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`company_seq`),
+  KEY `IDX_KEY_01` (`company_seq`,`company_code`,`company_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会社情報マスタ';
 
 /*Data for the table `company` */
 
-/*Table structure for table `itasset` */
+/*Table structure for table `emp` */
 
-DROP TABLE IF EXISTS `itasset`;
+DROP TABLE IF EXISTS `emp`;
 
-CREATE TABLE `itasset` (
-  `ASSETNUMBER` varchar(15) NOT NULL,
-  `P_S_NUM` int(2) DEFAULT NULL,
-  `PURCHASEDATE` date DEFAULT NULL,
-  `WARRANTYPERIOD` int(2) DEFAULT NULL,
-  `BUYTO` varchar(30) DEFAULT NULL,
-  `PURCHASEPRICE` int(12) DEFAULT NULL,
-  `S_NUMBER` int(2) DEFAULT NULL,
-  `MAKER` varchar(30) DEFAULT NULL,
-  `MODEL` varchar(30) DEFAULT NULL,
-  `SERIALNUM` varchar(30) DEFAULT NULL,
-  `INTERFACECOL` varchar(30) DEFAULT NULL,
-  `OS_NAME` varchar(30) DEFAULT NULL,
-  `OS_PRODUCTKEY` varchar(30) DEFAULT NULL,
-  `CPU_PROCESSOR` varchar(30) DEFAULT NULL,
-  `OPERATING_FREQUENCY` decimal(5,2) NOT NULL,
-  `MEMORY` decimal(5,2) DEFAULT NULL,
-  `MEMORY_UPGARDE` decimal(5,2) DEFAULT NULL,
-  `HDD` decimal(5,2) NOT NULL,
-  `HDD_UPGARDE` decimal(5,2) DEFAULT NULL,
-  `MAC_LAN` varchar(30) DEFAULT NULL,
-  `MAC_WIRELESS` varchar(30) DEFAULT NULL,
-  `OTHER` varchar(200) DEFAULT NULL,
-  `SECURITY_BIOS` varchar(30) DEFAULT NULL,
-  `SECURITY_HDD` varchar(30) DEFAULT NULL,
-  `ADMINACCOUNT_ID` varchar(30) DEFAULT NULL,
-  `ADMINACCOUNT_PW` varchar(30) DEFAULT NULL,
-  `STORAGELOCATION` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`ASSETNUMBER`,`OPERATING_FREQUENCY`,`HDD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `emp` (
+  `emp_id` varchar(20) NOT NULL COMMENT '社員ID',
+  `emp_name` varchar(20) DEFAULT NULL COMMENT '社員名称',
+  `organization_code` varchar(20) DEFAULT '00000000000000000000',
+  `use_flag` varchar(1) DEFAULT '0',
+  `create_user` varchar(20) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `update_user` varchar(20) NOT NULL,
+  `update_date` datetime NOT NULL,
+  PRIMARY KEY (`emp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社員情報マスタ';
 
-/*Data for the table `itasset` */
+/*Data for the table `emp` */
 
-insert  into `itasset`(`ASSETNUMBER`,`P_S_NUM`,`PURCHASEDATE`,`WARRANTYPERIOD`,`BUYTO`,`PURCHASEPRICE`,`S_NUMBER`,`MAKER`,`MODEL`,`SERIALNUM`,`INTERFACECOL`,`OS_NAME`,`OS_PRODUCTKEY`,`CPU_PROCESSOR`,`OPERATING_FREQUENCY`,`MEMORY`,`MEMORY_UPGARDE`,`HDD`,`HDD_UPGARDE`,`MAC_LAN`,`MAC_WIRELESS`,`OTHER`,`SECURITY_BIOS`,`SECURITY_HDD`,`ADMINACCOUNT_ID`,`ADMINACCOUNT_PW`,`STORAGELOCATION`) values
-('AIS-DT-001',0,'2019-10-29',3,NULL,500000,0,'DELL','DELL4242','dee22222',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-('AIS-DT-002',0,'2019-10-29',3,NULL,600000,0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-('AIS-DT-003',0,'2019-10-29',3,NULL,600000,0,'INTEL','INTEL222','ufw43422',NULL,NULL,NULL,NULL,0.00,NULL,NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*Table structure for table `maintenance_history` */
 
-/*Table structure for table `maintenancehistory` */
+DROP TABLE IF EXISTS `maintenance_history`;
 
-DROP TABLE IF EXISTS `maintenancehistory`;
+CREATE TABLE `maintenance_history` (
+  `history_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '履歴連番',
+  `asset_seq` int(11) NOT NULL COMMENT '資産管理連番',
+  `implementation_date` date DEFAULT NULL COMMENT '実施日',
+  `implementation_detail` varchar(200) DEFAULT '' COMMENT '実施内容',
+  `rep_id` varchar(30) DEFAULT '' COMMENT '担当者ID',
+  `approver_id` varchar(30) DEFAULT '' COMMENT '承認者ID',
+  `insert_id` varchar(30) NOT NULL DEFAULT '' COMMENT '登録者ID',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(30) NOT NULL COMMENT '更新者ID',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`history_seq`,`asset_seq`),
+  KEY `IDX_01` (`implementation_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='保守履歴								';
 
-CREATE TABLE `maintenancehistory` (
-  `ASSETNUMBER` varchar(15) DEFAULT NULL,
-  `NO` int(2) DEFAULT NULL,
-  `DATEOFIMPLEMENTATION` date DEFAULT NULL,
-  `CONTENTOFIMPLEMENTATION` varchar(200) DEFAULT NULL,
-  `RESPONSIBLEPERSON` varchar(30) DEFAULT NULL,
-  `APPROVAL` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*Data for the table `maintenance_history` */
 
-/*Data for the table `maintenancehistory` */
+/*Table structure for table `rental_history` */
 
-/*Table structure for table `product` */
+DROP TABLE IF EXISTS `rental_history`;
 
-DROP TABLE IF EXISTS `product`;
+CREATE TABLE `rental_history` (
+  `rental_history_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '履歴連番',
+  `rental_seq` int(11) NOT NULL COMMENT '貸与連番',
+  `asset_seq` int(11) NOT NULL COMMENT '資産管理番号',
+  `rental_day` varchar(10) NOT NULL DEFAULT '' COMMENT '貸与日',
+  `rental_user_id` varchar(30) NOT NULL DEFAULT '' COMMENT '貸与者ID',
+  `purpose` varchar(50) NOT NULL DEFAULT '' COMMENT '貸与用途',
+  `speciality` varchar(50) NOT NULL DEFAULT '' COMMENT '特記事項',
+  `applicant_id` varchar(30) DEFAULT '' COMMENT '申請者ID',
+  `return_day` varchar(10) DEFAULT '' COMMENT '返却日',
+  `return_user_id` varchar(30) DEFAULT '' COMMENT '返却者ID',
+  `return_period` varchar(10) DEFAULT '' COMMENT '返却期間',
+  `status_code` int(11) DEFAULT NULL COMMENT '状態コード',
+  `storage_location` varchar(30) DEFAULT NULL COMMENT '保管位置',
+  `bp_name` varchar(30) DEFAULT NULL COMMENT 'BP社名',
+  `insert_id` varchar(30) NOT NULL COMMENT '登録者ID',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(30) NOT NULL COMMENT '更新者ID',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`rental_history_seq`),
+  KEY `IDX_01` (`rental_history_seq`,`rental_seq`,`asset_seq`,`rental_day`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='貸与履歴								';
 
-CREATE TABLE `product` (
-  `P_C_NUM` int(4) NOT NULL,
-  `P_S_NUM` int(5) NOT NULL,
-  `P_NAME` varchar(20) NOT NULL,
-  `P_CODE` varchar(20) NOT NULL,
-  PRIMARY KEY (`P_S_NUM`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*Data for the table `rental_history` */
 
-/*Data for the table `product` */
+/*Table structure for table `rental_master` */
 
-insert  into `product`(`P_C_NUM`,`P_S_NUM`,`P_NAME`,`P_CODE`) values
-(0,0,'パソコン','dt'),
-(0,1,'マウス','dt'),
-(0,2,'モニター','jm'),
-(0,3,'ケーブル','jm');
+DROP TABLE IF EXISTS `rental_master`;
 
-/*Table structure for table `productkind` */
+CREATE TABLE `rental_master` (
+  `rental_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '貸与番号',
+  `asset_seq` int(11) NOT NULL COMMENT '資産管理番号',
+  `purpose　` varchar(50) DEFAULT NULL COMMENT '用途',
+  `speciality` varchar(50) DEFAULT NULL COMMENT '特記事項',
+  `applicant_id` varchar(30) DEFAULT NULL COMMENT '申請者ID',
+  `return_period` varchar(10) DEFAULT NULL COMMENT '返却期間',
+  `bp_name` varchar(30) DEFAULT NULL COMMENT 'BP社名',
+  `insert_id` varchar(30) NOT NULL COMMENT '登録者ID',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `update_id` varchar(30) NOT NULL COMMENT '更新者ID',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+  PRIMARY KEY (`rental_seq`,`asset_seq`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='貸与									';
 
-DROP TABLE IF EXISTS `productkind`;
-
-CREATE TABLE `productkind` (
-  `P＿C_NAME` varchar(20) NOT NULL,
-  `P＿C_CODE` varchar(20) NOT NULL,
-  `P_C_NUM` int(4) NOT NULL,
-  PRIMARY KEY (`P_C_NUM`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `productkind` */
-
-/*Table structure for table `rental` */
-
-DROP TABLE IF EXISTS `rental`;
-
-CREATE TABLE `rental` (
-  `RENT_DAY` date DEFAULT NULL,
-  `RENT_USER` varchar(20) DEFAULT NULL,
-  `PURPOSE` varchar(50) DEFAULT NULL,
-  `SPECIALITY` varchar(50) DEFAULT NULL,
-  `RENT_NUMBER` varchar(10) NOT NULL,
-  `APPLICANT` varchar(20) DEFAULT NULL,
-  `ASSETNUMBER` varchar(15) NOT NULL,
-  `RETURN_PERIOD` datetime DEFAULT NULL,
-  `BPPARTNER` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`RENT_NUMBER`,`ASSETNUMBER`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `rental` */
-
-insert  into `rental`(`RENT_DAY`,`RENT_USER`,`PURPOSE`,`SPECIALITY`,`RENT_NUMBER`,`APPLICANT`,`ASSETNUMBER`,`RETURN_PERIOD`,`BPPARTNER`) values
-('2019-11-06','ハミンホ','勤務',NULL,'20191106_0','イヒョクジュ','ais-dt-001',NULL,NULL),
-('2019-11-06','ソンジョンミン','勤務',NULL,'20191106_0','イヒョクジュ','ais-dt-002',NULL,NULL);
-
-/*Table structure for table `rentalhistory` */
-
-DROP TABLE IF EXISTS `rentalhistory`;
-
-CREATE TABLE `rentalhistory` (
-  `RENT_DAY` date DEFAULT NULL,
-  `RENT_USER` varchar(20) DEFAULT NULL,
-  `PURPOSE` varchar(50) DEFAULT NULL,
-  `SPECIALITY` varchar(50) DEFAULT NULL,
-  `RENT_NUMBER` varchar(10) NOT NULL,
-  `APPLICANT` varchar(20) DEFAULT NULL,
-  `ASSETNUMBER` varchar(15) NOT NULL,
-  `RETURN_DAY` date DEFAULT NULL,
-  `RETURN_USER` varchar(20) DEFAULT NULL,
-  `RETURN_PERIOD` date DEFAULT NULL,
-  `STATUS` int(2) DEFAULT NULL,
-  `STORAGELOCATION` varchar(30) DEFAULT NULL,
-  `BPPARTNER` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`RENT_NUMBER`,`ASSETNUMBER`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `rentalhistory` */
-
-/*Table structure for table `state` */
-
-DROP TABLE IF EXISTS `state`;
-
-CREATE TABLE `state` (
-  `S_NUMBER` int(2) NOT NULL,
-  `STATE` varchar(4) NOT NULL,
-  PRIMARY KEY (`S_NUMBER`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `state` */
-
-insert  into `state`(`S_NUMBER`,`STATE`) values
-(0,'保管'),
-(1,'貸与'),
-(2,'故障'),
-(3,'廃棄');
-
-/*Table structure for table `PRODUCTKIND` */
-CREATE TABLE PRODUCTKIND (
-P_C_NUM	INT(4) PRIMARY KEY,
-P_C_NAME VARCHAR(20) NOT NULL,
-P_C_CODE VARCHAR(20) NOT NULL
-);
-
-/*Table structure for table `todo` */
-
-DROP TABLE IF EXISTS `todo`;
-
-CREATE TABLE `todo` (
-  `id` decimal(10,0) NOT NULL,
-  `title` text,
-  `details` text,
-  `finished` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `todo` */
-
-insert  into `todo`(`id`,`title`,`details`,`finished`) values
-(1,'飲み会','銀座 19:00',0),
-(2,'飲み会','銀座 19:00',0),
-(3,'飲み会','銀座 19:00',0),
-(4,'飲み会','銀座 19:00',0),
-(5,'飲み会','銀座 19:00',0),
-(6,'飲み会','銀座 19:00',0),
-(7,'飲み会','銀座 19:00',0),
-(10,'飲み会','銀座 19:00',0),
-(11,'飲み会','銀座 19:00',0),
-(12,'飲み会','銀座 19:00',0),
-(13,'飲み会','銀座 19:00',0),
-(14,'飲み会','銀座 19:00',0),
-(15,'飲み会','銀座 19:00',0),
-(16,'飲み会','銀座 19:00',0),
-(17,'飲み会','銀座 19:00',0),
-(18,'飲み会','銀座 19:00',0),
-(19,'飲み会','銀座 19:00',0),
-(20,'飲み会','銀座 19:00',0),
-(21,'飲み会','銀座 19:00',0),
-(22,'飲み会','銀座 19:00',0),
-(23,'飲み会','銀座 19:00',0),
-(24,'飲み会','銀座 19:00',0),
-(25,'飲み会','銀座 19:00',0),
-(26,'飲み会','銀座 19:00',0),
-(27,'飲み会','銀座 19:00',0),
-(28,'飲み会','銀座 19:00',0),
-(29,'飲み会','銀座 19:00',0),
-(30,'飲み会','銀座 19:00',0);
+/*Data for the table `rental_master` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
