@@ -10,8 +10,8 @@ import jp.co.info.ais.asm.domain.Dashboard;
 @Mapper
 public interface DashboardMapper {
 
-	public ArrayList<Dashboard> rslist();
-
 	public ArrayList<Dashboard> possession();
+
+//	public ArrayList<Dashboard> rslist();
 
 }

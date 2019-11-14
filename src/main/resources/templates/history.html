@@ -30,6 +30,12 @@
 		#table1 tbody tr{
 		    cursor:pointer;
 		}
+
+		#exportExcel {
+			margin-top:10px;
+			background-color:#ff5050;
+			float:right;
+		}
 	</style>
 
   </head>
@@ -58,6 +64,9 @@
             <div class="row">
               <div class="col">
 
+				<!-- searching condition -S -->
+				<!-- 1st line -->
+				<div>
                 <div class="col-md-1" style="width:9%;">
                     <span class="pull-right" style="margin-left:-1%; font-size: 18px;">管理番号</span>
                 </div>
@@ -77,42 +86,78 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="status_search" style="margin-left:-1%">
-						<option value="-1">状態</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.sNumber}"
-                		th:inline="text">[[${code.state}]]</option>
+						<option value="000">状態</option>
+                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
+                		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
+				</div>
+				<!-- 1st line -->
 
-                <div class="col-md-1" style="margin-left:-2%;">
+				<br><br>
+				<!-- 2nd line -->
+				<div>
+
+				<div id="rentalDayDiv">
+				<div class="col-md-1" style="margin-left:-2%;">
                     <span class="pull-right" style="font-size: 18px;">貸与日</span>
                 </div>
                 <div class="col-md-2">
-					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="returnDate_search" style="margin-left:-1%">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="rentalDayS_search" style="margin-left:-1%">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					 </span>
 					</div>
                 </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="rentalDayE_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+				</div>
+
+				<div id="returnDayDiv">
+                <div class="col-md-1" style="margin-left:-2%;">
+                    <span class="pull-right" style="font-size: 18px;">返却日</span>
+                </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="returnDayS_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+                <div class="col-md-2">
+					<div class="input-group date">
+						<input type="text" class="form-control" id="returnDayE_search" style="margin-left:-1%">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					 </span>
+					</div>
+                </div>
+				</div>
 
                 <div class="col-md-1" style="width:5%; margin-left:-1%;">
                 	<button id="serchButton" class="btn btn-primary">検索</button>
                 </div>
+                </div>
+				<!-- 2nd line -->
 
-				<br>
-				<div>
-					<button id="exportExcel">Export</button>
-				</div>
+				<!-- searching condition -S -->
+
+
                 <div class="x_panel">
+
                   <div class="x_title">
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
+                    <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
+
                   </div>
+
                   <div class="x_content">
 
                     <table class="table table-bordered table-hover table-lg" id="table1" style="width:100%;">
@@ -181,7 +226,7 @@
     <script th:inline="javascript">
 
     /*<![CDATA[*/
-        $('#myDatepicker').datetimepicker({
+        $('.input-group date').datetimepicker({
             format: 'YYYY/MM/DD'
         });
 
@@ -193,11 +238,29 @@
     		stateCodeMap.set(value.snumber, value.state);
     	});
 
+    	var stateCodeMap = new Map();
+    	var stateCode = /*[[${stateCode}]]*/;
+    	stateCode.forEach(function( value ) {
+    		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
+    	});
+
+
         $(function(){
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
-            	fixedHeader: true,
+            	"language": {
+            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+            		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
+            	    "infoFiltered":   "",
+            	    "paginate": {
+            	        "first":      "最初",
+            	        "last":       "最後",
+            	        "next":       "次へ",
+            	        "previous":   "前の"
+            	    }
+                },
+            	"fixedHeader": true,
             	"processing": true,
             	"serverSide": true,
             	"start": 0,
@@ -215,7 +278,10 @@
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                 		d.columns[1].search.value = $('#applicant_search').val();
                 		d.columns[2].search.value = $('#status_search').val();
-                		d.columns[3].search.value = $('#returnDate_search').val();
+                		d.columns[3].search.value = $('#rentalDayS_search').val();
+                		d.columns[4].search.value = $('#rentalDayE_search').val();
+                		d.columns[5].search.value = $('#returnDayS_search').val();
+                		d.columns[6].search.value = $('#returnDayE_search').val();
 
                         return JSON.stringify(d);
                     }
@@ -224,29 +290,21 @@
                     { targets: 0, data: "assetNumber"},
                     { targets: 1, data: "maker"},
                     { targets: 2, data: "model"},
-                    { targets: 3, data: function ( d ) {
-                    	return stateCodeMap.get(d.status);
-                    }},
-                    { targets: 4, data: "rentNumber"},
+                    { targets: 3, data: "statusCode"},
+                    { targets: 4, data: "rentNo"},
                     { targets: 5, data: "purpose"},
                     { targets: 6, data: "storageLocation"},
                     { targets: 7, data: "applicant"},
-                    { targets: 8, data: "rentuser"},
-                    { targets: 9, data: "bpPartner"},
+                    { targets: 8, data: "rentUserId"},
+                    { targets: 9, data: "bpName"},
                     { targets: 10, data: function ( d ) {
-                    	var rentDate = new Date(d.rentDate);
-                		var yyyy = rentDate.getFullYear();
-                		var mm = rentDate.getMonth()+1;
-                		var dd = rentDate.getDate();
-                    	return yyyy + "/" + mm + "/" + dd;
+                    	var str = d.rentalDayS;
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
                     { targets: 11, data: function ( d ) {
-                    	var returnDate = new Date(d.returnDate);
-                		var yyyy = returnDate.getFullYear();
-                		var mm = returnDate.getMonth()+1;
-                		var dd = returnDate.getDate();
-                    	return yyyy + "/" + mm + "/" + dd;
-                    }},
+                    	var str = d.returnDayS;
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    }}
                 ]
             });
 
@@ -257,18 +315,53 @@
           	//Search -E
 
           	//table Exportion -S
-          	$('#exportExcel').click(function(){
-          		var link = document.createElement('export');
-          		link.download = 'exportionExample.xls';
-          		link.href = 'data :,' + $('#tblExport').text();
-          		link.click();
-          	});
-          	
-          	
+
+          	$('#exportExcel').on( 'click', function () {
+
+        		var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+        		tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
+        		tab_text = tab_text + '<xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
+        		tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
+        		tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        		tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        		tab_text = tab_text + "<table border='1px'>";
+
+        		var exportTable = $('#table1').clone();
+        		exportTable.find('input').each(function (index, elem) { $(elem).remove(); });
+        		tab_text = tab_text + exportTable.html();
+        		tab_text = tab_text + '</table></body></html>';
+        		var data_type = 'data:application/vnd.ms-excel';
+        		var ua = window.navigator.userAgent;
+        		var msie = ua.indexOf("MSIE ");
+        		var fileName = 'rentalHistory.xls';
+
+        		//adapt IE
+        		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        		if (window.navigator.msSaveBlob) {
+        		var blob = new Blob([tab_text], {
+        		type: "application/csv;charset=utf-8;"
+        		});
+        		navigator.msSaveBlob(blob, fileName);
+        		}
+        		} else {
+        		var blob2 = new Blob([tab_text], {
+        		type: "application/csv;charset=utf-8;"
+        		});
+        		var filename = fileName;
+        		var elem = window.document.createElement('a');
+        		elem.href = window.URL.createObjectURL(blob2);
+        		elem.download = filename;
+        		document.body.appendChild(elem);
+        		elem.click();
+        		document.body.removeChild(elem);
+        		}
+            } );
 
           	//table Exportion -E
 
         })
+
+
 
     </script>
 
