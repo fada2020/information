@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
-import jp.co.info.ais.asm.domain.History;
 
 @Mapper
-public interface HistoryMapper{
+public interface AssetMapper {
+	List<Asset> select(Asset ITAsset);
 
-	List<History> selectHistory(History History);
+	int selectCount(Asset ITAsset);
 
-	int selectCount(History History);
+	List<CodeDetail> selectProductCode();
 
 	List<CodeDetail> selectStateCode();
 }

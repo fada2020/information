@@ -5,13 +5,15 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.ProductKind;
 import jp.co.info.ais.asm.domain.Rental;
+import jp.co.info.ais.asm.domain.StatusCode;
 
 @Mapper
 public interface RentalMapper {
 
-	public List<Rental> select(Rental rental)throws Exception;
+	public List<Rental> selectAll(Rental rental)throws Exception;
 
 	public int selectCount(Rental rental) throws Exception;
 
@@ -24,6 +26,10 @@ public interface RentalMapper {
 	public List<ProductKind> searchCode()throws Exception;
 
 	public Rental researchRental(String assetNumber)throws Exception;
+
+	public List<CodeDetail> selectCodeDetail()throws Exception;
+
+	public List<StatusCode> selectStatusCode()throws Exception;
 
 
 }

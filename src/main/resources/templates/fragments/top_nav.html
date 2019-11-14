@@ -13,9 +13,13 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  		 <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html" style="padding-right:20px;">
-               				 <span class="glyphicon glyphicon-off" aria-hidden="true" style="font-size:20px;padding-top:7px;"></span>
-               			 </a>
+                  <a class="user-profile">
+                    <img src="" alt="">
+
+                  <span th:text="${session.name}"></span>
+				  <span th:text="${session.organizationCode}"></span>
+
+                  </a>
                 </li>
               </ul>
             </nav>

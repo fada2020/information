@@ -1,7 +1,5 @@
 package jp.co.info.ais.asm.domain;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,19 +8,20 @@ import lombok.ToString;
 @ToString
 public class History {
 
+	String assetNumber;
 	String maker;
 	String model;
 
-	String assetNumber;
-	int status = -1;
-	String rentNumber;
+
+	String statusCode = "000";
+	String rentNo;
 	String purpose;
 	String storageLocation;
 	String applicant;
-	String rentuser;
-	String bpPartner;
-	Date rentday;
-	Date returnday;
+	String rentUserId;
+	String bpName;
+	String rentalDay;
+	String returnDay;
 
 	int length = 10;
 	int start;

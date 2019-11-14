@@ -1,7 +1,5 @@
 package jp.co.info.ais.asm.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.History;
 import jp.co.info.ais.asm.service.HistoryService;
-import jp.co.info.ais.asm.service.ITAssetService;
 
 @Controller
 @RequestMapping("/history")
@@ -27,12 +24,9 @@ public class HistoryController {
 	@Autowired
 	private HistoryService HistoryService;
 
-	@Autowired
-	private ITAssetService ITAssetService;
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String ITAssetList(Model model) {
-    	model.addAttribute("stateCode", ITAssetService.selectStateCode());
+		model.addAttribute("stateCode", HistoryService.selectStateCode());
     	return "history";
     }
 
@@ -55,22 +49,16 @@ public class HistoryController {
     		condition.setApplicant(applicant);
     	}
 
-    	String status = page.getColumns().get(2).getSearch().getValue();
-    	int tempS = Integer.parseInt(status);
-    	logger.debug(tempS);
-    	if(tempS != -1){
-    		condition.setStatus(tempS);
+    	String statusCode = page.getColumns().get(2).getSearch().getValue();
+    	if(null != statusCode && !statusCode.equals("")){
+    		statusCode = "%"+statusCode+"%";
+    		condition.setApplicant(statusCode);
     	}
 
-    	String date = page.getColumns().get(3).getSearch().getValue();
-    	if(null != date && !date.equals("")){
-    		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-    		logger.debug(page.getColumns().get(3).getSearch().getValue());
-    		try {
-    			condition.setRentday(df.parse(date));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+    	String rentalDay = page.getColumns().get(3).getSearch().getValue();
+    	if(null != rentalDay && !rentalDay.equals("")) {
+    		rentalDay = "%"+rentalDay+"%";
+    		condition.setRentalDay(rentalDay);
     	}
 
         List<History> list = HistoryService.selectHistory(condition);

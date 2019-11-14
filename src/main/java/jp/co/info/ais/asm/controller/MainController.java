@@ -24,7 +24,7 @@ public class MainController {
 
 	private static final Logger logger = LogManager.getLogger(MainController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request
     					, Model model) {
 		@SuppressWarnings("unchecked")

@@ -9,26 +9,31 @@ import jp.co.info.ais.asm.domain.Login;
 import jp.co.info.ais.asm.mapper.LoginMapper;
 
 
-
-
 @Service
 public class LoginService {
 
 
-	private static final Logger logger = LogManager.getLogger(ITAssetService.class);
+	private static final Logger logger = LogManager.getLogger(LoginService.class);
 
 
 	@Autowired
 	private LoginMapper loginMapper;
 
-	public Login selectLogin(String id, String pass) {
-		return loginMapper.select(id, pass);
+	public int selectLoginId(String id) {
+		return loginMapper.selectId(id);
 
 	}
+
+	public Login selectLogin(String id ,String pass) {
+		return loginMapper.selectLogin(id, pass);
+
+	}
+
 	/*
 	public  loginCheckResult() {
 		 //checkResult 転送？
 		return null;
 	}*/
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.History;
 import jp.co.info.ais.asm.mapper.HistoryMapper;
 
@@ -16,6 +17,10 @@ public class HistoryService{
 
 	public List<History> selectHistory(History condition){
 		return HistoryMapper.selectHistory(condition);
+	}
+
+	public List<CodeDetail> selectStateCode() {
+		return HistoryMapper.selectStateCode();
 	}
 
 }

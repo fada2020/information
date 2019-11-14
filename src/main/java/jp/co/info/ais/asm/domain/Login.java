@@ -5,12 +5,11 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-
 public class Login {
-	String emp_id;
-	String emp_pass;
-	String emp_name;
-	String emp_organization;
-	String emp_position;
+	private String empId;
+	private String empName;
+	private String organizationCode;
+	private String useFlag;
+	private String passwd;
 
 }
