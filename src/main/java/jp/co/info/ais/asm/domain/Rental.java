@@ -29,7 +29,7 @@ public class Rental {
 
 	//資産マスタから持ち込む
 	private String assetNumber;
-	private int codeDetailId;
+	private String codeDetailId;
 	private String codeDetailName;
 	private String kubunCode;
 

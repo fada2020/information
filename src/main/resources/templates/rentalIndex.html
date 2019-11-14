@@ -76,7 +76,7 @@
 							</div>
 							<div class="buttons">
 
-									<button type="button" onclick="modalInsert()">貸与</button>
+								<button type="button" onclick="modalInsert()">貸与</button>
 
 
 
@@ -237,115 +237,118 @@
 												</div>
 
 												<div class="modal-body">
-														<div class="x_content">
-									<br>
-									<div class="form-group row ">
-										<label class="control-label col-md-3 col-sm-3 ">日付</label>
-										<div class="col-md-9 col-sm-9 ">
-											<input type="text" class="form-control col-md-10"
-												id="todayDate" th:value="${#dates.createNow()}"
-												readonly="readonly">
-										</div>
-									</div>
+													<div class="x_content">
+														<br>
+														<div class="form-group row ">
+															<label class="control-label col-md-3 col-sm-3 ">日付</label>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" class="form-control col-md-10"
+																	id="todayDate" th:value="${#dates.createNow()}"
+																	readonly="readonly">
+															</div>
+														</div>
 
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">使用者</label>
-										<div class="col-md-9 col-sm-9 ">
-											<input type="text" name="rentUser"
-												class="form-control col-md-10" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">用途</label>
-										<div class="col-md-9 col-sm-9 ">
-											<input type="text" class="form-control col-md-10"
-												id="purpose" value="勤務">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">場所</label>
-										<div class="col-md-9 col-sm-9 ">
-											<input type="text" id="storageLocation" value="自社"
-												class="form-control col-md-10">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">特記事項</label>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">使用者</label>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" name="rentUser"
+																	class="form-control col-md-10" />
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">用途</label>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" class="form-control col-md-10"
+																	id="purpose" value="勤務">
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">場所</label>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" id="storageLocation" value="自社"
+																	class="form-control col-md-10">
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">特記事項</label>
 
-										<div class="col-md-9 col-sm-9 ">
-											<input type="text" id="speciality"
-												class="form-control col-md-10">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">分類</label>
-										<div class="col-md-9 col-sm-9 ">
-											<select class="form-control" id="singleSelect"
-												name="selectedItem" onchange="getSubItem()">
-												<option value="">選択</option>
-												<option th:each="productKindCode : ${statusCodeMap}"
-													th:value="${productKindCode.codedetailid}"
-													th:text="${productKindCode.codedetailname}"></option>
-											</select>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" id="speciality"
+																	class="form-control col-md-10">
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">分類</label>
+															<div class="col-md-9 col-sm-9 "
+																th:if="${kubunCode} != null">
+																<select class="form-control" id="singleSelect"
+																	name="selectedItem" onchange="getSubItem()">
+																	<option value="">選択</option>
+																	<option th:each="productKindCode : ${kubun}"
+																		th:value="${productKindCode.codeDetailName}"
+																		th:text="${productKindCode.codeDetailName}"></option>
+																</select>
 
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">種類</label>
+															</div>
+															<p th:unless="${kubunCode} != null">データがありません</p>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">種類</label>
 
-										<div class="col-md-9 col-sm-9 ">
+															<div class="col-md-9 col-sm-9 ">
 
-											<select class="select2_multiple form-control"
-												id="sub_singleSelect" name="sub_selectedItem"
-												onchange="getSubSubItem()">
+																<select class="select2_multiple form-control"
+																	id="sub_singleSelect" name="sub_selectedItem"
+																	onchange="getSubSubItem()">
 
-												<option value="">選択</option>
-											</select>
+																	<option value="">選択</option>
+																</select>
 
-										</div>
+															</div>
 
-									</div>
-
-
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">選択</label>
-										<div class="col-md-9 col-sm-9 ">
-											<select class="select2_multiple form-control"
-												id="sub_subSelect" name="selectedSubItem"
-												onchange="writeItem()">
-												<option value="">選択</option>
-
-											</select>
-										</div>
-									</div>
+														</div>
 
 
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">選択</label>
+															<div class="col-md-9 col-sm-9 ">
+																<select class="select2_multiple form-control"
+																	id="sub_subSelect" name="selectedSubItem"
+																>
+																	<option value="">選択</option>
+
+																</select>
+															</div>
+														</div>
 
 
-
-									<div class="form-group row">
-										<label class="control-label col-md-3 col-sm-3 ">貸与目録</label><br>
-									</div>
-									<div class="form-group row">
-										<table id="selectedAsset">
-											<tr>
-												<th class="col-md-2">貸与番号</th>
-												<th class="col-md-1">貸与者</th>
-												<th class="col-md-1">分類</th>
-												<th class="col-md-1">種類</th>
-												<th class="col-md-1">管理番号</th>
-												<th class="col-md-1">用途</th>
-												<th class="col-md-1">場所</th>
-												<th class="col-md-1">特記事項</th>
-											</tr>
-
-											<tbody></tbody>
-										</table>
-
-									</div>
+<div><input type="button" id="button1" onclick="writeItem();" value="button"/></div>
 
 
-								</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">貸与目録</label><br>
+														</div>
+														<div class="form-group row">
+															<table id="selectedAsset">
+															<thead>
+																<tr>
+																	<th class="col-md-2">貸与番号</th>
+																	<th class="col-md-1">貸与者</th>
+																	<th class="col-md-1">分類</th>
+																	<th class="col-md-1">種類</th>
+																	<th class="col-md-1">管理番号</th>
+																	<th class="col-md-1">用途</th>
+																	<th class="col-md-1">場所</th>
+																	<th class="col-md-1">特記事項</th>
+																</tr>
+															</thead>
+																<tbody></tbody>
+															</table>
+
+														</div>
+
+
+													</div>
 												</div>
 
 
@@ -544,78 +547,131 @@
         })
     /*]]>*/
     </script>
-	<script th:inline="javascript">
-	function modalInsert() {
 
 
+		<script th:inline="javascript">
+		function modalInsert() {
 
     		$('#modal3d2').modal();
 
-
-
     	}
+		</script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
 		function getSubItem() {
+			var kub =/*[[${kubunCode}]]*/;
 
 			$('#singleSelect').click(
-					function() {
-						$.getJSON("/rental/selectFirst", {
-							pcNum : $(this).val(),
-							ajax : 'true'
-						}, function(data) {
-							var html = '<option value="">選択</option>';
-							data.forEach(function(value) {
 
-								html += '<option value="' +value.psNum + '">'
-										+ value.pname + '</option>';
-							})
+					function() {
+						var item=$(this).val();
+							var html = '<option value="">選択</option>';
+							kub.forEach(function(value) {
+							if(value.item1==item){
+								html += '<option value="' +value.codeDetailId + '">'
+										+ value.codeDetailName + '</option>';
+							}});
 							$('#sub_singleSelect').html(html);
 						});
-					});
-
 		}
-	</script>
-	<script th:inline="javascript">
-		function getSubSubItem() {
 
+<!--
+	/* 	function getSubSubItem() {
+			var kub =/*[[${kubunCode}]]*/;
 			$('#sub_singleSelect').click(
 					function() {
-						$.getJSON("/rental/selectSecond", {
-							psNum : $(this).val(),
-							ajax : 'true'
-						}, function(data) {
+
+					var itemName=$(this).val();
 							var html = '<option value="">選択</option>';
 
-							data.forEach(function(value) {
-								html += '<option value="' + value.psNum + '">'
-										+ value.assetNumber + '</option>';
-							})
+							kub.forEach(function(value) {
+								if(value.codeMasterId=='002'&&value.codeDetailId==itemName){
+								html += '<option value="' + value.codeDetailId + '">'
+										+ value.item2 + '</option>';
+							}});
 							$('#sub_subSelect').html(html);
-
 						});
-					});
+		} */
+		-->
+		function getSubSubItem() {
+			var kub =/*[[${kubunCode}]]*/;
 
+
+
+			$.ajax(/*[[@{/rental/getasset}]]*/ 'ITAsset/add',
+      		      {
+	                	type: "POST",
+	                	dataType: "json",
+	                	contentType: 'application/JSON',
+	                	data : JSON.stringify(accessories)
+      		      }
+      		    )
+      		    .done(function(data) {
+      		    	 $('#table1 tbody').append(
+      		    			 '<tr>'
+      		    			 +'<td>'+data.no+'</td>'
+      		    			 +'<td><input type="text" class="form-control" value="'+data.itemName+'"></td>'
+      		    			 +'<td><input type="text" class="form-control" value="'+data.trick+'"></td>'
+      		    			 +'<td><input type="text" class="form-control" value="'+data.quantity+'"></td>'
+      		    			 +'<td><input type="text" class="form-control" value="'+data.remarks+'"></td>'
+      		    			 +'<td class="a-center"><a id="add2" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+      		    			 +'</tr>'
+      		    	 );
+      		    })
+      });
+			$('#sub_singleSelect').click(
+					function() {
+
+					var itemName=$(this).val();
+							var html = '<option value="">選択</option>';
+
+							kub.forEach(function(value) {
+								if(value.codeMasterId=='002'&&value.codeDetailId==itemName){
+								html += '<option value="' + value.codeDetailId + '">'
+										+ value.item2 + '</option>';
+							}});
+							$('#sub_subSelect').html(html);
+						});
 		}
+		/*]]>*/
 	</script>
 	<script th:inline="javascript">
-
+	/*<![CDATA[*/
 		function writeItem() {
 
-			var assetNumber = $('#sub_subSelect').text();
-			alert(assetNumber);
+
+
+			var assetNumber = 	$("#sub_subSelect option:selected").val();
+
 			var todayDate = $('#todayDate').val();
-			alert(todayDate);
+
 			var rentUser = $('#rentUser').val();
 			var pcCode = $('#singleSelect').val();
 			var psNum = $('#sub_singleSelect').val();
 
-			$('#sub_subSelect').click(
-							function() {
 
 
-	$('#selectedAsset tbody').append('<tr><td>'+assetNumber+'</td><td>'+pcCode+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td><td>'+assetNumber+'</td></tr>');
-												});
+
+	$('#selectedAsset tbody').append('<tr><td>'
+			+assetNumber+
+			'</td><td>'
+			+pcCode+
+			'</td><td>'
+			+assetNumber+
+			'</td><td>'
+			+assetNumber+
+			'</td><td>'
+			+assetNumber+
+			'</td><td>'
+			+assetNumber+
+			'</td><td>'
+			+assetNumber+
+			'</td><td>'
+			+assetNumber+
+			'</td></tr>');
+
 		}
-
+		/*]]>*/
 	</script>
 
 </body>

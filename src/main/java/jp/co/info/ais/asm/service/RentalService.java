@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.ProductKind;
 import jp.co.info.ais.asm.domain.Rental;
@@ -31,9 +32,9 @@ public class RentalService {
 		return rentalMapper.selectCount(rental);
 	}
 
-	public List<CodeDetail> getSelectData()throws Exception {
+	public List<CodeDetail> getSelectCodeData(String codeDetailName)throws Exception {
 
-		return rentalMapper.getSelectData();
+		return rentalMapper.getSelectCodeData(codeDetailName);
 	}
 
 	public List<Rental> getSelectProduct(String psNum)throws Exception{
@@ -64,5 +65,16 @@ public class RentalService {
 
 		return rentalMapper.selectStatusCode();
 	}
+
+	public List<CodeDetail> selectCode()throws Exception  {
+
+		return rentalMapper.selectCode();
+	}
+
+	public List<Asset> selectAsset() throws Exception  {
+		// TODO 自動生成されたメソッド・スタブ
+		return rentalMapper.selectAsset();
+	}
+
 
 }

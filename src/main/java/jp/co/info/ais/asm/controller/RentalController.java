@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.asm.common.Page;
+import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.Rental;
-import jp.co.info.ais.asm.service.AssetService;
 import jp.co.info.ais.asm.service.RentalService;
 
 @Controller
@@ -27,9 +27,7 @@ public class RentalController {
 
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
-	//資産管理
-	@Autowired
-	private AssetService ITAssetService;
+
 
 	@Autowired
 	private RentalService rentalService;
@@ -44,11 +42,20 @@ public class RentalController {
 		model.addAttribute("kubunCode", rentalService.selectCodeDetail());
 		//ステータースデータ習得
 		model.addAttribute("statusCode", rentalService.selectStatusCode());
+		//区分コードの習得
+		model.addAttribute("kubun", rentalService.	selectCode());
 
+		model.addAttribute("assetList", rentalService.selectAsset());
 		//戻り値 区分データ,ステータースデータ
 		return "rentalIndex";
 	}
+	@RequestMapping("/getAsset")
+	@ResponseBody
+	public List<Asset> getAssetList(@RequestBody Page<Asset> page) throws Exception {
 
+
+		return ;
+	}
 	@RequestMapping("/getRentalList")
 	@ResponseBody
 	public Page<Rental> getuserlist(@RequestBody Page<Rental> page) throws Exception {
@@ -91,17 +98,11 @@ public class RentalController {
 		return page;
 	}
 
-	@RequestMapping("") //게시글 작성폼 호출
-	private @ResponseBody List<CodeDetail> rentalBoardInsertForm() throws Exception {
-		List<CodeDetail> selectedMap = rentalService.getSelectData();
-
-		return selectedMap;
-	}
 
 	@RequestMapping(value = "/selectFirst", method = RequestMethod.GET)
-	public @ResponseBody List<CodeDetail> getSelectData() throws Exception {
+	public @ResponseBody List<CodeDetail> getSelectData(@RequestParam(value = "codeDetailName", required = true) String codeDetailName) throws Exception {
 
-		List<CodeDetail> selectedMap = rentalService.getSelectData();
+		List<CodeDetail> selectedMap = rentalService.getSelectCodeData(codeDetailName);
 
 		return selectedMap;
 	}
