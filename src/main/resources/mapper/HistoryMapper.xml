@@ -9,7 +9,7 @@
 			as.asset_number,
 			as.maker_name,
 			as.model_name,
-			rt.status,
+			rt.status_code,
 			rt.rental_no,
 			rt.purpose,
 			rt.storage_location,
@@ -27,15 +27,22 @@
 		<if test="applicant != null and !applicant.equals('')">
 		AND rt.applicant LIKE #{applicant}
 		</if>
-		<if test="status != -1">
-		AND rt.status = #{status}
+		<if test="statusCode != null and !applicant.equals('')">
+		AND rt.status_code LIKE #{statusCode}
 		</if>
-		<if test="rentday != null">
+		<if test="rentalDay != null">
 		<![CDATA[
-		AND DATE_FORMAT(rentday, '%Y/%m/%d') = DATE_FORMAT(#{rentday}, '%Y/%m/%d')
+		AND DATE_FORMAT(rentalDay, '%Y/%m/%d') = DATE_FORMAT(#{rentalDay}, '%Y/%m/%d')
 		]]>
 		</if>
 		ORDER BY rt.assetNumber
 	</select>
 
+    <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name
+    	FROM code_detail
+		WHERE code_master_id = '001'
+    </select>
 </mapper>
