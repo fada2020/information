@@ -583,17 +583,17 @@
 
 
 		function getSubSubItem() {
-	
+
 
 
 			$('#sub_singleSelect').click(
 					function() {
-					var selectedItem =$("#sub_singleSelect option:selected").val();
+					var selectedItem = $("#sub_singleSelect option:selected").val();
 					$.ajax({
 	   			"url" : "/rental/getAssetList",
 	    		"type" : "post",
-	   	 		"dataType": "json",
 	   			"data" : selectedItem,
+	   			contentType: 'application/JSON',
 	   		 	"success" : function(data){
 
 	   			var itemName=$('#sub_subSelect').val();
