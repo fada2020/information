@@ -49,8 +49,9 @@ public class Asset {
 	Date updateDate;
 
 	String typeCode;
-	
+
 	List<Accessories> accessoriesList;
+	List<MaintenanceHistory> maintenanceHistoryList;
 
 	int length = 10;
 	int start;

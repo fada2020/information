@@ -58,10 +58,10 @@ public class RentalController {
 	@RequestMapping(value = "/getAssetList", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Asset> selectAssetList(Model model, @RequestBody String selectedItem) throws Exception {
-
+		logger.debug(selectedItem);
 		List<Asset> assetList = rentalService.selectAssetList(selectedItem);
 		model.addAttribute("assetList", assetList);
-		logger.debug(rentalService.selectAssetList(selectedItem).toString());
+		logger.debug(selectedItem);
 		return assetList;
 	}
 
