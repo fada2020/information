@@ -17,8 +17,8 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
 	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-datetimepicker -->
-    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
@@ -35,6 +35,20 @@
 			margin-top:10px;
 			background-color:#ff5050;
 			float:right;
+		}
+
+		.col-md-1{
+			margin-left:5%;
+		}
+
+		#exportExcel, #searchButton{
+			width:80px;
+			font-size:14px;
+		}
+
+		.pull-right{
+			font-size:18px;
+
 		}
 	</style>
 
@@ -66,26 +80,37 @@
 
 				<!-- searching condition -S -->
 				<!-- 1st line -->
-				<div>
-                <div class="col-md-1" style="width:9%;">
-                    <span class="pull-right" style="margin-left:-1%; font-size: 18px;">管理番号</span>
+				<div class="row">
+
+                <div class="col-md-1">
+                    <span class="pull-right" style="margin-left:-10%;">管理番号</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" style="margin-left:-1%">
+                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15" >
                 </div>
 
-                <div class="col-md-1" style="margin-left:-2%;">
-                    <span class="pull-right" style="font-size: 18px;">貸出者</span>
+
+                <div class="col-md-1">
+                    <span class="pull-right" style="margin-left:-10%;">貸与日</span>
                 </div>
                 <div class="col-md-2">
-                	<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" style="margin-left:-1%">
+					<fieldset>
+						<div class="control-group ">
+							<div class="controls">
+								<div class="input-prepend input-group">
+									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px" name="rental_search" id="rental_search" class="form-control">
+								</div>
+							</div>
+						</div>
+					</fieldset>
                 </div>
 
-                <div class="col-md-1" style="margin-left:-3%;">
-                    <span class="pull-right" style="font-size: 18px;">状態</span>
+                <div class="col-md-1">
+                    <span class="pull-right">状態</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control" id="status_search" style="margin-left:-1%">
+                	<select class="form-control" id="status_search" style="width:120px;">
 						<option value="000">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
@@ -94,61 +119,41 @@
 				</div>
 				<!-- 1st line -->
 
-				<br><br>
 				<!-- 2nd line -->
-				<div>
+				<div class="row" style="height:50px;">
 
-				<div id="rentalDayDiv">
-				<div class="col-md-1" style="margin-left:-2%;">
-                    <span class="pull-right" style="font-size: 18px;">貸与日</span>
+				<div class="col-md-1">
+                    <span class="pull-right">貸出者</span>
                 </div>
                 <div class="col-md-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" id="rentalDayS_search" style="margin-left:-1%">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
-					</div>
+                	<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
                 </div>
-                <div class="col-md-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" id="rentalDayE_search" style="margin-left:-1%">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
-					</div>
-                </div>
-				</div>
 
-				<div id="returnDayDiv">
-                <div class="col-md-1" style="margin-left:-2%;">
-                    <span class="pull-right" style="font-size: 18px;">返却日</span>
-                </div>
-                <div class="col-md-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" id="returnDayS_search" style="margin-left:-1%">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
-					</div>
-                </div>
-                <div class="col-md-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" id="returnDayE_search" style="margin-left:-1%">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
-					</div>
-                </div>
-				</div>
 
-                <div class="col-md-1" style="width:5%; margin-left:-1%;">
-                	<button id="serchButton" class="btn btn-primary">検索</button>
+				<div class="col-md-1">
+                    <span class="pull-right">返却日</span>
                 </div>
+                <div class="col-md-2">
+					<fieldset>
+						<div class="control-group ">
+							<div class="controls">
+								<div class="input-prepend input-group">
+									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px" name="return_search" id="return_search" class="form-control">
+								</div>
+							</div>
+						</div>
+					</fieldset>
+                </div>
+
+                <div class="col-md-1" style="width:5%; float:right; margin-right:60px;">
+                	<button id="searchButton" class="btn btn-primary" >検索</button>
+                </div>
+
                 </div>
 				<!-- 2nd line -->
 
-				<!-- searching condition -S -->
+				<!-- searching condition -E -->
 
 
                 <div class="x_panel">
@@ -216,9 +221,9 @@
     <script src="../vendors/nprogress/nprogress.js"></script>
     <!-- iCheck -->
     <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-datetimepicker -->
+    <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
@@ -226,17 +231,8 @@
     <script th:inline="javascript">
 
     /*<![CDATA[*/
-        $('.input-group date').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
 
         var modalesectiondata = null;
-
-    	var stateCodeMap = new Map();
-    	var stateCode = /*[[${stateCode}]]*/;
-    	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.snumber, value.state);
-    	});
 
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
@@ -246,6 +242,26 @@
 
 
         $(function(){
+
+			$('#rental_search').daterangepicker({
+				startDate: moment().add(0, "months"),
+				endDate: moment(),
+			 locale: {
+			       format: 'YYYY/MM/DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			});
+
+			$('#return_search').daterangepicker({
+				startDate: moment().add(0, "months"),
+				endDate: moment(),
+			 locale: {
+			       format: 'YYYY/MM/DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			});
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
@@ -263,8 +279,6 @@
             	"fixedHeader": true,
             	"processing": true,
             	"serverSide": true,
-            	"start": 0,
-                "length": 10,
                 "searching": false,
                 "paging": true,
                 "lengthChange": false,
@@ -278,24 +292,24 @@
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                 		d.columns[1].search.value = $('#applicant_search').val();
                 		d.columns[2].search.value = $('#status_search').val();
-                		d.columns[3].search.value = $('#rentalDayS_search').val();
-                		d.columns[4].search.value = $('#rentalDayE_search').val();
-                		d.columns[5].search.value = $('#returnDayS_search').val();
-                		d.columns[6].search.value = $('#returnDayE_search').val();
+                		d.columns[3].search.value = $('#rental_search').val();
+                		d.columns[4].search.value = $('#return_search').val();
 
                         return JSON.stringify(d);
                     }
                 },
                 "columnDefs": [
                     { targets: 0, data: "assetNumber"},
-                    { targets: 1, data: "maker"},
-                    { targets: 2, data: "model"},
-                    { targets: 3, data: "statusCode"},
-                    { targets: 4, data: "rentNo"},
+                    { targets: 1, data: "makerName"},
+                    { targets: 2, data: "modelName"},
+                    { targets: 3, data: function ( d ) {
+                    	return stateCodeMap.get(d.statusCode);
+                    }},
+                    { targets: 4, data: "rentalNo"},
                     { targets: 5, data: "purpose"},
                     { targets: 6, data: "storageLocation"},
-                    { targets: 7, data: "applicant"},
-                    { targets: 8, data: "rentUserId"},
+                    { targets: 7, data: "applicantId"},
+                    { targets: 8, data: "rentalUserId"},
                     { targets: 9, data: "bpName"},
                     { targets: 10, data: function ( d ) {
                     	var str = d.rentalDayS;
@@ -309,7 +323,7 @@
             });
 
             //Search -S
-            $('#serchButton').on( 'click', function () {
+            $('#searchButton').on( 'click', function () {
             	modalesectiontable.column(0).search( this.value ).draw();
             } );
           	//Search -E
