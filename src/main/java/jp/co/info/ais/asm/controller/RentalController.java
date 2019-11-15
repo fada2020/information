@@ -3,6 +3,8 @@ package jp.co.info.ais.asm.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,8 @@ import jp.co.info.ais.asm.service.RentalService;
 public class RentalController {
 
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
-
+	@Autowired
+	HttpSession session;
 	@Autowired
 	private RentalService rentalService;
 	//1必須チェック
@@ -33,6 +36,12 @@ public class RentalController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String ITAssetList(Model model) throws Exception {
+
+
+
+		session.setAttribute("id", "ais111111");
+
+		출처: https://fors.tistory.com/437 [fors]
 		//区分データ習得
 		model.addAttribute("kubunCode", rentalService.selectCodeDetail());
 		//ステータースデータ習得
@@ -55,13 +64,23 @@ public class RentalController {
 		return asset;
 	}
 
+	@RequestMapping(value = "/addRental", method = RequestMethod.POST)
+	@ResponseBody
+	public int addRental(Model model, @RequestBody List<Rental>rentalList) throws Exception {
+
+		 rentalService.addRental(rentalList);
+
+		return 1;
+	}
 	@RequestMapping(value = "/getAssetList", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Asset> selectAssetList(Model model, @RequestBody String selectedItem) throws Exception {
-		logger.debug(selectedItem);
+	public List<Asset> selectAssetList(@RequestBody String selectedItem) throws Exception {
+		selectedItem = selectedItem.replaceAll("[^0-9]", "");
 		List<Asset> assetList = rentalService.selectAssetList(selectedItem);
-		model.addAttribute("assetList", assetList);
 		logger.debug(selectedItem);
+
+		logger.debug(rentalService.selectAssetList(selectedItem).toString());
+
 		return assetList;
 	}
 
