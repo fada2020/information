@@ -9,16 +9,15 @@ import lombok.ToString;
 public class History {
 
 	String assetNumber;
-	String maker;
-	String model;
-
+	String makerName;
+	String modelName;
 
 	String statusCode = "000";
-	String rentNo;
+	String rentalNo;
 	String purpose;
 	String storageLocation;
-	String applicant;
-	String rentUserId;
+	String applicantId;
+	String rentalUserId;
 	String bpName;
 	String rentalDayS;
 	String rentalDayE;

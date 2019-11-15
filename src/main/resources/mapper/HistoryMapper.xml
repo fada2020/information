@@ -24,8 +24,8 @@
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND ast.asset_number LIKE #{assetNumber}
 		</if>
-		<if test="applicant != null and !applicant.equals('')">
-		AND rt.applicant_id LIKE #{applicant}
+		<if test="applicantId != null and !applicantId.equals('')">
+		AND rt.applicant_id LIKE #{applicantId}
 		</if>
 		<if test="statusCode != 000">
 		AND rt.status_code = #{statusCode}
@@ -37,6 +37,7 @@
 		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
 		</if>
 		ORDER BY ast.asset_number
+		LIMIT #{length} OFFSET #{start}
 	</select>
 
     <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
@@ -44,6 +45,31 @@
     		code_detail_id,
     		code_detail_name
     	FROM code_detail
-		WHERE code_master_id = '002'
+		WHERE code_master_id = '001'
+    </select>
+
+    <select id="selectCount" resultType="int">
+    	SELECT
+    		COUNT(1)
+    	FROM asset ast, rental rt
+		WHERE
+		rt.asset_seq = ast.asset_seq
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND ast.asset_number LIKE #{assetNumber}
+		</if>
+		<if test="applicantId != null and !applicantId.equals('')">
+		AND rt.applicant_id LIKE #{applicantId}
+		</if>
+		<if test="statusCode != 000">
+		AND rt.status_code = #{statusCode}
+		</if>
+		<if test="rentalDayS != null and rentalDayE !=null">
+		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+		</if>
+		<if test="returnDayS != null and returnDayE !=null">
+		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
+		</if>
+
+
     </select>
 </mapper>
