@@ -41,4 +41,6 @@ public interface RentalMapper {
 
 	public List<Asset> selectAssetList(String selectedItem)throws Exception;
 
+	public int addRental(List<Rental> rentalList)throws Exception;
+
 }

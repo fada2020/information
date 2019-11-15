@@ -81,5 +81,11 @@ public class RentalService {
 		return rentalMapper.selectAssetList(selectedItem);
 	}
 
+	public int addRental(List<Rental> rentalList) throws Exception {
+
+		return rentalMapper.addRental(rentalList);
+
+	}
+
 
 }

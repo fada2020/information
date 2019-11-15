@@ -286,7 +286,7 @@
 																	name="selectedItem" onchange="getSubItem()">
 																	<option value="">選択</option>
 																	<option th:each="productKindCode : ${kubun}"
-																		th:value="${productKindCode.codeDetailName}"
+																		th:value="${productKindCode.codeDetailId}"
 																		th:text="${productKindCode.codeDetailName}"></option>
 																</select>
 
@@ -322,11 +322,25 @@
 																</select>
 															</div>
 														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">貸与期間</label>
 
-
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" id="returnPeriod"
+																	th:value="${#dates.format(date, 'yyyy/MM/dd')}"
+																	class="form-control col-md-10">
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="control-label col-md-3 col-sm-3 ">BP社名</label>
+															<div class="col-md-9 col-sm-9 ">
+																<input type="text" id="bpName"
+																	class="form-control col-md-10">
+															</div>
+														</div>
 														<div>
 															<input type="button" id="button1" onclick="writeItem();"
-																value="button" />
+																value="追加" />
 														</div>
 
 
@@ -338,14 +352,16 @@
 																<thead>
 																	<tr>
 
-																		<th class="col-md-1">貸与者</th>
-																		<th class="col-md-1">分類</th>
-																		<th class="col-md-1">種類</th>
-																		<th class="col-md-1">管理番号</th>
-																		<th class="col-md-1">用途</th>
-																		<th class="col-md-1">場所</th>
-																		<th class="col-md-1">特記事項</th>
-																		<th class="col-md-1">選択</th>
+																		<th class="col-md-1" id="rentalUser_insert">貸与者</th>
+																		<th class="col-md-1" id="codeDetailName_insert">分類</th>
+																		<th class="col-md-1" id="item1_insert">種類</th>
+																		<th class="col-md-1" id="assetNumber_insert">管理番号</th>
+																		<th class="col-md-1" id="purpose_insert">用途</th>
+																		<th class="col-md-1" id="storageLocation_insert">場所</th>
+																		<th class="col-md-1" id="speciality_insert">特記事項</th>
+																		<th class="col-md-1" id="returnPeriod_insert">返却期間</th>
+																		<th class="col-md-1" id="bpName_insert">BP社名</th>
+																		<th class="col-md-1" id="cancel_insert">取り消し</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -360,7 +376,10 @@
 
 												<hr>
 
-												<div></div>
+												<div>
+													<input type="button" id="insertButton" value="貸与"
+														onclick="rentalItem();" />
+												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">Close</button>
@@ -421,11 +440,11 @@
     	var kubunItemMap = new Map();
 		var kubunCode = /*[[${kubunCode}]]*/;
 		kubunCode.forEach(function( value ) {
-			kubunCodeMap.set(value.codeDetailId,value.item1);
+			kubunCodeMap.set(value.item1,value.codeDetailName);
 
     	});
 		kubunCode.forEach(function( value ) {
-		kubunItemMap.set(value.codeDetailId, value.item2);	});
+		kubunItemMap.set(value.codeDetailId, value.item2);});
     	var statusCodeMap = new Map();
     	var statusCode = /*[[${statusCode}]]*/;
     	statusCode.forEach(function( value ) {
@@ -493,9 +512,10 @@
                         render: function ( data, type, row, meta ) {
                           return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
                           'rental/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'rental/' + row.assetNumber + '\'">削除</button>';
+                          'rental/' + row.assetSeq + '\'">削除</button>';
                         }
                     }
+
                 ]
             });
 
@@ -509,10 +529,6 @@
 
 
 
-
-
-
-
             $("#myDatepicker").on("dp.change", function(e) {
                 var d = new Date(e.date);
                 var mm = d.getMonth() + 1;
@@ -521,7 +537,7 @@
             	modalesectiontable.column(5).search( yyyy + "-" + mm + "-" + dd ).draw();
             });
 
-          /*   $('#table1 tbody').on( 'click', 'tr td', function () {
+  			$('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
             	if(this._DT_CellIndex.column !=8 &&this._DT_CellIndex.column !=0) {
             		$('#modal3d').modal();
@@ -548,7 +564,7 @@
             	} else {
             		//alert(JSON.stringify(rowData));
             	}
-            } ); */
+            } );
 
         })
     /*]]>*/
@@ -571,6 +587,7 @@
 
 					function() {
 						var item=$('#singleSelect option:selected').val();
+
 							var html = '<option value="">選択</option>';
 							kub.forEach(function(value) {
 							if(value.item1==item){
@@ -589,10 +606,13 @@
 			$('#sub_singleSelect').click(
 					function() {
 					var selectedItem = $('#sub_singleSelect option:selected').val();
+					selectedItem=selectedItem.replace(/[^0-9]/g,'');
+
 					$.ajax({
 	   			"url" : "/rental/getAssetList",
 	    		"type" : "post",
 	   	 		"dataType": "json",
+	   	 		"contentType": "application/JSON",
 	   			"data" : selectedItem,
 	   		 	"success" : function(data){
 
@@ -608,54 +628,95 @@
 			}
 
 
-
-
 	});
 					}
 );
 
       }
 
-		/*]]>*/
-	</script>
-	<script th:inline="javascript">
-	/*<![CDATA[*/
+
+
  function deleteRow(btn) {
   var row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
+
+}
+ function rentalItem() {
+		var rental =new Object();
+		var tdArr = new Array();
+		var tr = $('#selectedAsset tbody tr');
+		var td =  $('#selectedAsset tbody tr td');
+		tr.each(function(i){
+			rental.rentalUserId = td.eq(0).text();
+			rental.assetNumber = td.eq(3).text();
+			rental.purpose = td.eq(4).text();
+			rental.storageLocation = td.eq(5).text();
+			rental.speciality = td.eq(6).text();
+			rental.returnPeriod = td.eq(7).text();
+			rental.assetSeq=td.eq(8).text();
+			rental.applicantId = /*[[${session.id}]]*/ 'id';
+			rental.rentalDay=$('#todayDate').val().replace("/","");
+			rental.bpName=td.eq(9).text();
+			tdArr.push(rental);
+		});
+
+	$.ajax({
+		"url" : "/rental/addRental",
+	"type" : "post",
+		"dataType": "json",
+		"contentType": "application/JSON",
+		"data" : JSON.stringify(tdArr),
+	 	"success" : function(data){
+
+
+	alert("成功");
 }
 
-		function writeItem() {
+});
+
+ }
+	function writeItem() {
+
+		if($('#rentUser').val()!=""){
 			var number=$("#sub_subSelect option:selected").text();
 			$.ajax({
 			   			"url" : "/rental/getAsset",
 			    		"type" : "post",
 			   	 		"dataType": "json",
-			   			"data" : JSON.stringify(number),
+			   			"data" : number,
+			   			"contentType": "application/JSON",
 			   		 	"success" : function(data){
 
+			   		 	$('#selectedAsset tbody').append('<tr><td>'
+			   					+$('#rentUser').val()+
+			   					'</td><td>'
+			   					+$("#singleSelect option:selected").val()+
+			   					'</td><td>'
+			   				+$("#sub_singleSelect option:selected").text()+
+			   					'</td><td>'
+			   				+data.assetNumber+
+
+			   					'</td><td>'
+			   					+$("#purpose").val()+
+			   					'</td><td>'
+			   					+$("#storageLocation").val()+
+			   					'</td><td>'
+			   					+$("#speciality").val()+
+			   					'</td><td>'
+			   					+$("#returnPeriod").val()+
+			   					'</td><td style="display:none;"> '
+				   				+data.assetSeq+
+				   				'</td><td>'
+			   					+$("#bpName").val()+
+			   					'</td><td><input type="button" value="Delete" onclick="deleteRow(this)"/></td></tr>');
+
 			    },
-
+				"Error" : function(){
+					alert("貸与不可能");
+				}
 			});
-
-
-
-	$('#selectedAsset tbody').append('<tr><td>'
-
-			+$('#rentUser').val()+
-			'</td><td>'
-			+$("#singleSelect option:selected").val()+
-			'</td><td>'
-		+$("#sub_singleSelect option:selected").text()+
-			'</td><td>'
-		+$("#sub_subSelect option:selected").text()+
-			'</td><td>'
-			+$("#purpose").val()+
-			'</td><td>'
-			+$("#storageLocation").val()+
-			'</td><td>'
-			+$("#speciality").val()+
-			'</td><td><input type="button" value="Delete" onclick="deleteRow(this)"/></td></tr>');
+	}else{
+		alert("使用者入力");}
 
 		}
 		/*]]>*/
