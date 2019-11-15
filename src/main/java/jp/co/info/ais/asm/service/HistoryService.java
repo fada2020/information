@@ -23,4 +23,8 @@ public class HistoryService{
 		return HistoryMapper.selectStateCode();
 	}
 
+	public int selectCount(History condition) {
+		return HistoryMapper.selectCount(condition);
+	}
+
 }
