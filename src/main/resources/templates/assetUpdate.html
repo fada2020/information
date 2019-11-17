@@ -25,8 +25,8 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <style>
-    	#table1 thead, th {text-align: center;}
-		#table1 tbody tr{
+    	#table1, #table2, thead, th {text-align: center;}
+		#table1, #table2, tbody tr{
 		    cursor:pointer;
 		}
 		.my-custom-scrollbar {
@@ -70,6 +70,7 @@
 	  						<span>管理番号</span>
 	  					</div>
 	  					<div class="col-md-3">
+	  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
 			  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}">
 			  			</div>
 			  			<div class="col-md-3">
@@ -324,7 +325,7 @@
 											</td>
 										</tr>
 										<tr th:each="accessories : ${asset.accessoriesList}">
-											<td th:text="${accessories.accessoriesSeq}"></td>
+											<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
 											<td><input type="text" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
 											<td><input type="text" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
 											<td><input type="text" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
@@ -349,8 +350,9 @@
 								<table class="table table-striped jambo_table bulk_action" id="table2">
 									<thead>
 										<tr class="headings">
+											<th class="col-md-1">No </th>
 											<th class="col-md-2">実施日 </th>
-											<th class="col-md-6">実施内容 </th>
+											<th class="col-md-5">実施内容 </th>
 											<th class="col-md-2">担当 </th>
 											<th class="col-md-2">承認 </th>
 											<th></th>
@@ -358,13 +360,22 @@
 									</thead>
 									<tbody>
 										<tr class="even pointer">
-											<td><input type="text" class="form-control"></td>
-											<td><input type="text" class="form-control"></td>
-											<td><input type="text" class="form-control"></td>
-											<td><input type="text" class="form-control"></td>
+											<td></td>
+											<td><input id="implementationDate" type="text" class="form-control"></td>
+											<td><input id="implementationDetail" type="text" class="form-control"></td>
+											<td><input id="repId" type="text" class="form-control"></td>
+											<td><input id="approverId" type="text" class="form-control"></td>
 											<td class="a-center">
-												<a id="add" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+												<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
+										</tr>
+										<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
+											<td id="historySeq" th:text="${maintenance.historySeq}"></td>
+											<td><input type="text" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
+											<td><input type="text" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
+											<td><input type="text" class="form-control" id=repId th:value="${maintenance.repId}"></td>
+											<td><input type="text" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
+											<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -489,6 +500,71 @@
 				});
 
             });
+
+            $('#addMaintenanceHistory').on('click', function () {
+            	var selectTr = $(this).closest("tr");
+
+            	var maintenanceHistory ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"implementationDate" : selectTr.find("#implementationDate").val(),
+            			"implementationDetail" : selectTr.find("#implementationDetail").val(),
+            			"repId" : selectTr.find("#repId").val(),
+            			"approverId" : selectTr.find("#approverId").val()
+            	};
+
+            	$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
+					{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(maintenanceHistory)
+					}
+				)
+				.done(function(data) {
+					 $('#table2 tbody').append(
+							 '<tr>'
+							 +'<td id="historySeq">'+data.historySeq+'</td>'
+							 +'<td><input type="text" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
+							 +'<td><input type="text" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
+							 +'<td><input type="text" class="form-control" id="repId" value="'+data.repId+'"></td>'
+							 +'<td><input type="text" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
+							 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+							 +'</tr>'
+					 );
+				});
+
+            });
+
+            $('#table2 tbody').on("click","#updateMaintenanceHistory", function() {
+            	var selectTr = $(this).closest("tr");
+
+            	var maintenanceHistory ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"historySeq" : selectTr.find("#historySeq").text(),
+            			"implementationDate" : selectTr.find("#implementationDate").val(),
+            			"implementationDetail" : selectTr.find("#implementationDetail").val(),
+            			"repId" : selectTr.find("#repId").val(),
+            			"approverId" : selectTr.find("#approverId").val()
+            	};
+
+            	$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
+					{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(maintenanceHistory)
+					}
+            	)
+				.done(function(data) {
+					selectTr.find("#historySeq").text(data.historySeq);
+					selectTr.find("#implementationDate").val(data.implementationDate);
+					selectTr.find("#implementationDetail").val(data.implementationDetail);
+					selectTr.find("#repId").val(data.repId);
+					selectTr.find("#approverId").val(data.approverId);
+				});
+
+            });
+
         })
     /*]]>*/
     </script>
