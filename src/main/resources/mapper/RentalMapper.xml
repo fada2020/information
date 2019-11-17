@@ -28,7 +28,8 @@
 		JOIN asset a ON
 		r.asset_seq = a.asset_seq
 
-		AND a.status_code = '002' ORDER BY
+		AND a.status_code = '002'
+		ORDER BY
 		asset_number ASC
 
 
@@ -48,7 +49,8 @@
 		code_detail_id,
 		code_detail_name
 
-		FROM code_detail where item1=${codeDetailName}
+		FROM code_detail where
+		item1=${codeDetailName}
 
 	</select>
 
@@ -88,7 +90,8 @@
 		SELECT
 		code_detail_id,
 		code_detail_name
-		FROM code_detail where code_master_id='001'
+		FROM code_detail where
+		code_master_id='001'
 	</select>
 
 	<select id="selectCodeDetail"
@@ -107,66 +110,75 @@
 		SELECT
 		code_detail_id,
 		code_detail_name
-		FROM code_detail where code_master_id='003'
+		FROM code_detail where
+		code_master_id='003'
 	</select>
-<select id="selectAsset" parameterType="String"
+	<select id="selectAsset" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
-		FROM asset where asset_number=#{number} and status_code='001'
+		FROM asset where
+		asset_number=#{number} and status_code='001'
 	</select>
 
-<select id="selectAssetList" parameterType="String"
+	<select id="selectAssetList" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
-		FROM asset where status_code='001' and kubun_code=#{selectedItem}
+		FROM asset where
+		status_code='001' and kubun_code=#{selectedItem}
 	</select>
 
-<update id="changeStatus" parameterType="String"
-		>
-		update  asset set
+	<update id="changeStatus" parameterType="String">
+		update asset
+		set
 		status_code=#{statusCode}
 
 
-		 where status_code='001' and asset_number=#{selectedItem}
+		where status_code='001' and asset_number=#{selectedItem}
 	</update>
 
-	<insert id="addRental" useGeneratedKeys="true" keyProperty="rental_seq" parameterType="java.util.List">
-INSERT INTO rental(
+	<insert id="addRental" useGeneratedKeys="true"
+		keyProperty="rental_seq" parameterType="java.util.List">
 
-	 asset_Seq,
-	 rental_day,
-	 rental_User_id,
-	 purpose,
- 	 storage_Location,
-	 speciality,
-	 applicant_id,
- 	return_Period,
- 	bp_name,
- 	insert_id,
- 	update_id
-) VALUES
-<foreach item="item" index="index" collection="list">
-(
- #{item.assetSeq},
- #{item.rentalDay},
-  #{item.rentalUserId},
-   #{item.purpose},
-    #{item.storageLocation},
-     #{item.speciality},
-      #{item.applicantId},
-       #{item.returnPeriod},
-         #{item.bpName},
 
-         #{item.applicantId},
-      #{item.applicantId}
-)
-</foreach>
-</insert>
+
+		INSERT INTO rental(
+
+		asset_Seq,
+		rental_day,
+		rental_User_id,
+		purpose,
+		storage_Location,
+		speciality,
+		applicant_id,
+		return_Period,
+		bp_name,
+		insert_id,
+		update_id,
+		rental_no
+		) VALUES
+		<foreach item="item" index="index" collection="list">
+			(
+			#{item.assetSeq},
+			#{item.rentalDay},
+			#{item.rentalUserId},
+			#{item.purpose},
+			#{item.storageLocation},
+			#{item.speciality},
+			#{item.applicantId},
+			#{item.returnPeriod},
+			#{item.bpName},
+
+			#{item.applicantId},
+			#{item.applicantId},
+
+			)
+		</foreach>
+	</insert>
 </mapper>
 
