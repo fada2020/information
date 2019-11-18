@@ -32,6 +32,8 @@ public class AssetController {
 	@Autowired
 	HttpSession session;
 
+
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String assetList(Model model) {
     	model.addAttribute("productCode", assetService.selectProductCode());
@@ -88,6 +90,20 @@ public class AssetController {
         return page;
     }
 
+    @RequestMapping(value = "/assetInfoAjax")
+    @ResponseBody
+    public Asset assetInfoAjax(@RequestBody int assetSeq) {
+    	logger.debug(assetSeq);
+        return assetService.selectAsset(assetSeq);
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public String assetInsert(Model model, Asset asset) {
+    	model.addAttribute("productCode", assetService.selectProductCode());
+    	model.addAttribute("stateCode", assetService.selectStateCode());
+        return "asset";
+    }
+
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
     public String assetInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
     	model.addAttribute("asset", assetService.selectAsset(assetSeq));
@@ -97,12 +113,14 @@ public class AssetController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String assetUpdate(Model model, Asset asset) {
+    public String assetUpdate(Model model, @RequestBody Asset asset) {
     	String id = (String) session.getAttribute("id");
     	asset.setInsertId(id); asset.setUpdateId(id);
     	logger.debug(asset.toString());
+    	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
+    	int result = assetService.updateAsset(asset);
     	model.addAttribute("asset", assetService.selectAsset(asset.getAssetSeq()));
         return "assetUpdate";
     }

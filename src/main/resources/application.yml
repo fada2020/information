@@ -23,3 +23,6 @@ mybatis:
 
 server:
    port: 8081
+
+constant:
+   companyName: AIS

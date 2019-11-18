@@ -69,7 +69,7 @@
 		,os_product_key
 		,cpu_processor
 		,operating_frequency
-		,MEMORY
+		,memory
 		,memory_upgarde
 		,hdd
 		,hdd_upgarde
@@ -121,7 +121,7 @@
 			,os_product_key
 			,cpu_processor
 			,operating_frequency
-			,MEMORY
+			,memory
 			,memory_upgarde
 			,hdd
 			,hdd_upgarde
@@ -205,6 +205,38 @@
     	FROM code_detail
 		WHERE code_master_id = '002'
     </select>
+    
+    <update id="updateAsset">
+		UPDATE asset SET
+			kubun_code = #{kubunCode}
+			,purchase_date = #{purchaseDate}
+			,warranty_period = #{warrantyPeriod}
+			,buy_to = #{buyTo}
+			,purchase_price = #{purchasePrice}
+			,status_code = #{statusCode}
+			,maker_name = #{makerName}
+			,model_name = #{modelName}
+			,serial_num = #{serialNum}
+			,interface_col = #{interFaceCol}
+			,os_name = #{osName}
+			,os_product_key = #{osProductKey}
+			,cpu_processor = #{cpuProcessor}
+			,operating_frequency = #{operatingFrequency}
+			,memory = #{memory}
+			,memory_upgarde = #{memoryUpgarde}
+			,hdd = #{hdd}
+			,hdd_upgarde = #{hddUpgarde}
+			,mac_lan = #{macLan}
+			,mac_wireless = #{macWireless}
+			,other = #{other}
+			,security_bios = #{securityBios}
+			,security_hdd = #{securityHdd}
+			,admin_account_id = #{adminAccountId}
+			,admin_account_pwd = #{adminAccountPwd}
+			,storage_location = #{storageLocation}
+			,update_id = #{updateId}
+		WHERE asset_seq = #{assetSeq}
+    </update>
 
     <insert id="insertAccessories" keyProperty="accessoriesSeq">
         INSERT INTO accessories(
@@ -223,7 +255,6 @@
 			item_spec = #{itemSpec},
 			item_quantity = #{itemQuantity},
 			remarks = #{remarks},
-			insert_id = #{insertId},
 			update_id = #{updateId}
 		WHERE accessories_seq = #{accessoriesSeq}
 		AND asset_seq = #{assetSeq}
@@ -246,7 +277,6 @@
 			implementation_detail = #{implementationDetail},
 			rep_id = #{repId},
 			approver_id = #{approverId},
-			insert_id = #{insertId},
 			update_id = #{updateId}
 		WHERE history_seq = #{historySeq}
 		AND asset_seq = #{assetSeq}

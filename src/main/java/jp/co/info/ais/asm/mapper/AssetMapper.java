@@ -21,6 +21,8 @@ public interface AssetMapper {
 
 	List<CodeDetail> selectStateCode();
 
+	int updateAsset(Asset asset);
+
 	void insertAccessories(Accessories accessories);
 
 	void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory);
