@@ -1,5 +1,7 @@
 package jp.co.info.ais.asm.domain;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,15 +29,21 @@ public class Rental {
 	private String bpName;
 	private String rentalNo;
 
+	private String insertId;
+	private Date insertDate;
+	private String updateId;
+	private Date updateDate;
+
 	//資産マスタから持ち込む
 	private String assetNumber;
 	private String codeDetailId;
 	private String codeDetailName;
 	private String kubunCode;
 
-
 	//ページングする為のもの
-	private int length=10;
+	private int length = 10;
 	private int start;
+
+
 
 }

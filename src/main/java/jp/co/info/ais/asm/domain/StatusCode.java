@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class StatusCode {
-
+	private String codeMasterId;
 	private String codeDetailId;
 	private String codeDetailName;
 

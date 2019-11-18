@@ -33,7 +33,7 @@ public class AssetController {
 	HttpSession session;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String ITAssetList(Model model) {
+    public String assetList(Model model) {
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
         return "asset";
@@ -41,7 +41,7 @@ public class AssetController {
 
     @RequestMapping("/getAssetlist")
     @ResponseBody
-    public Page<Asset> getITAssetlist(@RequestBody Page<Asset> page) {
+    public Page<Asset> getAssetlist(@RequestBody Page<Asset> page) {
     	Asset condition = new Asset();
     	condition.setLength(page.getLength());
     	condition.setStart(page.getStart());
@@ -85,30 +85,31 @@ public class AssetController {
         int totalCount = assetService.selectCount(condition);
 
         page.setRecordsFiltered(totalCount);
-
         return page;
     }
 
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
-    public String ITAssetInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
-    	model.addAttribute("asset", assetService.select(assetSeq));
+    public String assetInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
+    	model.addAttribute("asset", assetService.selectAsset(assetSeq));
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
         return "assetUpdate";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String ITAssetUpdate(Model model, Asset asset) {
+    public String assetUpdate(Model model, Asset asset) {
+    	String id = (String) session.getAttribute("id");
+    	asset.setInsertId(id); asset.setUpdateId(id);
     	logger.debug(asset.toString());
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
-    	model.addAttribute("asset", assetService.select(asset.getAssetSeq()));
+    	model.addAttribute("asset", assetService.selectAsset(asset.getAssetSeq()));
         return "assetUpdate";
     }
 
     @RequestMapping(value = "/addAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public Accessories addAccessories(Model model,@RequestBody Accessories accessories) {
+    public Accessories addAccessories(Model model, @RequestBody Accessories accessories) {
     	String id = (String) session.getAttribute("id");
     	accessories.setInsertId(id); accessories.setUpdateId(id);
     	logger.debug(accessories.toString());
@@ -118,18 +119,28 @@ public class AssetController {
 
     @RequestMapping(value = "/updateAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public Accessories updateAccessories(Model model,@RequestBody Accessories accessories) {
-    	logger.debug(accessories.toString());
+    public Accessories updateAccessories(Model model, @RequestBody Accessories accessories) {
+    	String id = (String) session.getAttribute("id");
+    	accessories.setInsertId(id); accessories.setUpdateId(id);
+    	int result = assetService.updateAccessories(accessories);
         return accessories;
     }
 
     @RequestMapping(value = "/addMaintenanceHistory", method = RequestMethod.POST)
     @ResponseBody
-    public MaintenanceHistory addMaintenanceHistory(Model model,@RequestBody MaintenanceHistory maintenanceHistory) {
+    public MaintenanceHistory addMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
     	String id = (String) session.getAttribute("id");
     	maintenanceHistory.setInsertId(id); maintenanceHistory.setUpdateId(id);
-    	logger.debug(maintenanceHistory.toString());
-    	//assetService.insertAccessories(accessories);
+    	assetService.insertMaintenanceHistory(maintenanceHistory);
+        return maintenanceHistory;
+    }
+
+    @RequestMapping(value = "/updateMaintenanceHistory", method = RequestMethod.POST)
+    @ResponseBody
+    public MaintenanceHistory updateMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
+    	String id = (String) session.getAttribute("id");
+    	maintenanceHistory.setInsertId(id); maintenanceHistory.setUpdateId(id);
+    	int result = assetService.updateMaintenanceHistory(maintenanceHistory);
         return maintenanceHistory;
     }
 }

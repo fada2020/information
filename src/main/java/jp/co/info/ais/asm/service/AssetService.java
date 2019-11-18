@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import jp.co.info.ais.asm.domain.Accessories;
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
+import jp.co.info.ais.asm.domain.MaintenanceHistory;
 import jp.co.info.ais.asm.mapper.AssetMapper;
 
 @Service
@@ -20,18 +21,12 @@ public class AssetService {
 	@Autowired
 	AssetMapper assetMapper;
 
-	public Asset select(int assetSeq) {
-		Asset condition = new Asset();
-		condition.setAssetSeq(assetSeq);
-		List<Asset> result = assetMapper.select(condition);
-		Asset asset = null;
-		if(result != null)
-			asset = result.get(0);
-		return asset;
+	public Asset selectAsset(int assetSeq) {
+		return assetMapper.selectAsset(assetSeq);
 	}
 
 	public List<Asset> selectList(Asset condition) {
-		return assetMapper.select(condition);
+		return assetMapper.selectAssetList(condition);
 	}
 
 	public int selectCount(Asset condition) {
@@ -48,6 +43,18 @@ public class AssetService {
 
 	public void insertAccessories(Accessories accessories) {
 		assetMapper.insertAccessories(accessories);
+	}
+
+	public void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
+		assetMapper.insertMaintenanceHistory(maintenanceHistory);
+	}
+
+	public int updateAccessories(Accessories accessories) {
+		return assetMapper.updateAccessories(accessories);
+	}
+
+	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
+		return assetMapper.updateMaintenanceHistory(maintenanceHistory);
 	}
 
 }
