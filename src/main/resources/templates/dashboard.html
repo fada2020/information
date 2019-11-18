@@ -52,11 +52,11 @@
 
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" ><div class="text-center">
               <h3><b>総ハードウェア</b></h3>
-              <div class="count">[[${type1}]]台</div></div>
+              <div class="count">[[${hwCnt}]]台</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
               <h3><b>総ソフトウェア</b></h3>
-              <div class="count">[[${type2}]]台</div></div>
+              <div class="count">[[${swCnt}]]台</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
              <h3><b> 総資産装置</b></h3>
@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
               <h3><b>新しい装置</b></h3>
-              <div class="count">51台</div></div>
+              <div class="count">[[${newItem}]]台</div></div>
             </div>
           </div>
 
@@ -91,10 +91,10 @@
                       </th>
                       <th>
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">デバイス</p>
+                          <p class="">ハードウェア種別</p>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">保有パーセント</p>
+                          <p class="">保有率</p>
                         </div>
                       </th>
                     </tr>
@@ -104,35 +104,13 @@
                       </td>
                       <td>
                         <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>Desktop </p>
+                          <tr th:each="m:${marulist}" th:if="${#strings.equals(m.typeName,'HW')}">
+                            <td >
+                              <p><i class="fa fa-square blue" style="color : [[${}]];"></i>
+                              	[[${m.kubunName}]]
+                              </p>
                             </td>
-                            <td>40%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Mobile </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Server </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Notebook </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
+                            <td>[[${m.typeCnt}]]台</td>
                           </tr>
                         </table>
                       </td>
@@ -141,7 +119,9 @@
                 </div>
               </div>
             </div>
-        <!-- Hardware Top5 -->
+        <!-- /Hardware Top5 -->
+
+
 		<!-- Software Top5  -->
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
@@ -158,10 +138,10 @@
                       </th>
                       <th>
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">デバイス</p>
+                          <p class="">ソフトウェア種別</p>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">保有パーセント</p>
+                          <p class="">保有率</p>
                         </div>
                       </th>
                     </tr>
@@ -171,35 +151,11 @@
                       </td>
                       <td>
                         <table class="tile_info">
-                          <tr>
+                          <tr  th:each="m:${marulist}" th:if="${#strings.equals(m.typeName,'SW')}">
                             <td>
-                              <p><i class="fa fa-square blue"></i>OS </p>
+                              <p><i class="fa fa-square blue"></i>[[${m.kubunName}]] </p>
                             </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>会計Package </p>
-                            </td>
-                            <td>25%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Office </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Virus Program </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
+                            <td>[[${m.typeCnt}]]台</td>
                           </tr>
                         </table>
                       </td>
@@ -210,6 +166,7 @@
             </div>
 </div>
  <!-- /Software Top5 -->
+
 	<div class="row">
 	 <div class="">
 	    <div class="row">
@@ -277,7 +234,11 @@
 	    <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
-	<script type="text/javascript">
+
+
+
+<script type="text/javascript">
+
 $(document).ready(function() {
 	init_chart_doughnut1(), init_chart_doughnut2(), init_charts(), init_morris_charts_dashboard(), init_DataTables(), init_compose()
 	});
@@ -488,8 +449,8 @@ $(document).ready(function() {
 	                }
 	            })
 	        }
-	        if ($("#canvasDoughnut1").length) {
-	            var f = document.getElementById("canvasDoughnut1"),
+	        if ($("#canvasDoughnut").length) {
+	            var f = document.getElementById("canvasDoughnut"),
 	                i = {
 	                    labels: ["Dark Grey", "Purple Color", "Gray Color", "Green Color", "Blue Color"],
 	                    datasets: [{
@@ -576,38 +537,14 @@ $(document).ready(function() {
 	    }
 	}
 
-
+// 貸与現況グラフ
 	function init_morris_charts_dashboard() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
 	        data: [{
-	            x: "Desktop",
+	            x: "[[${hardTop[1]}]]",
 	            y: 5,
 	            z: 7
-	        }, {
-	            x: "NoteBook",
-	            y: 5,
-	            z: 3
-	        }, {
-	            x: "Tablet",
-	            y: 7,
-	            z: 5
-	        },{
-	            x: "Mobile",
-	            y: 7,
-	            z: 5
-	        }, {
-	            x: "Monitor",
-	            y: 2,
-	            z: 6,
-	        }, {
-	            x: "Keyboard",
-	            y: 4,
-	            z: 6
-	        }, {
-	            x: "Mouse",
-	            y: 7,
-	            z: 6
 	        }],
 	        xkey: "x",
 	        ykeys: ["y", "z"],
@@ -687,18 +624,30 @@ $(document).ready(function() {
 	    }))
 	}
 
-/* doughnut */
+/* maruGraph */
 
 
 function init_chart_doughnut1() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
+/* 	for(var j = 0; j<5 ; j++){
+		var result = "";
+		alert(hardlist);
+		for(var i = 0 ; i<"[[${hardTop[0]}]]".length ; i++){
+			var hardTop = "[[${hardTop[0]}]]";
+	 		result = result + hardTop[i];
+		}
+		alert(result);
+	}
+ */
+
+	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
+
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
             data: {
-                labels: ["Notebook", "Server", "Other", "mobile", "Desktop"],
+                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
                 datasets: [{
-                    data: [15, 15, 10, 20, 40],
+                    data: ["[[${hardPercent[0]}]]","[[${hardPercent[1]}]]","[[${hardPercent[2]}]]","[[${hardPercent[3]}]]","[[${hardPercent[4]}]]"],
                     backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
                     hoverBackgroundColor: ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"]
                 }]
@@ -715,13 +664,15 @@ function init_chart_doughnut1() {
     }
 }
 
+
+
 function init_chart_doughnut2() {
     if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
             data: {
-                labels: ["Symbian", "Blackberry", "Other", "Android", "IOS"],
+                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
                 datasets: [{
                     data: [20, 20, 15, 25, 30],
                     backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
