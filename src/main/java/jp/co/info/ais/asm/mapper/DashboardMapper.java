@@ -12,6 +12,10 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> possession();
 
+	public int newItem();
+
+	public ArrayList<Dashboard> maruGraph();
+
 //	public ArrayList<Dashboard> rslist();
 
 }

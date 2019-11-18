@@ -24,7 +24,7 @@ public class MainController {
 
 	private static final Logger logger = LogManager.getLogger(MainController.class);
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String index(HttpServletRequest request
     					, Model model) {
 		@SuppressWarnings("unchecked")
@@ -38,18 +38,74 @@ public class MainController {
 
 		logger.debug(messages.toString());
 
-//		保有現況数値
-		ArrayList<Dashboard> possession = new ArrayList<Dashboard>();
-		possession = dashboardService.possession();
-		int type1 = possession.get(0).getTypeCnt();
-		int type2 = possession.get(1).getTypeCnt();
-		model.addAttribute("type1", type1);
-		model.addAttribute("type2", type2);
-		model.addAttribute("totalCnt", type1 + type2);
-		for(int i = 0 ; i<possession.size(); i++) {
-			logger.debug("typeCnt:{}", possession.get(i).getTypeCnt());
+// 保有現況数値
+		ArrayList<Dashboard> dash = new ArrayList<Dashboard>();
+		dash = dashboardService.possession();
+	// HW, SW, Total Cnt
+		int hwCnt = 0;
+		int swCnt = 0;
+		for(int i = 0 ; i < dash.size() ; i++) {
+			if(dash.get(i).getTypeName().equals("HW")) {
+				hwCnt += dash.get(i).getTypeCnt();
+			} else {
+				swCnt += dash.get(i).getTypeCnt();
+			}
 		}
+		model.addAttribute("hwCnt", hwCnt);
+		model.addAttribute("swCnt", swCnt);
+		model.addAttribute("totalCnt", hwCnt + swCnt);
+	// newItem Cnt
+		int newItem = dashboardService.newItem();
+		model.addAttribute("newItem", newItem);
+//  保有現況グラフ
+		model.addAttribute("marulist", dash);
+		// (1)hardTop, softTop
+		ArrayList<String> hardTop = new ArrayList<String>();
+		ArrayList<String> softTop = new ArrayList<String>();
+		for(int i = 0 ; i<dash.size(); i++) {
+			if(dash.get(i).getTypeName().equals("HW")) {
+				hardTop.add(dash.get(i).getKubunName());
+			} else {
+				softTop.add(dash.get(i).getKubunName());
+			}
+		}
+		model.addAttribute("hardTop", hardTop);
+		model.addAttribute("softTop", softTop);
 
+		// (2)hardPercent, softPercent
+		ArrayList<Integer> hardPercent = new ArrayList<Integer>();
+		ArrayList<Integer> softPercent = new ArrayList<Integer>();
+		for(int i = 0 ; i<dash.size(); i++) {
+			if(dash.get(i).getTypeName().equals("HW")) {
+				hardPercent.add(dash.get(i).getTypeCnt());
+			} else {
+				softPercent.add(dash.get(i).getTypeCnt());
+			}
+		}
+		model.addAttribute("hardPercent", hardPercent);
+		model.addAttribute("softPercent", softPercent);
+
+
+//  貸与現況グラフ
+
+
+
+//		logger.debug("ht:{}", hardTop);
+/*		for(int i = 0 ; i<marulist.size(); i++) {
+			if(marulist.get(i).getTypeName().equals("HW")) {
+				logger.debug("hardTop:{}", marulist.get(i).getKubunName());
+			} else {
+				logger.debug("softTop:{}", marulist.get(i).getKubunName());
+			}
+		}*/
+
+/*		for(int i = 0 ; i<marulist.size(); i++) {
+			if(marulist.get(i).getHardPercent()!=0) {
+				logger.debug("{},{}",marulist.get(i).getHardTop(), marulist.get(i).getHardPercent());
+			} else {
+				logger.debug("{},{}",marulist.get(i).getSoftTop(), marulist.get(i).getSoftPercent());
+			}
+		}*/
 
 
 //		貸与現況グラフ

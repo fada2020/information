@@ -5,25 +5,39 @@
 <mapper namespace="jp.co.info.ais.asm.mapper.DashboardMapper">
 
 <!-- 資産タイプ別現況 -->
+
+	<!-- HW, SW, Total -->
 	<select id="possession" resultType="jp.co.info.ais.asm.domain.Dashboard">
-	SELECT COUNT(asset_number)typeCnt
-		, type_code
-		, code_detail_name
-			FROM asset
-			JOIN code_detail
-			WHERE  code_detail.code_master_id = "004" AND code_detail.code_detail_id = asset.type_code
-			GROUP BY type_code, code_detail_name;
+		SELECT COUNT(*)typeCnt
+		, kubun_code
+		, code_detail_name kubunName
+		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "003" AND code_detail_id = cdl.item1) typeName
+		, status_code
+		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "001" AND code_detail_id = asset.status_code) statusName
+		FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
+		GROUP BY kubun_code, status_code ORDER BY typeName, typeCnt DESC
+	;
+	</select>
+
+	<!-- 新しい装置 -->
+	<select id="newItem" resultType="int">
+	SELECT COUNT(asset_number)newItem
+		FROM asset
+			WHERE DATE_FORMAT(STR_TO_DATE(purchase_date,'%Y%m%d'),'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
 	</select>
 
 <!-- 資産種別貸与現況 -->
+
 <!-- 	<select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
-		SELECT
-			P_NAME itemName
-			, STATE
-			,COUNT(assetnumber) itemCnt
-			 FROM ITASSET
-				JOIN STATE ON ITASSET.S_NUMBER = STATE.S_NUMBER
-				JOIN PRODUCT ON ITASSET.P_S_NUM = PRODUCT.P_S_NUM
-		 			GROUP BY ITASSET.P_S_NUM, ITASSET.S_NUMBER
+	SELECT COUNT(*)cnt
+		, kubun_code
+		, code_detail_name kubun_name
+		, (SELECT code_detail_name FROM code_detail
+			WHERE code_master_id = "003" AND code_detail_id = cdl.item1) type_name
+		, status_code
+		, (SELECT code_detail_name FROM code_detail
+			WHERE code_master_id = "001" AND code_detail_id = asset.status_code) status_name
+				FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
+				GROUP BY kubun_code, status_name, type_name, status_code
 	</select> -->
 </mapper>
