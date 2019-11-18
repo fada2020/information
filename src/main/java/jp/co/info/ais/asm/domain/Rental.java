@@ -12,20 +12,20 @@ public class Rental {
 	//貸与情報管理の基本
 	private int rentalSeq;
 	private int assetSeq;
-	private String rental_no;
+	private String rentalNo;
 	private String rentalDay;
 	private String rentalUserId;
 	private String purpose;
 	private String speciality;
 	private String applicantId;
 
-	private String renturnDay;
-	private String renturnUserId;
+	private String returnDay;
+	private String returnUserId;
 	private String returnPeriod;
 	private int statusCode;
 	private String storageLocation;
 	private String bpName;
-	private String rentalNo;
+
 
 	//資産マスタから持ち込む
 	private String assetNumber;

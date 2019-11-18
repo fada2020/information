@@ -28,7 +28,7 @@
 		JOIN asset a ON
 		r.asset_seq = a.asset_seq
 
-		AND a.status_code = '002'
+		AND r.status_code = '002'
 		ORDER BY
 		asset_number ASC
 
@@ -54,31 +54,6 @@
 
 	</select>
 
-	<select id="getSelectProduct" parameterType="String"
-		resultType="jp.co.info.ais.asm.domain.Rental">
-		select p.p_s_num, i.assetnumber from itasset i
-		join state s
-		on s.s_number=i.s_number
-		join product p on p.p_s_num=i.p_s_num
-		where
-		i.p_s_num=#{psNum} and i.s_number='1'
-
-	</select>
-
-	<select id="writeProduct" parameterType="String"
-		resultType="java.util.HashMap">
-		select assetNumber from itasset i where
-		i.assetNumber=#{realCode}
-
-	</select>
-
-
-
-	<select id="searchCode"
-		resultType="jp.co.info.ais.asm.domain.ProductKind">
-		select p_c_num,p_c_name from productkind
-
-	</select>
 
 	<select id="researchRental" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Rental">
@@ -133,37 +108,41 @@
 		status_code='001' and kubun_code=#{selectedItem}
 	</select>
 
-	<update id="changeStatus" parameterType="String">
-		update asset
-		set
-		status_code=#{statusCode}
+	<update id="changeStatus" parameterType="java.util.List">
+		<foreach item="item" index="index" collection="list">
+			update asset
+			set
 
-
-		where status_code='001' and asset_number=#{selectedItem}
+			status_code='002'
+			where
+			asset_Seq=#{item.assetSeq}
+		</foreach>
 	</update>
 
-	<insert id="addRental" useGeneratedKeys="true"
-		keyProperty="rental_seq" parameterType="java.util.List">
+	<insert id="addRental" parameterType="java.util.List">
 
 
 
-		INSERT INTO rental(
-
-		asset_Seq,
-		rental_day,
-		rental_User_id,
-		purpose,
-		storage_Location,
-		speciality,
-		applicant_id,
-		return_Period,
-		bp_name,
-		insert_id,
-		update_id,
-		rental_no
-		) VALUES
-		<foreach item="item" index="index" collection="list">
+			INSERT INTO rental(
+			rental_Seq,
+			asset_Seq,
+			rental_day,
+			rental_User_id,
+			purpose,
+			storage_Location,
+			speciality,
+			applicant_id,
+			return_Period,
+			bp_name,
+			insert_id,
+			update_id,
+			rental_no,
+			status_code
+			) VALUES
+			<foreach item="item" index="index" collection="itemList"  separator =",">
 			(
+			(SELECT
+			IFNULL(MAX(rental_seq) + 1, 1) FROM rental r),
 			#{item.assetSeq},
 			#{item.rentalDay},
 			#{item.rentalUserId},
@@ -173,12 +152,36 @@
 			#{item.applicantId},
 			#{item.returnPeriod},
 			#{item.bpName},
-
 			#{item.applicantId},
 			#{item.applicantId},
-
+			(SELECT
+			IFNULL(#{item.rentalDay}+MAX(rental_seq) +
+			1, 1) FROM rental r),
+			'002'
 			)
 		</foreach>
 	</insert>
+	<update id="returnAsset"
+		parameterType="jp.co.info.ais.asm.domain.Rental">
+		update rental set
+		update_id=#{applicantId},
+		status_code='001',
+		return_day=#{returnDay},
+		return_user_id=#{returnUserId}
+		where asset_seq=#{assetSeq}
+
+	</update>
+
+		<update id="changeAssetStatus"
+		 parameterType="java.util.List">
+		update asset set
+
+		status_code='001'
+
+	<foreach item="item" index="index" collection="itemList"  separator =",">
+		where asset_seq=#{item.assetSeq}
+	</foreach>
+	</update>
+
 </mapper>
 
