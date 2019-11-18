@@ -148,6 +148,8 @@
 
                 <div class="col-md-1" style="width:5%; float:right; margin-right:60px;">
                 	<button id="searchButton" class="btn btn-primary" >検索</button>
+
+                	<button id="delete">delete</button>
                 </div>
 
                 </div>
@@ -280,6 +282,7 @@
             	"processing": true,
             	"serverSide": true,
                 "searching": false,
+                "pageLength":10,
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
@@ -319,6 +322,12 @@
                     	var str = d.returnDayS;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }}
+                    /* { targets: 12,
+                    	data:"rentalSeq",
+                    	render:function( data, type, row ){
+                    		return '<input type="checkbox" onclick="delete();" value="/'row.rentalSeq'">'
+                    	}
+                    } */
                 ]
             });
 
@@ -330,7 +339,10 @@
 
           	//table Exportion -S
 
-          	$('#exportExcel').on( 'click', function () {
+          	$('#exportExcel').on('click',function(){
+          		location.href = 'history/rentalHsitory.xlsx';
+          	})
+          	/* $('#exportExcel').on( 'click', function () {
 
         		var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
         		tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
@@ -369,9 +381,16 @@
         		elem.click();
         		document.body.removeChild(elem);
         		}
-            } );
+            } ); */
 
           	//table Exportion -E
+
+          	//delete -S
+          	$('#delete').on('click',function(){
+          		location.href = 'history/delete';
+          	})
+         	//delete -E
+
 
         })
 
