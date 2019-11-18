@@ -27,4 +27,8 @@ public class HistoryService{
 		return HistoryMapper.selectCount(condition);
 	}
 
+	public List<History> exportXlsx(){
+		return HistoryMapper.exportXlsx();
+	}
+
 }

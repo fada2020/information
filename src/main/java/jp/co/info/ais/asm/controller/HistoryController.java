@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.History;
+import jp.co.info.ais.asm.modelAndView.HistoryXlsxView;
 import jp.co.info.ais.asm.service.HistoryService;
 
 @Controller
@@ -29,6 +31,13 @@ public class HistoryController {
     public String History(Model model) {
 		model.addAttribute("stateCode", HistoryService.selectStateCode());
     	return "history";
+    }
+
+    @RequestMapping("/rentalHsitory.xlsx")
+    public ModelAndView exportXlsx() {
+    	List<History> history = HistoryService.exportXlsx();
+
+        return new ModelAndView(new HistoryXlsxView(), "history", history);
     }
 
     @RequestMapping("/getHistorylist")
@@ -80,6 +89,9 @@ public class HistoryController {
 
         page.setRecordsFiltered(totalCount);
 
+        logger.debug("result ==="+page.toString());
         return page;
     }
+
+
 }
