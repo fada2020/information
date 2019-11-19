@@ -39,8 +39,6 @@ public class RentalController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String ITAssetList(Model model) throws Exception {
 
-		session.setAttribute("id", "ais111111");
-
 		//区分データ習得
 		model.addAttribute("kubunCode", rentalService.selectCodeDetail());
 		//ステータースデータ習得
@@ -59,28 +57,30 @@ public class RentalController {
 	public Asset getAsset(Model model, @RequestBody String number) throws Exception {
 
 		Asset asset = rentalService.selectAsset(number);
+		if (asset != null) {
+			rentalService.changeAssetStatus(number);
+		}
 		model.addAttribute("asset", asset);
 		return asset;
 	}
 
 	@RequestMapping(value = "/addRental", method = RequestMethod.POST)
 	@ResponseBody
-	public void addRental(Model model, @RequestBody List<Rental> rentalList) throws Exception {
-		for (Rental r : rentalList) {
-			logger.debug(r.toString());
-		}
-		int num2 = 0;
-		int num = rentalService.addRental(rentalList);
-		if (num == 1) {
+	public void addRental(Model model, @RequestBody List<Rental> rentalList) {
 
-			num2 = rentalService.changeStatus(rentalList);
+		try {
+			rentalService.addRental(rentalList);
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (num2 > 0) {
-			model.addAttribute("result", "成功");
-		} else {
-			model.addAttribute("result", "失敗");
-		}
+	}
+
+	@RequestMapping(value = "/cancelAsset", method = RequestMethod.POST)
+	@ResponseBody
+	public void cancelAsset(@RequestBody int assetSeq) throws Exception {
+		rentalService.changeAStatus(assetSeq);
+
 	}
 
 	@RequestMapping(value = "/getAssetList", method = RequestMethod.POST)
@@ -104,30 +104,19 @@ public class RentalController {
 
 		String assetNumber = page.getColumns().get(0).getSearch().getValue();
 		if (null != assetNumber && !assetNumber.equals("")) {
-			logger.debug(page.getColumns().get(0).getSearch().getValue());
+			assetNumber = "%" + assetNumber + "%";
 			rental.setAssetNumber(assetNumber);
 		}
-
-		String date = page.getColumns().get(1).getSearch().getValue();
-		if (null != date && !date.equals("")) {
-
-			logger.debug(page.getColumns().get(1).getSearch().getValue());
-
-			rental.setRentalDay(date);
-
+		String rentalPeriod = page.getColumns().get(1).getSearch().getValue();
+		if (null != rentalPeriod && !rentalPeriod.equals("")) {
+			rentalPeriod = rentalPeriod.replaceAll("[ /]", "");
+			String[] dateArr = rentalPeriod.split("-");
+			rental.setRentalDayS(dateArr[0]);
+			rental.setRentalDayE(dateArr[1]);
 		}
 
 		List<Rental> list = rentalService.selectAll(rental);
-		for (Rental r : list) {
-			String rentalDay = r.getRentalDay();
-			String returnPeriod = r.getReturnPeriod();
-			rentalDay = rentalDay.substring(0, 4) + "/" + rentalDay.substring(4, 6) + "/"
-					+ rentalDay.substring(6, rentalDay.length());
-			returnPeriod = returnPeriod.substring(0, 4) + "/" + returnPeriod.substring(4, 6) + "/"
-					+ returnPeriod.substring(6, returnPeriod.length());
-			r.setRentalDay(rentalDay);
-			r.setReturnPeriod(returnPeriod);
-		}
+
 		page.setData(list);
 
 		int totalCount = rentalService.selectCount(rental);
@@ -154,7 +143,7 @@ public class RentalController {
 		try {
 			num = rentalService.returnAsset(rental);
 			if (num > 0) {
-				rentalService.changeAssetStatus(num1);
+				rentalService.changeAStatus(num1);
 
 			}
 		} catch (Exception e) {
@@ -176,14 +165,36 @@ public class RentalController {
 				e.printStackTrace();
 			}
 		}
-		return "";
+		return "rentalIndex";
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	private int rentalUpdate(Model model) {
+	@RequestMapping(value = "/researchRental", method = RequestMethod.POST)
+	@ResponseBody
+	private Rental researchRental(Model model, @RequestBody int assetSeq) {
+		Rental rental = new Rental();
+		try {
+			logger.debug(assetSeq);
+			rental = rentalService.researchRental(assetSeq);
+		} catch (Exception e) {
+			e.printStackTrace();
 
-		int suc = 0;
+		}
 
-		return suc;
+		return rental;
+	}
+
+	@RequestMapping(value = "/updateRental", method = RequestMethod.POST)
+	@ResponseBody
+	private String updateAsset(Model model, @RequestBody Rental rental) {
+
+		try {
+			logger.debug(rental.toString());
+			rental.setUpdateId((String) session.getAttribute("id"));
+
+			int num = rentalService.updateRental(rental);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "rentalIndex";
 	}
 }

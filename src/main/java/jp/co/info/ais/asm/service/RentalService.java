@@ -35,14 +35,9 @@ public class RentalService {
 		return rentalMapper.getSelectCodeData(codeDetailName);
 	}
 
+	public Rental researchRental(int assetSeq)throws Exception  {
 
-
-
-
-
-	public Rental researchRental(String assetNumber)throws Exception  {
-
-		return rentalMapper.researchRental(assetNumber);
+		return rentalMapper.researchRental(assetSeq);
 	}
 	public List<CodeDetail> selectCodeDetail()throws Exception  {
 
@@ -86,9 +81,19 @@ public class RentalService {
 		return rentalMapper.returnAsset(rental);
 	}
 
-	public int changeAssetStatus(int assetSeq) throws Exception {
+	public int changeAssetStatus(String assetNumber) throws Exception {
 		// TODO 自動生成されたメソッド・スタブ
-		return rentalMapper.changeAssetStatus(assetSeq);
+		return rentalMapper.changeAssetStatus(assetNumber);
+	}
+
+	public int changeAStatus(int num1) throws Exception {
+		// TODO 自動生成されたメソッド・スタブ
+		return rentalMapper.changeAStatus(num1);
+	}
+
+	public int updateRental(Rental rental) {
+		// TODO 自動生成されたメソッド・スタブ
+		return rentalMapper.updateRental(rental);
 	}
 
 
