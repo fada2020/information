@@ -13,12 +13,10 @@ public class Dashboard {
 	private int newItem;
 	private String kubunName;
 
-	private String hardTop;
-	private int hardPercent;
-	private String softTop;
-	private int softPercent;
+
 //	資産貸与パラメータ
+	private String kubunCode;
 	private String itemName;
-	private String state;
+	private String statusCode;
 	private int itemCnt;
 }
