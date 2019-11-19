@@ -22,9 +22,12 @@
 <!-- iCheck -->
 <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-<!-- bootstrap-datetimepicker -->
-
+<!-- bootstrap-daterangepicker -->
 <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
+<!-- bootstrap-datetimepicker -->
+<link
+	href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
 
 
@@ -266,9 +269,19 @@
 															<label class="control-label col-md-3 col-sm-3 ">貸与期間</label>
 
 															<div class="col-md-9 col-sm-9 ">
-																<input type="text" id="returnPeriod"
-																	th:value="${#dates.format(date, 'yyyy-MM-dd')}"
-																	class="form-control col-md-10">
+																<div class="col-md-9">
+																	<div class="input-group date" id="myDatepicker">
+																		<input type="text"
+																			th:value="${#dates.format(date, 'yyyy-MM-dd')}"
+																			class="form-control" name="returnPeriod"
+																			id="returnPeriod"> <span
+																			class="input-group-addon"> <span
+																			class="glyphicon glyphicon-calendar"></span>
+																		</span>
+																	</div>
+																</div>
+
+
 															</div>
 														</div>
 														<div class="form-group row">
@@ -301,7 +314,7 @@
 																		<th class="col-md-1" id="speciality_insert">特記事項</th>
 																		<th class="col-md-1" id="returnPeriod_insert">返却期間</th>
 																		<th class="col-md-1" id="bpName_insert">BP社名</th>
-																		<th class="col-md-1" id="cancel_insert">取り消し</th>
+																		<th class="col-md-1" id="cancel_insert">取消</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -537,6 +550,7 @@ function updateRental(){
 
 function researchRental(assetSeq){
 
+
 alert(assetSeq);
 	$.ajax({
 		   type  : "POST",
@@ -551,21 +565,20 @@ alert(assetSeq);
 
 				var	rentalDay=data.rentalDay;
 				rentalDay=rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8);
-			var html='<div class="row"><div class="col-md-3"><span>貸与番号</span></div><div class="col-md-9" ><input type="text" id="rentalNo_view" readonly="readonly" value="'+data.rentalNo+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>管理番号</span></div><div class="col-md-9" ><input type="text"  id="assetNumber_view" readonly="readonly" value="'+data.assetNumber+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>品目</span></div><div class="col-md-9" ><input type="text" id="codeDetailName_view" readonly="readonly" value="'+ kubunItemMap.get(data.kubunCode)+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>用途</span></div><div class="col-md-9"><input type="text"  id="purpose_view"  value="'+data.purpose+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>場所</span></div><div class="col-md-9" ><input type="text" id="storageLocation_view"  value="'+data.storageLocation+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>貸与日</span></div><div class="col-md-9"><input type="text"  id="rentalDay_view" value="'+rentalDay+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>特記事項</span></div><div class="col-md-9"><input type="text"  id="speciality_view" value="'+data.speciality+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>貸与期間</span></div><div class="col-md-9" ><input type="text" id="returnPeriod_view" value="'+returnPeriod+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>使用者</span></div><div class="col-md-9" ><input type="text" id="rentalUserId_view" value="'+data.rentalUserId+'"class="form-control" /></div></div>'
-				+'<div class="row"><div class="col-md-3"><span>貸与者</span></div><div class="col-md-9" ><input type="text"id="applicantId_view" value="'+data.applicantId+'"class="form-control" /></div></div>'
+			var html='<div class="col-md-3"><span>貸与番号</span></div><div class="col-md-9" ><input type="text" id="rentalNo_view" readonly="readonly" value="'+data.rentalNo+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>管理番号</span></div><div class="col-md-9" ><input type="text"  id="assetNumber_view" readonly="readonly" value="'+data.assetNumber+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>品目</span></div><div class="col-md-9" ><input type="text" id="codeDetailName_view" readonly="readonly" value="'+ kubunItemMap.get(data.kubunCode)+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>用途</span></div><div class="col-md-9"><input type="text"  id="purpose_view"  value="'+data.purpose+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>場所</span></div><div class="col-md-9" ><input type="text" id="storageLocation_view"  value="'+data.storageLocation+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>貸与日</span></div><div class="input-group date" id="myDatepicker"><input type="text"value="'+rentalDay+'"class="form-control" name="rentalDay"id="rentalDayview"> <spanclass="input-group-addon"> <spanclass="glyphicon glyphicon-calendar"></span></span></div>'
+				+'<div class="col-md-3"><span>特記事項</span></div><div class="col-md-9"><input type="text"  id="speciality_view" value="'+data.speciality+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>貸与期間</span></div><div class="col-md-9" ><input type="text" id="returnPeriod_view" value="'+returnPeriod+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>使用者</span></div><div class="col-md-9" ><input type="text" id="rentalUserId_view" value="'+data.rentalUserId+'"class="form-control" /></div>'
+				+'<div class="col-md-3"><span>貸与者</span></div><div class="col-md-9" ><input type="text"id="applicantId_view" value="'+data.applicantId+'"class="form-control" /></div>'
 
 				+'<input type="hidden" id="assetSeq_hidden"value="'+data.assetSeq+'"class="form-control" />';
 			$('#moddal_update').html(html);
-
-}
+			}
 
 });
 
