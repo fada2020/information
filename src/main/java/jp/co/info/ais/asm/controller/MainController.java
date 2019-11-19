@@ -84,8 +84,6 @@ public class MainController {
 		}
 		model.addAttribute("hardPercent", hardPercent);
 		model.addAttribute("softPercent", softPercent);
-
-
 //  貸与現況グラフ
 
 

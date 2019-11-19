@@ -28,7 +28,7 @@
 
 <!-- 資産種別貸与現況 -->
 
-<!-- 	<select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
+	<!-- <select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
 	SELECT COUNT(*)cnt
 		, kubun_code
 		, code_detail_name kubun_name
