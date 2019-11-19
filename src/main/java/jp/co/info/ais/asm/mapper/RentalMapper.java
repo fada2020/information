@@ -22,7 +22,7 @@ public interface RentalMapper {
 	//データコードをセレクト
 	public List<CodeDetail> getSelectCodeData(String codeDetailName) throws Exception;
 
-	public Rental researchRental(String assetNumber) throws Exception;
+	public Rental researchRental(int assetSeq) throws Exception;
 
 	public List<CodeDetail> selectCodeDetail() throws Exception;
 
@@ -41,6 +41,10 @@ public interface RentalMapper {
 
 	public int returnAsset(Rental rental)throws Exception;
 
-	public int changeAssetStatus(int assetSeq)throws Exception;
+	public int changeAssetStatus(String assetNumber)throws Exception;
+
+	public int changeAStatus(int num1)throws Exception;
+
+	public int updateRental(Rental rental);
 
 }
