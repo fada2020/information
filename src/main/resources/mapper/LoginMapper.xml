@@ -4,7 +4,7 @@
 <mapper namespace="jp.co.info.ais.asm.mapper.LoginMapper">
 
 <select id="selectId" resultType="Integer">
-    select count(*)
+    select count(emp_id)
     from emp
     where
     emp_id =#{id}
