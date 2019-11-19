@@ -1,7 +1,9 @@
 package jp.co.info.ais.asm.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,11 +39,8 @@ public class RentalController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String ITAssetList(Model model) throws Exception {
 
-
-
 		session.setAttribute("id", "ais111111");
 
-		출처: https://fors.tistory.com/437 [fors]
 		//区分データ習得
 		model.addAttribute("kubunCode", rentalService.selectCodeDetail());
 		//ステータースデータ習得
@@ -66,12 +65,24 @@ public class RentalController {
 
 	@RequestMapping(value = "/addRental", method = RequestMethod.POST)
 	@ResponseBody
-	public int addRental(Model model, @RequestBody List<Rental>rentalList) throws Exception {
+	public void addRental(Model model, @RequestBody List<Rental> rentalList) throws Exception {
+		for (Rental r : rentalList) {
+			logger.debug(r.toString());
+		}
+		int num2 = 0;
+		int num = rentalService.addRental(rentalList);
+		if (num == 1) {
 
-		 rentalService.addRental(rentalList);
+			num2 = rentalService.changeStatus(rentalList);
 
-		return 1;
+		}
+		if (num2 > 0) {
+			model.addAttribute("result", "成功");
+		} else {
+			model.addAttribute("result", "失敗");
+		}
 	}
+
 	@RequestMapping(value = "/getAssetList", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Asset> selectAssetList(@RequestBody String selectedItem) throws Exception {
@@ -124,6 +135,48 @@ public class RentalController {
 		page.setRecordsFiltered(totalCount);
 
 		return page;
+	}
+
+	@RequestMapping(value = "/returnAsset", method = RequestMethod.POST)
+	public String deleteRental(Model model, @RequestBody String seq) {
+		Rental rental = new Rental();
+		logger.debug(seq);
+		int num1 = Integer.parseInt(seq);
+		rental.setAssetSeq(num1);
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
+		Date currentTime = new Date();
+		String mTime = mSimpleDateFormat.format(currentTime);
+		rental.setReturnDay(mTime);
+
+		String applicantId = (String) session.getAttribute("id");
+		rental.setApplicantId(applicantId);
+		int num = 0;
+		try {
+			num = rentalService.returnAsset(rental);
+			if (num > 0) {
+				rentalService.changeAssetStatus(num1);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				//区分データ習得
+				model.addAttribute("kubunCode", rentalService.selectCodeDetail());
+				//ステータースデータ習得
+				model.addAttribute("statusCode", rentalService.selectStatusCode());
+				//区分コードの習得
+				model.addAttribute("kubun", rentalService.selectCode());
+
+				Date date = new Date();
+
+				model.addAttribute("date", date);
+				//戻り値 区分データ,ステータースデータ
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)

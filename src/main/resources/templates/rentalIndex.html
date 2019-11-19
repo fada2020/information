@@ -7,8 +7,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentelella Alela! |</title>
+<title>IT資産管理</title>
 
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
 <!-- Bootstrap -->
 <link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -511,13 +513,18 @@
                     	data: "description",
                         render: function ( data, type, row, meta ) {
                           return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                          'rental/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'rental/' + row.assetSeq + '\'">削除</button>';
+                          '/' + row.assetNumber + '\'">更新</button><button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">削除</button>';
+
+                       /*    return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
+                          '/' + row.assetNumber + '\'">更新</button><button type="button"id="deleteButton" class="btn btn-danger" onclick = "location.href =\'' +
+  			            'rental/' + row.assetSeq + '\'">削除</button>'; */
                         }
                     }
 
                 ]
             });
+
+
 
             // Search
             $('#assetNumber_search').on( 'keyup', function () {
@@ -539,7 +546,7 @@
 
   			$('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column !=8 &&this._DT_CellIndex.column !=0) {
+            	if(this._DT_CellIndex.column !=7) {
             		$('#modal3d').modal();
 
             		var rentDay = new Date(rowData.rentDay);
@@ -572,6 +579,24 @@
 
 
 	<script th:inline="javascript">
+	function deleteAsset(assetSeq){
+	var set={assetSeq : assetSeq};
+	alert(assetSeq);
+		$.ajax({
+			   type  : "post",
+			   url : "/rental/returnAsset",
+				dataType : "json",
+				"contentType" : "application/JSON",
+				data : set,
+		 	success : function(data){
+
+		 		window.location.href = "/rental";
+			}
+
+	});
+
+	}
+
 		function modalInsert() {
 
     		$('#modal3d2').modal();
@@ -643,6 +668,10 @@
 
 }
  function rentalItem() {
+	 String.prototype.replaceAll = function(org, dest) {
+		    return this.split(org).join(dest);
+		}
+
 		var rental =new Object();
 		var tdArr = new Array();
 		var tr = $('#selectedAsset tbody tr');
@@ -653,11 +682,12 @@
 			rental.purpose = td.eq(4).text();
 			rental.storageLocation = td.eq(5).text();
 			rental.speciality = td.eq(6).text();
-			rental.returnPeriod = td.eq(7).text();
+			rental.returnPeriod = td.eq(7).text().replaceAll("/","");
 			rental.assetSeq=td.eq(8).text();
 			rental.applicantId = /*[[${session.id}]]*/ 'id';
-			rental.rentalDay=$('#todayDate').val().replace("/","");
+			rental.rentalDay=$('#todayDate').val().replaceAll("/","");
 			rental.bpName=td.eq(9).text();
+
 			tdArr.push(rental);
 		});
 
@@ -670,7 +700,10 @@
 	 	"success" : function(data){
 
 
-	alert("成功");
+	alert(data.result);
+
+
+
 }
 
 });

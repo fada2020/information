@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.asm.common.AppConstant;
 import jp.co.info.ais.asm.domain.Accessories;
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
@@ -19,6 +20,9 @@ public class AssetService {
 	private static final Logger logger = LogManager.getLogger(AssetService.class);
 
 	@Autowired
+	AppConstant appConstant;
+
+	@Autowired
 	AssetMapper assetMapper;
 
 	public Asset selectAsset(int assetSeq) {
@@ -26,6 +30,7 @@ public class AssetService {
 	}
 
 	public List<Asset> selectList(Asset condition) {
+		logger.debug(appConstant.getCompanyName());
 		return assetMapper.selectAssetList(condition);
 	}
 
@@ -55,6 +60,10 @@ public class AssetService {
 
 	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
 		return assetMapper.updateMaintenanceHistory(maintenanceHistory);
+	}
+
+	public int updateAsset(Asset asset) {
+		return assetMapper.updateAsset(asset);
 	}
 
 }
