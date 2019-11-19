@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>IT資産管理</title>
-    
+
     <!-- favicons -->
 	<link rel="icon" href="../images/aisRogo.png">
     <!-- Bootstrap -->
@@ -151,7 +151,7 @@
                 <div class="col-md-1" style="width:5%; float:right; margin-right:60px;">
                 	<button id="searchButton" class="btn btn-primary" >検索</button>
 
-                	<button id="delete">delete</button>
+                	<button id="deleteHistory">delete</button>
                 </div>
 
                 </div>
@@ -189,6 +189,7 @@
                           <th>BP社名</th>
                           <th>貸与日</th>
                           <th>返却日</th>
+                          <th>削除</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -237,6 +238,7 @@
     /*<![CDATA[*/
 
         var modalesectiondata = null;
+        var deleteList="";
 
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
@@ -244,6 +246,13 @@
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
+    	function deletedd(target){
+        	if(target.checked == true){
+          		deleteList += target.value;
+        	} else{
+        		deleteList = deleteList.replace(target.value,"");
+        	}
+        }
 
         $(function(){
 
@@ -323,14 +332,12 @@
                     { targets: 11, data: function ( d ) {
                     	var str = d.returnDayS;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    }},
+                    {targets: 12,
+                    	render: function( data, type, row, meta ){
+                    		return '<input type="checkbox" class="deleteHistory" onClick="deletedd(this)" value="/' + row.rentalSeq + '">';
                     }}
-                    /* { targets: 12,
-                    	data:"rentalSeq",
-                    	render:function( data, type, row ){
-                    		return '<input type="checkbox" onclick="delete();" value="/'row.rentalSeq'">'
-                    	}
-                    } */
-                ]
+                    ]
             });
 
             //Search -S
@@ -344,55 +351,30 @@
           	$('#exportExcel').on('click',function(){
           		location.href = 'history/rentalHsitory.xlsx';
           	})
-          	/* $('#exportExcel').on( 'click', function () {
 
-        		var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
-        		tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
-        		tab_text = tab_text + '<xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
-        		tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
-        		tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
-        		tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
-        		tab_text = tab_text + "<table border='1px'>";
-
-        		var exportTable = $('#table1').clone();
-        		exportTable.find('input').each(function (index, elem) { $(elem).remove(); });
-        		tab_text = tab_text + exportTable.html();
-        		tab_text = tab_text + '</table></body></html>';
-        		var data_type = 'data:application/vnd.ms-excel';
-        		var ua = window.navigator.userAgent;
-        		var msie = ua.indexOf("MSIE ");
-        		var fileName = 'rentalHistory.xls';
-
-        		//adapt IE
-        		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-        		if (window.navigator.msSaveBlob) {
-        		var blob = new Blob([tab_text], {
-        		type: "application/csv;charset=utf-8;"
-        		});
-        		navigator.msSaveBlob(blob, fileName);
-        		}
-        		} else {
-        		var blob2 = new Blob([tab_text], {
-        		type: "application/csv;charset=utf-8;"
-        		});
-        		var filename = fileName;
-        		var elem = window.document.createElement('a');
-        		elem.href = window.URL.createObjectURL(blob2);
-        		elem.download = filename;
-        		document.body.appendChild(elem);
-        		elem.click();
-        		document.body.removeChild(elem);
-        		}
-            } ); */
-
-          	//table Exportion -E
+        	//table Exportion -E
 
           	//delete -S
-          	$('#delete').on('click',function(){
-          		location.href = 'history/delete';
-          	})
-         	//delete -E
+          	$('#deleteHistory').on('click',function(){
+          		var a = deleteList.split("/");
 
+				var confirmation = confirm("データを削除しますか？");
+
+				if(confirmation){
+					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
+				          	{
+										type: "POST",
+										dataType: "json",
+										contentType: 'application/JSON',
+										data : JSON.stringify(a)
+									}
+								)
+								.done(function(data) {
+									 //screen reset
+								});
+				}
+          	})
+			//delete -E
 
         })
 
