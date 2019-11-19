@@ -4,11 +4,17 @@
 
 <script>
 function LoginCheck() {
-  		if(session.getAttribute(id) !=null {$('#tab_login').text('ログアウト'); fnLoginToggle = function() { document.location.href = "index.html" };}
-		else {$('#tab_login').text('ログイン');fnLoginToggle = function() { document.location.href = "login.html" ;};}
-	);};
+  		if(session.getAttribute(id) !=null) {
+  			$(div)
+
+  			session.invalidate();
+
+
+  		}
+
+  		}
   </script>
-<meta charset="utf-8"/>
+<meta charset="utf-8"/>,
   <body>
         <!-- top navigation -->
         <div class="top_nav" th:fragment="top_nav">
@@ -23,8 +29,9 @@ function LoginCheck() {
                 <a class="user-profile"id="tab_login" onclick="LoginCheck();">
 
                     <span th:text="${session.name}"></span>
-
-					 <button >Logout</button>
+					<div>
+					 <button>a</button>
+                  </div>
                   </a>
                 </li>
               </ul>

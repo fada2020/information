@@ -60,30 +60,47 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left " method="get" >
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="companyname">会社の名前 <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">製品区分 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="c_name" required="required" name="c_name" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="codeKubun" required="required" name="codeKubun" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="companycode">会社のコ－ド <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >製品区分名前 <span class="required">*</span>
                         </label>
                          <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="c_code" required="required" name="c_code" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="codeKubunName" required="required" name="codeKubunName" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >製品区分コード <span class="required">*</span>
+                        </label>
+                         <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="codeKubunCode" required="required" name="codeKubunCode" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >？ <span class="required">*</span>
+                        </label>
+                         <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="code" required="required" name="code" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="submit" class="btn btn-success" id="companySend" onclick="c_btn()">Submit</button>
+                          <button type="submit" class="btn btn-success" id="companySend" onclick="c_btn()">保存</button>
                         </div>
                       </div>
                     </form>
                   </div>
+
+
                   <div class="x_title">
-                    <h2>会社コ－ドリスト</h2>
+                    <h2>製品リスト</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"></a>
                       </li>
@@ -95,8 +112,10 @@
                     <table class="table table-bordered table-hover table-lg" id="table1">
                       <thead class="thead-light">
                         <tr>
-                          <th>会社名前</th>
-                          <th>会社コ－ド</th>
+                          <th>製品区分</th>
+                          <th>製品区分名前</th>
+                          <th>製品区分コード</th>
+                          <th>？</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -137,7 +156,11 @@
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
+
+
     <!-- page script -->
+
+
     <script th:inline="javascript">
     /*<![CDATA[*/
         var modalesectiondata = null;
@@ -176,7 +199,7 @@
 
             // Setup - add a text input to each footer cell
             $('#table1 thead tr').clone(true).appendTo( '#table1 thead' );
-            $('#table1 thead tr:eq(1) th').each( function (i) {
+            /* $('#table1 thead tr:eq(1) th').each( function (i) {
                 var title = $(this).text();
                 $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
 
@@ -187,7 +210,7 @@
                             .search( this.value )
                             .draw();
                     }
-                } );
+                } ); */
             } );
 
         })
