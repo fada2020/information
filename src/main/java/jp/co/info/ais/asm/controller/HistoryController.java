@@ -1,5 +1,6 @@
 package jp.co.info.ais.asm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -38,6 +39,15 @@ public class HistoryController {
     	List<History> history = HistoryService.exportXlsx();
 
         return new ModelAndView(new HistoryXlsxView(), "history", history);
+    }
+
+    @RequestMapping("/deleteHistory")
+    @ResponseBody
+    public int deleteHistory(@RequestBody ArrayList<String> deleteList ) {
+
+
+    	int deletedNum = HistoryService.deleteHistory(deleteList);
+    	return deletedNum;
     }
 
     @RequestMapping("/getHistorylist")

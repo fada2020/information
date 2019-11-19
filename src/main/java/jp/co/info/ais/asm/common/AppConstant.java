@@ -10,5 +10,5 @@ import lombok.Setter;
 @ConfigurationProperties("constant")
 @Getter @Setter
 public class AppConstant {
-	String companyName;
+	String companyCode;
 }

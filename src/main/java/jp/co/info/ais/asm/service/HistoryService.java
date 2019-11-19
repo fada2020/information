@@ -1,5 +1,6 @@
 package jp.co.info.ais.asm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,7 @@ public class HistoryService{
 		return HistoryMapper.exportXlsx();
 	}
 
+	public int deleteHistory(ArrayList<String> deleteList) {
+		return HistoryMapper.deleteHistory(deleteList);
+	}
 }

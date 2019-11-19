@@ -36,7 +36,7 @@ public class DashboardService {
 	public ArrayList<Dashboard> rslist() {
 
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-//		rslist = dashboardMapper.rslist();
+		rslist = dashboardMapper.rslist();
 
 		return rslist;
 	}

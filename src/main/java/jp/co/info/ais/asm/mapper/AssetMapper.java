@@ -30,4 +30,12 @@ public interface AssetMapper {
 	int updateAccessories(Accessories accessories);
 
 	int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+
+	void insertAsset(Asset asset);
+
+	int updateAssetSeq(String kubunCode);
+
+	String selectAssetNumber(String companyCode, String kubunCode);
+
+	int deleteAsset(int assetSeq);
 }

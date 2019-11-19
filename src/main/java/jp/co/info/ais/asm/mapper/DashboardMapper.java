@@ -16,6 +16,6 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> maruGraph();
 
-//	public ArrayList<Dashboard> rslist();
+	public ArrayList<Dashboard> rslist();
 
 }
