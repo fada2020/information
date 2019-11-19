@@ -93,4 +93,14 @@
 			rt.asset_seq
     </select>
 
+    <delete id="deleteHistory" parameterType="List">
+    	DELETE FROM rental
+    	WHERE
+    		rental_seq IN
+    	<foreach collection="list" item="tem" open="(" close=")" separator=",">
+            #{tem}
+        </foreach>
+
+    </delete>
+
 </mapper>
