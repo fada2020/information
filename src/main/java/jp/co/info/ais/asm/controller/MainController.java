@@ -85,36 +85,26 @@ public class MainController {
 		model.addAttribute("hardPercent", hardPercent);
 		model.addAttribute("softPercent", softPercent);
 //  貸与現況グラフ
-
-
-
-//		logger.debug("ht:{}", hardTop);
-/*		for(int i = 0 ; i<marulist.size(); i++) {
-			if(marulist.get(i).getTypeName().equals("HW")) {
-				logger.debug("hardTop:{}", marulist.get(i).getKubunName());
-			} else {
-				logger.debug("softTop:{}", marulist.get(i).getKubunName());
-			}
-		}*/
-
-/*		for(int i = 0 ; i<marulist.size(); i++) {
-			if(marulist.get(i).getHardPercent()!=0) {
-				logger.debug("{},{}",marulist.get(i).getHardTop(), marulist.get(i).getHardPercent());
-			} else {
-				logger.debug("{},{}",marulist.get(i).getSoftTop(), marulist.get(i).getSoftPercent());
-			}
-		}*/
-
-
-//		貸与現況グラフ
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-//		rslist = dashboardService.rslist();
-		model.addAttribute("rslist", rslist);
+		rslist = dashboardService.rslist();
+		ArrayList<String> rentItem = new ArrayList<String>();
+	// rentItem
+		for(int i = 0 ; i<rslist.size(); i++) {
+			if(i+1 < rslist.size()) {
+				if(!rslist.get(i).getKubunName().equals(rslist.get(i+1).getKubunName())  ){
+					rentItem.add(rslist.get(i).getKubunName());
+//					logger.debug("rslist;{}", rslist.get(i).getKubunName()+i);
+				}
+			} else {
+				if(!rslist.get(i).getKubunName().equals(rslist.get(i-1).getKubunName())  ){
+					rentItem.add(rslist.get(i).getKubunName());
+//					logger.debug("rslist;{}", rslist.get(i).getKubunName()+i);
+				}
+			}
+		}
+		model.addAttribute("rentItem", rentItem);
 
-//		for(int i = 0 ; i<rslist.size(); i++) {
-//			logger.debug("itemName:{},state:{},itemCnt:{}",
-//				rslist.get(i).getItemName(),rslist.get(i).getState(),rslist.get(i).getItemCnt());
-//		}
+
 
         return "dashboard";
     }

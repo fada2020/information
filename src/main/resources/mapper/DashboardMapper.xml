@@ -14,8 +14,9 @@
 		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "003" AND code_detail_id = cdl.item1) typeName
 		, status_code
 		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "001" AND code_detail_id = asset.status_code) statusName
-		FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
-		GROUP BY kubun_code, status_code ORDER BY typeName, typeCnt DESC
+			FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
+				GROUP BY kubun_code, status_code
+					ORDER BY typeName, typeCnt DESC
 	;
 	</select>
 
@@ -28,16 +29,18 @@
 
 <!-- 資産種別貸与現況 -->
 
-	<!-- <select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
-	SELECT COUNT(*)cnt
+	<select id="rslist" resultType="jp.co.info.ais.asm.domain.Dashboard">
+	  SELECT COUNT(*)typeCnt
 		, kubun_code
-		, code_detail_name kubun_name
-		, (SELECT code_detail_name FROM code_detail
-			WHERE code_master_id = "003" AND code_detail_id = cdl.item1) type_name
-		, status_code
-		, (SELECT code_detail_name FROM code_detail
-			WHERE code_master_id = "001" AND code_detail_id = asset.status_code) status_name
-				FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
-				GROUP BY kubun_code, status_name, type_name, status_code
-	</select> -->
+		, code_detail_name kubunName
+		, status_code statusCode
+		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "001" AND code_detail_id = asset.status_code) statusName
+			FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
+				WHERE kubun_code BETWEEN "002" AND "008"
+					GROUP BY kubun_code, status_code
+						ORDER BY kubun_code;
+	;
+
+
+	</select>
 </mapper>

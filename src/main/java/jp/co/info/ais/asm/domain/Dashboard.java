@@ -15,7 +15,8 @@ public class Dashboard {
 
 
 //	資産貸与パラメータ
+	private String kubunCode;
 	private String itemName;
-	private String state;
+	private String statusCode;
 	private int itemCnt;
 }
