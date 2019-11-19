@@ -102,13 +102,13 @@
                       </td>
                       <td>
                         <table class="tile_info">
-                          <tr th:each="m:${marulist}" th:if="${#strings.equals(m.typeName,'HW')}">
+                          <tr th:each="index:${#numbers.sequence(0,4)}" th:if="${#strings.equals(marulist[index].typeName,'HW')}">
                             <td >
                               <p><i class="fa fa-square blue" style="color : [[${}]];"></i>
-                              	[[${m.kubunName}]]
+                              	[[${marulist[index].kubunName}]]
                               </p>
                             </td>
-                            <td>[[${m.typeCnt}]]台</td>
+                            <td>[[${marulist[index].typeCnt}]]台</td>
                           </tr>
                         </table>
                       </td>
@@ -541,12 +541,12 @@ $(document).ready(function() {
 	        element: "bargraph",
 	        data: [{
 	            x: "[[${rentItem[0]}]]",
-	            y:"[[${rslist0}]]",
-	            z: 7
+	            y:"[[${DT001}]]",
+	            z: "[[${DT002}]]"
 	        },{
 	            x: "[[${rentItem[1]}]]",
-	            y: 5,
-	            z: 3
+	            y: "[[${NB001}]]",
+	            z: "[[${NB002}]]"
 	        }, {
 	            x: "[[${rentItem[2]}]]",
 	            y: 7,

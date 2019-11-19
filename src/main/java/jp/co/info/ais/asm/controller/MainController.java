@@ -71,7 +71,6 @@ public class MainController {
 		}
 		model.addAttribute("hardTop", hardTop);
 		model.addAttribute("softTop", softTop);
-
 		// (2)hardPercent, softPercent
 		ArrayList<Integer> hardPercent = new ArrayList<Integer>();
 		ArrayList<Integer> softPercent = new ArrayList<Integer>();
@@ -84,6 +83,7 @@ public class MainController {
 		}
 		model.addAttribute("hardPercent", hardPercent);
 		model.addAttribute("softPercent", softPercent);
+
 //  貸与現況グラフ
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 		rslist = dashboardService.rslist();
@@ -104,11 +104,32 @@ public class MainController {
 		}
 		model.addAttribute("rentItem", rentItem);
 		for(int i = 0 ; i<rslist.size() ; i++) {
+			if(rslist.get(i).getKubunCode().equals("002")) {
+				if(rslist.get(i).getStatusCode().equals("001")) {
+					model.addAttribute("DT001", rslist.get(i).getTypeCnt());
+				}
+				if(rslist.get(i).getStatusCode().equals("002")) {
+					model.addAttribute("DT002", rslist.get(i).getTypeCnt());
+				} else {
+					model.addAttribute("DT002", 0);
+				}
+			}
+			if(rslist.get(i).getKubunCode().equals("003")) {
+				if(rslist.get(i).getStatusCode().equals("001")) {
+					model.addAttribute("NB001", rslist.get(i).getTypeCnt());
+				}
+				if(rslist.get(i).getStatusCode().equals("002")) {
+					model.addAttribute("NB002", rslist.get(i).getTypeCnt());
+				} else {
 
-			model.addAttribute("rslist"+i, rslist.get(i).getTypeCnt());
-			model.addAttribute("rslist"+i, rslist.get(i).getTypeCnt());
+					model.addAttribute("NB002", 0);
+				}
+			}
 		}
 		logger.debug("{}",rslist);
+
+
+
 
 
 		/*for(int j = 1 ; j <3 ; j++) {
@@ -124,8 +145,6 @@ public class MainController {
 			}
 		}
 */
-
-
 
 
 	// rentCnt
