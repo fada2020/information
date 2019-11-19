@@ -12,10 +12,8 @@
 		, kubun_code
 		, code_detail_name kubunName
 		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "003" AND code_detail_id = cdl.item1) typeName
-		, status_code
-		, (SELECT code_detail_name FROM code_detail WHERE code_master_id = "001" AND code_detail_id = asset.status_code) statusName
 			FROM asset JOIN code_detail cdl ON  code_master_id = "002" AND kubun_code = code_detail_id
-				GROUP BY kubun_code, status_code
+				GROUP BY kubun_code
 					ORDER BY typeName, typeCnt DESC
 	;
 	</select>
