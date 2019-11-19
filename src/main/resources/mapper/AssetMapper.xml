@@ -244,7 +244,7 @@
         insert_id, update_id
         )
         VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b),
+        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
         #{assetSeq}, #{itemName}, #{itemSpec}, #{itemQuantity}, #{remarks},
         #{insertId}, #{updateId})
     </insert>
@@ -266,7 +266,7 @@
         insert_id, update_id
         )
         VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b),
+        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
         #{assetSeq}, #{implementationDate}, #{implementationDetail}, #{repId}, #{approverId},
         #{insertId}, #{updateId})
     </insert>

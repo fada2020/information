@@ -485,7 +485,7 @@
 						data : JSON.stringify(accessories)
 					}
 				)
-				.done(function(data) {
+				.success(function(data) {
 					 $('#table1 tbody').append(
 							 '<tr>'
 							 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
@@ -496,6 +496,7 @@
 							 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
 							 +'</tr>'
 					 );
+					 alert('追加されました。');
 				});
 
             });
@@ -520,12 +521,13 @@
 						data : JSON.stringify(accessories)
 					}
             	)
-				.done(function(data) {
+				.success(function(data) {
 					selectTr.find("#accessoriesSeq").text(data.accessoriesSeq);
 					selectTr.find("#itemName").val(data.itemName);
 					selectTr.find("#itemSpec").val(data.itemSpec);
 					selectTr.find("#itemQuantity").val(data.itemQuantity);
 					selectTr.find("#remarks").val(data.remarks);
+					alert('修正されました。');
 				});
 
             });
@@ -549,7 +551,7 @@
 						data : JSON.stringify(maintenanceHistory)
 					}
 				)
-				.done(function(data) {
+				.success(function(data) {
 					 $('#table2 tbody').append(
 							 '<tr>'
 							 +'<td id="historySeq">'+data.historySeq+'</td>'
@@ -560,6 +562,7 @@
 							 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
 							 +'</tr>'
 					 );
+					 alert('追加されました。');
 				});
 
             });
@@ -584,12 +587,13 @@
 						data : JSON.stringify(maintenanceHistory)
 					}
             	)
-				.done(function(data) {
+				.success(function(data) {
 					selectTr.find("#historySeq").text(data.historySeq);
 					selectTr.find("#implementationDate").val(data.implementationDate);
 					selectTr.find("#implementationDetail").val(data.implementationDetail);
 					selectTr.find("#repId").val(data.repId);
 					selectTr.find("#approverId").val(data.approverId);
+					alert('修正されました。');
 				});
 
             });
