@@ -20,4 +20,5 @@ public interface HistoryMapper{
 	List<History> exportXlsx();
 
 	int deleteHistory(ArrayList<String> deleteList);
+
 }

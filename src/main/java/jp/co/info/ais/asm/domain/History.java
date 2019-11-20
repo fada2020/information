@@ -12,7 +12,7 @@ public class History {
 	String makerName;
 	String modelName;
 
-	String statusCode = "000";
+	String statusCode = "00";
 	String rentalNo;
 	String purpose;
 	String storageLocation;

@@ -28,12 +28,14 @@ public class HistoryController {
 	@Autowired
 	private HistoryService HistoryService;
 
+	//状態コード値セッティング
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String History(Model model) {
 		model.addAttribute("stateCode", HistoryService.selectStateCode());
     	return "history";
     }
 
+    //エクセルファイル抽出
     @RequestMapping("/rentalHsitory.xlsx")
     public ModelAndView exportXlsx() {
     	List<History> history = HistoryService.exportXlsx();
@@ -41,6 +43,7 @@ public class HistoryController {
         return new ModelAndView(new HistoryXlsxView(), "history", history);
     }
 
+    //履歴情報削除
     @RequestMapping("/deleteHistory")
     @ResponseBody
     public int deleteHistory(@RequestBody ArrayList<String> deleteList ) {
@@ -50,31 +53,30 @@ public class HistoryController {
     	return deletedNum;
     }
 
+    //検索条件及び画面表示情報の作成
     @RequestMapping("/getHistorylist")
     @ResponseBody
     public Page<History> getHistorylist(@RequestBody Page<History> page) {
     	logger.debug(page.toString());
+
+    	//検索条件生成
     	History condition = new History();
     	condition.setLength(page.getLength());
     	condition.setStart(page.getStart());
 
+    	//検索条件設定-資産番号
     	String assetNumber = page.getColumns().get(0).getSearch().getValue();
-    	if(null != assetNumber && !assetNumber.equals("")){
-    		assetNumber = "%"+assetNumber+"%";
-    		condition.setAssetNumber(assetNumber);
-    	}
+    	condition.setAssetNumber(assetNumber);
 
+    	//検索条件設定-貸出者
     	String applicantId = page.getColumns().get(1).getSearch().getValue();
-    	if(null != applicantId && !applicantId.equals("")){
-    		applicantId = "%"+applicantId+"%";
-    		condition.setApplicantId(applicantId);
-    	}
+    	condition.setApplicantId(applicantId);
 
+    	//検索条件設定-状態コード
     	String statusCode = page.getColumns().get(2).getSearch().getValue();
-    	if(statusCode.equals("000")){
-    		condition.setStatusCode(statusCode);
-    	}
+    	condition.setStatusCode(statusCode);
 
+    	//検索条件設定-貸与期間
     	String rentalPeriod = page.getColumns().get(3).getSearch().getValue();
     	if(null != rentalPeriod && !rentalPeriod.equals("")) {
     		rentalPeriod = rentalPeriod.replaceAll("[ /]", "");
@@ -83,6 +85,7 @@ public class HistoryController {
 			condition.setRentalDayE(dateArr[1]);
     	}
 
+    	//検索条件設定-返却期間
     	String returnPeriod = page.getColumns().get(4).getSearch().getValue();
     	if(null != returnPeriod && !returnPeriod.equals("")) {
     		returnPeriod = returnPeriod.replaceAll("[ /]", "");
@@ -91,12 +94,10 @@ public class HistoryController {
     		condition.setReturnDayE(dateArr[1]);
     	}
 
+    	//検索及び画面情報取得
         List<History> list = HistoryService.selectHistory(condition);
-
         page.setData(list);
-
         int totalCount = HistoryService.selectCount(condition);
-
         page.setRecordsFiltered(totalCount);
 
         logger.debug("result ==="+page.toString());

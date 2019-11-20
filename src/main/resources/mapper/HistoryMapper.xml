@@ -23,12 +23,12 @@
 		WHERE
 		rt.asset_seq = ast.asset_seq
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND ast.asset_number LIKE #{assetNumber}
+		AND ast.asset_number LIKE '%#{assetNumber}%'
 		</if>
 		<if test="applicantId != null and !applicantId.equals('')">
-		AND rt.applicant_id LIKE #{applicantId}
+		AND rt.applicant_id LIKE '%#{applicantId}%'
 		</if>
-		<if test="statusCode != 000">
+		<if test="statusCode != null and !statusCode.equals('00')">
 		AND rt.status_code = #{statusCode}
 		</if>
 		<if test="rentalDayS != null and rentalDayE !=null">
@@ -56,12 +56,12 @@
 		WHERE
 		rt.asset_seq = ast.asset_seq
 		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND ast.asset_number LIKE #{assetNumber}
+		AND ast.asset_number LIKE '%#{assetNumber}%'
 		</if>
 		<if test="applicantId != null and !applicantId.equals('')">
-		AND rt.applicant_id LIKE #{applicantId}
+		AND rt.applicant_id LIKE '%#{applicantId}%'
 		</if>
-		<if test="statusCode != 000">
+		<if test="statusCode != 00">
 		AND rt.status_code = #{statusCode}
 		</if>
 		<if test="rentalDayS != null and rentalDayE !=null">
