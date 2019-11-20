@@ -59,7 +59,7 @@ public class LoginController {
 		session.setAttribute("id", user.getEmpId());
 
 
-		return mainController.index(request, model);
+		return mainController.index(model);
 	}
 
 }
