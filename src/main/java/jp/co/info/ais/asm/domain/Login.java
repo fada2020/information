@@ -8,8 +8,9 @@ import lombok.ToString;
 public class Login {
 	private String empId;
 	private String empName;
+	private String passwd;
 	private String organizationCode;
 	private String useFlag;
-	private String passwd;
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import jp.co.info.ais.asm.domain.Code;
+import jp.co.info.ais.asm.domain.CodeMaster;
 
 @Mapper
 public interface CodeMapper {
@@ -19,6 +20,10 @@ public interface CodeMapper {
 	List<Code> selectCategoryCode();
 	//004
 	List<Code> selectKindCode();
+
+	int selectMasterId(String masterId);
+
+	CodeMaster MasterIdNameCheck(String masterId, String masterName);
 
 
 

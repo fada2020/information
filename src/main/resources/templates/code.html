@@ -112,30 +112,33 @@
     </div>
 
 
-		<!-- Modal Part :: Register -->
-<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録</h5>
+		<!-- Modal Part コードマスタ登録 -->
+	<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog">
+ 		 <div class="modal-dialog" role="document">
+   		 <div class="modal-content">
+     	 <div class="modal-header">
+       		 <h5 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          	<span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+               <br>
+				<div>[[${errorMessage}]]</div>
+              <br>
 		<div style="padding: 5px 20px;">
 		  <form id="antoform" class="form-horizontal calender" role="form">
 			<div class="form-group">
 			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コードID</label>
 			  <div class="col-sm-9">
-				<input type="text" class="form-control form-control-sm" id="code_master_id" name="code_master_id" required>
+				<input type="text" class="form-control form-control-sm" id="codeMasterId" name="codeMasterId" required>
 			  </div>
 			</div>
 			<div class="clearfix"></div>
 			<div class="form-group">
 			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コード名称</label>
 			  <div class="col-sm-9">
-				<input type="text" class="form-control form-control-sm" id="code_master_name" name="code_master_name" required>
+				<input type="text" class="form-control form-control-sm" id="codeMasterName" name="codeMasterName" required>
 			  </div>
 			</div>
 			<div class="clearfix"></div>
@@ -165,6 +168,8 @@
   </div>
 </div>
 <!-- /.Modal Part :: Register End -->
+
+
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
