@@ -4,23 +4,23 @@
 <mapper namespace="jp.co.info.ais.asm.mapper.LoginMapper">
 
 <select id="selectId" resultType="Integer">
-    select count(*)
-    from emp
-    where
+    SELECT count(emp_id)
+    FROM emp
+    WHERE
     emp_id =#{id}
     </select>
 
   <select id="selectLogin" resultType="jp.co.info.ais.asm.domain.Login">
-    select
-    	emp_id,
-		emp_name,
-		organization_code,
-		use_flag,
-		passwd
-    from emp
-    where
+    SELECT
+    	 emp_id
+		,emp_name
+		,passwd
+		,organization_code
+		,use_flag
+    FROM emp
+    WHERE
     emp_id =#{id}
-    and
+    AND
     passwd = #{pass}
      </select>
  </mapper>

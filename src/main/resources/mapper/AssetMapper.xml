@@ -33,6 +33,7 @@
 	  <result property="adminAccountId" column="admin_account_id"/>
 	  <result property="adminAccountPwd" column="admin_account_pwd"/>
 	  <result property="storageLocation" column="storage_location"/>
+
 	  <collection property="accessoriesList" ofType="Accessories">
 	    <id property="accessoriesSeq" column="acc_accessories_seq"/>
 	    <id property="assetSeq" column="acc_asset_seq"/>
@@ -41,6 +42,7 @@
 	    <result property="itemQuantity" column="acc_item_quantity"/>
 	    <result property="remarks" column="acc_remarks"/>
 	  </collection>
+
 	  <collection property="maintenanceHistoryList" ofType="MaintenanceHistory">
 	    <id property="historySeq" column="mt_history_seq"/>
 	    <id property="assetSeq" column="mt_asset_seq"/>
