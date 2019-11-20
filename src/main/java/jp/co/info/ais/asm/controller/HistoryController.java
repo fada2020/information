@@ -66,23 +66,15 @@ public class HistoryController {
 
     	//検索条件設定-資産番号
     	String assetNumber = page.getColumns().get(0).getSearch().getValue();
-    	if(null != assetNumber && !assetNumber.equals("")){
-    		assetNumber = "%"+assetNumber+"%";
-    		condition.setAssetNumber(assetNumber);
-    	}
+    	condition.setAssetNumber(assetNumber);
 
     	//検索条件設定-貸出者
     	String applicantId = page.getColumns().get(1).getSearch().getValue();
-    	if(null != applicantId && !applicantId.equals("")){
-    		applicantId = "%"+applicantId+"%";
-    		condition.setApplicantId(applicantId);
-    	}
+    	condition.setApplicantId(applicantId);
 
     	//検索条件設定-状態コード
     	String statusCode = page.getColumns().get(2).getSearch().getValue();
-    	if(statusCode.equals("000")){
-    		condition.setStatusCode(statusCode);
-    	}
+    	condition.setStatusCode(statusCode);
 
     	//検索条件設定-貸与期間
     	String rentalPeriod = page.getColumns().get(3).getSearch().getValue();

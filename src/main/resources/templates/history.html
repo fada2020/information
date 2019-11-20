@@ -113,7 +113,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="status_search" style="width:120px;">
-						<option value="000">状態</option>
+						<option value="00">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
@@ -159,9 +159,9 @@
 
 
                 <div class="x_panel">
-
+	              <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
+	              <br><br><br>
                   <div class="x_title">
-                    <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
 
                   </div>
 
@@ -259,14 +259,13 @@
 
         	//貸与のデートピッカー
         	$('#rental_search').daterangepicker({
-				startDate: moment().add(0, "months"),
-				endDate: moment(),
 			 locale: {
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
-			});
+			}).val('');
+
 			//返却日のデートピッカー
 			$('#return_search').daterangepicker({
 				startDate: moment().add(0, "months"),
@@ -276,7 +275,7 @@
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
-			});
+			}).val('');
 
             //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
@@ -325,6 +324,7 @@
                     { targets: 2, data: "modelName"},
                     //状態
                     { targets: 3, data: function ( d ) {
+                    	console.log(d.statusCode);
                     	return stateCodeMap.get(d.statusCode);
                     }},
                     //貸与番号
@@ -341,19 +341,29 @@
                     { targets: 9, data: "bpName"},
                     //貸与日
                     { targets: 10, data: function ( d ) {
-                    	var str = d.rentalDayS;
-                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	if( d.rentalDayS =='' || d.rentalDayS == null){
+                    		return null;
+                    	}else{
+                    		var str = d.rentalDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
+
                     }},
                     //返却日
                     { targets: 11, data: function ( d ) {
-                    	var str = d.returnDayS;
-                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	if( d.returnDayS =='' || d.returnDayS == null){
+                    		return null;
+                    	}else{
+                    		var str = d.returnDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
+
                     }},
 					//削除チェックボックス
                     {targets: 12,
                     	render: function( data, type, row, meta ){
 
-                    		if(row.statusCode=="002"){//貸与状態の場合
+                    		if(row.statusCode=="02"){//貸与状態の場合
                     			return null;
                     		} else{//その他の場合
                     			return '<input type="checkbox" class="deleteHistory" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
@@ -381,21 +391,26 @@
           	$('#deleteHistory').on('click',function(){
           		var a = deleteList.split("/");
 
-				var confirmation = confirm("データを削除しますか？");
+          		if(a.length>1){
 
-				if(confirmation){
-					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
-				       	{
-							type: "POST",
-							dataType: "json",
-							contentType: 'application/JSON',
-							data : JSON.stringify(a)
-						}
-					)
-					.done(function(data) {
-						location.reload(true);
-					});
-				}
+          			var confirmation = confirm(a.length-1+"項目の履歴データを削除します。");
+
+          			if(confirmation){
+    					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
+    				       	{
+    							type: "POST",
+    							dataType: "json",
+    							contentType: 'application/JSON',
+    							data : JSON.stringify(a)
+    						}
+    					)
+    					.done(function(data) {
+    						location.reload(true);
+    					});
+    				}
+          		}else{
+          			alert("削除項目を選択してください。");
+          		}
           	})
 			//history delete -E
 
