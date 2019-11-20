@@ -29,11 +29,7 @@ public class LoginService {
 
 	}
 
-	/*
-	public  loginCheckResult() {
-		 //checkResult 転送？
-		return null;
-	}*/
+
 
 
 }

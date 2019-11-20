@@ -1,0 +1,15 @@
+@charset "UTF-8";
+#loginb{
+	text-align:center;
+
+}
+#logininb{
+	display:inline-block;
+	padding-right:40px;
+
+}
+#box{
+	z-inbex:-2;
+	position:absolute;
+	right:50;
+	}
