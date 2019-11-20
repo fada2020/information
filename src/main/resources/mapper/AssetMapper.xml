@@ -143,10 +143,10 @@
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND asset_number like '%${assetNumber}%'
 		</if>
-		<if test="kubunCode != null and !kubunCode.equals('000')">
+		<if test="kubunCode != null and !kubunCode.equals('00')">
 		AND kubun_code = #{kubunCode}
 		</if>
-		<if test="statusCode != null and !statusCode.equals('000')">
+		<if test="statusCode != null and !statusCode.equals('00')">
 		AND status_code = #{statusCode}
 		</if>
 		<if test="makerName != null and !makerName.equals('')">
@@ -171,10 +171,10 @@
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND asset_number like '%${assetNumber}%'
 		</if>
-		<if test="kubunCode != null and !kubunCode.equals('000')">
+		<if test="kubunCode != null and !kubunCode.equals('00')">
 		AND kubun_code = #{kubunCode}
 		</if>
-		<if test="statusCode != null and !statusCode.equals('000')">
+		<if test="statusCode != null and !statusCode.equals('00')">
 		AND status_code = #{statusCode}
 		</if>
 		<if test="makerName != null and !makerName.equals('')">

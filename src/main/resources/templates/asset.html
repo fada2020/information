@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="psNum_search">
-                		<option value="000">区分</option>
+                		<option value="00">区分</option>
                 		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="sNumber_search">
-						<option value="000">状態</option>
+						<option value="00">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
