@@ -34,108 +34,137 @@
 
         <!-- page content -->
 
-
-
+<!-- page content -->
+		<!-- ここからコンテンツ作成 -->
         <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
+		<div class="">
+			<div class="page-title">
               <div class="title_left">
-                <h3>コ－ド登録</h3>
+                <h3><i class="fa fa-cogs"></i>　コード管理</h3>
               </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="row">
-              <div class="col">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                </div>
-                <div class="x_panel">
-                          <div class="x_title">
-                    <h2>会社の名前 </h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left " method="get" >
+			</div><!-- /.page-title -->
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+		                    <div class="well" style="overflow: auto">
+		                      <div class="col-md-4">
+		                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="search_id">コードID</label>
+		                        <div class="col-md-6 col-sm-6 ">
+		                          <input type="text" id="search_id" class="form-control ">
+		                        </div>
+		                      </div>
+		                      <div class="col-md-4">
+		                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="search_name">コード名称</label>
+		                        <div class="col-md-6 col-sm-6 ">
+		                          <input type="text" id="search_name" class="form-control ">
+		                        </div>
+		                      </div>
+		                      <div class="col-md-4">
+		                      	<button type="button" class="btn btn-round btn-success" id="searchBtn"><i class="fa fa-search" aria-hidden="true"></i> 検索</button>
+		                      	<button type="button" class="btn btn-round btn-info" data-toggle="modal" data-target="#modalCodeMaster">
+		                      	<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録</button>
+		                      </div>
+		                    </div><!-- /.well -->
+						</div><!-- /.x_title -->
+						<div class="x_content">
+							<div class="table-responsive">
+							<table id="datatable-list" class="table table-striped jambo_table bulk_action" style="width:100%">
+		                      <thead>
+		                        <tr class="headings">
+		                          <th class="column-title txt_center">No</th>
+		                          <th class="column-title txt_center">コードID</th>
+		                          <th class="column-title txt_center">コード名称</th>
+		                          <th class="column-title txt_center">使用有無</th>
+		                          <th class="column-title txt_center"></th>
+		                        </tr>
+		                      </thead>
+		                      <tbody>
+								<tr th:each="element, elementStat : ${codeMasterList}">
+									<td th:text="${elementStat.count}"></td>
+									<td th:text="${element.codeMasterId}"></td>
+									<td th:text="${element.codeMasterName}"></td>
+									<td th:switch="${element.useFlag}">
+							            <p th:case =="0"　style="color:blue;">使用中</p>
+        							    <p th:case =="1" style="color:red;">未使用</p>
+									</td>
+									<td class="txt_center txt_middle">
+										<button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
+									</td>
+								</tr>
+		                      </tbody>
+							</table>
+							</div><!-- /.table-responsive -->
+						</div><!-- /.x_content -->
+					</div><!-- /.x_panel -->
+				</div>
+			</div><!-- /.row -->
 
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">製品区分 <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="codeKubun" required="required" name="codeKubun" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >製品区分名前 <span class="required">*</span>
-                        </label>
-                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="codeKubunName" required="required" name="codeKubunName" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >製品区分コード <span class="required">*</span>
-                        </label>
-                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="codeKubunCode" required="required" name="codeKubunCode" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >？ <span class="required">*</span>
-                        </label>
-                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="code" required="required" name="code" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="submit" class="btn btn-success" id="companySend" onclick="c_btn()">保存</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-
-                  <div class="x_title">
-                    <h2>製品リスト</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-                    <table class="table table-bordered table-hover table-lg" id="table1">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>製品区分</th>
-                          <th>製品区分名前</th>
-                          <th>製品区分コード</th>
-                          <th>？</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+		</div>
+        </div><!-- /.right_co -->
+ 		<!-- ここまでのコンテンツ作成 -->
         <!-- /page content -->
-
         <!-- footer content -->
         <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
         <!-- /footer content -->
       </div>
     </div>
 
+
+		<!-- Modal Part :: Register -->
+<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<div style="padding: 5px 20px;">
+		  <form id="antoform" class="form-horizontal calender" role="form">
+			<div class="form-group">
+			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コードID</label>
+			  <div class="col-sm-9">
+				<input type="text" class="form-control form-control-sm" id="code_master_id" name="code_master_id" required>
+			  </div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="form-group">
+			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コード名称</label>
+			  <div class="col-sm-9">
+				<input type="text" class="form-control form-control-sm" id="code_master_name" name="code_master_name" required>
+			  </div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="form-group">
+			  <label class="col-sm-3 control-label">詳細</label>
+			  <div class="col-sm-9">
+				<input type="text" class="form-control form-control-sm" id="remart" name="remart">
+			  </div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="form-group">
+			  <label class="col-sm-3 control-label">使用有無</label>
+			  <div class="col-sm-9">
+                 <div id="use" class="btn-group" style="padding:5px;">
+					<label style="color:blue;"><input type="radio" name="use_flag" value="0">&nbsp; 使用 &nbsp;</label>
+					<label style="color:red"><input type="radio" name="use_flag" value="1" checked>&nbsp; 未使用 &nbsp;</label>
+                 </div>
+			  </div>
+			</div>
+		  </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"><i class="fa fa-check-circle"></i> 登録</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times-circle"></i> 閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.Modal Part :: Register End -->
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -177,6 +206,7 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
+
                 "ajax": {
                 	url: /*[[@{/getuserlist}]]*/ 'getuserlist',
                 	type: "POST",

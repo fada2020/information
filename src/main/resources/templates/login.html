@@ -59,7 +59,7 @@ function check() {}
         <div class="animate form login_form">
           <section class="login_content">
            <!--th:object="${login}"-->
-            <form method="POST" action="/loginCheck" class="form-horizontal" name = "frm" >
+            <form method="POST" action="/loginprocess" class="form-horizontal" name = "frm" >
 
                 <div>
                   <h1>IT資産管理システム </h1>
@@ -71,27 +71,28 @@ function check() {}
               <br>
 
               <div>
-              <fieldset>
-                <input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" required />
-             </fieldset>
+              	<fieldset>
+                	<input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" required />
+              	</fieldset>
               </div>
 
               <div>
-              <fieldset>
-                <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" required/>
-              </fieldset>
+           	   	 <fieldset>
+            	    <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" required/>
+             	 </fieldset>
               </div>
 
 			<div id = "loginb" >
 				<div id ="logininb">
 					<input type ="submit" value="Login"id="submit_button" />
 				</div>
+
 			</div>
 
-            </form>
+            </form> <!-- /logincheckform -->
           </section>
-       		   </div>
-               </div>
-        	   </div>
+       		  				 </div><!-- animate form login_form -->
+               			</div><!-- login_wrapper -->
+        	  		</div><!-- login -->
 			   </body>
 </html>

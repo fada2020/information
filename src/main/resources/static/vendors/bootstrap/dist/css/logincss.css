@@ -8,3 +8,8 @@
 	padding-right:40px;
 
 }
+#box{
+	z-inbex:-2;
+	position:absolute;
+	right:50;
+	}
