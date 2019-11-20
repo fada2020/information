@@ -61,7 +61,7 @@
               <div class="count">[[${totalCnt}]]台</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-              <h3><b>新しい装置</b></h3>
+              <h3><b>今月購入した装置</b></h3>
               <div class="count">[[${newItem}]]台</div></div>
             </div>
           </div>
@@ -549,24 +549,24 @@ $(document).ready(function() {
 	            z: "[[${NB002}]]"
 	        }, {
 	            x: "[[${rentItem[2]}]]",
-	            y: 7,
-	            z: 5
+	            y: "[[${TBL001}]]",
+	            z: "[[${TBL002}]]"
 	        },{
 	            x: "[[${rentItem[3]}]]",
-	            y: 7,
-	            z: 5
+	            y: "[[${MD001}]]",
+	            z: "[[${MD002}]]"
 	        }, {
 	            x: "Monitor",
-	            y: 2,
-	            z: 6,
+	            y: "[[${DP001}]]",
+	            z: "[[${DP002}]]"
 	        }, {
 	            x: "Keyboard",
-	            y: 4,
-	            z: 6
+	            y: "[[${KBD001}]]",
+	            z: "[[${KBD002}]]"
 	        }, {
 	            x: "Mouse",
-	            y: 7,
-	            z: 6
+	            y: "[[${MS001}]]",
+	            z: "[[${MS002}]]"
 	        }],
 	        xkey: "x",
 	        ykeys: ["y", "z"],
