@@ -29,6 +29,8 @@ public interface AssetMapper {
 
 	int updateAccessories(Accessories accessories);
 
+	int deleteAccessories(Accessories accessories);
+
 	int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory);
 
 	void insertAsset(Asset asset);
@@ -38,4 +40,7 @@ public interface AssetMapper {
 	String selectAssetNumber(String companyCode, String kubunCode);
 
 	int deleteAsset(int assetSeq);
+
+	int deleteMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+
 }

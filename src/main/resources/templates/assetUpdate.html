@@ -339,7 +339,7 @@
 											<th class="col-md-2">仕樣 </th>
 											<th class="col-md-1">数量 </th>
 											<th class="col-md-6">備考 </th>
-											<th></th>
+											<th colspan="2"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -349,7 +349,7 @@
 											<td><input id="itemSpec" type="text" class="form-control"></td>
 											<td><input id="itemQuantity" type="text" class="form-control"></td>
 											<td><input id="remarks" type="text" class="form-control"></td>
-											<td class="a-center">
+											<td colspan="2" class="a-center">
 												<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
@@ -360,6 +360,7 @@
 											<td><input type="text" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
 											<td><input type="text" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
 											<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+											<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -384,7 +385,7 @@
 											<th class="col-md-5">実施内容 </th>
 											<th class="col-md-2">担当 </th>
 											<th class="col-md-2">承認 </th>
-											<th></th>
+											<th colspan="2"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -394,7 +395,7 @@
 											<td><input id="implementationDetail" type="text" class="form-control"></td>
 											<td><input id="repId" type="text" class="form-control"></td>
 											<td><input id="approverId" type="text" class="form-control"></td>
-											<td class="a-center">
+											<td colspan="2" class="a-center">
 												<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
@@ -405,6 +406,7 @@
 											<td><input type="text" class="form-control" id=repId th:value="${maintenance.repId}"></td>
 											<td><input type="text" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
 											<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+											<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -494,6 +496,7 @@
 							 +'<td><input type="text" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
 							 +'<td><input type="text" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
 							 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+							 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
 							 +'</tr>'
 					 );
 					 alert('追加されました。');
@@ -532,6 +535,34 @@
 
             });
 
+            $('#table1 tbody').on("click","#deleteAccessories", function() {
+
+            	if(!confirm('本当に削除しますか？')){
+                    /* キャンセルの時の処理 */
+                    return false;
+                }else{
+                	var selectTr = $(this).closest("tr");
+
+                	var accessories ={
+                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+                			"accessoriesSeq" : selectTr.find("#accessoriesSeq").text()
+                	};
+
+                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(accessories)
+    					}
+                	)
+    				.success(function(data) {
+    					selectTr.remove();
+    				});
+                }
+
+            });
+
             $('#addMaintenanceHistory').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
@@ -560,6 +591,7 @@
 							 +'<td><input type="text" class="form-control" id="repId" value="'+data.repId+'"></td>'
 							 +'<td><input type="text" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
 							 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+							 +'<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
 							 +'</tr>'
 					 );
 					 alert('追加されました。');
@@ -595,6 +627,34 @@
 					selectTr.find("#approverId").val(data.approverId);
 					alert('修正されました。');
 				});
+
+            });
+
+            $('#table2 tbody').on("click","#deleteMaintenanceHistory", function() {
+
+            	if(!confirm('本当に削除しますか？')){
+                    /* キャンセルの時の処理 */
+                    return false;
+                }else{
+                	var selectTr = $(this).closest("tr");
+
+                	var maintenanceHistory ={
+                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+                			"historySeq" : selectTr.find("#historySeq").text()
+                	};
+
+                	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(maintenanceHistory)
+    					}
+                	)
+    				.success(function(data) {
+    					selectTr.remove();
+    				});
+                }
 
             });
 

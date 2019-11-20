@@ -1,6 +1,7 @@
 package jp.co.info.ais.asm.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +23,9 @@ public class LoginController {
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 
 	@Autowired
+	MainController mainController;
+
+	@Autowired
 	HttpSession session;
 
 	@Autowired
@@ -35,7 +39,7 @@ public class LoginController {
 
 	//Login button id & pass check
 	@RequestMapping(value= "/loginCheck", method = RequestMethod.POST)
-	public String loginCheck(@RequestParam String assetId, @RequestParam String assetPass, Model model)  {
+	public String loginCheck(HttpServletRequest request, @RequestParam String assetId, @RequestParam String assetPass, Model model)  {
 
 		int userCheck = loginservice.selectLoginId(assetId);
 
@@ -55,7 +59,7 @@ public class LoginController {
 		session.setAttribute("id", user.getEmpId());
 
 
-		return "index";
+		return mainController.index(request, model);
 	}
 
 }

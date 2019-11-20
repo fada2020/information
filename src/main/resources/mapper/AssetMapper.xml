@@ -238,7 +238,7 @@
 		WHERE asset_seq = #{assetSeq}
     </update>
 
-    <insert id="insertAccessories" keyProperty="accessoriesSeq">
+    <insert id="insertAccessories" useGeneratedKeys="true" keyProperty="accessoriesSeq">
         INSERT INTO accessories(
         accessories_seq, asset_seq, item_name, item_spec, item_quantity, remarks,
         insert_id, update_id
@@ -260,13 +260,19 @@
 		AND asset_seq = #{assetSeq}
     </update>
 
-    <insert id="insertMaintenanceHistory" keyProperty="historySeq">
+    <delete id="deleteAccessories">
+        DELETE FROM accessories
+		WHERE accessories_seq = #{accessoriesSeq}
+		AND asset_seq = #{assetSeq}
+    </delete>
+
+    <insert id="insertMaintenanceHistory" useGeneratedKeys="true" keyProperty="historySeq">
         INSERT INTO maintenance_history(
         history_seq, asset_seq, implementation_date, implementation_detail, rep_id, approver_id,
         insert_id, update_id
         )
         VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
+        (SELECT IFNULL(MAX(history_seq) + 1, 1) FROM maintenance_history b WHERE asset_seq = #{assetSeq}),
         #{assetSeq}, #{implementationDate}, #{implementationDetail}, #{repId}, #{approverId},
         #{insertId}, #{updateId})
     </insert>
@@ -281,6 +287,12 @@
 		WHERE history_seq = #{historySeq}
 		AND asset_seq = #{assetSeq}
     </update>
+
+    <delete id="deleteMaintenanceHistory">
+        DELETE FROM maintenance_history
+		WHERE history_seq = #{historySeq}
+		AND asset_seq = #{assetSeq}
+    </delete>
 
     <update id="updateAssetSeq">
 		UPDATE code_detail SET
