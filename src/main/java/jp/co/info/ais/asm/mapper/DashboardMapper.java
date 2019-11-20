@@ -12,6 +12,8 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> possession();
 
-//	public ArrayList<Dashboard> rslist();
+	public int newItem();
+
+	public ArrayList<Dashboard> rslist();
 
 }

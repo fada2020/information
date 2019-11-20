@@ -1,6 +1,7 @@
 package jp.co.info.ais.asm.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,9 @@ import jp.co.info.ais.asm.service.LoginService;
 public class LoginController {
 
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
+
+	@Autowired
+	MainController mainController;
 
 	@Autowired
 	HttpSession session;

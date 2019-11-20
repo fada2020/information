@@ -13,7 +13,7 @@ public class TestDBResultLog {
 
 	private static final Logger logger = LogManager.getLogger(TestDBResultLog.class);
 
-    @AfterReturning(pointcut = "execution(* com.example.*..*Mapper.*(..))", returning= "result")
+    @AfterReturning(pointcut = "execution(* jp.co.info.ais.*..*Mapper.*(..))", returning= "result")
     public void DBResultLog(JoinPoint joinPoint, Object result) {
     	if(!(null == result)) {
     		logger.debug(result.toString());

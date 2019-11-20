@@ -7,8 +7,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentelella Alela! |</title>
+<title>IT資産管理</title>
 
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
 <!-- Bootstrap -->
 <link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -20,10 +22,14 @@
 <!-- iCheck -->
 <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
+<!-- bootstrap-daterangepicker -->
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
 <!-- bootstrap-datetimepicker -->
 <link
 	href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
+
 
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
@@ -60,27 +66,27 @@
 									id="assetNumber_search">
 							</div>
 
-
-
-
 							<div class="col-md-1">
-								<span class="pull-right" style="font-size: 18px;">貸与日</span>
+								<span class="pull-right" style="margin-left: -10%;">貸与日</span>
 							</div>
 							<div class="col-md-2">
-								<div class="input-group date" id="myDatepicker">
-									<input type="text" class="form-control" id="date_search">
-									<span class="input-group-addon"> <span
-										class="glyphicon glyphicon-calendar"></span>
-									</span>
-								</div>
+								<fieldset>
+									<div class="control-group ">
+										<div class="controls">
+											<div class="input-prepend input-group">
+												<span class="add-on input-group-addon"><i
+													class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
+													type="text" style="width: 200px" name="rental_search"
+													id="rental_search" class="form-control">
+											</div>
+										</div>
+									</div>
+								</fieldset>
 							</div>
-							<div class="buttons">
-
-								<button type="button" onclick="modalInsert()">貸与</button>
 
 
 
-							</div>
+
 							<div class="x_panel">
 								<div class="x_title">
 
@@ -113,6 +119,11 @@
 										<tbody>
 										</tbody>
 									</table>
+									<div class="col-md-1">
+										<button type="button" id="deleteButton" class="btn btn-danger"
+											onclick="modalInsert()">貸与</button>
+
+									</div>
 
 									<!--update modal -->
 									<div class="modal" id="modal3d" tabindex="-1" role="dialog"
@@ -132,76 +143,93 @@
 													<div class="container-fluid">
 														<div class="row">
 
-															<div class="col-md-6">
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>貸与番号</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="rentNumber_view"></span>
-																	</div>
+															<div class="col-md-6" id="moddal_update">
+																<div class="col-md-3">
+																	<span>貸与番号</span>
 																</div>
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>管理番号</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="assetNumber_view"></span>
-																	</div>
+																<div class="col-md-9">
+																	<input type="text" id="rentalNo_view"
+																		readonly="readonly" class="form-control" />
 																</div>
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>区分</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="psNum_view"></span>
-																	</div>
+																<div class="col-md-3">
+																	<span>管理番号</span>
 																</div>
-
-
-
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>用途</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="purpose_view"></span>
-																	</div>
+																<div class="col-md-9">
+																	<input type="text" id="assetNumber_view"
+																		readonly="readonly" class="form-control" />
 																</div>
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>保管位置</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="storageLocation_view"></span>
-																	</div>
+																<div class="col-md-3">
+																	<span>品目</span>
 																</div>
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>貸与日</span>
-																	</div>
-																	<div class="col-md-4">
-																		<span id="rentalDay_view"></span>
-																	</div>
+																<div class="col-md-9">
+																	<input type="text" id="codeDetailName_view"
+																		readonly="readonly" class="form-control" />
 																</div>
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>特記事項</span>
-																	</div>
-																	<div class="col-md-3">
-																		<span id="speciality_view"></span>
+																<div class="col-md-3">
+																	<span>用途</span>
+																</div>
+																<div class="col-md-9">
+																	<input type="text" id="purpose_view"
+																		class="form-control" />
+																</div>
+																<div class="col-md-3">
+																	<span>場所</span>
+																</div>
+																<div class="col-md-9">
+																	<input type="text" id="storageLocation_view"
+																		class="form-control" />
+																</div>
+																<div class="col-md-3">
+																	<span>貸与日</span>
+																</div>
+																<div class="col-md-9">
+																	<div class="input-group date" id="myDatepicker">
+																		<input type="text" class="form-control"
+																			name="rentalDay" id="rentalDay_view"> <span
+																			class="input-group-addon"> <span
+																			class="glyphicon glyphicon-calendar"></span>
+																		</span>
 																	</div>
 																</div>
 
-																<div class="row">
-																	<div class="col-md-3">
-																		<span>貸与期間</span>
-																	</div>
-																	<div class="col-md-4">
-																		<span id="returnPeriod_view"></span>
-																	</div>
-
+																<div class="col-md-3">
+																	<span>特記事項</span>
 																</div>
+																<div class="col-md-9">
+																	<input type="text" id="speciality_view"
+																		class="form-control" />
+																</div>
+																<div class="col-md-3">
+																	<span>貸与期間</span>
+																</div>
+																<div class="col-md-9">
+																	<div class="input-group date" id="myDatepicker">
+																		<input type="text" class="form-control"
+																			name="returnPeriod" id="returnPeriod_view"> <span
+																			class="input-group-addon"> <span
+																			class="glyphicon glyphicon-calendar"></span>
+																		</span>
+																	</div>
+																</div>
+
+																<div class="col-md-3">
+																	<span>使用者</span>
+																</div>
+																<div class="col-md-9">
+																	<input type="text" id="rentalUserId_view"
+																		class="form-control" />
+																</div>
+																<div class="col-md-3">
+																	<span>貸与者</span>
+																</div>
+																<div class="col-md-9">
+																	<input type="text" id="applicantId_view"
+																		class="form-control" />
+																</div>
+
+																<input type="hidden" id="assetSeq_hidden"
+																	class="form-control" />
+
 
 															</div>
 
@@ -212,7 +240,10 @@
 
 												<hr>
 
-												<div></div>
+												<div>
+													<button type="button" class="btn btn-warning"
+														id="updateButton" onclick="updateRental()">更新</button>
+												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">Close</button>
@@ -244,7 +275,7 @@
 															<div class="col-md-9 col-sm-9 ">
 																<input type="text" class="form-control col-md-10"
 																	id="todayDate"
-																	th:value="${#dates.format(date, 'yyyy/MM/dd')}"
+																	th:value="${#dates.format(date, 'yyyy-MM-dd')}"
 																	readonly="readonly">
 															</div>
 														</div>
@@ -326,9 +357,19 @@
 															<label class="control-label col-md-3 col-sm-3 ">貸与期間</label>
 
 															<div class="col-md-9 col-sm-9 ">
-																<input type="text" id="returnPeriod"
-																	th:value="${#dates.format(date, 'yyyy/MM/dd')}"
-																	class="form-control col-md-10">
+																<div class="col-md-9">
+																	<div class="input-group date" id="myDatepicker">
+																		<input type="text"
+																			th:value="${#dates.format(date, 'yyyy-MM-dd')}"
+																			class="form-control" name="returnPeriod"
+																			id="returnPeriod"> <span
+																			class="input-group-addon"> <span
+																			class="glyphicon glyphicon-calendar"></span>
+																		</span>
+																	</div>
+																</div>
+
+
 															</div>
 														</div>
 														<div class="form-group row">
@@ -339,8 +380,8 @@
 															</div>
 														</div>
 														<div>
-															<input type="button" id="button1" onclick="writeItem();"
-																value="追加" />
+															<input type="button" class="btn btn-danger" id="button1"
+																onclick="writeItem();" value="追加" />
 														</div>
 
 
@@ -361,7 +402,7 @@
 																		<th class="col-md-1" id="speciality_insert">特記事項</th>
 																		<th class="col-md-1" id="returnPeriod_insert">返却期間</th>
 																		<th class="col-md-1" id="bpName_insert">BP社名</th>
-																		<th class="col-md-1" id="cancel_insert">取り消し</th>
+																		<th class="col-md-1" id="cancel_insert">取消</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -376,13 +417,12 @@
 
 												<hr>
 
-												<div>
-													<input type="button" id="insertButton" value="貸与"
-														onclick="rentalItem();" />
-												</div>
+
 												<div class="modal-footer">
+													<input type="button" class="btn btn-danger"
+														id="insertButton" value="貸与" onclick="rentalItem();" />
 													<button type="button" class="btn btn-secondary"
-														data-dismiss="modal">Close</button>
+														onclick="cancelInsert();" data-dismiss="modal">Close</button>
 												</div>
 											</div>
 										</div>
@@ -422,6 +462,7 @@
 	<script src="../vendors/iCheck/icheck.min.js"></script>
 	<!-- bootstrap-datetimepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script
 		src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- Custom Theme Scripts -->
@@ -430,31 +471,92 @@
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
-        $('#myDatepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
 
         var modalesectiondata = null;
 
     	var kubunCodeMap = new Map();
     	var kubunItemMap = new Map();
+    	/*listで区分コードを呼び出す  */
 		var kubunCode = /*[[${kubunCode}]]*/;
+		/* keyはitem1でcodeDetailNameがvalueになるmapを作る */
 		kubunCode.forEach(function( value ) {
+
 			kubunCodeMap.set(value.item1,value.codeDetailName);
 
     	});
+		/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
 		kubunCode.forEach(function( value ) {
-		kubunItemMap.set(value.codeDetailId, value.item2);});
+
+		kubunItemMap.set(value.codeDetailId, value.codeDetailName);});
     	var statusCodeMap = new Map();
+    	/*listで状態コードを呼び出す  */
     	var statusCode = /*[[${statusCode}]]*/;
+    	/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
     	statusCode.forEach(function( value ) {
+
     		statusCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
-        $(function(){
+function cancelInsert(){
 
-            // datatableの設定を変更
+/*削除する前に確認する  */
+	 var result = confirm('削除しますか？');
+	 /*もしyesであれば#selectedAssetのtbodyにあるデータのassetSeqを元にしてassetテーブルのstatus_codeを001に変える  */
+	 if(result) {
+		 var tr =$('#selectedAsset tbody');
+
+
+			var rental =new Object();
+			var tdArr = new Array();
+			var tr = $('#selectedAsset tbody tr');
+			var td =  $('#selectedAsset tbody tr td');
+			tr.each(function(i){
+
+				var assetSeq=td.eq(8).text();
+
+			$.ajax({
+					"url" : "/rental/cancelAsset",
+				"type" : "post",
+			 		"dataType": "json",
+					"data" : assetSeq,
+					"contentType": "application/JSON"
+			});
+
+
+			});
+
+		 //yes location.replace('index.php');
+	 } else {
+		 //no
+
+	 }
+
+
+
+
+}
+
+        $(function(){
+        	/*一つの日付を選べるカーレンダーのフォーマットを決める  */
+            $('#myDatepicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            /*二つ一つの日付を選べるカーレンダーのフォーマットを決める  */
+        	$('#rental_search').daterangepicker({
+				startDate: moment().add(-1, "months"),
+				endDate: moment(),
+			 locale: {
+			       format: 'YYYY/MM/DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			});
+        	/*カーレンダーで期間を無くして今貸与されてるものを全部見えることにする */
+        	$('#rental_search').val('');
+        	/*最初/rentalに画面を移す時に貸与のデータ全部を持たせる  */
             var modalesectiontable = $("#table1").DataTable({
+            	/*下の詳細説明を日本語に変える  */
             	"language": {
             		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
@@ -475,22 +577,23 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-
+				/*検索機能でassetNumberや貸与期間をもらってデータを設定する  */
                 "ajax": {
                 	url: /*[[@{/rental/getRentalList}]]*/ 'rental/getRentalList',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
+
                 		d.columns[0].search.value = $('#assetNumber_search').val();
-                		d.columns[1].search.value = $('#date_search').val();
+                   		d.columns[1].search.value = $('#rental_search').val();
                         return JSON.stringify(d);
                     }
                 },
 
                 "columnDefs": [
 
-
+					/*serverからデータを貰ってデータをtargetにセッティングする  */
                 	{ targets: 0, data: "rentalNo"},
 
                     { targets: 1, data: "assetNumber"},
@@ -503,68 +606,47 @@
 
                     { targets: 4, data: "rentalUserId"},
 
-                    { targets: 5, data: "rentalDay"},
+                    { targets: 5, data: function ( d ) {
+                    	var str = d.rentalDay;
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    }},
 
-                    { targets: 6, data: "returnPeriod"},
+                    { targets: 6, data: function ( d ) {
+                    	var str = d.returnPeriod;
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    }},
 
                     { targets: 7,
                     	data: "description",
                         render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                          'rental/' + row.assetNumber + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'rental/' + row.assetSeq + '\'">削除</button>';
-                        }
+                        	/*変更と返却の選択ボタンでメソッドを呼び出す  */
+                          return '<button type="button" class="btn btn-warning" id="updateButton" onclick = "researchRental(' + row.assetSeq + ')" >更新</button><button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
+
+                           }
                     }
 
                 ]
             });
 
-            // Search
+
+
+            /*assetNumberを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
             	modalesectiontable
                 .column(0)
                 .search( this.value )
                 .draw();
             } );
-
-
-
-            $("#myDatepicker").on("dp.change", function(e) {
-                var d = new Date(e.date);
-                var mm = d.getMonth() + 1;
-                var dd = d.getDate();
-                var yyyy = d.getFullYear();
-            	modalesectiontable.column(5).search( yyyy + "-" + mm + "-" + dd ).draw();
+            /*rental_dayを貰ってメイン画面のデータを変える*/
+            $("#rental_search").change(function () {
+                var date = $("#rental_search").val();
+                alert(date);
+                modalesectiontable
+                .column(1)
+                .search(date)
+                .draw();
             });
 
-  			$('#table1 tbody').on( 'click', 'tr td', function () {
-            	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column !=8 &&this._DT_CellIndex.column !=0) {
-            		$('#modal3d').modal();
-
-            		var rentDay = new Date(rowData.rentDay);
-            		var yyyy = rentDay.getFullYear(); var mm = rentDay.getMonth()+1;
-            		var dd = rentDay.getDate();
-
-            		var returnPeriod = new Date(rowData.returnPeriod);
-            		var y = returnPeriod.getFullYear();  var m= returnPeriod.getMonth()+1;
-            		var d = returnPeriod.getDate();
-					$('#rentNumber_view').text(rowData.rentNumber);
-            		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#purpose_view').text((rowData.purpose));
-            		$('#rentDay_view').text(yyyy + "-" + mm + "-" + dd);
-            		$('#speciality_view').text(rowData.speciality);
-            		$('#purpose_view').text(rowData.purpose);
-            		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
-
-            		$('#returnPeriod_view').text(y + "-" + m+ "-" + d);
-
-            	} else {
-            		//alert(JSON.stringify(rowData));
-            	}
-            } );
 
         })
     /*]]>*/
@@ -572,11 +654,112 @@
 
 
 	<script th:inline="javascript">
+	/*<![CDATA[*/
+/*データのupdateメソッド
+引数はrentalのドメインを作ってajaxを利用する
+戻り値も無し
+*/
+function updateRental(){
+		/*変更してもらったデータにもし-の文字があればなくすメソッド  */
+	 String.prototype.replaceAll = function(org, dest) {
+		    return this.split(org).join(dest);
+		}
+	var rental = new Object();
+	rental.rentalNo=$('#rentalNo_view').val();
+	rental.assetNumber=$('#assetNumber_view').val();
+	rental.codeDetailName=$('#codeDetailName_view').val();
+	rental.purpose=$('#purpose_view').val();
+	rental.storageLocation=$('#storageLocation_view').val();
+	rental.rentalDay=$('#rentalDay_view').val().replaceAll("-","");
+	rental.speciality=$('#speciality_view').val();
+	rental.returnPeriod=$('#returnPeriod_view').val().replaceAll("-","");
+	rental.rentalUserId=$('#rentalUserId_view').val();
+	rental.bpName=$('#bpName_view').val();
+	rental.applicantId=$('#applicantId_view').val();
+	rental.assetSeq=$('#assetSeq_hidden').val();
+
+    		$.ajax({
+ 			   type  : "POST",
+ 			   url : "/rental/updateRental",
+ 				dataType : "json",
+ 				"contentType" : "application/JSON",
+ 				data : JSON.stringify(rental)
+
+
+ 	});
+/*変更してページをリロードする  */
+			location.reload(true);
+
+	}
+
+function researchRental(assetSeq){
+
+
+
+	$.ajax({
+		   type  : "POST",
+		   url : "/rental/researchRental",
+			dataType : "json",
+			"contentType" : "application/JSON",
+			data : JSON.stringify(assetSeq),
+			success : function(data){
+
+				var returnPeriod=data.returnPeriod;
+				returnPeriod=returnPeriod.substring(0, 4) + "-" + returnPeriod.substring(4, 6) + "-" + returnPeriod.substring(6, 8);
+				var	rentalDay=data.rentalDay;
+				rentalDay=rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8);
+			$('#rentalNo_view').val(data.rentalNo);
+			$('#assetNumber_view').val(data.assetNumber);
+			$('#codeDetailName_view').val(kubunItemMap.get(data.kubunCode));
+			$('#purpose_view').val(data.purpose);
+			$('#storageLocation_view').val(data.storageLocation);
+			$('#rentalDay_view').val(rentalDay);
+			$('#speciality_view').val(data.speciality);
+			$('#returnPeriod_view').val(returnPeriod);
+			$('#rentalUserId_view').val(data.rentalUserId);
+			$('#applicantId_view').val(data.applicantId);
+			$('#assetSeq_hidden').val(data.assetSeq);
+			}
+
+});
+
+
+	$('#modal3d').modal({backdrop: 'static'});
+
+}
+
+	function deleteAsset(assetSeq){
+
+		 var result = confirm('返却しますか？');
+		 /*もしyesであれば選択した行のデータを元にして貸与テーブルのデータを削除する  */
+		 if(result) {
+				$.ajax({
+					   type  : "POST",
+					   url : "/rental/returnAsset",
+						dataType : "json",
+						"contentType" : "application/JSON",
+						data : JSON.stringify(assetSeq)
+
+
+			});
+				location.reload(true);
+
+		 } else {
+			 //no
+
+		 }
+
+
+
+
+
+		}
 		function modalInsert() {
 
-    		$('#modal3d2').modal();
 
+    		$('#modal3d2').modal({backdrop: 'static'});
     	}
+	    /*]]>*/
 		</script>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
@@ -638,11 +821,27 @@
 
 
  function deleteRow(btn) {
+
+
+var assetSeq=btn.value;
+		$.ajax({
+   			"url" : "/rental/cancelAsset",
+    		"type" : "post",
+   	 		"dataType": "json",
+   			"data" : assetSeq,
+   			"contentType": "application/JSON"
+		});
   var row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
 
 }
  function rentalItem() {
+	 String.prototype.replaceAll = function(org, dest) {
+		    return this.split(org).join(dest);
+		}
+
+
+
 		var rental =new Object();
 		var tdArr = new Array();
 		var tr = $('#selectedAsset tbody tr');
@@ -653,32 +852,28 @@
 			rental.purpose = td.eq(4).text();
 			rental.storageLocation = td.eq(5).text();
 			rental.speciality = td.eq(6).text();
-			rental.returnPeriod = td.eq(7).text();
+			rental.returnPeriod = td.eq(7).text().replaceAll("-","");
 			rental.assetSeq=td.eq(8).text();
 			rental.applicantId = /*[[${session.id}]]*/ 'id';
-			rental.rentalDay=$('#todayDate').val().replace("/","");
+			rental.rentalDay=$('#todayDate').val().replaceAll("-","");
 			rental.bpName=td.eq(9).text();
+
 			tdArr.push(rental);
 		});
 
 	$.ajax({
 		"url" : "/rental/addRental",
-	"type" : "post",
+		"type" : "post",
 		"dataType": "json",
 		"contentType": "application/JSON",
-		"data" : JSON.stringify(tdArr),
-	 	"success" : function(data){
-
-
-	alert("成功");
-}
+		"data" : JSON.stringify(tdArr)
 
 });
-
+	location.reload(true);
  }
 	function writeItem() {
 
-		if($('#rentUser').val()!=""){
+		if($('#rentUser').val()!=""&&$('#returnPeriod').val()!=""){
 			var number=$("#sub_subSelect option:selected").text();
 			$.ajax({
 			   			"url" : "/rental/getAsset",
@@ -709,7 +904,7 @@
 				   				+data.assetSeq+
 				   				'</td><td>'
 			   					+$("#bpName").val()+
-			   					'</td><td><input type="button" value="Delete" onclick="deleteRow(this)"/></td></tr>');
+			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">Delete</button></td></tr>');
 
 			    },
 				"Error" : function(){

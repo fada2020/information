@@ -21,11 +21,26 @@ public interface AssetMapper {
 
 	List<CodeDetail> selectStateCode();
 
+	int updateAsset(Asset asset);
+
 	void insertAccessories(Accessories accessories);
 
 	void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory);
 
 	int updateAccessories(Accessories accessories);
 
+	int deleteAccessories(Accessories accessories);
+
 	int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+
+	void insertAsset(Asset asset);
+
+	int updateAssetSeq(String kubunCode);
+
+	String selectAssetNumber(String companyCode, String kubunCode);
+
+	int deleteAsset(int assetSeq);
+
+	int deleteMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+
 }
