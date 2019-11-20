@@ -104,13 +104,13 @@
                       </td>
                       <td>
                         <table class="tile_info">
-                          <tr th:each="m:${marulist}" th:if="${#strings.equals(m.typeName,'HW')}">
+                          <tr th:each="index:${#numbers.sequence(0,4)}" th:if="${#strings.equals(marulist[index].typeName,'HW')}">
                             <td >
                               <p><i class="fa fa-square blue" style="color : [[${}]];"></i>
-                              	[[${m.kubunName}]]
+                              	[[${marulist[index].kubunName}]]
                               </p>
                             </td>
-                            <td>[[${m.typeCnt}]]台</td>
+                            <td>[[${marulist[index].typeCnt}]]台</td>
                           </tr>
                         </table>
                       </td>
@@ -542,9 +542,33 @@ $(document).ready(function() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
 	        data: [{
-	            x: "[[${hardTop[1]}]]",
-	            y: 5,
-	            z: 7
+	            x: "[[${rentItem[0]}]]",
+	            y:"[[${DT001}]]",
+	            z: "[[${DT002}]]"
+	        },{
+	            x: "[[${rentItem[1]}]]",
+	            y: "[[${NB001}]]",
+	            z: "[[${NB002}]]"
+	        }, {
+	            x: "[[${rentItem[2]}]]",
+	            y: 7,
+	            z: 5
+	        },{
+	            x: "[[${rentItem[3]}]]",
+	            y: 7,
+	            z: 5
+	        }, {
+	            x: "Monitor",
+	            y: 2,
+	            z: 6,
+	        }, {
+	            x: "Keyboard",
+	            y: 4,
+	            z: 6
+	        }, {
+	            x: "Mouse",
+	            y: 7,
+	            z: 6
 	        }],
 	        xkey: "x",
 	        ykeys: ["y", "z"],

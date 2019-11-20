@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
+
+<resultMap id="rentalResult" type="Rental">
+	  <id property="rentalSeq" column="rental_seq" />
+	  <result property="assetSeq" column="asset_seq"/>
+	  <result property="assetNumber" column="asset_number"/>
+	  <result property="rentalDay" column="rental_day"/>
+	  <result property="rentalUserId" column="rental_user_id"/>
+	  <result property="purpose" column="purpose"/>
+	  <result property="speciality" column="speciality"/>
+	  <result property="applicantId" column="applicant_id"/>
+	  <result property="returnDay" column="return_day"/>
+	  <result property="returnUserId" column="return_user_id"/>
+	  <result property="returnPeriod" column="return_period"/>
+	  <result property="statusCode" column="status_code"/>
+	  <result property="storageLocation" column="storage_Location"/>
+	  <result property="bpName" column="bp_Name"/>
+	  <result property="rentalNo" column="rental_no"/>
+	  <result property="kubunCode" column="kubun_code"/>
+
+	  </resultMap>
 	<select id="selectAll"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 
@@ -24,23 +44,37 @@
 		r.rental_no,
 		a.kubun_code
 		FROM rental r
-
-		JOIN asset a ON
+		join asset a on
 		r.asset_seq = a.asset_seq
-
+		WHERE
+		1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+			AND a.asset_number LIKE #{assetNumber}
+		</if>
+		<if test="rentalDayS != null and rentalDayE !=null">
+			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+		</if>
 		AND r.status_code = '002'
 		ORDER BY
 		asset_number ASC
 
 
-		LIMIT #{length} OFFSET #{start}
+		LIMIT #{length}
+		OFFSET #{start}
 	</select>
 
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
-		FROM rental
-
-
+		FROM rental r
+		join asset a on
+		r.asset_seq = a.asset_seq
+		WHERE 1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+			AND a.asset_number like '%${assetNumber}%'
+		</if>
+		<if test="rentalDayS != null and rentalDayE !=null">
+			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+		</if>
 	</select>
 
 	<select id="getSelectCodeData" parameterType="String"
@@ -55,10 +89,29 @@
 	</select>
 
 
-	<select id="researchRental" parameterType="String"
+	<select id="researchRental" parameterType="int"
 		resultType="jp.co.info.ais.asm.domain.Rental">
-		select * from Rental
-		where asset_Number=#{assetNumber}
+		SELECT
+		a.asset_seq,
+		a.asset_number,
+		r.rental_seq,
+		r.rental_day,
+		r.rental_user_id,
+		r.purpose,
+		r.speciality,
+		r.applicant_id,
+		r.return_day,
+		r.return_user_id,
+		r.return_period,
+		a.status_code,
+		r.storage_Location,
+		r.bp_Name,
+		r.rental_no,
+		a.kubun_code
+		FROM rental r
+		join asset a on
+		r.asset_seq = a.asset_seq
+			WHERE a.asset_seq=#{assetSeq} AND r.status_code='002'
 	</select>
 	<select id="selectStatusCode"
 		resultType="jp.co.info.ais.asm.domain.StatusCode">
@@ -109,13 +162,15 @@
 	</select>
 
 	<update id="changeStatus" parameterType="java.util.List">
-		<foreach item="item" index="index" collection="list">
-			update asset
-			set
 
-			status_code='002'
-			where
-			asset_Seq=#{item.assetSeq}
+		update asset
+		set
+
+		status_code='002'
+
+		<foreach item="item" index="index" collection="itemList"
+			separator=",">
+			where asset_seq=#{item.assetSeq}
 		</foreach>
 	</update>
 
@@ -123,23 +178,24 @@
 
 
 
-			INSERT INTO rental(
-			rental_Seq,
-			asset_Seq,
-			rental_day,
-			rental_User_id,
-			purpose,
-			storage_Location,
-			speciality,
-			applicant_id,
-			return_Period,
-			bp_name,
-			insert_id,
-			update_id,
-			rental_no,
-			status_code
-			) VALUES
-			<foreach item="item" index="index" collection="itemList"  separator =",">
+		INSERT INTO rental(
+		rental_Seq,
+		asset_Seq,
+		rental_day,
+		rental_User_id,
+		purpose,
+		storage_Location,
+		speciality,
+		applicant_id,
+		return_Period,
+		bp_name,
+		insert_id,
+		update_id,
+		rental_no,
+		status_code
+		) VALUES
+		<foreach item="item" index="index" collection="itemList"
+			separator=",">
 			(
 			(SELECT
 			IFNULL(MAX(rental_seq) + 1, 1) FROM rental r),
@@ -172,15 +228,40 @@
 
 	</update>
 
-		<update id="changeAssetStatus"
-		 parameterType="java.util.List">
+	<update id="changeAssetStatus" parameterType="String">
+		update asset set
+
+		status_code='002'
+
+
+
+		where asset_number=#{assetNumber}
+
+	</update>
+	<update id="changeAStatus" parameterType="int">
 		update asset set
 
 		status_code='001'
 
-	<foreach item="item" index="index" collection="itemList"  separator =",">
-		where asset_seq=#{item.assetSeq}
-	</foreach>
+
+
+		where asset_seq=#{assetSeq}
+
+	</update>
+
+	<update id="updateRental" parameterType="jp.co.info.ais.asm.domain.Rental">
+		update rental set
+		rental_day =#{rentalDay},
+		rental_User_id=#{rentalUserId},
+		purpose=#{purpose},
+		storage_Location=#{storageLocation},
+		speciality=#{speciality},
+		applicant_id=#{applicantId},
+		return_Period=#{returnPeriod},
+		bp_name=#{bpName},
+		update_id=#{updateId}
+		where asset_seq=#{assetSeq}
+
 	</update>
 
 </mapper>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>IT資産管理</title>
-    
+
     <!-- favicons -->
 	<link rel="icon" href="../images/aisRogo.png">
     <!-- Bootstrap -->
@@ -65,20 +65,20 @@
             <div class="clearfix"></div>
 
             <div class="row">
-            <form action="/asset/update" method="POST" role="form" class="form-horizontal">
+            <form action="/asset/update" id="updateForm" method="POST" role="form" class="form-horizontal">
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>管理番号</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
 			  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}">
 			  			</div>
-			  			<div class="col-md-3">
+			  			<div class="col-md-2">
 			  				<span>区分</span>
 			  			</div>
-			  			<div class="col-md-3">
+			  			<div class="col-md-4">
 		                	<select name="kubunCode" class="form-control" id="psNum_search">
 		                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
 		                		th:inline="text">[[${code.codeDetailName}]]</option>
@@ -88,10 +88,10 @@
 	  			</div>
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 		  					<span>購入日</span>
 		  				</div>
-		  				<div class="col-md-3">
+		  				<div class="col-md-4">
 						<div class="input-group date" id="myDatepicker">
 							<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
 							<span class="input-group-addon">
@@ -99,10 +99,10 @@
 						 </span>
 						</div>
 		  				</div>
-		  				<div class="col-md-3">
+		  				<div class="col-md-2">
 		  					<span>保証期間</span>
 		  				</div>
-		  				<div class="col-md-3">
+		  				<div class="col-md-4">
 		  					<input type="text" class="form-control" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
 		  				</div>
 	  				</div>
@@ -110,32 +110,32 @@
 
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>購入先</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="buyTo" th:value="${asset.buyTo}">
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>購入金額</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="purchasePrice" th:value="${asset.purchasePrice}">
 	  					</div>
 	  				</div>
 	  			</div>
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>保管位置</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>状態</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 		                	<select name="statusCode" class="form-control" id="sNumber_search">
 		                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
 		                		th:inline="text">[[${code.codeDetailName}]]</option>
@@ -144,76 +144,91 @@
 	  				</div>
 	  			</div>
 
+	  			<div class="col-md-12"><br></div>
+
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>Maker</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="makerName" th:value="${asset.makerName}">
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>Model</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="modelName" th:value="${asset.modelName}">
 	  					</div>
 	  				</div>
 	  			</div>
 	  			<div class="col-md-6">
 	  				<div class="row">
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>S/N</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="serialNum" th:value="${asset.serialNum}">
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-2">
 	  						<span>I/F</span>
 	  					</div>
-	  					<div class="col-md-3">
+	  					<div class="col-md-4">
 	  						<input type="text" class="form-control" name="interFaceCol" th:value="${asset.interFaceCol}">
 	  					</div>
 	  				</div>
 	  			</div>
 
 	  			<div class="col-md-12">
+	  				<hr>
 	  				<span>OS</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-12">
+	  				<br>
+	  			</div>
+	  			<div class="col-md-2">
 	  				<span>名(Edition)</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-4">
 	  				<input type="text" class="form-control" name="osName" th:value="${asset.osName}">
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-2">
 	  				<span>Product Key</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-4">
 	  				<input type="text" class="form-control" name="osProductKey" th:value="${asset.osProductKey}">
 	  			</div>
 
 	  			<div class="col-md-12">
+	  				<br>
 	  				<span>CPU</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-12">
+	  				<br>
+	  			</div>
+	  			<div class="col-md-2">
 	  				<span>Processor</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-4">
 	  				<input type="text" class="form-control" name="cpuProcessor" th:value="${asset.cpuProcessor}">
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-2">
 	  				<span>動作周波数</span>
 	  			</div>
-	  			<div class="col-md-3">
+	  			<div class="col-md-4">
 	  				<input type="text" class="form-control" name="operatingFrequency" th:value="${asset.operatingFrequency}">
 	  			</div>
-
+	  			<div class="col-md-12">
+	  				<br>
+	  			</div>
 	  			<div class="col-md-6">
 	  				<span>Memory</span>
 	  			</div>
 	  			<div class="col-md-6">
 	  				<span>HDD</span>
+	  			</div>
+	  			<div class="col-md-12">
+	  				<br>
 	  			</div>
 	  			<div class="col-md-2">
 	  				<input type="text" class="form-control" name="memory" th:value="${asset.memory}">
@@ -235,7 +250,11 @@
 	  			</div>
 
 	  			<div class="col-md-12">
+	  				<br>
 	  				<span>MAC</span>
+	  			</div>
+	  			<div class="col-md-12">
+	  				<br>
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>LAN</span>
@@ -256,9 +275,14 @@
 	  			<div class="col-md-12">
 	  				<input type="text" class="form-control" name="other" th:value="${asset.other}">
 	  			</div>
-
+	  			<div class="col-md-12">
+	  				<br>
+	  			</div>
 	  			<div class="col-md-12">
 	  				<span>Security</span>
+	  			</div>
+	  			<div class="col-md-12">
+	  				<br>
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>BIOS</span>
@@ -274,7 +298,11 @@
 	  			</div>
 
 	  			<div class="col-md-12">
+	  				<br>
 	  				<span>Admin.Account</span>
+	  			</div>
+	  			<div class="col-md-12">
+	  				<br>
 	  			</div>
 	  			<div class="col-md-3">
 	  				<span>ID</span>
@@ -289,6 +317,7 @@
 	  				<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
 	  			</div>
 	  			<div class="col-md-12 text-right">
+	  				<br>
 	  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
 	  				<button type="submit" class="btn btn-primary pull-right">修正</button>
 	  			</div>
@@ -456,7 +485,7 @@
 						data : JSON.stringify(accessories)
 					}
 				)
-				.done(function(data) {
+				.success(function(data) {
 					 $('#table1 tbody').append(
 							 '<tr>'
 							 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
@@ -467,6 +496,7 @@
 							 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
 							 +'</tr>'
 					 );
+					 alert('追加されました。');
 				});
 
             });
@@ -491,12 +521,13 @@
 						data : JSON.stringify(accessories)
 					}
             	)
-				.done(function(data) {
+				.success(function(data) {
 					selectTr.find("#accessoriesSeq").text(data.accessoriesSeq);
 					selectTr.find("#itemName").val(data.itemName);
 					selectTr.find("#itemSpec").val(data.itemSpec);
 					selectTr.find("#itemQuantity").val(data.itemQuantity);
 					selectTr.find("#remarks").val(data.remarks);
+					alert('修正されました。');
 				});
 
             });
@@ -520,7 +551,7 @@
 						data : JSON.stringify(maintenanceHistory)
 					}
 				)
-				.done(function(data) {
+				.success(function(data) {
 					 $('#table2 tbody').append(
 							 '<tr>'
 							 +'<td id="historySeq">'+data.historySeq+'</td>'
@@ -531,6 +562,7 @@
 							 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
 							 +'</tr>'
 					 );
+					 alert('追加されました。');
 				});
 
             });
@@ -555,14 +587,38 @@
 						data : JSON.stringify(maintenanceHistory)
 					}
             	)
-				.done(function(data) {
+				.success(function(data) {
 					selectTr.find("#historySeq").text(data.historySeq);
 					selectTr.find("#implementationDate").val(data.implementationDate);
 					selectTr.find("#implementationDetail").val(data.implementationDetail);
 					selectTr.find("#repId").val(data.repId);
 					selectTr.find("#approverId").val(data.approverId);
+					alert('修正されました。');
 				});
 
+            });
+
+            $('#updateForm').submit(function(event) {
+                // HTMLでの送信をキャンセル
+                event.preventDefault();
+
+                // 操作対象のフォーム要素を取得
+                var $form = $(this);
+
+                // 送信
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    success: function(result, textStatus, xhr) {
+                        alert('修正されました。');
+                    },
+
+                    // 通信失敗時の処理
+                    error: function(xhr, textStatus, error) {
+                        alert('NG...');
+                    }
+                });
             });
 
         })

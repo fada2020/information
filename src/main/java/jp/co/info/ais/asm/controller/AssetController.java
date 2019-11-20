@@ -99,9 +99,19 @@ public class AssetController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String assetInsert(Model model, Asset asset) {
+    	String id = (String) session.getAttribute("id");
+    	asset.setInsertId(id); asset.setUpdateId(id);
+    	assetService.insertAsset(asset);
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
         return "asset";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public int assetDelete(Model model, @RequestBody int assetSeq) {
+    	int result = assetService.deleteAsset(assetSeq);
+        return result;
     }
 
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
@@ -113,7 +123,7 @@ public class AssetController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String assetUpdate(Model model, @RequestBody Asset asset) {
+    public String assetUpdate(Model model, Asset asset) {
     	String id = (String) session.getAttribute("id");
     	asset.setInsertId(id); asset.setUpdateId(id);
     	logger.debug(asset.toString());

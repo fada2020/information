@@ -71,7 +71,6 @@ public class MainController {
 		}
 		model.addAttribute("hardTop", hardTop);
 		model.addAttribute("softTop", softTop);
-
 		// (2)hardPercent, softPercent
 		ArrayList<Integer> hardPercent = new ArrayList<Integer>();
 		ArrayList<Integer> softPercent = new ArrayList<Integer>();
@@ -85,38 +84,91 @@ public class MainController {
 		model.addAttribute("hardPercent", hardPercent);
 		model.addAttribute("softPercent", softPercent);
 
-
 //  貸与現況グラフ
-
-
-
-//		logger.debug("ht:{}", hardTop);
-/*		for(int i = 0 ; i<marulist.size(); i++) {
-			if(marulist.get(i).getTypeName().equals("HW")) {
-				logger.debug("hardTop:{}", marulist.get(i).getKubunName());
-			} else {
-				logger.debug("softTop:{}", marulist.get(i).getKubunName());
-			}
-		}*/
-
-/*		for(int i = 0 ; i<marulist.size(); i++) {
-			if(marulist.get(i).getHardPercent()!=0) {
-				logger.debug("{},{}",marulist.get(i).getHardTop(), marulist.get(i).getHardPercent());
-			} else {
-				logger.debug("{},{}",marulist.get(i).getSoftTop(), marulist.get(i).getSoftPercent());
-			}
-		}*/
-
-
-//		貸与現況グラフ
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-//		rslist = dashboardService.rslist();
-		model.addAttribute("rslist", rslist);
+		rslist = dashboardService.rslist();
+		ArrayList<String> rentItem = new ArrayList<String>();
+	// rentItem
+		for(int i = 0 ; i<rslist.size(); i++) {
+			if(i+1 < rslist.size()) {
+				if(!rslist.get(i).getKubunName().equals(rslist.get(i+1).getKubunName())  ){
+					rentItem.add(rslist.get(i).getKubunName());
+//					logger.debug("rslist;{}", rslist.get(i).getKubunName()+i);
+				}
+			} else {
+				if(!rslist.get(i).getKubunName().equals(rslist.get(i-1).getKubunName())  ){
+					rentItem.add(rslist.get(i).getKubunName());
+//					logger.debug("rslist;{}", rslist.get(i).getKubunName()+i);
+				}
+			}
+		}
+		model.addAttribute("rentItem", rentItem);
+		for(int i = 0 ; i<rslist.size() ; i++) {
+			if(rslist.get(i).getKubunCode().equals("002")) {
+				if(rslist.get(i).getStatusCode().equals("001")) {
+					model.addAttribute("DT001", rslist.get(i).getTypeCnt());
+				}
+				if(rslist.get(i).getStatusCode().equals("002")) {
+					model.addAttribute("DT002", rslist.get(i).getTypeCnt());
+				} else {
+					model.addAttribute("DT002", 0);
+				}
+			}
+			if(rslist.get(i).getKubunCode().equals("003")) {
+				if(rslist.get(i).getStatusCode().equals("001")) {
+					model.addAttribute("NB001", rslist.get(i).getTypeCnt());
+				}
+				if(rslist.get(i).getStatusCode().equals("002")) {
+					model.addAttribute("NB002", rslist.get(i).getTypeCnt());
+				} else {
 
-//		for(int i = 0 ; i<rslist.size(); i++) {
-//			logger.debug("itemName:{},state:{},itemCnt:{}",
-//				rslist.get(i).getItemName(),rslist.get(i).getState(),rslist.get(i).getItemCnt());
-//		}
+					model.addAttribute("NB002", 0);
+				}
+			}
+		}
+		logger.debug("{}",rslist);
+
+
+
+
+
+		/*for(int j = 1 ; j <3 ; j++) {
+			int statusCode = Integer.parseInt(rslist.get(j).getStatusCode());
+			for(int i = 1 ; i<rslist.size() ; i++) {
+				int kubunCode = Integer.parseInt(rslist.get(i).getKubunCode());
+				if(kubunCode == i+1 && statusCode == j ) {
+					test.get(i).setTypeCnt(rslist.get(i).getTypeCnt());
+				} else {
+					test.get(i).setTypeCnt(rslist.get(i).getTypeCnt());
+				}
+				logger.debug("s : {}",test.get(i).getTypeCnt());
+			}
+		}
+*/
+
+
+	// rentCnt
+
+
+
+/*
+		ArrayList<Integer> rentCnt = new ArrayList<Integer>();
+		ArrayList<Integer> storageCnt = new ArrayList<Integer>();
+		for(int j = 1 ; j <3 ; j++) {
+			int statusCode = Integer.parseInt(rslist.get(j).getStatusCode());
+			for(int i = 1 ; i<rslist.size() ; i++) {
+				int kubunCode = Integer.parseInt(rslist.get(i).getKubunCode());
+				if(kubunCode == i+1 && statusCode == j ) {
+					storageCnt.add(rslist.get(i).getTypeCnt());
+				} else {
+					rentCnt.add(rslist.get(i).getTypeCnt());
+				}
+				logger.debug("s : {},r : {}",storageCnt , rentCnt);
+			}
+		}
+
+*/
+
 
         return "dashboard";
     }
