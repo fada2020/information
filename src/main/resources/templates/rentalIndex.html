@@ -143,7 +143,7 @@
 													<div class="container-fluid">
 														<div class="row">
 
-															<div class="col-md-6" id="moddal_update">
+															<div class="col-md-12" id="moddal_update">
 																<div class="col-md-3">
 																	<span>貸与番号</span>
 																</div>
@@ -183,7 +183,7 @@
 																	<span>貸与日</span>
 																</div>
 																<div class="col-md-9">
-																	<div class="input-group date" id="myDatepicker">
+																	<div class="input-group date" id="rentalDay_search">
 																		<input type="text" class="form-control"
 																			name="rentalDay" id="rentalDay_view"> <span
 																			class="input-group-addon"> <span
@@ -203,7 +203,8 @@
 																	<span>貸与期間</span>
 																</div>
 																<div class="col-md-9">
-																	<div class="input-group date" id="myDatepicker">
+																	<div class="input-group date" id="returnPeriod_search"
+																		name="myDatepicker">
 																		<input type="text" class="form-control"
 																			name="returnPeriod" id="returnPeriod_view"> <span
 																			class="input-group-addon"> <span
@@ -358,7 +359,8 @@
 
 															<div class="col-md-9 col-sm-9 ">
 																<div class="col-md-9">
-																	<div class="input-group date" id="myDatepicker">
+																	<div class="input-group date" id="myDatepicker"
+																		name="myDatepicker">
 																		<input type="text"
 																			th:value="${#dates.format(date, 'yyyy-MM-dd')}"
 																			class="form-control" name="returnPeriod"
@@ -538,7 +540,14 @@ function cancelInsert(){
 
         $(function(){
         	/*一つの日付を選べるカーレンダーのフォーマットを決める  */
+            $('#rentalDay_search').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
             $('#myDatepicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#returnPeriod_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
 
@@ -554,9 +563,9 @@ function cancelInsert(){
 			});
         	/*カーレンダーで期間を無くして今貸与されてるものを全部見えることにする */
         	$('#rental_search').val('');
-        	/*最初/rentalに画面を移す時に貸与のデータ全部を持たせる  */
+       
             var modalesectiontable = $("#table1").DataTable({
-            	/*下の詳細説明を日本語に変える  */
+ 
             	"language": {
             		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
@@ -577,7 +586,7 @@ function cancelInsert(){
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-				/*検索機能でassetNumberや貸与期間をもらってデータを設定する  */
+			
                 "ajax": {
                 	url: /*[[@{/rental/getRentalList}]]*/ 'rental/getRentalList',
                 	type: "POST",
@@ -593,7 +602,7 @@ function cancelInsert(){
 
                 "columnDefs": [
 
-					/*serverからデータを貰ってデータをtargetにセッティングする  */
+	
                 	{ targets: 0, data: "rentalNo"},
 
                     { targets: 1, data: "assetNumber"},
@@ -619,7 +628,7 @@ function cancelInsert(){
                     { targets: 7,
                     	data: "description",
                         render: function ( data, type, row, meta ) {
-                        	/*変更と返却の選択ボタンでメソッドを呼び出す  */
+     
                           return '<button type="button" class="btn btn-warning" id="updateButton" onclick = "researchRental(' + row.assetSeq + ')" >更新</button><button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
 
                            }
@@ -719,6 +728,7 @@ function researchRental(assetSeq){
 			$('#rentalUserId_view').val(data.rentalUserId);
 			$('#applicantId_view').val(data.applicantId);
 			$('#assetSeq_hidden').val(data.assetSeq);
+
 			}
 
 });
@@ -759,10 +769,7 @@ function researchRental(assetSeq){
 
     		$('#modal3d2').modal({backdrop: 'static'});
     	}
-	    /*]]>*/
-		</script>
-	<script th:inline="javascript">
-		/*<![CDATA[*/
+
 		function getSubItem() {
 			var kub =/*[[${kubunCode}]]*/;
 
