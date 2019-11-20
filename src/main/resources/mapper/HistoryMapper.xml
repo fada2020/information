@@ -17,7 +17,8 @@
 			rt.rental_user_id,
 			rt.bp_name,
 			rt.rental_day rentalDayS,
-			rt.return_day returnDayS
+			rt.return_day returnDayS,
+			rt.rental_seq
 		FROM asset ast, rental rt
 		WHERE
 		rt.asset_seq = ast.asset_seq
@@ -69,7 +70,37 @@
 		<if test="returnDayS != null and returnDayE !=null">
 		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
 		</if>
-
-
     </select>
+
+    <select id="exportXlsx" resultType="jp.co.info.ais.asm.domain.History">
+		SELECT
+			ast.asset_number,
+			ast.maker_name,
+			ast.model_name,
+			rt.status_code,
+			rt.rental_no,
+			rt.purpose,
+			rt.storage_location,
+			rt.applicant_id,
+			rt.rental_user_id,
+			rt.bp_name,
+			rt.rental_day rentalDayS,
+			rt.return_day returnDayS
+		FROM asset ast, rental rt
+		WHERE
+			rt.asset_seq = ast.asset_seq
+		ORDER BY
+			rt.asset_seq
+    </select>
+
+    <delete id="deleteHistory" parameterType="List">
+    	DELETE FROM rental
+    	WHERE
+    		rental_seq IN
+    	<foreach collection="list" item="tem" open="(" close=")" separator=",">
+            #{tem}
+        </foreach>
+
+    </delete>
+
 </mapper>

@@ -32,6 +32,8 @@ public class AssetController {
 	@Autowired
 	HttpSession session;
 
+
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String assetList(Model model) {
     	model.addAttribute("productCode", assetService.selectProductCode());
@@ -88,6 +90,30 @@ public class AssetController {
         return page;
     }
 
+    @RequestMapping(value = "/assetInfoAjax")
+    @ResponseBody
+    public Asset assetInfoAjax(@RequestBody int assetSeq) {
+    	logger.debug(assetSeq);
+        return assetService.selectAsset(assetSeq);
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public String assetInsert(Model model, Asset asset) {
+    	String id = (String) session.getAttribute("id");
+    	asset.setInsertId(id); asset.setUpdateId(id);
+    	assetService.insertAsset(asset);
+    	model.addAttribute("productCode", assetService.selectProductCode());
+    	model.addAttribute("stateCode", assetService.selectStateCode());
+        return "asset";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public int assetDelete(Model model, @RequestBody int assetSeq) {
+    	int result = assetService.deleteAsset(assetSeq);
+        return result;
+    }
+
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
     public String assetInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
     	model.addAttribute("asset", assetService.selectAsset(assetSeq));
@@ -101,8 +127,10 @@ public class AssetController {
     	String id = (String) session.getAttribute("id");
     	asset.setInsertId(id); asset.setUpdateId(id);
     	logger.debug(asset.toString());
+    	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
     	model.addAttribute("productCode", assetService.selectProductCode());
     	model.addAttribute("stateCode", assetService.selectStateCode());
+    	int result = assetService.updateAsset(asset);
     	model.addAttribute("asset", assetService.selectAsset(asset.getAssetSeq()));
         return "assetUpdate";
     }

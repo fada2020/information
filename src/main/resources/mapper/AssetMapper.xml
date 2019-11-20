@@ -69,7 +69,7 @@
 		,os_product_key
 		,cpu_processor
 		,operating_frequency
-		,MEMORY
+		,memory
 		,memory_upgarde
 		,hdd
 		,hdd_upgarde
@@ -121,7 +121,7 @@
 			,os_product_key
 			,cpu_processor
 			,operating_frequency
-			,MEMORY
+			,memory
 			,memory_upgarde
 			,hdd
 			,hdd_upgarde
@@ -206,13 +206,45 @@
 		WHERE code_master_id = '002'
     </select>
 
+    <update id="updateAsset">
+		UPDATE asset SET
+			kubun_code = #{kubunCode}
+			,purchase_date = #{purchaseDate}
+			,warranty_period = #{warrantyPeriod}
+			,buy_to = #{buyTo}
+			,purchase_price = #{purchasePrice}
+			,status_code = #{statusCode}
+			,maker_name = #{makerName}
+			,model_name = #{modelName}
+			,serial_num = #{serialNum}
+			,interface_col = #{interFaceCol}
+			,os_name = #{osName}
+			,os_product_key = #{osProductKey}
+			,cpu_processor = #{cpuProcessor}
+			,operating_frequency = #{operatingFrequency}
+			,memory = #{memory}
+			,memory_upgarde = #{memoryUpgarde}
+			,hdd = #{hdd}
+			,hdd_upgarde = #{hddUpgarde}
+			,mac_lan = #{macLan}
+			,mac_wireless = #{macWireless}
+			,other = #{other}
+			,security_bios = #{securityBios}
+			,security_hdd = #{securityHdd}
+			,admin_account_id = #{adminAccountId}
+			,admin_account_pwd = #{adminAccountPwd}
+			,storage_location = #{storageLocation}
+			,update_id = #{updateId}
+		WHERE asset_seq = #{assetSeq}
+    </update>
+
     <insert id="insertAccessories" keyProperty="accessoriesSeq">
         INSERT INTO accessories(
         accessories_seq, asset_seq, item_name, item_spec, item_quantity, remarks,
         insert_id, update_id
         )
         VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b),
+        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
         #{assetSeq}, #{itemName}, #{itemSpec}, #{itemQuantity}, #{remarks},
         #{insertId}, #{updateId})
     </insert>
@@ -223,7 +255,6 @@
 			item_spec = #{itemSpec},
 			item_quantity = #{itemQuantity},
 			remarks = #{remarks},
-			insert_id = #{insertId},
 			update_id = #{updateId}
 		WHERE accessories_seq = #{accessoriesSeq}
 		AND asset_seq = #{assetSeq}
@@ -235,7 +266,7 @@
         insert_id, update_id
         )
         VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b),
+        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
         #{assetSeq}, #{implementationDate}, #{implementationDetail}, #{repId}, #{approverId},
         #{insertId}, #{updateId})
     </insert>
@@ -246,10 +277,44 @@
 			implementation_detail = #{implementationDetail},
 			rep_id = #{repId},
 			approver_id = #{approverId},
-			insert_id = #{insertId},
 			update_id = #{updateId}
 		WHERE history_seq = #{historySeq}
 		AND asset_seq = #{assetSeq}
     </update>
+
+    <update id="updateAssetSeq">
+		UPDATE code_detail SET
+			item3 = item3 + 1
+		WHERE code_master_id = '002'
+		AND code_detail_id = #{kubunCode}
+    </update>
+
+    <select id="selectAssetNumber" resultType="String">
+		SELECT CONCAT(#{companyCode}, '-', item2, '-', LPAD(item3, 3 , '0') )
+		FROM code_detail
+		WHERE code_master_id = '002'
+		AND code_detail_id = #{kubunCode}
+    </select>
+
+    <insert id="insertAsset" useGeneratedKeys="true" keyProperty="assetSeq">
+        INSERT INTO asset(
+        asset_number, kubun_code, purchase_date, warranty_period, buy_to, purchase_price, storage_location,
+        status_code, maker_name, model_name, serial_num, interface_col, os_name, os_product_key,
+        cpu_processor, operating_frequency, memory, memory_upgarde, hdd, hdd_upgarde, mac_lan,
+        mac_wireless, other, security_bios, security_hdd, admin_account_id, admin_account_pwd, insert_id, update_id
+        )
+        VALUES (
+        #{assetNumber}, #{kubunCode}, #{purchaseDate}, #{warrantyPeriod}, #{buyTo}, #{purchasePrice}, #{storageLocation},
+        #{statusCode}, #{makerName}, #{modelName}, #{serialNum}, #{interFaceCol}, #{osName}, #{osProductKey},
+        #{cpuProcessor}, #{operatingFrequency}, #{memory}, #{memoryUpgarde}, #{hdd}, #{hddUpgarde}, #{macLan},
+        #{macWireless}, #{other}, #{securityBios}, #{securityHdd}, #{adminAccountId}, #{adminAccountPwd}, #{insertId}, #{updateId}
+        )
+    </insert>
+
+    <delete id="deleteAsset">
+        DELETE FROM maintenance_history WHERE asset_seq = #{assetSeq};
+        DELETE FROM accessories WHERE asset_seq = #{assetSeq};
+        DELETE FROM asset WHERE asset_seq = #{assetSeq};
+    </delete>
 
 </mapper>

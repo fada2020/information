@@ -1,7 +1,7 @@
 spring:
    datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://52.192.127.200:3306/amsdb?serverTimezone=JST
+      url: jdbc:mysql://52.192.127.200:3306/amsdb?serverTimezone=JST&allowMultiQueries=true
       username: ams
       password: ams!23456
       type: com.zaxxer.hikari.HikariDataSource
@@ -23,3 +23,6 @@ mybatis:
 
 server:
    port: 8081
+
+constant:
+   companyCode: AIS

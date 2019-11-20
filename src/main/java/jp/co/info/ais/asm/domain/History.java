@@ -23,6 +23,7 @@ public class History {
 	String rentalDayE;
 	String returnDayS;
 	String returnDayE;
+	String rentalSeq;
 
 	int length = 10;
 	int start;

@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
+
+<resultMap id="rentalResult" type="Rental">
+	  <id property="rentalSeq" column="rental_seq" />
+	  <result property="assetSeq" column="asset_seq"/>
+	  <result property="assetNumber" column="asset_number"/>
+	  <result property="rentalDay" column="rental_day"/>
+	  <result property="rentalUserId" column="rental_user_id"/>
+	  <result property="purpose" column="purpose"/>
+	  <result property="speciality" column="speciality"/>
+	  <result property="applicantId" column="applicant_id"/>
+	  <result property="returnDay" column="return_day"/>
+	  <result property="returnUserId" column="return_user_id"/>
+	  <result property="returnPeriod" column="return_period"/>
+	  <result property="statusCode" column="status_code"/>
+	  <result property="storageLocation" column="storage_Location"/>
+	  <result property="bpName" column="bp_Name"/>
+	  <result property="rentalNo" column="rental_no"/>
+	  <result property="kubunCode" column="kubun_code"/>
+
+	  </resultMap>
 	<select id="selectAll"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 
@@ -24,22 +44,37 @@
 		r.rental_no,
 		a.kubun_code
 		FROM rental r
-
-		JOIN asset a ON
+		join asset a on
 		r.asset_seq = a.asset_seq
-
-		AND a.status_code = '002' ORDER BY
+		WHERE
+		1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+			AND a.asset_number LIKE #{assetNumber}
+		</if>
+		<if test="rentalDayS != null and rentalDayE !=null">
+			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+		</if>
+		AND r.status_code = '002'
+		ORDER BY
 		asset_number ASC
 
 
-		LIMIT #{length} OFFSET #{start}
+		LIMIT #{length}
+		OFFSET #{start}
 	</select>
 
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
-		FROM rental
-
-
+		FROM rental r
+		join asset a on
+		r.asset_seq = a.asset_seq
+		WHERE 1 = 1
+		<if test="assetNumber != null and !assetNumber.equals('')">
+			AND a.asset_number like '%${assetNumber}%'
+		</if>
+		<if test="rentalDayS != null and rentalDayE !=null">
+			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+		</if>
 	</select>
 
 	<select id="getSelectCodeData" parameterType="String"
@@ -48,47 +83,43 @@
 		code_detail_id,
 		code_detail_name
 
-		FROM code_detail where item1=${codeDetailName}
+		FROM code_detail where
+		item1=${codeDetailName}
 
 	</select>
 
-	<select id="getSelectProduct" parameterType="String"
+
+	<select id="researchRental" parameterType="int"
 		resultType="jp.co.info.ais.asm.domain.Rental">
-		select p.p_s_num, i.assetnumber from itasset i
-		join state s
-		on s.s_number=i.s_number
-		join product p on p.p_s_num=i.p_s_num
-		where
-		i.p_s_num=#{psNum} and i.s_number='1'
-
-	</select>
-
-	<select id="writeProduct" parameterType="String"
-		resultType="java.util.HashMap">
-		select assetNumber from itasset i where
-		i.assetNumber=#{realCode}
-
-	</select>
-
-
-
-	<select id="searchCode"
-		resultType="jp.co.info.ais.asm.domain.ProductKind">
-		select p_c_num,p_c_name from productkind
-
-	</select>
-
-	<select id="researchRental" parameterType="String"
-		resultType="jp.co.info.ais.asm.domain.Rental">
-		select * from Rental
-		where asset_Number=#{assetNumber}
+		SELECT
+		a.asset_seq,
+		a.asset_number,
+		r.rental_seq,
+		r.rental_day,
+		r.rental_user_id,
+		r.purpose,
+		r.speciality,
+		r.applicant_id,
+		r.return_day,
+		r.return_user_id,
+		r.return_period,
+		a.status_code,
+		r.storage_Location,
+		r.bp_Name,
+		r.rental_no,
+		a.kubun_code
+		FROM rental r
+		join asset a on
+		r.asset_seq = a.asset_seq
+			WHERE a.asset_seq=#{assetSeq} AND r.status_code='002'
 	</select>
 	<select id="selectStatusCode"
 		resultType="jp.co.info.ais.asm.domain.StatusCode">
 		SELECT
 		code_detail_id,
 		code_detail_name
-		FROM code_detail where code_master_id='001'
+		FROM code_detail where
+		code_master_id='001'
 	</select>
 
 	<select id="selectCodeDetail"
@@ -107,66 +138,131 @@
 		SELECT
 		code_detail_id,
 		code_detail_name
-		FROM code_detail where code_master_id='003'
+		FROM code_detail where
+		code_master_id='003'
 	</select>
-<select id="selectAsset" parameterType="String"
+	<select id="selectAsset" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
-		FROM asset where asset_number=#{number} and status_code='001'
+		FROM asset where
+		asset_number=#{number} and status_code='001'
 	</select>
 
-<select id="selectAssetList" parameterType="String"
+	<select id="selectAssetList" parameterType="String"
 		resultType="jp.co.info.ais.asm.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
-		FROM asset where status_code='001' and kubun_code=#{selectedItem}
+		FROM asset where
+		status_code='001' and kubun_code=#{selectedItem}
 	</select>
 
-<update id="changeStatus" parameterType="String"
-		>
-		update  asset set
-		status_code=#{statusCode}
+	<update id="changeStatus" parameterType="java.util.List">
 
+		update asset
+		set
 
-		 where status_code='001' and asset_number=#{selectedItem}
+		status_code='002'
+
+		<foreach item="item" index="index" collection="itemList"
+			separator=",">
+			where asset_seq=#{item.assetSeq}
+		</foreach>
 	</update>
 
-	<insert id="addRental" useGeneratedKeys="true" keyProperty="rental_seq" parameterType="java.util.List">
-INSERT INTO rental(
+	<insert id="addRental" parameterType="java.util.List">
 
-	 asset_Seq,
-	 rental_day,
-	 rental_User_id,
-	 purpose,
- 	 storage_Location,
-	 speciality,
-	 applicant_id,
- 	return_Period,
- 	bp_name,
- 	insert_id,
- 	update_id
-) VALUES
-<foreach item="item" index="index" collection="list">
-(
- #{item.assetSeq},
- #{item.rentalDay},
-  #{item.rentalUserId},
-   #{item.purpose},
-    #{item.storageLocation},
-     #{item.speciality},
-      #{item.applicantId},
-       #{item.returnPeriod},
-         #{item.bpName},
 
-         #{item.applicantId},
-      #{item.applicantId}
-)
-</foreach>
-</insert>
+
+		INSERT INTO rental(
+		rental_Seq,
+		asset_Seq,
+		rental_day,
+		rental_User_id,
+		purpose,
+		storage_Location,
+		speciality,
+		applicant_id,
+		return_Period,
+		bp_name,
+		insert_id,
+		update_id,
+		rental_no,
+		status_code
+		) VALUES
+		<foreach item="item" index="index" collection="itemList"
+			separator=",">
+			(
+			(SELECT
+			IFNULL(MAX(rental_seq) + 1, 1) FROM rental r),
+			#{item.assetSeq},
+			#{item.rentalDay},
+			#{item.rentalUserId},
+			#{item.purpose},
+			#{item.storageLocation},
+			#{item.speciality},
+			#{item.applicantId},
+			#{item.returnPeriod},
+			#{item.bpName},
+			#{item.applicantId},
+			#{item.applicantId},
+			(SELECT
+			IFNULL(#{item.rentalDay}+MAX(rental_seq) +
+			1, 1) FROM rental r),
+			'002'
+			)
+		</foreach>
+	</insert>
+	<update id="returnAsset"
+		parameterType="jp.co.info.ais.asm.domain.Rental">
+		update rental set
+		update_id=#{applicantId},
+		status_code='001',
+		return_day=#{returnDay},
+		return_user_id=#{returnUserId}
+		where asset_seq=#{assetSeq}
+
+	</update>
+
+	<update id="changeAssetStatus" parameterType="String">
+		update asset set
+
+		status_code='002'
+
+
+
+		where asset_number=#{assetNumber}
+
+	</update>
+	<update id="changeAStatus" parameterType="int">
+		update asset set
+
+		status_code='001'
+
+
+
+		where asset_seq=#{assetSeq}
+
+	</update>
+
+	<update id="updateRental" parameterType="jp.co.info.ais.asm.domain.Rental">
+		update rental set
+		rental_day =#{rentalDay},
+		rental_User_id=#{rentalUserId},
+		purpose=#{purpose},
+		storage_Location=#{storageLocation},
+		speciality=#{speciality},
+		applicant_id=#{applicantId},
+		return_Period=#{returnPeriod},
+		bp_name=#{bpName},
+		update_id=#{updateId}
+		where asset_seq=#{assetSeq}
+
+	</update>
+
 </mapper>
 

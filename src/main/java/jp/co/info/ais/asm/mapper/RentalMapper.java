@@ -1,13 +1,12 @@
 package jp.co.info.ais.asm.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
-import jp.co.info.ais.asm.domain.ProductKind;
 import jp.co.info.ais.asm.domain.Rental;
 import jp.co.info.ais.asm.domain.StatusCode;
 
@@ -23,13 +22,7 @@ public interface RentalMapper {
 	//データコードをセレクト
 	public List<CodeDetail> getSelectCodeData(String codeDetailName) throws Exception;
 
-	public List<Rental> getSelectProduct(String psNum) throws Exception;
-
-	public Map<String, String> writeProduct(String realCode) throws Exception;
-
-	public List<ProductKind> searchCode() throws Exception;
-
-	public Rental researchRental(String assetNumber) throws Exception;
+	public Rental researchRental(int assetSeq) throws Exception;
 
 	public List<CodeDetail> selectCodeDetail() throws Exception;
 
@@ -41,6 +34,17 @@ public interface RentalMapper {
 
 	public List<Asset> selectAssetList(String selectedItem)throws Exception;
 
-	public int addRental(List<Rental> rentalList)throws Exception;
+	public int addRental(@Param ("itemList" ) List<Rental> itemList)throws Exception;
+
+	public int changeStatus(@Param ("itemList" ) List<Rental> itemList)throws Exception;
+
+
+	public int returnAsset(Rental rental)throws Exception;
+
+	public int changeAssetStatus(String assetNumber)throws Exception;
+
+	public int changeAStatus(int num1)throws Exception;
+
+	public int updateRental(Rental rental);
 
 }

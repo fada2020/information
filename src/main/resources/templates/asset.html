@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>IT資産管理</title>
 
+    <!-- favicons -->
+	<link rel="icon" href="../images/aisRogo.png">
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -20,6 +22,8 @@
 
     <!-- bootstrap-daterangepicker -->
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
@@ -28,6 +32,14 @@
     	#table1 thead, th {text-align: center;}
 		#table1 tbody tr{
 		    cursor:pointer;
+		}
+		.my-custom-scrollbar {
+			position: relative;
+			height: 130px;
+			overflow: auto;
+		}
+		.table-wrapper-scroll-y {
+			display: block;
 		}
 	</style>
 
@@ -70,7 +82,7 @@
                 	<select class="form-control" id="psNum_search">
                 		<option value="000">区分</option>
                 		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
-                		th:inline="text">[[${code.item2}]]</option>
+                		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
                 <div class="col-md-1">
@@ -114,7 +126,7 @@
 					</fieldset>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-success pull-right">登録</button>
+                    <button type="button" class="btn btn-success pull-right" id="insertBtn">登録</button>
                 </div>
                 <div class="x_panel">
                   <div class="x_content">
@@ -130,14 +142,16 @@
                           <th class="col-md-2">購入日</th>
                           <th class="col-md-1">保管位置</th>
                           <th class="col-md-1">状態</th>
-                          <th class="col-md-2"></th>
+                          <th class="col-md-1"></th>
+                          <th class="col-md-1"></th>
                         </tr>
                       </thead>
                       <tbody>
                       </tbody>
                     </table>
+					</div>
 
-					<!-- modal -->
+					<!-- 照会 modal -->
 					<div class="modal" id="modal3d" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
 					    <div class="modal-content">
@@ -145,39 +159,39 @@
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					          <span aria-hidden="true">×</span>
 					        </button>
-					        <h3 class="modal-title">照会</h3>
+					        <h3 class="modal-title">資産情報照会</h3>
 					      </div>
 					      <div class="modal-body">
 					      	<div class="container-fluid">
 							  	<div class="row">
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>管理番号</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 								  				<span id="assetNumber_view"></span>
 								  			</div>
-								  			<div class="col-md-3">
+								  			<div class="col-md-2">
 								  				<span>区分</span>
 								  			</div>
-								  			<div class="col-md-3">
+								  			<div class="col-md-4">
 								  				<span id="psNum_view"></span>
 								  			</div>
 						  				</div>
 						  			</div>
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 							  					<span>購入日</span>
 							  				</div>
-							  				<div class="col-md-3">
+							  				<div class="col-md-4">
 							  					<span id="purchaseDate_view"></span>
 							  				</div>
-							  				<div class="col-md-3">
+							  				<div class="col-md-2">
 							  					<span>保証期間</span>
 							  				</div>
-							  				<div class="col-md-3">
+							  				<div class="col-md-4">
 							  					<span id="warrantyPeriod_view"></span>
 							  				</div>
 						  				</div>
@@ -185,32 +199,32 @@
 
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>購入先</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="buyTo_view"></span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>購入金額</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="purchasePrice_view"></span>
 						  					</div>
 						  				</div>
 						  			</div>
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>保管位置</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="storageLocation_view"></span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>状態</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="sNumber_view"></span>
 						  					</div>
 						  				</div>
@@ -218,32 +232,32 @@
 
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>Maker</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="maker_view"></span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>Model</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="model_view"></span>
 						  					</div>
 						  				</div>
 						  			</div>
 						  			<div class="col-md-6">
 						  				<div class="row">
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>S/N</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="serialNum_view"></span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-2">
 						  						<span>I/F</span>
 						  					</div>
-						  					<div class="col-md-3">
+						  					<div class="col-md-4">
 						  						<span id="interFaceCol_view"></span>
 						  					</div>
 						  				</div>
@@ -252,32 +266,32 @@
 						  			<div class="col-md-12">
 						  				<span>OS</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-2">
 						  				<span>名(Edition)</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-4">
 						  				<span id="OSName_view"></span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-2">
 						  				<span>Product Key</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-4">
 						  				<span id="OSProductKey_view"></span>
 						  			</div>
 
 						  			<div class="col-md-12">
 						  				<span>CPU</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-2">
 						  				<span>Processor</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-4">
 						  				<span id="CPUProcessor_view"></span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-2">
 						  				<span>動作周波数</span>
 						  			</div>
-						  			<div class="col-md-3">
+						  			<div class="col-md-4">
 						  				<span id="operatingFrequency_view"></span>
 						  			</div>
 
@@ -361,18 +375,311 @@
 						  				<span id="adminAccountPW_view"></span>
 						  			</div>
 
+							  		<div class="col-md-12">
+							  			<h5>付属品</h5>
+					  					<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+											<table class="table table-striped jambo_table bulk_action text-center" id="accTable">
+												<thead>
+													<tr class="headings">
+														<th class="col-md-1">No </th>
+														<th class="col-md-3">品名 </th>
+														<th class="col-md-2">仕樣 </th>
+														<th class="col-md-1">数量 </th>
+														<th class="col-md-5">備考 </th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+							  		</div>
+
+							  		<div class="col-md-12">
+							  			<h5>保守履歴</h5>
+					  					<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+											<table class="table table-striped jambo_table bulk_action text-center" id="maintenTable">
+												<thead>
+													<tr class="headings">
+														<th class="col-md-2">実施日 </th>
+														<th class="col-md-6">実施内容 </th>
+														<th class="col-md-2">担当 </th>
+														<th class="col-md-2">承認 </th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+							  		</div>
 
 							  	</div>
 						  	</div>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
 					      </div>
 					    </div>
 					  </div>
 					</div>
+					<!-- /照会 modal -->
+
+					<!-- 登録 modal -->
+					<div class="modal" id="insertModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">×</span>
+					        </button>
+					        <h3 class="modal-title">資産情報登録</h3>
+					      </div>
+					      <form action="/asset/insert" id="insertForm" method="POST" role="form" class="form-horizontal">
+					      <div class="modal-body">
+					      	<div class="container-fluid">
+							  	<div class="row">
+					            	<div class="row">
+							  			<div class="col-md-6">
+							  				<div class="row">
+									  			<div class="col-md-2">
+									  				<span>区分</span>
+									  			</div>
+									  			<div class="col-md-4">
+								                	<select name="kubunCode" class="form-control" id="psNum_search">
+								                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
+								                		th:inline="text">[[${code.codeDetailName}]]</option>
+													</select>
+									  			</div>
+							  					<div class="col-md-2">
+								  					<span>購入日</span>
+								  				</div>
+								  				<div class="col-md-4">
+												<div class="input-group date" id="myDatepicker">
+													<input type="text" class="form-control" name="purchaseDate">
+													<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												 </span>
+												</div>
+								  				</div>
+							  				</div>
+							  			</div>
+							  			<div class="col-md-6">
+							  				<div class="row">
+								  				<div class="col-md-2">
+								  					<span>保証期間</span>
+								  				</div>
+								  				<div class="col-md-4">
+								  					<input type="text" class="form-control" name="warrantyPeriod" value="0">
+								  				</div>
+							  					<div class="col-md-2">
+							  						<span>購入先</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="buyTo">
+							  					</div>
+							  				</div>
+							  			</div>
+									</div>
+									<div class="row">
+							  			<div class="col-md-6">
+							  				<div class="row">
+							  					<div class="col-md-2">
+							  						<span>購入金額</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="purchasePrice" value="0">
+							  					</div>
+							  					<div class="col-md-2">
+							  						<span>保管位置</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="storageLocation">
+							  					</div>
+							  				</div>
+							  			</div>
+							  			<div class="col-md-6">
+							  				<div class="row">
+							  					<div class="col-md-2">
+							  						<span>状態</span>
+							  					</div>
+							  					<div class="col-md-4">
+								                	<select name="statusCode" class="form-control" id="sNumber_search">
+								                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
+								                		th:inline="text">[[${code.codeDetailName}]]</option>
+													</select>
+							  					</div>
+							  					<div class="col-md-2">
+							  						<span>Maker</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="makerName">
+							  					</div>
+							  				</div>
+							  			</div>
+									</div>
+									<div class="row"><br></div>
+									<div class="row">
+							  			<div class="col-md-6">
+							  				<div class="row">
+							  					<div class="col-md-2">
+							  						<span>Model</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="modelName">
+							  					</div>
+							  					<div class="col-md-2">
+							  						<span>S/N</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="serialNum">
+							  					</div>
+							  				</div>
+							  			</div>
+							  			<div class="col-md-6">
+							  				<div class="row">
+							  					<div class="col-md-2">
+							  						<span>I/F</span>
+							  					</div>
+							  					<div class="col-md-4">
+							  						<input type="text" class="form-control" name="interFaceCol">
+							  					</div>
+							  					<div class="col-md-6">
+							  					</div>
+							  				</div>
+							  			</div>
+									</div>
+						  			<div class="col-md-12">
+						  				<br>
+						  				<span>OS</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>名(Edition)</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="osName">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>Product Key</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="osProductKey">
+						  			</div>
+
+						  			<div class="col-md-12">
+						  				<br>
+						  				<span>CPU</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>Processor</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="cpuProcessor">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>動作周波数</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="operatingFrequency" value="0">
+						  			</div>
+									<div class="col-md-12">
+						  				<br>
+						  			</div>
+						  			<div class="col-md-6">
+						  				<span>Memory</span>
+						  			</div>
+						  			<div class="col-md-6">
+						  				<span>HDD</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<input type="text" class="form-control" name="memory" value="0">
+						  			</div>
+						  			<div class="col-md-2 text-right">
+						  				<span>Upgarde</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<input type="text" class="form-control" name="memoryUpgarde" value="0">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<input type="text" class="form-control" name="hdd" value="0">
+						  			</div>
+						  			<div class="col-md-2 text-right">
+						  				<span>Upgarde</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<input type="text" class="form-control" name="hddUpgarde" value="0">
+						  			</div>
+									<div class="col-md-12">
+						  				<br>
+						  			</div>
+						  			<div class="col-md-12">
+						  				<span>MAC</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>LAN</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="macLan">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>Wireless</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="macWireless">
+						  			</div>
+									<div class="col-md-12">
+						  				<br>
+						  			</div>
+						  			<div class="col-md-12">
+						  				<span>その他</span>
+						  			</div>
+						  			<div class="col-md-12">
+						  				<input type="text" class="form-control" name="other">
+						  			</div>
+									<div class="col-md-12">
+						  				<br>
+						  			</div>
+						  			<div class="col-md-12">
+						  				<span>Security</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>BIOS</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="securityBios">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>HDD</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="securityHdd">
+						  			</div>
+
+						  			<div class="col-md-12">
+						  				<br>
+						  				<span>Admin.Account</span>
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>ID</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="adminAccountId">
+						  			</div>
+						  			<div class="col-md-2">
+						  				<span>PW</span>
+						  			</div>
+						  			<div class="col-md-4">
+						  				<input type="text" class="form-control" name="adminAccountPwd">
+						  			</div>
+							  	</div>
+						  	</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="submit" class="btn btn-info pull-right" id="insertProc">登録</button>
+					      </div>
+					      </form>
+					    </div>
+					  </div>
 					</div>
-					<!-- /modal -->
+					<!-- /登録 modal -->
 
                   </div>
                 </div>
@@ -408,6 +715,7 @@
     <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
@@ -417,7 +725,7 @@
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
     	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.codeDetailId, value.item2);
+    		productCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
@@ -427,8 +735,12 @@
 
         $(function(){
 
+            $('#myDatepicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
 			$('#reservation').daterangepicker({
-				startDate: moment().add(-120, "months"),
+				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 			 locale: {
 			       format: 'YYYY/MM/DD'
@@ -437,12 +749,15 @@
 			   }
 			});
 
+			$('#reservation').val('');
+
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
             		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
             	    "infoFiltered":   "",
+            	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
@@ -454,7 +769,7 @@
             	"processing": true,
             	"serverSide": true,
             	"start": 0,
-                "length": 10,
+                "pageLength": 10,
                 "searching": false,
                 "paging": true,
                 "lengthChange": false,
@@ -491,11 +806,18 @@
                     }},
                     {
                     	targets: 7,
-                    	data: "update",
+                    	data: null,
                         render: function ( data, type, row, meta ) {
                           return '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                          'asset/' + row.assetSeq + '\'">更新</button><button type="button" class="btn btn-danger" onclick = "location.href =\'' +
-                          'asset/' + row.assetSeq + '\'">削除</button>';
+                          '/asset/' + row.assetSeq + '\'">更新</button>';
+                        }
+                    },
+                    {
+                    	targets: 8,
+                    	data: null,
+                        render: function ( data, type, row, meta ) {
+                          return '<button type="button" class="btn btn-danger deleteBtn"' +
+                          ' id="' + row.assetSeq + '">削除</button>';
                         }
                     }
                 ]
@@ -539,7 +861,6 @@
 
             $("#reservation").change(function () {
                 var date = $("#reservation").val();
-                alert(date);
                 modalesectiontable
                 .column(5)
                 .search(date)
@@ -548,51 +869,146 @@
 
             $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column != 7) {
+            	if(this._DT_CellIndex.column < 7) {
+            		$('#accTable > tbody').empty();
+            		$('#maintenTable > tbody').empty();
+
             		$('#modal3d').modal();
 
-                	var str = rowData.purchaseDate;
+                	$.ajax(/*[[@{/asset/assetInfoAjax}]]*/ 'asset/assetInfoAjax',
+        					{
+        						type: "POST",
+        						dataType: "json",
+        						contentType: 'application/JSON',
+        						data : JSON.stringify(rowData.assetSeq)
+        					}
+                    	)
+        				.done(function(data) {
+                    		$('#assetNumber_view').text(data.assetNumber);
+                    		$('#psNum_view').text(productCodeMap.get(data.kubunCode));
 
-            		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#psNum_view').text(productCodeMap.get(rowData.kubunCode));
-            		$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
-            		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
+                    		var str = data.purchaseDate;
 
-            		$('#buyTo_view').text(rowData.buyTo);
-            		$('#purchasePrice_view').text(rowData.purchasePrice);
-            		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#sNumber_view').text(stateCodeMap.get(rowData.statusCode));
+                    		$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
+                    		$('#warrantyPeriod_view').text(data.warrantyPeriod + "年");
 
-            		$('#maker_view').text(rowData.makerName);
-            		$('#model_view').text(rowData.modelName);
-            		$('#serialNum_view').text(rowData.serialNum);
-            		$('#interFaceCol_view').text(rowData.interFaceCol);
+                    		$('#buyTo_view').text(data.buyTo);
+                    		$('#purchasePrice_view').text(data.purchasePrice);
+                    		$('#storageLocation_view').text(data.storageLocation);
+                    		$('#sNumber_view').text(stateCodeMap.get(data.statusCode));
 
-            		$('#OSName_view').text(rowData.osname);
-            		$('#OSProductKey_view').text(rowData.osproductKey);
-            		$('#CPUProcessor_view').text(rowData.cpuprocessor);
-            		$('#operatingFrequency_view').text(rowData.operatingFrequency + " GHz");
+                    		$('#maker_view').text(data.makerName);
+                    		$('#model_view').text(data.modelName);
+                    		$('#serialNum_view').text(data.serialNum);
+                    		$('#interFaceCol_view').text(data.interFaceCol);
 
-            		$('#memory_view').text(rowData.memory + " GB");
-            		$('#memoryUpgarde_view').text(rowData.memoryUpgarde + " GB");
-            		$('#HDD_view').text(rowData.hdd + " GB");
-            		$('#HDDUpgarde_view').text(rowData.hddUpgarde + " GB");
+                    		$('#OSName_view').text(data.osName);
+                    		$('#OSProductKey_view').text(data.osProductKey);
+                    		$('#CPUProcessor_view').text(data.cpuProcessor);
+                    		$('#operatingFrequency_view').text(data.operatingFrequency + " GHz");
 
-            		$('#MACLAN_view').text(rowData.maclan);
-            		$('#MACWireless_view').text(rowData.macwireless);
+                    		$('#memory_view').text(data.memory + " GB");
+                    		$('#memoryUpgarde_view').text(data.memoryUpgarde + " GB");
+                    		$('#HDD_view').text(data.hdd + " GB");
+                    		$('#HDDUpgarde_view').text(data.hddUpgarde + " GB");
 
-            		$('#other_view').text(rowData.other);
+                    		$('#MACLAN_view').text(data.macLan);
+                    		$('#MACWireless_view').text(data.macWireless);
 
-            		$('#securityBIOS_view').text(rowData.securityBios);
-            		$('#securityHDD_view').text(rowData.securityHdd);
+                    		$('#other_view').text(data.other);
 
-            		$('#adminAccountID_view').text(rowData.adminAccountId);
-            		$('#adminAccountPW_view').text(rowData.adminAccountPwd);
+                    		$('#securityBIOS_view').text(data.securityBios);
+                    		$('#securityHDD_view').text(data.securityHdd);
+
+                    		$('#adminAccountID_view').text(data.adminAccountId);
+                    		$('#adminAccountPW_view').text(data.adminAccountPwd);
+
+                    		data.accessoriesList.forEach(function( data ) {
+								$('#accTable tbody').append(
+									 '<tr>'
+									 +'<td>'+data.accessoriesSeq+'</td>'
+									 +'<td>'+data.itemName+'</td>'
+									 +'<td>'+data.itemSpec+'</td>'
+									 +'<td>'+data.itemQuantity+'</td>'
+									 +'<td>'+data.remarks+'</td>'
+									 +'</tr>'
+								);
+                        	});
+
+                    		if( data.accessoriesList == '' ){
+                    			$('#accTable tbody').append('<tr><td colspan="5">データなし</td></tr>');
+                    		}
+
+                    		data.maintenanceHistoryList.forEach(function( data ) {
+								$('#maintenTable tbody').append(
+									 '<tr>'
+									 +'<td>'+data.implementationDate+'</td>'
+									 +'<td>'+data.implementationDetail+'</td>'
+									 +'<td>'+data.repId+'</td>'
+									 +'<td>'+data.approverId+'</td>'
+									 +'</tr>'
+								);
+                        	});
+
+                    		if( data.maintenanceHistoryList == '' ){
+                    			$('#maintenTable tbody').append('<tr><td colspan="4">データなし</td></tr>');
+                    		}
+
+        				});
 
             	} else {
             		//alert(JSON.stringify(rowData));
             	}
             } );
+
+            $('#insertBtn').on('click', function () {
+            	$('#insertModal').modal();
+            });
+
+            $('#insertForm').submit(function(event) {
+                // HTMLでの送信をキャンセル
+                event.preventDefault();
+
+                // 操作対象のフォーム要素を取得
+                var $form = $(this);
+
+                // 送信
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    success: function(result, textStatus, xhr) {
+                        alert('OK');
+                        location.href = '/asset';
+                    },
+
+                    // 通信失敗時の処理
+                    error: function(xhr, textStatus, error) {
+                        alert('NG...');
+                    }
+                });
+            });
+
+            $('#table1 tbody').on("click",".deleteBtn", function() {
+
+            	if(!confirm('本当に削除しますか？')){
+                    /* キャンセルの時の処理 */
+                    return false;
+                }else{
+                    /*　OKの時の処理 */
+                	$.ajax(/*[[@{/asset/delete}]]*/ 'asset/delete',
+        					{
+        						type: "POST",
+        						dataType: "json",
+        						contentType: 'application/JSON',
+        						data : JSON.stringify(this.id)
+        					}
+                    	).done(function(data) {
+    						location.href = '/asset';
+                    	});
+                }
+
+            });
 
         })
     /*]]>*/
