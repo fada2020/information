@@ -1,6 +1,9 @@
 package jp.co.info.ais.asm.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,23 +79,33 @@ public class RentalService {
 
 	}
 
-	public int returnAsset(Rental rental) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		return rentalMapper.returnAsset(rental);
+	public void returnAsset(Rental rental) {
+
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
+		Date currentTime = new Date();
+		String mTime = mSimpleDateFormat.format(currentTime);
+		rental.setReturnDay(mTime);
+		int num = 0;
+		num=rentalMapper.returnAsset(rental);
+		if(num>0) {
+			rentalMapper.changeAStatus(rental.getAssetSeq());
+
+		}
+
 	}
 
 	public int changeAssetStatus(String assetNumber) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+
 		return rentalMapper.changeAssetStatus(assetNumber);
 	}
 
-	public int changeAStatus(int num1) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		return rentalMapper.changeAStatus(num1);
+	public void changeAStatus(int assetSeq) throws Exception {
+
+	rentalMapper.changeAStatus(assetSeq);
 	}
 
 	public int updateRental(Rental rental) {
-		// TODO 自動生成されたメソッド・スタブ
+
 		return rentalMapper.updateRental(rental);
 	}
 
