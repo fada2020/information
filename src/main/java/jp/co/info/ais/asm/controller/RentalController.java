@@ -56,11 +56,14 @@ public class RentalController {
 	@ResponseBody
 	public Asset getAsset(Model model, @RequestBody String number) throws Exception {
 
+		//戻り値はAssetで引数はasset_numberを使う
 		Asset asset = rentalService.selectAsset(number);
+		//もし
 		if (asset != null) {
 			rentalService.changeAssetStatus(number);
+			model.addAttribute("asset", asset);
 		}
-		model.addAttribute("asset", asset);
+
 		return asset;
 	}
 
