@@ -59,6 +59,10 @@ public class AssetService {
 		return assetMapper.updateAccessories(accessories);
 	}
 
+	public int deleteAccessories(Accessories accessories) {
+		return assetMapper.deleteAccessories(accessories);
+	}
+
 	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
 		return assetMapper.updateMaintenanceHistory(maintenanceHistory);
 	}
@@ -68,24 +72,36 @@ public class AssetService {
 	}
 
 	public void insertAsset(Asset asset) {
-
+		// 購入日'-'除去
 		String date = asset.getPurchaseDate();
-		date = date.replaceAll("[-]", "");
-		asset.setPurchaseDate(date);
-
+		if(null != date && !date.equals("")) {
+			date = date.replaceAll("[-]", "");
+			asset.setPurchaseDate(date);
+		}
+		// 製品コード照会
 		List<CodeDetail> pdCodeList = assetMapper.selectProductCode();
+		// マッピングのためのmap生成
 		Map<String, String> pdCodeMap = new HashMap<String, String>();
 		for(CodeDetail pdCode : pdCodeList) {
 			pdCodeMap.put(pdCode.getCodeDetailId(), pdCode.getItem2());
 		}
-		assetMapper.updateAssetSeq(asset.getKubunCode());
 
+		// 資産Seq更新
+		assetMapper.updateAssetSeq(asset.getKubunCode());
+		// 資産管理番号生成
 		String assetNumber = assetMapper.selectAssetNumber(appConstant.getCompanyCode(), asset.getKubunCode());
 		asset.setAssetNumber(assetNumber);
+
+		// 資産情報登録
 		assetMapper.insertAsset(asset);
 	}
 
 	public int deleteAsset(int assetSeq) {
 		return assetMapper.deleteAsset(assetSeq);
 	}
+
+	public int deleteMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
+		return assetMapper.deleteMaintenanceHistory(maintenanceHistory);
+	}
+
 }
