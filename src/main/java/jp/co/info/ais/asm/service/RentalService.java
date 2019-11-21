@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
@@ -66,19 +67,19 @@ public class RentalService {
 
 		return rentalMapper.selectAssetList(selectedItem);
 	}
-
+	@Transactional
 	public int addRental(List<Rental> rentalList) throws Exception {
 
 		return rentalMapper.addRental(rentalList);
 
 	}
-
+	@Transactional
 	public int changeStatus(List<Rental> rentalList) throws Exception {
 
 		return rentalMapper.changeStatus(rentalList);
 
 	}
-
+	@Transactional
 	public void returnAsset(Rental rental) {
 
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
@@ -93,17 +94,17 @@ public class RentalService {
 		}
 
 	}
-
+	@Transactional
 	public int changeAssetStatus(String assetNumber) throws Exception {
 
 		return rentalMapper.changeAssetStatus(assetNumber);
 	}
-
+	@Transactional
 	public void changeAStatus(int assetSeq) throws Exception {
 
 	rentalMapper.changeAStatus(assetSeq);
 	}
-
+	@Transactional
 	public int updateRental(Rental rental) {
 
 		return rentalMapper.updateRental(rental);

@@ -129,7 +129,7 @@ public class RentalController {
 
 		String applicantId = (String) session.getAttribute("id");
 		rental.setApplicantId(applicantId);
-
+		rental.setReturnUserId(applicantId);
 		rentalService.returnAsset(rental);
 
 		return "rentalIndex";
@@ -152,15 +152,16 @@ public class RentalController {
 
 	@RequestMapping(value = "/updateRental", method = RequestMethod.POST)
 	@ResponseBody
-	private String updateAsset(Model model, @RequestBody Rental rental) {
-
+	private int updateAsset(Model model, @RequestBody Rental rental) {
+int successNum=0;
 		try {
 			rental.setUpdateId((String) session.getAttribute("id"));
 
-	rentalService.updateRental(rental);
+			successNum=rentalService.updateRental(rental);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "rentalIndex";
+		return successNum;
 	}
 }
