@@ -56,8 +56,6 @@
 	color: red;
 	background-color: lavender;
 }
-
-
 </style>
 
 
@@ -72,6 +70,7 @@
 			<!-- top navigation -->
 			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
+			<!-- top navigation -->
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -90,7 +89,7 @@
 								<span class="pull-right" style="font-size: 18px;">管理番号</span>
 							</div>
 							<div class="col-md-2">
-								<input type="text" class="form-control" placeholder="管理番号"
+								<input type="text" class="form-control" placeholder="全体"
 									id="assetNumber_search">
 							</div>
 
@@ -401,8 +400,9 @@
 																			<input type="text"
 																				th:value="${#dates.format(date, 'yyyy-MM-dd')}"
 																				class="form-control" name="returnPeriod"
-																				id="returnPeriod" /> <span class="input-group-addon">
-																				<span class="glyphicon glyphicon-calendar"></span>
+																				id="returnPeriod" /> <span
+																				class="input-group-addon"> <span
+																				class="glyphicon glyphicon-calendar"></span>
 																			</span>
 																		</div>
 
