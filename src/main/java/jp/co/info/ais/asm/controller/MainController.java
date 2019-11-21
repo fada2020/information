@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.info.ais.asm.common.AppConstant;
 import jp.co.info.ais.asm.domain.Dashboard;
 import jp.co.info.ais.asm.service.DashboardService;
 
@@ -80,7 +81,8 @@ public class MainController {
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 			rslist = dashboardService.rslist();
 			// 【目録】貸与現況グラフ
-
+			AppConstant rentlist = new AppConstant();
+			model.addAttribute("rentlist", rentlist);
 			// 【数量】貸与現況グラフ：保有、貸与
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);

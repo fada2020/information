@@ -563,31 +563,31 @@ $(document).ready(function() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
 	        data: [{
-	            x: "Desktop",
+	            x: "[[${rentlist.fixed_rent_list01}]]",
 	            y:"[[${DT001}]]",
 	            z: "[[${DT002}]]"
 	        },{
-	            x: "Notebook",
+	            x: "[[${rentlist.fixed_rent_list02}]]",
 	            y: "[[${NB001}]]",
 	            z: "[[${NB002}]]"
 	        }, {
-	            x: "Tablet",
+	            x:  "[[${rentlist.fixed_rent_list03}]]",
 	            y: "[[${TBL001}]]",
 	            z: "[[${TBL002}]]"
 	        },{
-	            x: "Mobile",
+	            x:  "[[${rentlist.fixed_rent_list04}]]",
 	            y: "[[${MD001}]]",
 	            z: "[[${MD002}]]"
 	        }, {
-	            x: "Monitor",
+	            x:  "[[${rentlist.fixed_rent_list05}]]",
 	            y: "[[${DP001}]]",
 	            z: "[[${DP002}]]"
 	        }, {
-	            x: "Keyboard",
+	            x:  "[[${rentlist.fixed_rent_list06}]]",
 	            y: "[[${KBD001}]]",
 	            z: "[[${KBD002}]]"
 	        }, {
-	            x: "Mouse",
+	            x:  "[[${rentlist.fixed_rent_list07}]]",
 	            y: "[[${MS001}]]",
 	            z: "[[${MS002}]]"
 	        }],
