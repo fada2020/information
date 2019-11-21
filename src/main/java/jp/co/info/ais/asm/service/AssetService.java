@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.info.ais.asm.common.AppConstant;
 import jp.co.info.ais.asm.domain.Accessories;
@@ -71,6 +72,7 @@ public class AssetService {
 		return assetMapper.updateAsset(asset);
 	}
 
+	@Transactional
 	public void insertAsset(Asset asset) {
 		// 購入日'-'除去
 		String date = asset.getPurchaseDate();

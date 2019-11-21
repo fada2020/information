@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="psNum_search">
-                		<option value="000">区分</option>
+                		<option value="00">区分</option>
                 		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="sNumber_search">
-						<option value="000">状態</option>
+						<option value="00">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
@@ -721,6 +721,10 @@
     <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- jquery-validation-1.19.1 -->
+    <script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
@@ -737,70 +741,6 @@
     	stateCode.forEach(function( value ) {
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
-
-    	  // Updates the inputs with the validation errors
-    	  function showErrors(form, errors) {
-    	    // We loop through all the inputs and show the errors for that input
-    	    _.each(form.querySelectorAll("input[name], select[name]"), function(input) {
-    	      // Since the errors can be null if no errors were found we need to handle
-    	      // that
-    	      showErrorsForInput(input, errors && errors[input.name]);
-    	    });
-    	  }
-
-    	  // Shows the errors for a specific input
-    	  function showErrorsForInput(input, errors) {
-    	    // This is the root of the input
-    	    var formGroup = closestParent(input.parentNode, "form-group")
-    	      // Find where the error messages will be insert into
-    	      , messages = formGroup.querySelector(".messages");
-    	    // First we remove any old messages and resets the classes
-    	    resetFormGroup(formGroup);
-    	    // If we have errors
-    	    if (errors) {
-    	      // we first mark the group has having errors
-    	      formGroup.classList.add("has-error");
-    	      // then we append all the errors
-    	      _.each(errors, function(error) {
-    	        addError(messages, error);
-    	      });
-    	    } else {
-    	      // otherwise we simply mark it as success
-    	      formGroup.classList.add("has-success");
-    	    }
-    	  }
-
-    	  // Recusively finds the closest parent that has the specified class
-    	  function closestParent(child, className) {
-    	    if (!child || child == document) {
-    	      return null;
-    	    }
-    	    if (child.classList.contains(className)) {
-    	      return child;
-    	    } else {
-    	      return closestParent(child.parentNode, className);
-    	    }
-    	  }
-
-    	  function resetFormGroup(formGroup) {
-    	    // Remove the success and error classes
-    	    formGroup.classList.remove("has-error");
-    	    formGroup.classList.remove("has-success");
-    	    // and remove any old messages
-    	    _.each(formGroup.querySelectorAll(".help-block.error"), function(el) {
-    	      el.parentNode.removeChild(el);
-    	    });
-    	  }
-
-    	  // Adds the specified error with the following markup
-    	  // <p class="help-block error">[message]</p>
-    	  function addError(messages, error) {
-    	    var block = document.createElement("p");
-    	    block.classList.add("help-block");
-    	    block.classList.add("error");
-    	    block.innerHTML = error;
-    	    messages.appendChild(block);
-    	  }
 
     	// オンロード
         $(function(){
@@ -1036,46 +976,44 @@
             });
 
             $('#insertForm').submit(function(event) {
-                // HTMLでの送信をキャンセル
-                event.preventDefault();
-
-            	var constraints = {
-              		purchaseDate: {
-       		    		presence: true,
-       		            format: {
-       		                pattern: "/^\d{8}$|^\d{4}-\d{2}-\d{2}$/"
-       		            }
-       			    }
-               	}
 
                 // 操作対象のフォーム要素を取得
                 var $form = $(this);
 
-            	var values = validate.collectFormValues(form);
-
-                var errors = validate(values, constraints);
-
-                alert(errors);
-
-                showErrors(form, errors || {});
-
-                if (!errors) {
-                    // 送信
-                    $.ajax({
-                        url: $form.attr('action'),
-                        type: $form.attr('method'),
-                        data: $form.serialize(),
-                        success: function(result, textStatus, xhr) {
-                            alert('登録されました。');
-                            location.href = '/asset';
-                        },
-
-                        // 通信失敗時の処理
-                        error: function(xhr, textStatus, error) {
-                            alert('NG...');
+                $form.validate({
+                    rules: {
+                        name: {
+                            required: true,
+                            maxlength: 50
                         }
-                    });
-				}
+                    },
+                    messages: {
+                        name: {
+                            required: "お名前を入力してください。",
+                            maxlength: "お名前は50文字以内で入力してください。"
+                        },
+                     }
+                });
+
+                if (!$form.valid()) {
+                    return false;
+                };
+
+                // 送信
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    success: function(result, textStatus, xhr) {
+                        alert('登録されました。');
+                        location.href = '/asset';
+                    },
+
+                    // 通信失敗時の処理
+                    error: function(xhr, textStatus, error) {
+                        alert('NG...');
+                    }
+                });
 
             });
 
