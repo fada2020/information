@@ -59,7 +59,6 @@ public class AssetController {
 	    	// 資産管理番号セッティング
 	    	String assetNumber = page.getColumns().get(0).getSearch().getValue();
 	    	if(null != assetNumber && !assetNumber.equals("")){
-	    		logger.debug(page.getColumns().get(0).getSearch().getValue());
 	    		condition.setAssetNumber(assetNumber);
 	    	}
 
@@ -74,14 +73,12 @@ public class AssetController {
 	    	// メーカ名セッティング
 	    	String makerName = page.getColumns().get(3).getSearch().getValue();
 	    	if(null != makerName && !makerName.equals("")){
-	    		logger.debug(page.getColumns().get(3).getSearch().getValue());
 	    		condition.setMakerName(makerName);
 	    	}
 
 	    	// モデル名セッティング
 	    	String modelName = page.getColumns().get(4).getSearch().getValue();
 	    	if(null != modelName && !modelName.equals("")){
-	    		logger.debug(page.getColumns().get(4).getSearch().getValue());
 	    		condition.setModelName(modelName);
 	    	}
 
@@ -229,7 +226,6 @@ public class AssetController {
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-    	logger.error(result);
         return result;
     }
 
@@ -274,7 +270,6 @@ public class AssetController {
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-    	logger.error(result);
         return result;
     }
 }

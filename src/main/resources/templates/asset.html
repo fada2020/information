@@ -136,7 +136,7 @@
                   <div class="x_content">
 
 					<div class="table-responsive">
-                    <table class="table table-bordered table-hover table-lg text-center" id="table1">
+                    <table class="table table-bordered table-hover jambo_table table-lg text-center" id="table1">
                       <thead class="thead-light">
                         <tr>
                           <th class="col-md-2">管理番号</th>
@@ -758,12 +758,25 @@
 			$('#reservation').daterangepicker({
 				startDate: moment().add(-1, "months"),
 				endDate: moment(),
-			 locale: {
+				locale: {
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			});
+
+			$('#reservation').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#reservation').val('');
+				    var date = $("#reservation").val();
+				    modalesectiontable
+				    .column(5)
+				    .search(date)
+				    .draw();
+			});
+
+			// ダタージュピッカー空っぽセッティング
+			$('#reservation').val('');
 
 			function refreshForm(obj) {
 			    $(obj)
@@ -774,9 +787,6 @@
 			        .closest('form')
 			        .find('input[type="checkbox"]').prop('checked', false);
 			}
-
-			// ダタージュピッカー空っぽセッティング
-			$('#reservation').val('');
 
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
