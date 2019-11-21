@@ -50,7 +50,7 @@ public class MainController {
 			int i = 0, j = 0, hw = 0, sw = 0;	// i, j, hw, sw 値を初期化
 			String[] hardTop = new String[20];
 			String[] softTop = new String[5];
-			String[] colorTop = {"#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"};
+			String[] colorTop = {"#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"};
 			int hardCnt[] = new int[20];
 			int softCnt[] = new int[5];
 			// hardTop, hardCnt, softTop, softCntに値を代入
@@ -75,6 +75,9 @@ public class MainController {
 			model.addAttribute("colorTop", colorTop);	// color list
 			model.addAttribute("hw", hw);		// 登録したHW種数
 			model.addAttribute("sw", sw);		// 登録したSW種数
+
+			ArrayList<Dashboard> softlist = dashboardService.softlist();// softlist
+			model.addAttribute("softlist", softlist);		// Top5 table list
 
 			// 貸与現況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();

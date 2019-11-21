@@ -16,4 +16,6 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> rslist();
 
+	public ArrayList<Dashboard> softlist();
+
 }

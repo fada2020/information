@@ -33,6 +33,11 @@ public class DashboardService {
 
 		return rslist;
 	}
+	public ArrayList<Dashboard> softlist() {
+		ArrayList<Dashboard> softlist = new ArrayList<Dashboard>();
+		softlist = dashboardMapper.softlist();
+		return softlist;
+	}
 
 
 }
