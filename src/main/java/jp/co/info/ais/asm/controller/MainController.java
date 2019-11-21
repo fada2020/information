@@ -76,28 +76,11 @@ public class MainController {
 			model.addAttribute("hw", hw);		// 登録したHW種数
 			model.addAttribute("sw", sw);		// 登録したSW種数
 
-			ArrayList<Dashboard> softlist = dashboardService.softlist();// softlist
-			model.addAttribute("softlist", softlist);		// Top5 table list
-
 			// 貸与現況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 			rslist = dashboardService.rslist();
-			ArrayList<String> rentItem = new ArrayList<String>();
-
 			// 【目録】貸与現況グラフ
-			int listsize = rslist.size();
-			for ( i = 0; i < listsize; i++) {
-				if (i + 1 < listsize) {
-					if (!rslist.get(i).getKubunName().equals(rslist.get(i + 1).getKubunName())) {
-						rentItem.add(rslist.get(i).getKubunName());
-					}
-				} else {
-					if (!rslist.get(i).getKubunName().equals(rslist.get(i - 1).getKubunName())) {
-						rentItem.add(rslist.get(i).getKubunName());
-					}
-				}
-			}
-			model.addAttribute("rentItem", rentItem);
+
 			// 【数量】貸与現況グラフ：保有、貸与
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);

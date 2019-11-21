@@ -78,7 +78,6 @@
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2><b>ハードウェア保有現況</b></h2>
-
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -113,11 +112,14 @@
                           </tr>
                         </table>
                         <table class="tile_info" th:if = "${ hw < 5 }">
-                          <tr  th:each="m:${toplist}" th:if="${#strings.equals(m.typeName,'HW')}">
-                            <td>
-                              <p><i class="fa fa-square blue"></i>[[${m.kubunName}]] </p>
+                          <tr th:each="index:${#numbers.sequence(0, #lists.size(toplist)-sw-1)}"
+               		th:if = "${#strings.equals(toplist[index].typeName,'HW')}">
+                            <td >
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index].kubunName}]]
+                              </p>
                             </td>
-                            <td>[[${m.typeCnt}]] 個</td>
+                            <td>[[${toplist[index].typeCnt}]] 個</td>
                           </tr>
                         </table>
                       </td>
@@ -155,76 +157,26 @@
                         <canvas class="canvasDoughnut2" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
                       </td>
                       <td>
-                       <table class="tile_info">
-                          <tr th:each="index:${#numbers.sequence(0,#lists.size(softlist)-1)}"
-               		th:if = "${#strings.equals(softlist[index].typeName,'SW')}">
-                            <td >
-                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
-                              	[[${softlist[index].kubunName}]]
-                              </p>
-                            </td>
-                            <td>[[${softlist[index].typeCnt}]] 個</td>
-                          </tr>
-                        </table>
-
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-</div>
- <!-- /Software Top5 -->
- <!-- Graph  -->
- <div class="col-md-12 col-sm-8 col-xs-12">
-          <div class="row">
-		<!-- Software Top5  -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2><b>ソフトウェア保有現況</b></h2>
-
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>順位</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">ソフトウェア種別</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">保有率</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut2" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
                        <table class="tile_info" th:if = "${ sw > 4 }">
                           <tr th:each="index:${#numbers.sequence(0,4)}"
                		th:if = "${#strings.equals(toplist[index].typeName,'SW')}">
                             <td >
                               <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
-                              	[[${toplist[index].kubunName}]]
+                              	[[${toplist[index+hw].kubunName}]]
                               </p>
                             </td>
-                            <td>[[${toplist[index].typeCnt}]] 個</td>
+                            <td>[[${toplist[index+hw].typeCnt}]] 個</td>
                           </tr>
                         </table>
-                        <table class="tile_info"  th:if = "${ sw < 5 }">
-                          <tr  th:each="m:${toplist}" th:if="${#strings.equals(m.typeName,'SW')}">
-                            <td>
-                              <p><i class="fa fa-square" th:style="|color: ${colorTop[1]}|"></i>
-                              	[[${m.kubunName}]]
+                        <table class="tile_info" th:if = "${ sw < 5 }">
+                          <tr th:each="index:${#numbers.sequence(0,#lists.size(toplist)-hw-1)}"
+               		th:if = "${#strings.equals(toplist[index+hw].typeName,'SW')}">
+                            <td >
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index+hw].kubunName}]]
                               </p>
                             </td>
-                            <td>[[${m.typeCnt}]] 個</td>
+                            <td>[[${toplist[index+hw].typeCnt}]] 個</td>
                           </tr>
                         </table>
                       </td>
@@ -611,19 +563,19 @@ $(document).ready(function() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
 	        data: [{
-	            x: "[[${rentItem[0]}]]",
+	            x: "Desktop",
 	            y:"[[${DT001}]]",
 	            z: "[[${DT002}]]"
 	        },{
-	            x: "[[${rentItem[1]}]]",
+	            x: "Notebook",
 	            y: "[[${NB001}]]",
 	            z: "[[${NB002}]]"
 	        }, {
-	            x: "[[${rentItem[2]}]]",
+	            x: "Tablet",
 	            y: "[[${TBL001}]]",
 	            z: "[[${TBL002}]]"
 	        },{
-	            x: "[[${rentItem[3]}]]",
+	            x: "Mobile",
 	            y: "[[${MD001}]]",
 	            z: "[[${MD002}]]"
 	        }, {
