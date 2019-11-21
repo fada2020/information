@@ -113,7 +113,7 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="status_search" style="width:120px;">
-						<option value="000">状態</option>
+						<option value="00">状態</option>
                 		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
                 		th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
@@ -150,8 +150,6 @@
 
                 <div class="col-md-1" style="width:5%; float:right; margin-right:60px;">
                 	<button id="searchButton" class="btn btn-primary" >検索</button>
-
-                	<button id="deleteHistory">delete</button>
                 </div>
 
                 </div>
@@ -161,9 +159,9 @@
 
 
                 <div class="x_panel">
-
+	              <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
+	              <br><br><br>
                   <div class="x_title">
-                    <button id=exportExcel class="btn btn-primary" title="現在のテーブルをExcelファイルでダウンロード">Excel</button>
 
                   </div>
 
@@ -189,7 +187,9 @@
                           <th>BP社名</th>
                           <th>貸与日</th>
                           <th>返却日</th>
-                          <th>削除</th>
+                          <th style="width:50px;">
+                          	<button id="deleteHistory" title="チェックした履歴情報を削除">削除</button>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -213,13 +213,11 @@
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
     <!-- FastClick -->
     <script src="../vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
@@ -240,13 +238,15 @@
         var modalesectiondata = null;
         var deleteList="";
 
+        //状態コード作成
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
-    	function deletedd(target){
+    	//履歴削除項目作成
+    	function deleteAct(target){
         	if(target.checked == true){
           		deleteList += target.value;
         	} else{
@@ -254,18 +254,19 @@
         	}
         }
 
+    	//オンロード
         $(function(){
 
-			$('#rental_search').daterangepicker({
-				startDate: moment().add(0, "months"),
-				endDate: moment(),
+        	//貸与のデートピッカー
+        	$('#rental_search').daterangepicker({
 			 locale: {
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
-			});
+			}).val('');
 
+			//返却日のデートピッカー
 			$('#return_search').daterangepicker({
 				startDate: moment().add(0, "months"),
 				endDate: moment(),
@@ -274,9 +275,9 @@
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
-			});
+			}).val('');
 
-            // datatableの設定を変更
+            //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
             		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
@@ -297,6 +298,7 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
+                //検索条件取得
                 "ajax": {
                 	url: /*[[@{/history/getHistorylist}]]*/ 'History/getHistorylist',
                 	type: "POST",
@@ -312,30 +314,61 @@
                         return JSON.stringify(d);
                     }
                 },
+                //表のデータ構成
                 "columnDefs": [
-                    { targets: 0, data: "assetNumber"},
+                    //資産番号
+                	{ targets: 0, data: "assetNumber"},
+                    //メーカー
                     { targets: 1, data: "makerName"},
+                    //モデル
                     { targets: 2, data: "modelName"},
+                    //状態
                     { targets: 3, data: function ( d ) {
+                    	console.log(d.statusCode);
                     	return stateCodeMap.get(d.statusCode);
                     }},
+                    //貸与番号
                     { targets: 4, data: "rentalNo"},
+                    //用途
                     { targets: 5, data: "purpose"},
+                    //場所
                     { targets: 6, data: "storageLocation"},
+                    //貸出者
                     { targets: 7, data: "applicantId"},
+                    //使用者
                     { targets: 8, data: "rentalUserId"},
+                    //BP社名
                     { targets: 9, data: "bpName"},
+                    //貸与日
                     { targets: 10, data: function ( d ) {
-                    	var str = d.rentalDayS;
-                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	if( d.rentalDayS =='' || d.rentalDayS == null){
+                    		return null;
+                    	}else{
+                    		var str = d.rentalDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
+
                     }},
+                    //返却日
                     { targets: 11, data: function ( d ) {
-                    	var str = d.returnDayS;
-                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	if( d.returnDayS =='' || d.returnDayS == null){
+                    		return null;
+                    	}else{
+                    		var str = d.returnDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
+
                     }},
+					//削除チェックボックス
                     {targets: 12,
                     	render: function( data, type, row, meta ){
-                    		return '<input type="checkbox" class="deleteHistory" onClick="deletedd(this)" value="/' + row.rentalSeq + '">';
+
+                    		if(row.statusCode=="02"){//貸与状態の場合
+                    			return null;
+                    		} else{//その他の場合
+                    			return '<input type="checkbox" class="deleteHistory" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
+                    		}
+
                     }}
                     ]
             });
@@ -354,27 +387,32 @@
 
         	//table Exportion -E
 
-          	//delete -S
+          	//history delete -S
           	$('#deleteHistory').on('click',function(){
           		var a = deleteList.split("/");
 
-				var confirmation = confirm("データを削除しますか？");
+          		if(a.length>1){
 
-				if(confirmation){
-					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
-				          	{
-										type: "POST",
-										dataType: "json",
-										contentType: 'application/JSON',
-										data : JSON.stringify(a)
-									}
-								)
-								.done(function(data) {
-									 //screen reset
-								});
-				}
+          			var confirmation = confirm(a.length-1+"項目の履歴データを削除します。");
+
+          			if(confirmation){
+    					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
+    				       	{
+    							type: "POST",
+    							dataType: "json",
+    							contentType: 'application/JSON',
+    							data : JSON.stringify(a)
+    						}
+    					)
+    					.done(function(data) {
+    						location.reload(true);
+    					});
+    				}
+          		}else{
+          			alert("削除項目を選択してください。");
+          		}
           	})
-			//delete -E
+			//history delete -E
 
         })
 
