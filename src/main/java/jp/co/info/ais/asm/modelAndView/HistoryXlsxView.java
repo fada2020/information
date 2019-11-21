@@ -1,5 +1,6 @@
 package jp.co.info.ais.asm.modelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,14 +24,22 @@ public class HistoryXlsxView extends AbstractXlsxView {
 
         List<History> history = (List<History>) model.get("history");
 
-        Sheet sheet = workbook.createSheet("貸与履歴");
+		HashMap<String, String> statusCode = new HashMap<String, String>();
+		statusCode.put("01", "保管");
+		statusCode.put("02", "貸与");
+		statusCode.put("03", "故障");
+		statusCode.put("01", "廃棄");
+		statusCode.put(null, "-");
+
+
+		Sheet sheet = workbook.createSheet("貸与履歴");
 
         // create header
 
         Row row = sheet.createRow(0);
         row.createCell(0).setCellValue("管理番号");
-        row.createCell(1).setCellValue("Maker");
-        row.createCell(2).setCellValue("Model");
+        row.createCell(1).setCellValue("メーカー");
+        row.createCell(2).setCellValue("モデル");
         row.createCell(3).setCellValue("状態");
         row.createCell(4).setCellValue("貸与番号");
         row.createCell(5).setCellValue("用途");
@@ -49,7 +58,7 @@ public class HistoryXlsxView extends AbstractXlsxView {
             row.createCell(0).setCellValue(aHistory.getAssetNumber());
             row.createCell(1).setCellValue(aHistory.getMakerName());
             row.createCell(2).setCellValue(aHistory.getModelName());
-            row.createCell(3).setCellValue(aHistory.getStatusCode());
+            row.createCell(3).setCellValue(statusCode.get(aHistory.getStatusCode()));
             row.createCell(4).setCellValue(aHistory.getRentalNo());
             row.createCell(5).setCellValue(aHistory.getPurpose());
             row.createCell(6).setCellValue(aHistory.getStorageLocation());
@@ -58,21 +67,20 @@ public class HistoryXlsxView extends AbstractXlsxView {
             row.createCell(9).setCellValue(aHistory.getBpName());
 
 			String rentalDay = aHistory.getRentalDayS();
-			rentalDay = rentalDay.trim();
-			if(rentalDay.length()>7) {
-				row.createCell(10).setCellValue(rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8));
-			} else {
+			if(rentalDay == null) {
 				row.createCell(10).setCellValue(aHistory.getRentalDayS());
+			}else {
+				rentalDay = rentalDay.trim();
+				row.createCell(10).setCellValue(rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8));
 			}
 
 			String returnDay = aHistory.getReturnDayS();
-			returnDay = returnDay.trim();
-			if(returnDay.length()>7) {
-				row.createCell(11).setCellValue(returnDay.substring(0, 4) + "-" + returnDay.substring(4, 6) + "-" + returnDay.substring(6, 8));
-			} else {
+			if(returnDay == null) {
 				row.createCell(11).setCellValue(aHistory.getReturnDayS());
+			}else {
+				returnDay = returnDay.trim();
+				row.createCell(11).setCellValue(returnDay.substring(0, 4) + "-" + returnDay.substring(4, 6) + "-" + returnDay.substring(6, 8));
 			}
-
         }
 
         // enable auto filter

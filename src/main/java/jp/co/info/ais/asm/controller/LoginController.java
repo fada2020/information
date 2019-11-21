@@ -1,7 +1,6 @@
 package jp.co.info.ais.asm.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +39,7 @@ public class LoginController {
 			return "login.html";
 		}else {
 			//sessionに値がなかったら
-			return "index.html";
+			return "redirect:/dashboard";
 		}
 
 
