@@ -44,36 +44,47 @@ public class MainController {
 			}
 			model.addAttribute("hwCnt", hwCnt);		// HW 装置数量
 			model.addAttribute("swCnt", swCnt);		// SW 装置数量
-			model.addAttribute("totalCnt", hwCnt + swCnt);// Total 装置数量
-			model.addAttribute("newItem", newItem);// 今月購入した装置数量
+			model.addAttribute("totalCnt", hwCnt + swCnt);	// Total 装置数量
+			model.addAttribute("newItem", newItem);	// 今月購入した装置数量
 			// 保有現況グラフ
-			ArrayList<String> hardTop = new ArrayList<String>();
-			ArrayList<String> softTop = new ArrayList<String>();
-			ArrayList<Integer> hardCnt = new ArrayList<Integer>();
-			ArrayList<Integer> softCnt = new ArrayList<Integer>();
-
+			int i = 0, j = 0, hw = 0, sw = 0;	// i, j, hw, sw 値を初期化
+			String[] hardTop = new String[20];
+			String[] softTop = new String[5];
+			String[] colorTop = {"#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"};
+			int hardCnt[] = new int[20];
+			int softCnt[] = new int[5];
+			// hardTop, hardCnt, softTop, softCntに値を代入
 			for (Dashboard item : dash) {
 				if (item.getTypeName().equals("HW")) {
-					hardTop.add(item.getKubunName());
-					hardCnt.add(item.getTypeCnt());
+					hardTop[j] = item.getKubunName();
+					hardCnt[j] = item.getTypeCnt();
+					j += 1;
+					hw += 1;
 				} else {
-					softTop.add(item.getKubunName());
-					softCnt.add(item.getTypeCnt());
+					softTop[i] = item.getKubunName();
+					softCnt[i] = item.getTypeCnt();
+					i += 1;
+					sw += 1;
 				}
 			}
-			model.addAttribute("toplist", dash);		// Top5 list
-			model.addAttribute("hardTop", hardTop);		// HW Top5
-			model.addAttribute("softTop", softTop);		// SW Top5
-			model.addAttribute("hardCnt", hardCnt);		// HW Top5 Cnt
-			model.addAttribute("softCnt", softCnt);		// SW Top5 Cnt
+			model.addAttribute("toplist", dash);		// Top5 table list
+			model.addAttribute("hardTop", hardTop);		// HW Top5 Graph list
+			model.addAttribute("softTop", softTop);		// SW Top5 Graph list
+			model.addAttribute("hardCnt", hardCnt);		// HW Top5 Graph Cnt
+			model.addAttribute("softCnt", softCnt);		// SW Top5 Graph Cnt
+			model.addAttribute("colorTop", colorTop);	// color list
+			model.addAttribute("hw", hw);		// 登録したHW種数
+			model.addAttribute("sw", sw);		// 登録したSW種数
 
 			// 貸与現況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 			rslist = dashboardService.rslist();
 			ArrayList<String> rentItem = new ArrayList<String>();
+
 			// 【目録】貸与現況グラフ
-			for (int i = 0; i < rslist.size(); i++) {
-				if (i + 1 < rslist.size()) {
+			int listsize = rslist.size();
+			for ( i = 0; i < listsize; i++) {
+				if (i + 1 < listsize) {
 					if (!rslist.get(i).getKubunName().equals(rslist.get(i + 1).getKubunName())) {
 						rentItem.add(rslist.get(i).getKubunName());
 					}
@@ -94,13 +105,13 @@ public class MainController {
 			model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
 
 			for (Dashboard item : rslist) {
-				if (item.getKubunCode().equals("002")) {
+				if (item.getKubunCode().equals("02")) {
 					// Desktop保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("DT001", item.getTypeCnt());
 					}
 					// Desktop貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DT002", item.getTypeCnt());
 					} else {
 						model.addAttribute("DT002", 0);
@@ -113,13 +124,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("003")) {
+				if (item.getKubunCode().equals("03")) {
 					// Notebook保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("NB001", item.getTypeCnt());
 					}
 					// Notebook貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("NB002", item.getTypeCnt());
 					} else {
 						model.addAttribute("NB002", 0);
@@ -131,13 +142,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("004")) {
+				if (item.getKubunCode().equals("04")) {
 					// Tablet保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("TBL001", item.getTypeCnt());
 					}
 					// Tablet貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("TBL002", item.getTypeCnt());
 					} else {
 						model.addAttribute("TBL002", 0);
@@ -148,13 +159,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("005")) {
+				if (item.getKubunCode().equals("05")) {
 					// Mobile保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("MD001", item.getTypeCnt());
 					}
 					// Mobile貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MD002", item.getTypeCnt());
 					} else {
 						model.addAttribute("MD002", 0);
@@ -164,13 +175,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("006")) {
+				if (item.getKubunCode().equals("06")) {
 					// Monitor保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("DP001", item.getTypeCnt());
 					}
 					// Monitor貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DP002", item.getTypeCnt());
 					} else {
 						model.addAttribute("DP002", 0);
@@ -179,13 +190,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("007")) {
+				if (item.getKubunCode().equals("07")) {
 					// Keyboard保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("KBD001", item.getTypeCnt());
 					}
 					// Keyboard貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("KBD002", item.getTypeCnt());
 					} else {
 						model.addAttribute("KBD002", 0);
@@ -193,13 +204,13 @@ public class MainController {
 						continue;
 					}
 				}
-				if (item.getKubunCode().equals("008")) {
+				if (item.getKubunCode().equals("08")) {
 					// Mouse保有
-					if(item.getStatusCode().equals("001")) {
+					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("MS001", item.getTypeCnt());
 					}
 					// Keyboard貸与
-					if(item.getStatusCode().equals("002")) {
+					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MS002", item.getTypeCnt());
 					} else {
 						model.addAttribute("MS002", 0);
