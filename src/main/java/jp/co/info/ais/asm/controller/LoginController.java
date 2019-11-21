@@ -33,33 +33,76 @@ public class LoginController {
 
 	@RequestMapping("/")
     public String index() {
-        return "login.html";
+
+		logger.info("LOGIN PAGE START ===================");
+		if (session.getAttribute("id") == null) {
+			//sessionに値があったら
+			return "login.html";
+		}else {
+			//sessionに値がなかったら
+			return "index.html";
+		}
+
+
     }
 
 
 	//Login button id & pass check
-	@RequestMapping(value= "/loginCheck", method = RequestMethod.POST)
-	public String loginCheck(HttpServletRequest request, @RequestParam String assetId, @RequestParam String assetPass, Model model)  {
+	//매핑할때는 소문자로
+	/**
+	 * 社員番号とパスワード認証処理
+	 * @param assetId
+	 * @param assetPass
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value= "/loginprocess", method = RequestMethod.POST)
+	public String loginProcess(@RequestParam String assetId, @RequestParam String assetPass, Model model)  {
 
-		int userCheck = loginservice.selectLoginId(assetId);
+		logger.info("LOGIN PROCESS START : " + assetId);
+		try {
+			int userCheck = loginservice.selectLoginId(assetId);
+			//ID存在チェック
+			if (userCheck < 1) {
+				model.addAttribute("errorMessage", "社員番号が存在しません。");
+				return "login";
+			}
 
-		if (userCheck != 1) {
-			model.addAttribute("errorMessage", "社員番号が存在しません。");
-			return "login";
+			Login user = loginservice.selectLogin(assetId, assetPass);
+			//パスワード有効性チェック
+			if (user == null) {
+				model.addAttribute("errorMessage", "パスワードが一致しないです。");
+				return "login";
+			}
+
+			session.setAttribute("name", user.getEmpName());
+			session.setAttribute("id", user.getEmpId());
+			session.setAttribute("organizationCode", user.getOrganizationCode());
+
+			return "redirect:/";
+		}catch(Exception e) {
+			logger.error("認証処理エラーが発生 :" + e.toString());
+			return  "login";
 		}
-
-		Login user = loginservice.selectLogin(assetId, assetPass);
-		if (user == null) {
-			model.addAttribute("errorMessage", "パスワードが一致しないです。");
-			return "login";
-		}
-
-		session.setAttribute("organizationCode", user.getOrganizationCode());
-		session.setAttribute("name", user.getEmpName());
-		session.setAttribute("id", user.getEmpId());
-
-
-		return mainController.index(request, model);
 	}
+	/**
+	 * ログアウト処理を行う。
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String Logout() {
+		logger.info("LOGOUT START ====");
+		try {
+			session.invalidate();
+		} catch (Exception e) {
+			logger.error("ログアウト処理エラーが発生 :" + e.toString());
+		}
+		return "redirect:/";
+	}
+
+
+
+
 
 }

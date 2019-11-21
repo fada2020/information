@@ -39,11 +39,11 @@ public interface RentalMapper {
 	public int changeStatus(@Param ("itemList" ) List<Rental> itemList)throws Exception;
 
 
-	public int returnAsset(Rental rental)throws Exception;
+	public int returnAsset(Rental rental);
 
 	public int changeAssetStatus(String assetNumber)throws Exception;
 
-	public int changeAStatus(int num1)throws Exception;
+	public void changeAStatus(int assetSeq);
 
 	public int updateRental(Rental rental);
 
