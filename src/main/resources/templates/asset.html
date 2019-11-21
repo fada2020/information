@@ -41,6 +41,10 @@
 		.table-wrapper-scroll-y {
 			display: block;
 		}
+		.error {
+	      color: red;
+	      background-color: lavender;
+		}
 	</style>
 
   </head>
@@ -457,8 +461,8 @@
 													<div class="input-group date" id="myDatepicker">
 														<input type="text" class="form-control" name="purchaseDate">
 														<span class="input-group-addon">
-														<span class="glyphicon glyphicon-calendar"></span>
-													 </span>
+															<span class="glyphicon glyphicon-calendar"></span>
+													 	</span>
 													</div>
 													<div class="messages"></div>
 									  				</div>
@@ -471,7 +475,7 @@
 								  					<span>保証期間</span>
 								  				</div>
 								  				<div class="col-md-4">
-								  					<input type="text" class="form-control" name="warrantyPeriod" value="0">
+								  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
 								  				</div>
 							  					<div class="col-md-2">
 							  						<span>購入先</span>
@@ -489,7 +493,7 @@
 							  						<span>購入金額</span>
 							  					</div>
 							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="purchasePrice" value="0">
+							  						<input type="text" class="form-control numVal" name="purchasePrice" value="0">
 							  					</div>
 							  					<div class="col-md-2">
 							  						<span>保管位置</span>
@@ -581,7 +585,7 @@
 						  				<span>動作周波数</span>
 						  			</div>
 						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="operatingFrequency" value="0">
+						  				<input type="text" class="form-control numVal" name="operatingFrequency" value="0">
 						  			</div>
 									<div class="col-md-12">
 						  				<br>
@@ -593,22 +597,22 @@
 						  				<span>HDD</span>
 						  			</div>
 						  			<div class="col-md-2">
-						  				<input type="text" class="form-control" name="memory" value="0">
+						  				<input type="text" class="form-control numVal" name="memory" value="0">
 						  			</div>
 						  			<div class="col-md-2 text-right">
 						  				<span>Upgarde</span>
 						  			</div>
 						  			<div class="col-md-2">
-						  				<input type="text" class="form-control" name="memoryUpgarde" value="0">
+						  				<input type="text" class="form-control numVal" name="memoryUpgarde" value="0">
 						  			</div>
 						  			<div class="col-md-2">
-						  				<input type="text" class="form-control" name="hdd" value="0">
+						  				<input type="text" class="form-control numVal" name="hdd" value="0">
 						  			</div>
 						  			<div class="col-md-2 text-right">
 						  				<span>Upgarde</span>
 						  			</div>
 						  			<div class="col-md-2">
-						  				<input type="text" class="form-control" name="hddUpgarde" value="0">
+						  				<input type="text" class="form-control numVal" name="hddUpgarde" value="0">
 						  			</div>
 									<div class="col-md-12">
 						  				<br>
@@ -676,7 +680,8 @@
 						  	</div>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="submit" class="btn btn-info pull-right" id="insertProc">登録</button>
+					      	<button type="button" class="btn btn-primary pull-right" id="initBtn">初期化</button>
+					        <button type="button" class="btn btn-info pull-right" id="insertProc">登録</button>
 					      </div>
 					      </form>
 					    </div>
@@ -703,8 +708,6 @@
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- validator -->
-    <script src="../vendors/validator/validator.js"></script>
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
@@ -742,6 +745,9 @@
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
+    	$.validator.messages.number = '有効な数字を入力';
+    	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
     	// オンロード
         $(function(){
 			// デートピッカーセッティング
@@ -758,6 +764,17 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			});
+
+			function refreshForm(obj) {
+			    $(obj)
+			        .closest('form')
+			        .find('input[type="text"], textarea, select').val('');
+
+			    $(obj)
+			        .closest('form')
+			        .find('input[type="checkbox"]').prop('checked', false);
+			}
+
 			// ダタージュピッカー空っぽセッティング
 			$('#reservation').val('');
 
@@ -975,46 +992,146 @@
             	$('#insertModal').modal();
             });
 
-            $('#insertForm').submit(function(event) {
+            $('#insertProc').on('click', function() {
+                var form = $('#insertForm');
 
-                // 操作対象のフォーム要素を取得
-                var $form = $(this);
-
-                $form.validate({
+                form.validate({
                     rules: {
-                        name: {
-                            required: true,
-                            maxlength: 50
+                    	kubunCode : {
+                    		required : true
+                    	},
+                    	purchaseDate: {
+                            required: true
+                        },
+                        statusCode: {
+                        	required: true
+                        },
+                        warrantyPeriod: {
+                        	number: true,
+                        	maxlength: 2
+                        },
+                        buyTo: {
+                        	maxlength: 15
+                        },
+                        storageLocation: {
+                        	maxlength: 15
+                        },
+                        makerName: {
+                        	maxlength: 25
+                        },
+                        modelName: {
+                        	maxlength: 25
+                        },
+                        serialNum: {
+                        	maxlength: 15
+                        },
+                        interFaceCol: {
+                        	maxlength: 15
+                        },
+                        osName: {
+                        	maxlength: 15
+                        },
+                        osProductKey: {
+                        	maxlength: 15
+                        },
+                        cpuProcessor: {
+                        	maxlength: 15
+                        },
+                        purchasePrice: {
+                        	number: true,
+                        	maxlength: 11
+                        },
+                        operatingFrequency: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memory: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memoryUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hdd: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hddUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        macLan: {
+                        	maxlength: 15
+                        },
+                        macWireless: {
+                        	maxlength: 15
+                        },
+                        other: {
+                        	maxlength: 100
+                        },
+                        securityBios: {
+                        	maxlength: 15
+                        },
+                        securityHdd: {
+                        	maxlength: 15
+                        },
+                        adminAccountId: {
+                        	maxlength: 15
+                        },
+                        adminAccountPwd: {
+                        	maxlength: 15
                         }
                     },
                     messages: {
-                        name: {
-                            required: "お名前を入力してください。",
-                            maxlength: "お名前は50文字以内で入力してください。"
+                    	kubunCode : {
+                    		required : "区分を選択"
+                    	},
+                    	purchaseDate: {
+                            required: "日付を入力"
                         },
-                     }
-                });
-
-                if (!$form.valid()) {
-                    return false;
-                };
-
-                // 送信
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: $form.attr('method'),
-                    data: $form.serialize(),
-                    success: function(result, textStatus, xhr) {
-                        alert('登録されました。');
-                        location.href = '/asset';
+                        statusCode: {
+                        	required: "状態を選択"
+                        }
                     },
-
-                    // 通信失敗時の処理
-                    error: function(xhr, textStatus, error) {
-                        alert('NG...');
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "purchaseDate") {
+                          error.insertAfter("#myDatepicker");
+                        } else {
+                          error.insertAfter(element);
+                        }
                     }
                 });
 
+                if (form.valid()) {
+
+                    form.find('.numVal').each(function( ) {
+                    	if($(this).val() == '') {
+                    		$(this).val('0');
+                    	}
+                    });
+
+                	// 送信
+                    $.ajax({
+                       url: form.attr('action'),
+                       type: form.attr('method'),
+                       data: form.serialize(),
+                       success: function(result, textStatus, xhr) {
+                           alert('登録されました。');
+                           location.href = '/asset';
+                       },
+
+                       // 通信失敗時の処理
+                       error: function(xhr, textStatus, error) {
+                           alert('NG...');
+                       }
+                   });
+                };
+
+            });
+
+            $('#initBtn').on('click', function () {
+				refreshForm($('#insertForm'));
             });
 
             $('#table1 tbody').on("click",".deleteBtn", function() {
