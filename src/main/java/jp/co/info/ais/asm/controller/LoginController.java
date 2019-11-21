@@ -1,7 +1,7 @@
 package jp.co.info.ais.asm.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ public class LoginController {
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 
 	@Autowired
-	MainController mainController;
+	LoginController LoginController;
 
 	@Autowired
 	HttpSession session;
@@ -36,11 +36,11 @@ public class LoginController {
 
 		logger.info("LOGIN PAGE START ===================");
 		if (session.getAttribute("id") == null) {
-			//sessionに値があったら
+			// sessionに値がなかったら
 			return "login.html";
 		}else {
-			//sessionに値がなかったら
-			return "index.html";
+			//sessionに値があったら
+			return "redirect:/dashboard";
 		}
 
 

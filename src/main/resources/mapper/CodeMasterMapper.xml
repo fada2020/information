@@ -4,6 +4,32 @@
 <mapper namespace="jp.co.info.ais.asm.mapper.CodeMasterMapper">
 
 
+		<!--Insert MasterID NAME REMARKS  -->
+	<insert id="insertMasterIdName"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+   		INSERT INTO code_master(
+   		 code_master_id
+   		,code_master_name)
+   		VALUES (
+       	  #{code_master_id}
+         ,#{code_master_name}
+        )
+    </insert>
+
+    <insert id="insertMasterId"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+   		INSERT INTO code_master(
+   		 code_master_id)
+   		VALUES (
+       	  #{code_master_id}
+    </insert>
+    <insert id="insertMasterName"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+   		INSERT INTO code_master(
+   		code_master_name)
+   		VALUES (
+
+         #{code_master_name}
+         )
+    </insert>
+
 
 
 </mapper>

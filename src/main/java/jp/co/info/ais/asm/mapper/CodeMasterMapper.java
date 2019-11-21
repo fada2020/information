@@ -2,6 +2,8 @@ package jp.co.info.ais.asm.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.info.ais.asm.domain.CodeMaster;
+
 /**
  *
  * @author AIS191101
@@ -10,4 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CodeMasterMapper {
 
+	void insertMasterId(CodeMaster codeMasterId);
+
+	void insertMasterName(CodeMaster codeMasterName);
+
+	void insertMasterIdName(CodeMaster codeMasterId, CodeMaster codeMasterName);
 }

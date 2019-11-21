@@ -18,29 +18,25 @@ public class CodeService {
 	@Autowired
 	private CodeMapper codeMapper;
 
-	public int selectMasterId(String masterId) {
 
+	//masterIDを持ってきます。
+	public int selectMasterId(String masterId) {
 		return codeMapper.selectMasterId(masterId);
 	}
 
-		public CodeMaster MasterIdNameCheck(String masterId, String masterName)  {
-			return codeMapper.MasterIdNameCheck(masterId, masterName);
-		}
-
-	public List<Code> selectCodeList(Code condition){
-		return codeMapper.selectCodeList(condition);
-
+	//masterID, masterNameを持ってきます。
+	public CodeMaster MasterIdNameCheck(String masterId, String masterName)  {
+		return codeMapper.MasterIdNameCheck(masterId, masterName);
 	}
 
+
+
+	//StateCode持ってきます。
 	public List<Code> selectStateCode() {
 		return codeMapper.selectStateCode();
 	}
 
-	public CodeMaster InsertMasterIdName(List<CodeMaster> masterList) throws Exception {
 
-		return codeMapper.insertMasterId(masterList);
-
-	}
 
 
 

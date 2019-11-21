@@ -75,27 +75,33 @@
 							<table id="datatable-list" class="table table-striped jambo_table bulk_action" style="width:100%">
 		                      <thead>
 		                        <tr class="headings">
-		                          <th class="column-title txt_center">No</th>
+		                          <th class="column-title txt_center">No.</th>
 		                          <th class="column-title txt_center">コードID</th>
 		                          <th class="column-title txt_center">コード名称</th>
 		                          <th class="column-title txt_center">使用有無</th>
 		                          <th class="column-title txt_center"></th>
 		                        </tr>
 		                      </thead>
-		                      <tbody>
-								<tr th:each="element, elementStat : ${codeMasterList}">
-									<td th:text="${elementStat.count}"></td>
-									<td th:text="${element.codeMasterId}"></td>
-									<td th:text="${element.codeMasterName}"></td>
-									<td th:switch="${element.useFlag}">
-							            <p th:case =="0"　style="color:blue;">使用中</p>
-        							    <p th:case =="1" style="color:red;">未使用</p>
-									</td>
-									<td class="txt_center txt_middle">
-										<button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
-									</td>
-								</tr>
-		                      </tbody>
+		                     	<!-- List 出力 -->
+		                     	<tbody>
+		                     	<!--객체명  -->
+		                     		<tr th:each="element, elementStat : ${codeMasterList}">
+											<td></td>
+			                     			<!-- <td th:text="${elementStat.count}"></td> -->
+			                     			<td th:text="${element.codeMasterId}"></td>
+											<td th:text="${element.codeMasterName}"></td>
+			                     			<td th:switch="${element.useFlag}">
+			                     				 <p th:case =="0" style="color:blue;">使用中</p>
+        							    		 <p th:case =="1" style="color:red;">未使用</p>
+        							    	</td>
+		                     				<td class="txt_center txt_middle">
+												 <button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
+											</td>
+		                     		</tr>
+
+		                     	</tbody>
+		                     <!--/. List 出力 -->
+
 							</table>
 							</div><!-- /.table-responsive -->
 						</div><!-- /.x_content -->
@@ -165,11 +171,12 @@
 
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" href = ""><i class="fa fa-check-circle" ></i> 登録</button>
+        <button type="button" class="btn btn-primary"  onclick = "location.href = '/codemaster'"><i class="fa fa-check-circle" ></i> 登録</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times-circle"></i> 閉じる</button>
       </div>
     </div>
   </div>
+</div>
 </div>
 <!-- /.Modal Part :: Register End -->
 
