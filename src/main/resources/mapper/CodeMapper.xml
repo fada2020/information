@@ -122,4 +122,15 @@
     <!--/.KindCode出力  -->
 
 
+    <!-- Insert MasterID Name -->
+
+    <insert id="insertMasterId" parameterType="">
+    	INSERT INTO code_master
+    	VALUES(#{code_master_id}
+    		  ,#{code_master_name})
+
+    </insert>
+    <!-- /.Insert MasterID Name -->
+
+
  </mapper>

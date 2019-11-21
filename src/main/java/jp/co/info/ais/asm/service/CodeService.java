@@ -36,6 +36,12 @@ public class CodeService {
 		return codeMapper.selectStateCode();
 	}
 
+	public CodeMaster InsertMasterIdName(List<CodeMaster> masterList) throws Exception {
+
+		return codeMapper.insertMasterId(masterList);
+
+	}
+
 
 
 

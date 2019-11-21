@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.info.ais.asm.domain.CodeMaster;
 import jp.co.info.ais.asm.service.CodeService;
 
 @Controller
@@ -45,11 +46,23 @@ public class CodeController {
 
 		try {
 				int masterIdCheck =codeService.selectMasterId(codeMasterId);
+				CodeMaster masterNameCheck = codeService.MasterIdNameCheck(codeMasterId, codeMasterName);
 
-				if(masterIdCheck == 1) {
+				if(masterIdCheck > 0 && masterNameCheck == null) {
 					model.addAttribute("errorMessage","マスターコードが存在してます。");
+					model.addAttribute("errorMessage", "??????");
+					
+					logger.info("MASTER ID :" + codeMasterId);
+					
 					return "redirect:/";
+				}else {
+					
 				}
+				
+
+			
+				session.setAttribute("masterId", masterNameCheck.getCodeMasterId());
+				session.setAttribute("masterId", masterNameCheck.getCodeMasterName());
 
 
 		}catch(Exception e) {

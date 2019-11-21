@@ -25,7 +25,7 @@ public interface CodeMapper {
 
 	CodeMaster MasterIdNameCheck(String masterId, String masterName);
 
-
+	CodeMaster insertMasterId(List<CodeMaster> masterList);
 
 
 }
