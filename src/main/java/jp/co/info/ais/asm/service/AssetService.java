@@ -69,6 +69,8 @@ public class AssetService {
 	}
 
 	public int updateAsset(Asset asset) {
+    	// 空白及び'-'除去
+    	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
 		return assetMapper.updateAsset(asset);
 	}
 
