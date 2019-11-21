@@ -8,10 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>IT資産管理</title>
-    
-    <!-- favicons -->
-	<link rel="icon" href="../images/aisRogo.png">
+    <title>DashBoard</title>
+
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -52,19 +50,19 @@
 
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" ><div class="text-center">
               <h3><b>総ハードウェア</b></h3>
-              <div class="count">[[${hwCnt}]]台</div></div>
+              <div class="count">[[${hwCnt}]] 個</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
               <h3><b>総ソフトウェア</b></h3>
-              <div class="count">[[${swCnt}]]台</div></div>
+              <div class="count">[[${swCnt}]] 個</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
              <h3><b> 総資産装置</b></h3>
-              <div class="count">[[${totalCnt}]]台</div></div>
+              <div class="count">[[${totalCnt}]] 個</div></div>
             </div>
             <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
               <h3><b>今月購入した装置</b></h3>
-              <div class="count">[[${newItem}]]台</div></div>
+              <div class="count">[[${newItem}]] 個</div></div>
             </div>
           </div>
 
@@ -80,14 +78,13 @@
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2><b>ハードウェア保有現況</b></h2>
-
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <table class="" style="width:100%">
                     <tr>
                       <th style="width:37%;">
-                        <p>Top 5</p>
+                        <p>順位</p>
                       </th>
                       <th>
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
@@ -103,14 +100,26 @@
                         <canvas class="canvasDoughnut1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
                       </td>
                       <td>
-                        <table class="tile_info">
-                          <tr th:each="index:${#numbers.sequence(0,4)}" th:if="${#strings.equals(marulist[index].typeName,'HW')}">
+                        <table class="tile_info" th:if = "${ hw > 4 }">
+                          <tr th:each="index:${#numbers.sequence(0,4)}"
+               		th:if = "${#strings.equals(toplist[index].typeName,'HW')}">
                             <td >
-                              <p><i class="fa fa-square blue" style="color : [[${}]];"></i>
-                              	[[${marulist[index].kubunName}]]
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index].kubunName}]]
                               </p>
                             </td>
-                            <td>[[${marulist[index].typeCnt}]]台</td>
+                            <td>[[${toplist[index].typeCnt}]] 個</td>
+                          </tr>
+                        </table>
+                        <table class="tile_info" th:if = "${ hw < 5 }">
+                          <tr th:each="index:${#numbers.sequence(0, #lists.size(toplist)-sw-1)}"
+               		th:if = "${#strings.equals(toplist[index].typeName,'HW')}">
+                            <td >
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index].kubunName}]]
+                              </p>
+                            </td>
+                            <td>[[${toplist[index].typeCnt}]] 個</td>
                           </tr>
                         </table>
                       </td>
@@ -120,8 +129,6 @@
               </div>
             </div>
         <!-- /Hardware Top5 -->
-
-
 		<!-- Software Top5  -->
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
@@ -134,7 +141,7 @@
                   <table class="" style="width:100%">
                     <tr>
                       <th style="width:37%;">
-                        <p>Top 5</p>
+                        <p>順位</p>
                       </th>
                       <th>
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
@@ -150,12 +157,26 @@
                         <canvas class="canvasDoughnut2" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
                       </td>
                       <td>
-                        <table class="tile_info">
-                          <tr  th:each="m:${marulist}" th:if="${#strings.equals(m.typeName,'SW')}">
-                            <td>
-                              <p><i class="fa fa-square blue"></i>[[${m.kubunName}]] </p>
+                       <table class="tile_info" th:if = "${ sw > 4 }">
+                          <tr th:each="index:${#numbers.sequence(0,4)}"
+               		th:if = "${#strings.equals(toplist[index].typeName,'SW')}">
+                            <td >
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index+hw].kubunName}]]
+                              </p>
                             </td>
-                            <td>[[${m.typeCnt}]]台</td>
+                            <td>[[${toplist[index+hw].typeCnt}]] 個</td>
+                          </tr>
+                        </table>
+                        <table class="tile_info" th:if = "${ sw < 5 }">
+                          <tr th:each="index:${#numbers.sequence(0,#lists.size(toplist)-hw-1)}"
+               		th:if = "${#strings.equals(toplist[index+hw].typeName,'SW')}">
+                            <td >
+                              <p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
+                              	[[${toplist[index+hw].kubunName}]]
+                              </p>
+                            </td>
+                            <td>[[${toplist[index+hw].typeCnt}]] 個</td>
                           </tr>
                         </table>
                       </td>
@@ -542,19 +563,19 @@ $(document).ready(function() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
 	        data: [{
-	            x: "[[${rentItem[0]}]]",
+	            x: "Desktop",
 	            y:"[[${DT001}]]",
 	            z: "[[${DT002}]]"
 	        },{
-	            x: "[[${rentItem[1]}]]",
+	            x: "Notebook",
 	            y: "[[${NB001}]]",
 	            z: "[[${NB002}]]"
 	        }, {
-	            x: "[[${rentItem[2]}]]",
+	            x: "Tablet",
 	            y: "[[${TBL001}]]",
 	            z: "[[${TBL002}]]"
 	        },{
-	            x: "[[${rentItem[3]}]]",
+	            x: "Mobile",
 	            y: "[[${MD001}]]",
 	            z: "[[${MD002}]]"
 	        }, {
@@ -648,21 +669,8 @@ $(document).ready(function() {
 	    }))
 	}
 
-/* maruGraph */
-
-
+/* Topグラフ */
 function init_chart_doughnut1() {
-/* 	for(var j = 0; j<5 ; j++){
-		var result = "";
-		alert(hardlist);
-		for(var i = 0 ; i<"[[${hardTop[0]}]]".length ; i++){
-			var hardTop = "[[${hardTop[0]}]]";
-	 		result = result + hardTop[i];
-		}
-		alert(result);
-	}
- */
-
 	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
 
         var a = {
@@ -671,9 +679,9 @@ function init_chart_doughnut1() {
             data: {
                 labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
                 datasets: [{
-                    data: ["[[${hardPercent[0]}]]","[[${hardPercent[1]}]]","[[${hardPercent[2]}]]","[[${hardPercent[3]}]]","[[${hardPercent[4]}]]"],
-                    backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
-                    hoverBackgroundColor: ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"]
+                    data: ["[[${hardCnt[0]}]]","[[${hardCnt[1]}]]","[[${hardCnt[2]}]]","[[${hardCnt[3]}]]","[[${hardCnt[4]}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
                 }]
             },
             options: {
@@ -688,19 +696,17 @@ function init_chart_doughnut1() {
     }
 }
 
-
-
 function init_chart_doughnut2() {
     if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
             data: {
-                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
+                labels: ["[[${softTop[0]}]]","[[${softTop[1]}]]","[[${softTop[2]}]]","[[${softTop[3]}]]","[[${softTop[4]}]]"],
                 datasets: [{
-                    data: [20, 20, 15, 25, 30],
-                    backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
-                    hoverBackgroundColor: ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"]
+                    data: ["[[${softCnt[0]}]]","[[${softCnt[1]}]]","[[${softCnt[2]}]]","[[${softCnt[3]}]]","[[${softCnt[4]}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
                 }]
             },
             options: {
