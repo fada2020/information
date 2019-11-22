@@ -17,9 +17,6 @@ public class CodeMasterService {
 	@Autowired
 	private CodeMasterMapper codeMasterMapper;
 
-	private CodeMaster CodeMaster;
-
-
 	public void insertMasterIdName(CodeMaster codeMasterId, CodeMaster codeMasterName) {
 		codeMasterMapper.insertMasterIdName(codeMasterId, codeMasterName);
 
@@ -30,15 +27,17 @@ public class CodeMasterService {
 		codeMasterMapper.insertMasterName(codeMasterName);
 	}
 
-
 	public void insertMasterId(CodeMaster codeMasterId) {
 
 		codeMasterMapper.insertMasterName(codeMasterId);
 	}
 
-	public List<CodeMaster> selectCodeMasterList(){
-		return codeMasterMapper.selectCodeMasterList(CodeMaster);
+	public List<CodeMaster> selectCodeMasterList(CodeMaster condition) {
+		return codeMasterMapper.selectCodeMasterList(condition);
 	}
 
+	public int selectCount(CodeMaster condition) {
+		return codeMasterMapper.selectCount(condition);
+	}
 
 }

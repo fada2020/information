@@ -9,9 +9,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.CodeMaster;
 import jp.co.info.ais.asm.service.CodeMasterService;
 
@@ -27,13 +30,11 @@ public class CodeMasterController {
 	HttpSession session;
 
 
-	@RequestMapping(value ="",method = RequestMethod.POST)
+	@RequestMapping(value ="",method = RequestMethod.GET)
 	public String masterIdNameInsert(Model model, CodeMaster codemaster) {
 		try {
 		String id = (String) session.getAttribute("codeMasterId");
 		String name =(String) session.getAttribute("codeMasterName");
-
-		List<CodeMaster> codeMasterList = codeMasterService.selectCodeMasterList();
 
 		if(id.equals(codemaster.getCodeMasterId())&&name.equals(codemaster.getCodeMasterName())){
 			logger.info("すでに存在しています。。");
@@ -59,5 +60,40 @@ public class CodeMasterController {
 		}
 
 		return "code.html";
+	}
+
+	@RequestMapping(value = "/codeList", method = RequestMethod.POST)
+    @ResponseBody
+	public Page<CodeMaster> CodeList(@RequestBody Page<CodeMaster> page) {
+
+    	// 検索条件
+		CodeMaster condition = new CodeMaster();
+
+    	// ページング処理
+    	condition.setLength(page.getLength());
+    	condition.setStart(page.getStart());
+
+    	String codeMasterId = page.getColumns().get(0).getSearch().getValue();
+    	if(null != codeMasterId && !codeMasterId.equals("")){
+    		condition.setCodeMasterId(codeMasterId);
+    	}
+
+    	String codeMasterName = page.getColumns().get(1).getSearch().getValue();
+    	if(null != codeMasterName && !codeMasterName.equals("")){
+    		condition.setCodeMasterName(codeMasterName);
+    	}
+
+    	// リスト照会
+    	List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
+
+        // データをページオブジェクトにセット
+        page.setData(CodeList);
+
+        // 総数
+        int totalCount = codeMasterService.selectCount(condition);
+
+        page.setRecordsFiltered(totalCount);
+
+		return page;
 	}
 }

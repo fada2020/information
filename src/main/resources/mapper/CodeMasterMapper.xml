@@ -31,15 +31,34 @@
     </insert>
 
     <select id="selectCodeMasterList" resultType="CodeMaster">
-    SELECT A.* FROM(
-        SELECT
-			 code_master_id
-   			,code_master_name
-   			,remarks
-   			,useFlag)
-		FROM code_master)
+	    SELECT A.* FROM(
+	        SELECT
+				 code_master_id
+	   			,code_master_name
+	   			,remarks
+	   			,use_flag
+			FROM code_master
+			ORDER BY code_master_id ASC
+			) A
+		WHERE 1 = 1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+		AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeMasterName != null and !codeMasterName.equals('')">
+		AND code_master_name like '%${codeMasterName}%'
+		</if>
+		LIMIT #{length} OFFSET #{start}
     </select>
 
-
-
+    <select id="selectCount" resultType="int">
+    SELECT COUNT(1)
+    FROM code_master
+		WHERE 1 = 1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+		AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeMasterName != null and !codeMasterName.equals('')">
+		AND code_master_name like '%${codeMasterName}%'
+		</if>
+    </select>
 </mapper>
