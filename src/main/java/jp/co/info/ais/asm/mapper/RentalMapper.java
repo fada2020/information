@@ -8,40 +8,39 @@ import org.apache.ibatis.annotations.Param;
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.Rental;
-import jp.co.info.ais.asm.domain.StatusCode;
 
 @Mapper
 public interface RentalMapper {
 
 	//一覧ページに表示
-	public List<Rental> selectAll(Rental rental) throws Exception;
+	public List<Rental> selectAll(Rental rental);
 
 	//一覧ページに表示する全体のデータ数
-	public int selectCount(Rental rental) throws Exception;
+	public int selectCount(Rental rental);
 
 	//データコードをセレクト
-	public List<CodeDetail> getSelectCodeData(String codeDetailName) throws Exception;
+	public List<CodeDetail> getSelectCodeData(String codeDetailName);
 
-	public Rental researchRental(int assetSeq) throws Exception;
+	public Rental researchRental(int assetSeq);
 
-	public List<CodeDetail> selectCodeDetail() throws Exception;
+	public List<CodeDetail> selectCodeDetail();
 
-	public List<StatusCode> selectStatusCode() throws Exception;
+	public List<CodeDetail> selectStatusCode();
 
-	public List<CodeDetail> selectCode() throws Exception;
+	public List<CodeDetail> selectCode();
 
-	public Asset selectAsset(String number ) throws Exception;
+	public Asset selectAsset(String number );
 
-	public List<Asset> selectAssetList(String selectedItem)throws Exception;
+	public List<Asset> selectAssetList(String selectedItem);
 
-	public int addRental(@Param ("itemList" ) List<Rental> itemList)throws Exception;
+	public int addRental(@Param ("itemList" ) List<Rental> itemList);
 
-	public int changeStatus(@Param ("itemList" ) List<Rental> itemList)throws Exception;
+	public int changeStatus(@Param ("itemList" ) List<Rental> itemList);
 
 
 	public int returnAsset(Rental rental);
 
-	public int changeAssetStatus(String assetNumber)throws Exception;
+	public int changeAssetStatus(String assetNumber);
 
 	public void changeAStatus(int assetSeq);
 

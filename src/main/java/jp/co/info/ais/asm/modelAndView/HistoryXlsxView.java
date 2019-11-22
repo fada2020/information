@@ -34,9 +34,16 @@ public class HistoryXlsxView extends AbstractXlsxView {
 
 		Sheet sheet = workbook.createSheet("貸与履歴");
 
-        // create header
-
+		// create header
         Row row = sheet.createRow(0);
+
+        row.createCell(0).setCellValue("装置");
+        row.createCell(3).setCellValue("使用現況");
+
+        sheet.addMergedRegion(new CellRangeAddress(0,0,0,2));
+        sheet.addMergedRegion(new CellRangeAddress(0,0,3,11));
+
+        row = sheet.createRow(1);
         row.createCell(0).setCellValue("管理番号");
         row.createCell(1).setCellValue("メーカー");
         row.createCell(2).setCellValue("モデル");
@@ -54,7 +61,8 @@ public class HistoryXlsxView extends AbstractXlsxView {
 
         for (int i=0; i<history.size(); i++) {
             History aHistory = history.get(i);
-            row = sheet.createRow(i+1);
+
+            row = sheet.createRow(2+i);
             row.createCell(0).setCellValue(aHistory.getAssetNumber());
             row.createCell(1).setCellValue(aHistory.getMakerName());
             row.createCell(2).setCellValue(aHistory.getModelName());
@@ -84,7 +92,7 @@ public class HistoryXlsxView extends AbstractXlsxView {
         }
 
         // enable auto filter
-        sheet.setAutoFilter(new CellRangeAddress(0, 0, 0, 11));
+        sheet.setAutoFilter(new CellRangeAddress(1, 1, 0, 11));
 
         // adjust column width
         for (int i=0; i<12; i++) {

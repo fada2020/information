@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.info.ais.asm.common.Page;
 import jp.co.info.ais.asm.domain.History;
+import jp.co.info.ais.asm.modelAndView.HistoryXlsxView;
 import jp.co.info.ais.asm.service.HistoryService;
 
 @Controller
@@ -31,7 +32,7 @@ public class HistoryController {
 	 * 状態コード値セッティング
 	 *
 	 * @param model
-	 * @return
+	 * @return String
 	 */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String History(Model model) {
@@ -45,27 +46,31 @@ public class HistoryController {
     	return "history";
     }
 
-    //エクセルファイル抽出
+    /**
+	 * エクセルファイル抽出
+	 *
+	 * @return ModelAndView
+	 */
     @RequestMapping("/rentalHsitory.xlsx")
     public ModelAndView exportXlsx() {
     	List<History> history;
+
     	try {
-    		ModelAndView modelAndView =  new ModelAndView("redirect:/history");
-    		return new ModelAndView("redirect:/history");
-    		//history = HistoryService.exportXlsx();
+    		history = HistoryService.exportXlsx();
+
+            return new ModelAndView(new HistoryXlsxView(), "history", history);
+
     	} catch(Exception e) {
     		logger.error(e.getMessage());
-    		ModelAndView mav = new ModelAndView("redirect:/history.html");
-    		return mav;
+    		return new ModelAndView("redirect:/history");
     	}
-       // return new ModelAndView(new HistoryXlsxView(), "history", history);
     }
 
     /**
      * 履歴情報削除
      *
-     * @param deleteList
-     * @return
+     * @param ArrayList<String>
+     * @return int
      */
     @RequestMapping("/deleteHistory")
     @ResponseBody
@@ -80,7 +85,12 @@ public class HistoryController {
     	return deleteNum;
     }
 
-    //検索条件及び画面表示情報の作成
+    /**
+     * 検索及び画面表示情報の作成
+     *
+     * @param Page<History>
+     * @return Page<History>
+     */
     @RequestMapping("/getHistorylist")
     @ResponseBody
     public Page<History> getHistorylist(@RequestBody Page<History> page) {
@@ -123,7 +133,7 @@ public class HistoryController {
         		condition.setReturnDayE(dateArr[1]);
         	}
     	} catch(Exception e) {
-    		logger.error("conditionSetting >>> "+e.getMessage());
+    		logger.error("searchConditionSetting >>>  "+e.getMessage());
     		return page;
     	}
 
@@ -135,7 +145,7 @@ public class HistoryController {
             int totalCount = HistoryService.selectCount(condition);
             page.setRecordsFiltered(totalCount);
     	} catch(Exception e) {
-    		logger.error("acquisitionError >>> " + e.getMessage());
+    		logger.error("searchResultAcquisitionError >>>  " + e.getMessage());
     		return page;
     	}
 
