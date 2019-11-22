@@ -35,7 +35,7 @@ public class RentalService {
 		return rentalMapper.getSelectCodeData(codeDetailName);
 	}
 
-	public Rental researchRental(int assetSeq)  {
+	public Rental researchRental(int assetSeq) {
 
 		return rentalMapper.researchRental(assetSeq);
 	}
@@ -80,8 +80,11 @@ public class RentalService {
 	}
 
 	@Transactional
-	public void returnAsset(Rental rental) {
+	public void returnAsset(Rental rental, String applicantId, int assetSeq) {
 		try {
+			rental.setAssetSeq(assetSeq);
+			rental.setApplicantId(applicantId);
+			rental.setReturnUserId(applicantId);
 			SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
 			Date currentTime = new Date();
 			String mTime = mSimpleDateFormat.format(currentTime);
@@ -112,8 +115,13 @@ public class RentalService {
 	}
 
 	@Transactional
-	public int updateRental(Rental rental) {
-
+	public int updateRental(Rental rental, String updateId) {
+		try {
+			rental.setUpdateId(updateId);
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println("例外が発生しました。");
+		}
 		return rentalMapper.updateRental(rental);
 	}
 

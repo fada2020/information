@@ -188,13 +188,7 @@ public class RentalController {
 	public void deleteRental(Model model, @RequestBody int assetSeq) {
 
 		try {
-			Rental rental = new Rental();
-			rental.setAssetSeq(assetSeq);
-			String applicantId = (String) session.getAttribute("id");
-			rental.setApplicantId(applicantId);
-			rental.setReturnUserId(applicantId);
-
-			rentalService.returnAsset(rental);
+			rentalService.returnAsset(new Rental(), (String) session.getAttribute("id"), assetSeq);
 		} catch (Exception e) {
 			System.out.println("例外が発生しました。");
 			System.out.println(e);
@@ -232,9 +226,8 @@ public class RentalController {
 	private int updateAsset(Model model, @RequestBody Rental rental) {
 		int successNum = 0;
 		try {
-			rental.setUpdateId((String) session.getAttribute("id"));
 
-			successNum = rentalService.updateRental(rental);
+			successNum = rentalService.updateRental(rental, (String) session.getAttribute("id"));
 
 		} catch (Exception e) {
 			System.out.println("例外が発生しました。");

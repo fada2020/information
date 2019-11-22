@@ -454,8 +454,8 @@
 
 
 										<div class="modal-footer">
-											<input type="button"  class="btn btn-primary" id="insertButton"
-												value="貸与" onclick="rentalItem();" />
+											<input type="button" class="btn btn-primary"
+												id="insertButton" value="貸与" onclick="rentalItem();" />
 											<button type="button" class="btn btn-secondary"
 												onclick="cancelInsert()">Close</button>
 										</div>
@@ -992,32 +992,36 @@ var assetSeq=btn.value;
   row.parentNode.removeChild(row);
 
 }
+
+ String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
+
  function rentalItem() {
-	 if($('#selectedAsset tbody tr').length!=0){
-	 String.prototype.replaceAll = function(org, dest) {
-		    return this.split(org).join(dest);
-		}
 
-
-
-		var rental =new Object();
 		var tdArr = new Array();
-		var tr = $('#selectedAsset tbody tr');
-		var td =  $('#selectedAsset tbody tr td');
-		tr.each(function(i){
-			rental.rentalUserId = td.eq(0).text();
-			rental.assetNumber = td.eq(3).text();
-			rental.purpose = td.eq(4).text();
-			rental.storageLocation = td.eq(5).text();
-			rental.speciality = td.eq(6).text();
-			rental.returnPeriod = td.eq(9).text().replaceAll("-","");
-			rental.assetSeq=td.eq(8).text();
+
+		$('#selectedAsset tbody tr').each(function() {
+			var rental =new Object();
+			var cellText = $(this);
+			rental.rentalUserId =cellText.find("#rentalUserId_i").text();
+			rental.assetNumber =cellText.find("#assetNumber_i").text();
+			rental.purpose  =cellText.find("#purpose_i").text();
+			rental.storageLocation =cellText.find("#storageLocation_i").text();
+			rental.speciality =cellText.find("#speciality_i").text();
+			rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
+			rental.assetSeq=cellText.find("#assetSeq_i").text();
 			rental.applicantId = /*[[${session.id}]]*/ 'id';
 			rental.rentalDay=$('#todayDate').val().replaceAll("-","");
-			rental.bpName=td.eq(7).text();
+			rental.bpName=cellText.find("#bpName_i").text();
 
 			tdArr.push(rental);
+
+
+
 		});
+
+
 
 	$.ajax({
 		"url" : "/rental/addRental",
@@ -1026,10 +1030,15 @@ var assetSeq=btn.value;
 		"contentType": "application/JSON",
 		"data" : JSON.stringify(tdArr)
 
+
 });
-	location.reload(true);}else{
-		alert("貸与する物がないです。");
-	}
+	 if($('#selectedAsset tbody tr').length!=0){
+			location.reload(true);
+
+		 }else{
+			alert("貸与する物がないです。");
+		}
+
  }
 
 
@@ -1117,6 +1126,7 @@ var assetSeq=btn.value;
             if (form.valid()) {
 
             	var number=$("#sub_subSelect option:selected").text();
+
     			$.ajax({
     			   			"url" : "/rental/getAsset",
     			    		"type" : "post",
@@ -1125,26 +1135,26 @@ var assetSeq=btn.value;
     			   			"contentType": "application/JSON",
     			   		 	"success" : function(data){
 
-    			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td>'
+    			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td id="rentalUserId_i">'
     			   					+$('#rentalUserId').val()+
-    			   					'</td><td>'
+    			   					'</td><td >'
     			   					+$("#singleSelect option:selected").text()+
     			   					'</td><td>'
     			   				+$("#sub_singleSelect option:selected").text()+
-    			   					'</td><td>'
-    			   				+data.assetNumber+
+    			   					'</td><td id="assetNumber_i">'
+    			   				+number+
 
-    			   					'</td><td>'
+    			   					'</td><td id="purpose_i">'
     			   					+$("#purpose").val()+
-    			   					'</td><td>'
+    			   					'</td><td id="storageLocation_i">'
     			   					+$("#storageLocation").val()+
-    			   					'</td><td>'
+    			   					'</td><td id="speciality_i">'
     			   					+$("#speciality").val()+
-    			   					'</td><td>'
+    			   					'</td><td id="bpName_i">'
     			   					+$("#bpName").val()+
-    			   					'</td><td style="display:none;"> '
+    			   					'</td><td id="assetSeq_i" style="display:none;"> '
     				   				+data.assetSeq+
-    				   				'</td><td>'
+    				   				'</td><td id="returnPeriod_i">'
     				   					+$("#returnPeriod").val()+
 
     			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">Delete</button></td></tr>');
