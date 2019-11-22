@@ -117,7 +117,7 @@
 		AND r.status_code='02'
 	</select>
 	<select id="selectStatusCode"
-		resultType="jp.co.info.ais.asm.domain.StatusCode">
+		resultType="jp.co.info.ais.asm.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
@@ -234,7 +234,7 @@
 		parameterType="jp.co.info.ais.asm.domain.Rental">
 		update rental set
 		update_id=#{applicantId},
-		status_code='001',
+		status_code='01',
 		return_day=#{returnDay},
 		return_user_id=#{returnUserId}
 		where asset_seq=#{assetSeq}
