@@ -125,8 +125,10 @@
 
 							<div class="clearfix"></div>
 						</div>
+
+
 						<div class="x_content">
-							<table class="table table-striped jambo_table bulk_action"
+							<table class="table table-bordered jambo_table bulk_action"
 								id="table1" style="text-align: center;">
 
 
@@ -134,7 +136,6 @@
 
 
 									<tr class="headings">
-
 
 
 										<th class="col-md-2">貸与番号</th>
@@ -163,7 +164,7 @@
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal"
 												aria-label="Close"></button>
-											<h3 class="modal-title">照会</h3>
+											<h3 class="modal-title">貸与情報修正</h3>
 										</div>
 
 										<div class="modal-body">
@@ -276,7 +277,7 @@
 											<button type="button" class="btn btn-warning"
 												id="updateButton" onclick="updateRental()">更新</button>
 											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">Close</button>
+												data-dismiss="modal">戻る</button>
 										</div>
 									</div>
 								</div>
@@ -409,7 +410,7 @@
 
 
 															</div>
-															<input type="button" class="btn btn-danger"
+															<input type="button"  class="btn btn-success"
 																style="float: right" id="button1" onclick="writeItem();"
 																value="追加" />
 
@@ -457,7 +458,7 @@
 											<input type="button" class="btn btn-primary"
 												id="insertButton" value="貸与" onclick="rentalItem();" />
 											<button type="button" class="btn btn-secondary"
-												onclick="cancelInsert()">Close</button>
+												onclick="cancelInsert()">戻る</button>
 										</div>
 									</div>
 								</div>
@@ -615,6 +616,16 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			});
+
+    		$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#rental_search').val('');
+				    var date = $("#rental_search").val();
+				    modalesectiontable
+				    .column(2)
+				    .search(date)
+				    .draw();
+			});
         	/*カーレンダーで期間を無くして今貸与されてるものを全部見えることにする */
         	$('#rental_search').val('');
         	/*／!カーレンダーの機能  */
@@ -701,7 +712,7 @@
             /*rental_dayを貰ってメイン画面のデータを変える*/
             $("#rental_search").change(function () {
                 var date = $("#rental_search").val();
-                alert(date);
+
                 modalesectiontable
                 .column(1)
                 .search(date)

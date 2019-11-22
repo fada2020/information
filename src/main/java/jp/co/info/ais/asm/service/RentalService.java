@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.info.ais.asm.controller.RentalController;
 import jp.co.info.ais.asm.domain.Asset;
 import jp.co.info.ais.asm.domain.CodeDetail;
 import jp.co.info.ais.asm.domain.Rental;
@@ -19,6 +22,8 @@ public class RentalService {
 
 	@Autowired
 	RentalMapper rentalMapper;
+
+	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
 	public List<Rental> selectAll(Rental rental) {
 
@@ -96,8 +101,8 @@ public class RentalService {
 
 			}
 		} catch (Exception e) {
-			System.out.println(e);
-			System.out.println("例外が発生しました。");
+
+			logger.debug(e.getMessage());
 		}
 
 	}
@@ -119,8 +124,8 @@ public class RentalService {
 		try {
 			rental.setUpdateId(updateId);
 		} catch (Exception e) {
-			System.out.println(e);
-			System.out.println("例外が発生しました。");
+
+			logger.debug(e.getMessage());
 		}
 		return rentalMapper.updateRental(rental);
 	}

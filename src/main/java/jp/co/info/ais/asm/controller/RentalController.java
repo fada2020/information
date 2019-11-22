@@ -32,7 +32,9 @@ public class RentalController {
 
 	@Autowired
 	private RentalService rentalService;
-	/*貸与管理ルトー
+	/**
+	 * 貸与管理ルトー
+	 *
 	 * @param Model
 	 * @return 住所の"rentalIndex"
 	 * */
@@ -50,14 +52,15 @@ public class RentalController {
 			Date date = new Date();
 			model.addAttribute("date", date);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 		//戻り値 区分データ,ステータースデータ
 		return "rentalIndex";
 	}
 
-	/*貸与管理単一の資産の情報を持ち出す
+	/**
+	 * 貸与管理単一の資産の情報を持ち出す
 	 * @param String assetNumber
 	 * @return Asset
 	 * */
@@ -75,14 +78,15 @@ public class RentalController {
 				model.addAttribute("asset", asset);
 			}
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 
 		return asset;
 	}
 
-	/*貸与管理単一の資産をデータテーブルに入れ込む
+	/**
+	 * 貸与管理単一の資産をデータテーブルに入れ込む
 	 * @param  List<Rental rentalList
 	 * @return 無し
 	 * */
@@ -94,12 +98,13 @@ public class RentalController {
 			rentalService.addRental(rentalList);
 
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 	}
 
-	/*任意の貸与リストの資産の状態を002から001に変える
+	/**
+	 * 任意の貸与リストの資産の状態を002から001に変える
 	 * @param  int assetSeq
 	 * @return 無し
 	 * */
@@ -109,13 +114,14 @@ public class RentalController {
 		try {
 			rentalService.changeAStatus(assetSeq);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 
 	}
 
-	/*貸与メイン画面表示
+	/**
+	 * 貸与メイン画面表示
 	 *資産のデータの状態が001と引数に該当するデータを持ち出す
 	 * @param   String selectedItem
 	 * @return List<Asset> assetList
@@ -128,13 +134,14 @@ public class RentalController {
 			selectedItem = selectedItem.replaceAll("[^0-9]", "");
 			assetList = rentalService.selectAssetList(selectedItem);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 		return assetList;
 	}
 
-	/*貸与メイン画面表示
+	/**
+	 * 貸与メイン画面表示
 	 * 貸与リストのデータの状態が002に該当するデータを持ち出す
 	 * ページングする為の処理もする
 	 * 貸与データを十個ずつ表示する
@@ -172,14 +179,15 @@ public class RentalController {
 
 			page.setRecordsFiltered(totalCount);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 
 		return page;
 	}
 
-	/*貸与した資産を返却する
+	/**
+	 * 貸与した資産を返却する
 	 * htmlから assetSeqを持ち込んで該当する貸与データの状態を002から001に変える
 	 * @param  int assetSeq
 	 * @return 無し
@@ -190,13 +198,14 @@ public class RentalController {
 		try {
 			rentalService.returnAsset(new Rental(), (String) session.getAttribute("id"), assetSeq);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 
 	}
 
-	/*貸与画面で変更したい貸与情報があったら変更する為探す
+	/**
+	 * 貸与画面で変更したい貸与情報があったら変更する為探す
 	 *貸与データから変更したい情報を資産情報を元にして状態が002になっている貸与情報を持ち出す
 	 * @param  int assetSeq
 	 * @return Rental rental
@@ -209,14 +218,15 @@ public class RentalController {
 
 			rental = rentalService.researchRental(assetSeq);
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 
 		return rental;
 	}
 
-	/*貸与画面で変更する情報を持ち込む
+	/**
+	 * 貸与画面で変更する情報を持ち込む
 	 *htmlから変更する全ての情報を持ち込んで貸与データに入れ替える
 	 * @param  int assetSeq
 	 * @return Rental rental
@@ -230,8 +240,8 @@ public class RentalController {
 			successNum = rentalService.updateRental(rental, (String) session.getAttribute("id"));
 
 		} catch (Exception e) {
-			System.out.println("例外が発生しました。");
-			System.out.println(e);
+
+			logger.debug(e.getMessage());
 		}
 		return successNum;
 	}
