@@ -20,5 +20,8 @@ public interface CodeMasterMapper {
 
 	void insertMasterIdName(CodeMaster codeMasterId, CodeMaster codeMasterName);
 
-	List<CodeMaster> selectCodeMasterList(CodeMaster CodeMaster);
+	List<CodeMaster> selectCodeMasterList(CodeMaster condition);
+
+	int selectCount(CodeMaster condition);
+
 }

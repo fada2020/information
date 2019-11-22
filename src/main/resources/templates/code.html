@@ -79,50 +79,12 @@
 		                          <th class="column-title txt_center">コードID</th>
 		                          <th class="column-title txt_center">コード名称</th>
 		                          <th class="column-title txt_center">使用有無</th>
-		                          <th class="column-title txt_center"></th>
 		                        </tr>
 		                      </thead>
 		                     	<!-- List 出力 -->
 		                     	<tbody>
-		                     	<!--객체명  -->
-
-			                     	<!-- <tr th:each="codemaster : ${codemaster.codeMasterList}">
-										<td id="codeMasterId" th:text="${codemaster.codeMasterId}"></td>
-										<td th:switch="${codemaster.useFlag}">
-			                     				 <p th:case =="0" style="color:blue;">使用中</p>
-        							    		 <p th:case =="1" style="color:red;">未使用</p>
-        							    </td>
-        							    <td class="txt_center txt_middle">
-												<button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
-										</td>
-			                     	 </tr> -->
-		                     		<!--<tr th:each="accessories : ${asset.accessoriesList}">
-											<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
-											<td><input type="text" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
-											<td><input type="text" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
-											<td><input type="text" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
-											<td><input type="text" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
-											<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-											<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
-										</tr> -->
-
-
-		                     		<tr th:each="codemaster : ${codemaster}">
-											<td></td>
-			                     			<!-- <td th:text="${codemaster.count}"></td> -->
-			                     			<td th:text="$codemaster.codeMasterId}"></td>
-											<td th:text="${codemaster.codeMasterName}"></td>
-			                     			<td th:switch="${codemaster.useFlag}">
-			                     				 <p th:case =="0" style="color:blue;">使用中</p>
-        							    		 <p th:case =="1" style="color:red;">未使用</p>
-        							    	</td>
-		                     				<td class="txt_center txt_middle">
-												 <button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
-											</td>
-		                     		</tr>
-
 		                     	</tbody>
-		                     <!--/. List 出力 -->
+		                     	<!--/. List 出力 -->
 
 							</table>
 							</div><!-- /.table-responsive -->
@@ -237,7 +199,7 @@
         $(function(){
 
             // datatableの設定を変更
-            var modalesectiontable = $("#table1").DataTable({
+            var modalesectiontable = $("#datatable-list").DataTable({
             	fixedHeader: true,
             	"processing": true,
             	"serverSide": true,
@@ -247,29 +209,32 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-
                 "ajax": {
-                	url: /*[[@{/getuserlist}]]*/ 'getuserlist',
+                	url: /*[[@{/codemaster/codeList}]]*/ 'codemaster/codeList',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
-                        //d.extra_search = $('#extra').val();
+                		d.columns[0].search.value = $('#search_id').val();
+                		d.columns[1].search.value = $('#search_name').val();
                         return JSON.stringify(d);
                     }
                 },
-                "columns": [
-                    { data: "username" },
-                    { data: "mailaddress" },
-                ],
                 "columnDefs": [
-                    { targets: 0, width: 60 },
-                    { targets: 1, width: 180 }
+                	{ targets: 0, data: "codeMasterId"},
+                    { targets: 1, data: "codeMasterName"},
+                    { targets: 2, data: "remarks"}
                 ]
             });
 
-            // Setup - add a text input to each footer cell
-            $('#table1 thead tr').clone(true).appendTo( '#table1 thead' );
+
+            $('#searchBtn').on( 'click', function () {
+            	modalesectiontable
+                .column(0)
+                .search( this.value )
+                .draw();
+            } );
+
             /* $('#table1 thead tr:eq(1) th').each( function (i) {
                 var title = $(this).text();
                 $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
@@ -282,8 +247,6 @@
                             .draw();
                     }
                 } ); */
-            } );
-
         })
     /*]]>*/
     </script>
