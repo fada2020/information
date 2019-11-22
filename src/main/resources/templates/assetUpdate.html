@@ -28,9 +28,6 @@
 
     <style>
     	#table1, #table2, thead, th {text-align: center;}
-		#table1, #table2, tbody tr{
-		    cursor:pointer;
-		}
 		.my-custom-scrollbar {
 			position: relative;
 			height: 200px;
@@ -38,6 +35,10 @@
 		}
 		.table-wrapper-scroll-y {
 			display: block;
+		}
+		.error {
+	      color: red;
+	      background-color: lavender;
 		}
 	</style>
 
@@ -103,7 +104,7 @@
 		  					<span>保証期間</span>
 		  				</div>
 		  				<div class="col-md-4">
-		  					<input type="text" class="form-control" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
+		  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
 		  				</div>
 	  				</div>
 	  			</div>
@@ -120,7 +121,7 @@
 	  						<span>購入金額</span>
 	  					</div>
 	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="purchasePrice" th:value="${asset.purchasePrice}">
+	  						<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
 	  					</div>
 	  				</div>
 	  			</div>
@@ -216,7 +217,7 @@
 	  				<span>動作周波数</span>
 	  			</div>
 	  			<div class="col-md-4">
-	  				<input type="text" class="form-control" name="operatingFrequency" th:value="${asset.operatingFrequency}">
+	  				<input type="text" class="form-control numVal" name="operatingFrequency" th:value="${asset.operatingFrequency}">
 	  			</div>
 	  			<div class="col-md-12">
 	  				<br>
@@ -231,22 +232,22 @@
 	  				<br>
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="memory" th:value="${asset.memory}">
+	  				<input type="text" class="form-control numVal" name="memory" th:value="${asset.memory}">
 	  			</div>
 	  			<div class="col-md-2">
 	  				<span>Upgarde</span>
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
+	  				<input type="text" class="form-control numVal" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="hdd" th:value="${asset.hdd}">
+	  				<input type="text" class="form-control numVal" name="hdd" th:value="${asset.hdd}">
 	  			</div>
 	  			<div class="col-md-2">
 	  				<span>Upgarde</span>
 	  			</div>
 	  			<div class="col-md-2">
-	  				<input type="text" class="form-control" name="hddUpgarde" th:value="${asset.hddUpgarde}">
+	  				<input type="text" class="form-control numVal" name="hddUpgarde" th:value="${asset.hddUpgarde}">
 	  			</div>
 
 	  			<div class="col-md-12">
@@ -319,7 +320,7 @@
 	  			<div class="col-md-12 text-right">
 	  				<br>
 	  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
-	  				<button type="submit" class="btn btn-primary pull-right">修正</button>
+	  				<button type="button" id="updateProc" class="btn btn-primary pull-right">修正</button>
 	  			</div>
 	  		</form>
 
@@ -437,6 +438,9 @@
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
 
+    <!-- jquery-validation-1.19.1 -->
+    <script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
+
     <!-- FastClick -->
     <script src="../vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
@@ -467,6 +471,9 @@
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
+    	$.validator.messages.number = '有効な数字を入力';
+    	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
         $(function(){
             $('#addAccessories').on('click', function () {
             	var selectTr = $(this).closest("tr");
@@ -488,18 +495,22 @@
 					}
 				)
 				.success(function(data) {
-					 $('#table1 tbody').append(
-							 '<tr>'
-							 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
-							 +'<td><input type="text" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
-							 +'<td><input type="text" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
-							 +'<td><input type="text" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
-							 +'<td><input type="text" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
-							 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-							 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
-							 +'</tr>'
-					 );
-					 alert('追加されました。');
+					if(data.accessoriesSeq == 0){
+						alert('エラーが発生しました。');
+					}else {
+						 $('#table1 tbody').append(
+								 '<tr>'
+								 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
+								 +'<td><input type="text" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
+								 +'<td><input type="text" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
+								 +'<td><input type="text" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
+								 +'<td><input type="text" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
+								 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+								 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
+								 +'</tr>'
+						 );
+						 alert('追加されました。');
+					}
 				});
 
             });
@@ -524,13 +535,12 @@
 						data : JSON.stringify(accessories)
 					}
             	)
-				.success(function(data) {
-					selectTr.find("#accessoriesSeq").text(data.accessoriesSeq);
-					selectTr.find("#itemName").val(data.itemName);
-					selectTr.find("#itemSpec").val(data.itemSpec);
-					selectTr.find("#itemQuantity").val(data.itemQuantity);
-					selectTr.find("#remarks").val(data.remarks);
-					alert('修正されました。');
+				.success(function(result) {
+					if(result == 0) {
+						alert('エラーが発生しました。');
+					} else {
+						alert('修正されました。');
+					}
 				});
 
             });
@@ -556,8 +566,12 @@
     						data : JSON.stringify(accessories)
     					}
                 	)
-    				.success(function(data) {
-    					selectTr.remove();
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました。');
+    					} else {
+    						selectTr.remove();
+    					}
     				});
                 }
 
@@ -583,18 +597,22 @@
 					}
 				)
 				.success(function(data) {
-					 $('#table2 tbody').append(
-							 '<tr>'
-							 +'<td id="historySeq">'+data.historySeq+'</td>'
-							 +'<td><input type="text" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
-							 +'<td><input type="text" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
-							 +'<td><input type="text" class="form-control" id="repId" value="'+data.repId+'"></td>'
-							 +'<td><input type="text" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
-							 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-							 +'<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
-							 +'</tr>'
-					 );
-					 alert('追加されました。');
+					if(data.historySeq == 0){
+						alert('エラーが発生しました。');
+					}else {
+						 $('#table2 tbody').append(
+								 '<tr>'
+								 +'<td id="historySeq">'+data.historySeq+'</td>'
+								 +'<td><input type="text" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
+								 +'<td><input type="text" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
+								 +'<td><input type="text" class="form-control" id="repId" value="'+data.repId+'"></td>'
+								 +'<td><input type="text" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
+								 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+								 +'<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
+								 +'</tr>'
+						 );
+						 alert('追加されました。');
+					}
 				});
 
             });
@@ -619,13 +637,12 @@
 						data : JSON.stringify(maintenanceHistory)
 					}
             	)
-				.success(function(data) {
-					selectTr.find("#historySeq").text(data.historySeq);
-					selectTr.find("#implementationDate").val(data.implementationDate);
-					selectTr.find("#implementationDetail").val(data.implementationDetail);
-					selectTr.find("#repId").val(data.repId);
-					selectTr.find("#approverId").val(data.approverId);
-					alert('修正されました。');
+				.success(function(result) {
+					if(result == 0) {
+						alert('エラーが発生しました。');
+					} else {
+						alert('修正されました。');
+					}
 				});
 
             });
@@ -651,34 +668,155 @@
     						data : JSON.stringify(maintenanceHistory)
     					}
                 	)
-    				.success(function(data) {
-    					selectTr.remove();
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました。');
+    					} else {
+    						selectTr.remove();
+    					}
     				});
                 }
 
             });
 
-            $('#updateForm').submit(function(event) {
-                // HTMLでの送信をキャンセル
-                event.preventDefault();
+            $('#updateProc').on('click', function() {
+                var form = $('#updateForm');
 
-                // 操作対象のフォーム要素を取得
-                var $form = $(this);
-
-                // 送信
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: $form.attr('method'),
-                    data: $form.serialize(),
-                    success: function(result, textStatus, xhr) {
-                        alert('修正されました。');
+                form.validate({
+                    rules: {
+                    	kubunCode : {
+                    		required : true
+                    	},
+                    	purchaseDate: {
+                            required: true
+                        },
+                        statusCode: {
+                        	required: true
+                        },
+                        warrantyPeriod: {
+                        	number: true,
+                        	maxlength: 2
+                        },
+                        buyTo: {
+                        	maxlength: 15
+                        },
+                        storageLocation: {
+                        	maxlength: 15
+                        },
+                        makerName: {
+                        	maxlength: 25
+                        },
+                        modelName: {
+                        	maxlength: 25
+                        },
+                        serialNum: {
+                        	maxlength: 15
+                        },
+                        interFaceCol: {
+                        	maxlength: 15
+                        },
+                        osName: {
+                        	maxlength: 15
+                        },
+                        osProductKey: {
+                        	maxlength: 15
+                        },
+                        cpuProcessor: {
+                        	maxlength: 15
+                        },
+                        purchasePrice: {
+                        	number: true,
+                        	maxlength: 11
+                        },
+                        operatingFrequency: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memory: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memoryUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hdd: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hddUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        macLan: {
+                        	maxlength: 15
+                        },
+                        macWireless: {
+                        	maxlength: 15
+                        },
+                        other: {
+                        	maxlength: 100
+                        },
+                        securityBios: {
+                        	maxlength: 15
+                        },
+                        securityHdd: {
+                        	maxlength: 15
+                        },
+                        adminAccountId: {
+                        	maxlength: 15
+                        },
+                        adminAccountPwd: {
+                        	maxlength: 15
+                        }
                     },
-
-                    // 通信失敗時の処理
-                    error: function(xhr, textStatus, error) {
-                        alert('NG...');
+                    messages: {
+                    	kubunCode : {
+                    		required : "区分を選択"
+                    	},
+                    	purchaseDate: {
+                            required: "日付を入力"
+                        },
+                        statusCode: {
+                        	required: "状態を選択"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "purchaseDate") {
+                          error.insertAfter("#myDatepicker");
+                        } else {
+                          error.insertAfter(element);
+                        }
                     }
                 });
+
+                if (form.valid()) {
+
+                    form.find('.numVal').each(function( ) {
+                    	if($(this).val() == '') {
+                    		$(this).val('0');
+                    	}
+                    });
+
+                    // 送信
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: form.serialize(),
+                        success: function(result, textStatus, xhr) {
+                        	if(result == 0){
+                        		alert('エラーが発生しました。');
+                        	}else{
+                        		alert('修正されました。');
+                        	}
+                        },
+                        // 通信失敗時の処理
+                        error: function(xhr, textStatus, error) {
+                            alert('NG...');
+                        }
+                    });
+                };
+
             });
 
         })

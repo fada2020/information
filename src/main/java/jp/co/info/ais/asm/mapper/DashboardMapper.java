@@ -10,10 +10,10 @@ import jp.co.info.ais.asm.domain.Dashboard;
 @Mapper
 public interface DashboardMapper {
 
-	public ArrayList<Dashboard> possession();
+	public ArrayList<Dashboard> possession();	// 資産種別保有数量
 
-	public int newItem();
+	public int newItem();						// 今月購入した装置数量
 
-	public ArrayList<Dashboard> rslist();
+	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸与現況
 
 }
