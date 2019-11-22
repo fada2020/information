@@ -27,12 +27,8 @@ public class DashboardService {
 	}
 	//	貸与現況
 	public ArrayList<Dashboard> rslist() {
-
 		ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 		rslist = dashboardMapper.rslist();
-
 		return rslist;
 	}
-
-
 }
