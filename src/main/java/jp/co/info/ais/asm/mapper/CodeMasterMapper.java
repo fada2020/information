@@ -24,4 +24,8 @@ public interface CodeMasterMapper {
 
 	int selectCount(CodeMaster condition);
 
+	int CodeMasterListCheck(CodeMaster masterCode);
+
+	void CodeMasterInsert(CodeMaster codeMasterId);
+
 }

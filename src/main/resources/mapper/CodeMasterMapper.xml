@@ -4,61 +4,86 @@
 <mapper namespace="jp.co.info.ais.asm.mapper.CodeMasterMapper">
 
 
-		<!--Insert MasterID NAME REMARKS  -->
-	<insert id="insertMasterIdName"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
-   		INSERT INTO code_master(
-   		 code_master_id
-   		,code_master_name)
-   		VALUES (
-       	  #{code_master_id}
-         ,#{code_master_name}
-        )
-    </insert>
+	<!--Insert MasterID NAME REMARKS -->
+	<insert id="insertMasterIdName"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id
+		,code_master_name)
+		VALUES (
+		#{code_master_id}
+		,#{code_master_name}
+		)
+	</insert>
 
-    <insert id="insertMasterId"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
-   		INSERT INTO code_master(
-   		 code_master_id)
-   		VALUES (
-       	  #{code_master_id})
-    </insert>
-    <insert id="insertMasterName"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
-   		INSERT INTO code_master(
-   		code_master_name)
-   		VALUES (
+	<insert id="insertMasterId"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id)
+		VALUES (
+		#{code_master_id})
+	</insert>
+	<insert id="insertMasterName"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_name)
+		VALUES (
 
-         #{code_master_name}
-         )
-    </insert>
+		#{code_master_name}
+		)
+	</insert>
 
-    <select id="selectCodeMasterList" resultType="CodeMaster">
-	    SELECT A.* FROM(
-	        SELECT
-				 code_master_id
-	   			,code_master_name
-	   			,remarks
-	   			,use_flag
-			FROM code_master
-			ORDER BY code_master_id ASC
-			) A
+	<select id="selectCodeMasterList" resultType="CodeMaster">
+		SELECT A.* FROM(
+		SELECT
+		code_master_id
+		,code_master_name
+		,remarks
+		,use_flag
+		FROM code_master
+		ORDER BY code_master_id ASC
+		) A
 		WHERE 1 = 1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
-		AND code_master_id like '%${codeMasterId}%'
+			AND code_master_id like '%${codeMasterId}%'
 		</if>
 		<if test="codeMasterName != null and !codeMasterName.equals('')">
-		AND code_master_name like '%${codeMasterName}%'
+			AND code_master_name like '%${codeMasterName}%'
 		</if>
 		LIMIT #{length} OFFSET #{start}
-    </select>
+	</select>
 
-    <select id="selectCount" resultType="int">
-    SELECT COUNT(1)
-    FROM code_master
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(1)
+		FROM code_master
 		WHERE 1 = 1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
-		AND code_master_id like '%${codeMasterId}%'
+			AND code_master_id like '%${codeMasterId}%'
 		</if>
 		<if test="codeMasterName != null and !codeMasterName.equals('')">
-		AND code_master_name like '%${codeMasterName}%'
+			AND code_master_name like '%${codeMasterName}%'
 		</if>
-    </select>
+	</select>
+	<select id="CodeMasterListCheck" parameterType="jp.co.info.ais.asm.domain.CodeMaster"
+		resultType="int">
+		SELECT
+		count(*)
+		FROM code_master
+		where code_master_id=${codeMasterId}
+	</select>
+	<insert id="CodeMasterInsert"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id
+		,code_master_name
+		,remarks
+		,use_flag)
+		VALUES (
+		#{codeMasterId}
+		, #{codeMasterName}
+		, #{remarks}
+		, #{useFlag}
+		)
+	</insert>
+
 </mapper>

@@ -40,4 +40,15 @@ public class CodeMasterService {
 		return codeMasterMapper.selectCount(condition);
 	}
 
+	public int CodeMasterListCheck(CodeMaster masterCode) {
+		int num = 0;
+		num = codeMasterMapper.CodeMasterListCheck(masterCode);
+		if (num== 0) {
+			codeMasterMapper.CodeMasterInsert(masterCode);
+		}
+
+		return num;
+
+	}
+
 }
