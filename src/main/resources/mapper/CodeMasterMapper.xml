@@ -19,7 +19,7 @@
    		INSERT INTO code_master(
    		 code_master_id)
    		VALUES (
-       	  #{code_master_id}
+       	  #{code_master_id})
     </insert>
     <insert id="insertMasterName"  parameterType="jp.co.info.ais.asm.domain.CodeMaster">
    		INSERT INTO code_master(
@@ -29,6 +29,16 @@
          #{code_master_name}
          )
     </insert>
+
+    <select id="selectCodeMasterList" resultType="CodeMaster">
+    SELECT A.* FROM(
+        SELECT
+			 code_master_id
+   			,code_master_name
+   			,remarks
+   			,useFlag)
+		FROM code_master)
+    </select>
 
 
 

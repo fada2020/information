@@ -80,6 +80,7 @@ public class LoginController {
 			session.setAttribute("organizationCode", user.getOrganizationCode());
 
 			return "redirect:/";
+
 		}catch(Exception e) {
 			logger.error("認証処理エラーが発生 :" + e.toString());
 			return  "login";
