@@ -208,7 +208,7 @@ public class MainController {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.debug("error'{}",e);
 		} //try...catch文
 
 		return "dashboard";
