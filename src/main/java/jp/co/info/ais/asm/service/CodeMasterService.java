@@ -1,5 +1,7 @@
 package jp.co.info.ais.asm.service;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ public class CodeMasterService {
 
 	@Autowired
 	private CodeMasterMapper codeMasterMapper;
+
+	private CodeMaster CodeMaster;
 
 
 	public void insertMasterIdName(CodeMaster codeMasterId, CodeMaster codeMasterName) {
@@ -30,6 +34,10 @@ public class CodeMasterService {
 	public void insertMasterId(CodeMaster codeMasterId) {
 
 		codeMasterMapper.insertMasterName(codeMasterId);
+	}
+
+	public List<CodeMaster> selectCodeMasterList(){
+		return codeMasterMapper.selectCodeMasterList(CodeMaster);
 	}
 
 
