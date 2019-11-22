@@ -75,32 +75,16 @@
 							<table id="datatable-list" class="table table-striped jambo_table bulk_action" style="width:100%">
 		                      <thead>
 		                        <tr class="headings">
-		                          <th class="column-title txt_center">No.</th>
+		                         <!--  <th class="column-title txt_center">No.</th> -->
 		                          <th class="column-title txt_center">コードID</th>
 		                          <th class="column-title txt_center">コード名称</th>
 		                          <th class="column-title txt_center">使用有無</th>
-		                          <th class="column-title txt_center"></th>
 		                        </tr>
 		                      </thead>
 		                     	<!-- List 出力 -->
 		                     	<tbody>
-		                     	<!--객체명  -->
-		                     		<tr th:each="element, elementStat : ${codeMasterList}">
-											<td></td>
-			                     			<!-- <td th:text="${elementStat.count}"></td> -->
-			                     			<td th:text="${element.codeMasterId}"></td>
-											<td th:text="${element.codeMasterName}"></td>
-			                     			<td th:switch="${element.useFlag}">
-			                     				 <p th:case =="0" style="color:blue;">使用中</p>
-        							    		 <p th:case =="1" style="color:red;">未使用</p>
-        							    	</td>
-		                     				<td class="txt_center txt_middle">
-												 <button type="button" class="btn btn-warning btn-sm btn-detail"><i class="fa fa-file-text"></i> 詳細</button>
-											</td>
-		                     		</tr>
-
 		                     	</tbody>
-		                     <!--/. List 出力 -->
+		                     	<!--/. List 出力 -->
 
 							</table>
 							</div><!-- /.table-responsive -->
@@ -131,22 +115,23 @@
         </button>
       </div>
       <div class="modal-body">
-               <br>
-				<div>[[${errorMessage}]]</div>
-              <br>
 		<div style="padding: 5px 20px;">
-		  <form id="antoform" class="form-horizontal calender" role="form">
+		  <form id="antoform" class="form-horizontal calender" role="form" method="GET" action="/codemaster" name = "frm">
 			<div class="form-group">
 			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コードID</label>
 			  <div class="col-sm-9">
-				<input type="text" class="form-control form-control-sm" id="codeMasterId" name="codeMasterId" required>
+			  	<fieldset>
+				<input type="text" class="form-control form-control-sm" id="codeMasterId" name="codeMasterId" placeholder="ex)001" required/>
+			 	</fieldset>
 			  </div>
 			</div>
 			<div class="clearfix"></div>
 			<div class="form-group">
 			  <label class="col-sm-3 control-label"><span style="color:red; font-size:1.25em;">*</span> コード名称</label>
 			  <div class="col-sm-9">
-				<input type="text" class="form-control form-control-sm" id="codeMasterName" name="codeMasterName" required>
+			  	<fieldset>
+				<input type="text" class="form-control form-control-sm" id="codeMasterName" name="codeMasterName" placeholder="コード名称" required/>
+			  	</fieldset>
 			  </div>
 			</div>
 			<div class="clearfix"></div>
@@ -166,14 +151,16 @@
                  </div>
 			  </div>
 			</div>
+			<div class="modal-footer">
+      			<input type ="submit" value="登録" id="AddMasterCode" />
+        <!-- <button type="button" class="btn btn-primary"  onclick = "location.href = '/codemaster'"><i class="fa fa-check-circle" ></i> 登録</button> -->
+       			 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times-circle"></i> 閉じる</button>
+     	 </div>
 		  </form>
       </div>
 
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary"  onclick = "location.href = '/codemaster'"><i class="fa fa-check-circle" ></i> 登録</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times-circle"></i> 閉じる</button>
-      </div>
+
     </div>
   </div>
 </div>
@@ -212,7 +199,7 @@
         $(function(){
 
             // datatableの設定を変更
-            var modalesectiontable = $("#table1").DataTable({
+            var modalesectiontable = $("#datatable-list").DataTable({
             	fixedHeader: true,
             	"processing": true,
             	"serverSide": true,
@@ -222,29 +209,32 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-
                 "ajax": {
-                	url: /*[[@{/getuserlist}]]*/ 'getuserlist',
+                	url: /*[[@{/codemaster/codeList}]]*/ 'codemaster/codeList',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
-                        //d.extra_search = $('#extra').val();
+                		d.columns[0].search.value = $('#search_id').val();
+                		d.columns[1].search.value = $('#search_name').val();
                         return JSON.stringify(d);
                     }
                 },
-                "columns": [
-                    { data: "username" },
-                    { data: "mailaddress" },
-                ],
                 "columnDefs": [
-                    { targets: 0, width: 60 },
-                    { targets: 1, width: 180 }
+                	{ targets: 0, data: "codeMasterId"},
+                    { targets: 1, data: "codeMasterName"},
+                    { targets: 2, data: "remarks"}
                 ]
             });
 
-            // Setup - add a text input to each footer cell
-            $('#table1 thead tr').clone(true).appendTo( '#table1 thead' );
+
+            $('#searchBtn').on( 'click', function () {
+            	modalesectiontable
+                .column(0)
+                .search( this.value )
+                .draw();
+            } );
+
             /* $('#table1 thead tr:eq(1) th').each( function (i) {
                 var title = $(this).text();
                 $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
@@ -257,8 +247,6 @@
                             .draw();
                     }
                 } ); */
-            } );
-
         })
     /*]]>*/
     </script>

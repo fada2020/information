@@ -143,6 +143,7 @@ public class AssetController {
 	 * @return Asset 結果値
 	 */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @ResponseBody
     public Asset assetInsert(Asset asset) {
     	try {
 	    	//セッションにあるID値セッティング

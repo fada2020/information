@@ -1,5 +1,7 @@
 package jp.co.info.ais.asm.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import jp.co.info.ais.asm.domain.CodeMaster;
@@ -17,4 +19,9 @@ public interface CodeMasterMapper {
 	void insertMasterName(CodeMaster codeMasterName);
 
 	void insertMasterIdName(CodeMaster codeMasterId, CodeMaster codeMasterName);
+
+	List<CodeMaster> selectCodeMasterList(CodeMaster condition);
+
+	int selectCount(CodeMaster condition);
+
 }
