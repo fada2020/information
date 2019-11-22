@@ -561,7 +561,10 @@
 				    "type" : "post",
 			 		"dataType": "json",
 					"data" : assetSeq,
-					"contentType": "application/JSON"
+					"contentType": "application/JSON",
+					"Error" : function(){
+    					alert("キャンセル不可能");
+    				}
 			   });
 			  $(function() {
 
@@ -665,6 +668,9 @@
                         return JSON.stringify(d);
                     }
                 },
+                "Error" : function(){
+					alert("初期化不可能");
+				},
 
                 "columnDefs": [
 
@@ -847,6 +853,9 @@ function updateRental(){
         if(data>0){
         	location.reload(true);
         }
+        				},
+        				"Error" : function(){
+        					alert("変更不可能");
         				}
          	});
 
@@ -910,7 +919,10 @@ function researchRental(assetSeq){
 					   url : "/rental/returnAsset",
 						dataType : "json",
 						"contentType" : "application/JSON",
-						data : JSON.stringify(assetSeq)
+						data : JSON.stringify(assetSeq),
+						"Error" : function(){
+	    					alert("返却不可能");
+	    				}
 
 
 			});
@@ -978,6 +990,9 @@ function researchRental(assetSeq){
 							+ value.assetNumber + '</option>';
 				});
 				$('#sub_subSelect').html(html);
+			},
+			"Error" : function(){
+				alert("貸与不可能");
 			}
 
 
@@ -998,7 +1013,10 @@ var assetSeq=btn.value;
     		"type" : "post",
    	 		"dataType": "json",
    			"data" : assetSeq,
-   			"contentType": "application/JSON"
+   			"contentType": "application/JSON",
+   			"Error" : function(){
+				alert("削除不可能");
+			}
 		});
   var row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
@@ -1040,8 +1058,10 @@ var assetSeq=btn.value;
 		"type" : "post",
 		"dataType": "json",
 		"contentType": "application/JSON",
-		"data" : JSON.stringify(tdArr)
-
+		"data" : JSON.stringify(tdArr),
+		"Error" : function(){
+			alert("貸与不可能");
+		}
 
 });
 	 if($('#selectedAsset tbody tr').length!=0){
