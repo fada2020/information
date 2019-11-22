@@ -66,6 +66,8 @@
             <div class="clearfix"></div>
 
             <div class="row">
+
+            <!-- 資産情報修正フォーム -->
             <form action="/asset/update" id="updateForm" method="POST" role="form" class="form-horizontal">
 	  			<div class="col-md-6">
 	  				<div class="row">
@@ -323,7 +325,9 @@
 	  				<button type="button" id="updateProc" class="btn btn-primary pull-right">修正</button>
 	  			</div>
 	  		</form>
+	  		<!-- /資産情報修正フォーム -->
 
+				<!-- 付属品テーブル -->
 		  		<div class="col-md-12">
 		  			<div class="x_panel">
 						<div class="x_title">
@@ -346,20 +350,20 @@
 									<tbody>
 										<tr class="even pointer">
 											<td></td>
-											<td><input id="itemName" type="text" class="form-control"></td>
-											<td><input id="itemSpec" type="text" class="form-control"></td>
-											<td><input id="itemQuantity" type="text" class="form-control"></td>
-											<td><input id="remarks" type="text" class="form-control"></td>
+											<td><input id="itemName" type="text" maxlength="25" class="form-control"></td>
+											<td><input id="itemSpec" type="text" maxlength="25" class="form-control"></td>
+											<td><input id="itemQuantity" type="text" maxlength="11" class="form-control"></td>
+											<td><input id="remarks" type="text" maxlength="100" class="form-control"></td>
 											<td colspan="2" class="a-center">
 												<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
 										<tr th:each="accessories : ${asset.accessoriesList}">
 											<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
-											<td><input type="text" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
-											<td><input type="text" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
-											<td><input type="text" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
-											<td><input type="text" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
+											<td><input type="text" maxlength="25" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
+											<td><input type="text" maxlength="25" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
+											<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
+											<td><input type="text" maxlength="100" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
 											<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
 											<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 										</tr>
@@ -369,7 +373,9 @@
 						</div>
 					</div>
 		  		</div>
+				<!-- /付属品テーブル -->
 
+				<!-- 保守履歴テーブル -->
 		  		<div class="col-md-12">
 		  			<div class="x_panel">
 						<div class="x_title">
@@ -392,20 +398,20 @@
 									<tbody>
 										<tr class="even pointer">
 											<td></td>
-											<td><input id="implementationDate" type="text" class="form-control"></td>
-											<td><input id="implementationDetail" type="text" class="form-control"></td>
-											<td><input id="repId" type="text" class="form-control"></td>
-											<td><input id="approverId" type="text" class="form-control"></td>
+											<td><input id="implementationDate" maxlength="8" type="text" class="form-control"></td>
+											<td><input id="implementationDetail" maxlength="100" type="text" class="form-control"></td>
+											<td><input id="repId" maxlength="10" type="text" class="form-control"></td>
+											<td><input id="approverId" maxlength="10" type="text" class="form-control"></td>
 											<td colspan="2" class="a-center">
 												<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 											</td>
 										</tr>
 										<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
 											<td id="historySeq" th:text="${maintenance.historySeq}"></td>
-											<td><input type="text" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
-											<td><input type="text" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
-											<td><input type="text" class="form-control" id=repId th:value="${maintenance.repId}"></td>
-											<td><input type="text" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
+											<td><input type="text" maxlength="8" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
+											<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
+											<td><input type="text" maxlength="10" class="form-control" id=repId th:value="${maintenance.repId}"></td>
+											<td><input type="text" maxlength="10" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
 											<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
 											<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 										</tr>
@@ -415,7 +421,7 @@
 						</div>
 					</div>
 		  		</div>
-
+				<!-- /保守履歴テーブル -->
 		  	</div>
           </div>
         </div>
@@ -456,25 +462,48 @@
     <!-- page script -->
     <script th:inline="javascript">
     /*<![CDATA[*/
+
+    	// datetimepickerセッティング
         $('#myDatepicker').datetimepicker({
             format: 'YYYY-MM-DD'
         });
 
+		// 区分コードMap
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
     	productCode.forEach(function( value ) {
     		productCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
+    	// 状態コードMap
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
+    	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
 
         $(function(){
+
+        	// 数量文字入力制限
+        	$('#table1 tbody').on('keyup','#itemQuantity', function() {
+        	    if (/\D/.test(this.value)) {
+        	        this.value = this.value.replace(/\D/g, '')
+        	        alert('半角数字のみ入力');
+        	    }
+        	});
+
+        	// 実施日文字入力制限
+        	$('#table2 tbody').on('keyup','#implementationDate', function() {
+        	    if (/\D/.test(this.value)) {
+        	        this.value = this.value.replace(/\D/g, '')
+        	        alert('半角数字のみ入力');
+        	    }
+        	});
+
+			// 付属品登録プロセス
             $('#addAccessories').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
@@ -486,35 +515,39 @@
             			"remarks" : selectTr.find("#remarks").val()
             	};
 
-            	$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(accessories)
-					}
-				)
-				.success(function(data) {
-					if(data.accessoriesSeq == 0){
-						alert('エラーが発生しました。');
-					}else {
-						 $('#table1 tbody').append(
-								 '<tr>'
-								 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
-								 +'<td><input type="text" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
-								 +'<td><input type="text" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
-								 +'<td><input type="text" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
-								 +'<td><input type="text" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
-								 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-								 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
-								 +'</tr>'
-						 );
-						 alert('追加されました。');
-					}
-				});
+                $.ajax({
+                    url: /*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+                    type: "POST",
+                    dataType: "json",
+                    contentType: 'application/JSON',
+                    data : JSON.stringify(accessories),
+                    success: function(data) {
+                    	if(data.accessoriesSeq == 0){
+    						alert('エラーが発生しました。');
+    					}else {
+    						 $('#table1 tbody').append(
+    								 '<tr>'
+    								 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
+    								 +'<td><input type="text" maxlength="25" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
+    								 +'<td><input type="text" maxlength="25" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
+    								 +'<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
+    								 +'<td><input type="text" maxlength="100" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
+    								 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+    								 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
+    								 +'</tr>'
+    						 );
+    						 alert('追加されました。');
+    					}
+                    },
+                    // 通信失敗時の処理
+                    error: function(xhr, textStatus, error) {
+                    	alert('通信失敗');
+                    }
+                });
 
             });
 
+			// 付属品修正プロセス
             $('#table1 tbody').on("click","#updateAccessories", function() {
             	var selectTr = $(this).closest("tr");
 
@@ -541,10 +574,13 @@
 					} else {
 						alert('修正されました。');
 					}
-				});
+				}).error(function(xhr, textStatus, error) {
+                	alert('通信失敗');
+                });
 
             });
 
+			// 付属品削除プロセス
             $('#table1 tbody').on("click","#deleteAccessories", function() {
 
             	if(!confirm('本当に削除しますか？')){
@@ -572,11 +608,14 @@
     					} else {
     						selectTr.remove();
     					}
-    				});
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗');
+                    });
                 }
 
             });
 
+			// 保守履歴登録プロセス
             $('#addMaintenanceHistory').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
@@ -603,20 +642,23 @@
 						 $('#table2 tbody').append(
 								 '<tr>'
 								 +'<td id="historySeq">'+data.historySeq+'</td>'
-								 +'<td><input type="text" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
-								 +'<td><input type="text" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
-								 +'<td><input type="text" class="form-control" id="repId" value="'+data.repId+'"></td>'
-								 +'<td><input type="text" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
+								 +'<td><input type="text" maxlength="8" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
+								 +'<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
+								 +'<td><input type="text" maxlength="10" class="form-control" id="repId" value="'+data.repId+'"></td>'
+								 +'<td><input type="text" maxlength="10" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
 								 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
 								 +'<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
 								 +'</tr>'
 						 );
 						 alert('追加されました。');
 					}
-				});
+				}).error(function(xhr, textStatus, error) {
+                	alert('通信失敗');
+                });
 
             });
 
+			// 保守履歴修正プロセス
             $('#table2 tbody').on("click","#updateMaintenanceHistory", function() {
             	var selectTr = $(this).closest("tr");
 
@@ -643,10 +685,13 @@
 					} else {
 						alert('修正されました。');
 					}
-				});
+				}).error(function(xhr, textStatus, error) {
+                	alert('通信失敗');
+                });
 
             });
 
+			// 保守履歴削除プロセス
             $('#table2 tbody').on("click","#deleteMaintenanceHistory", function() {
 
             	if(!confirm('本当に削除しますか？')){
@@ -674,14 +719,18 @@
     					} else {
     						selectTr.remove();
     					}
-    				});
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗');
+                    });
                 }
 
             });
 
+			// 資産修正プロセス
             $('#updateProc').on('click', function() {
                 var form = $('#updateForm');
 
+				// 有効性検査条件セッティング
                 form.validate({
                     rules: {
                     	kubunCode : {
@@ -710,19 +759,19 @@
                         	maxlength: 25
                         },
                         serialNum: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         interFaceCol: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         osName: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         osProductKey: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         cpuProcessor: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         purchasePrice: {
                         	number: true,
@@ -749,25 +798,25 @@
                         	maxlength: 7
                         },
                         macLan: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         macWireless: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         other: {
                         	maxlength: 100
                         },
                         securityBios: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         securityHdd: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         adminAccountId: {
-                        	maxlength: 15
+                        	maxlength: 25
                         },
                         adminAccountPwd: {
-                        	maxlength: 15
+                        	maxlength: 25
                         }
                     },
                     messages: {
@@ -790,8 +839,9 @@
                     }
                 });
 
+				// 有効性検査成功時
                 if (form.valid()) {
-
+                	// number基本値セッティング
                     form.find('.numVal').each(function( ) {
                     	if($(this).val() == '') {
                     		$(this).val('0');
@@ -812,7 +862,7 @@
                         },
                         // 通信失敗時の処理
                         error: function(xhr, textStatus, error) {
-                            alert('NG...');
+                        	alert('通信失敗');
                         }
                     });
                 };

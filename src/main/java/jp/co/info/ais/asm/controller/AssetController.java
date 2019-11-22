@@ -33,7 +33,13 @@ public class AssetController {
 	HttpSession session;
 
 
-
+	/**
+	 * 資産管理の初期画面
+	 * コード値セッティング
+	 *
+	 * @param Model
+	 * @return String 画面名
+	 */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String assetList(Model model) {
     	try {
@@ -46,6 +52,12 @@ public class AssetController {
         return "asset";
     }
 
+	/**
+	 * 検索条件に応じた資産リスト出力
+	 *
+	 * @param Page<Asset> dataTableObject
+	 * @return Page<Asset> dataTableObject
+	 */
     @RequestMapping("/getAssetlist")
     @ResponseBody
     public Page<Asset> getAssetlist(@RequestBody Page<Asset> page) {
@@ -82,15 +94,10 @@ public class AssetController {
 	    		condition.setModelName(modelName);
 	    	}
 
-	    	// 購入日検索範囲セッティング
+	    	// 購入日セッティング
 	    	String date = page.getColumns().get(5).getSearch().getValue();
 	    	if(null != date && !date.equals("")){
-	    		// 空白及び'/'除去
-	    		date = date.replaceAll("[ /]", "");
-	    		// '-'基準切り
-	    		String[] dateArr = date.split("-");
-				condition.setStartPurchaseDate(dateArr[0]);
-				condition.setEndPurchaseDate(dateArr[1]);
+	    		condition.setPurchaseDate(date);
 	    	}
 
 	    	// リスト照会
@@ -110,6 +117,12 @@ public class AssetController {
         return page;
     }
 
+	/**
+	 * 資産詳細情報照会
+	 *
+	 * @param int 資産シーケンス
+	 * @return Asset  資産Object
+	 */
     @RequestMapping(value = "/assetInfoAjax")
     @ResponseBody
     public Asset assetInfoAjax(@RequestBody int assetSeq) {
@@ -122,8 +135,16 @@ public class AssetController {
 		}
     }
 
+	/**
+	 * 資産情報登録
+	 *
+	 * @param Model
+	 * @param Asset 資産情報
+	 * @return Asset 結果値
+	 */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public String assetInsert(Model model, Asset asset) {
+    @ResponseBody
+    public Asset assetInsert(Asset asset) {
     	try {
 	    	//セッションにあるID値セッティング
 	    	String id = (String) session.getAttribute("id");
@@ -131,19 +152,21 @@ public class AssetController {
 
 	    	// 資産情報登録
 	    	assetService.insertAsset(asset);
-
-	    	// コード値セッティング
-	    	model.addAttribute("productCode", assetService.selectProductCode());
-	    	model.addAttribute("stateCode", assetService.selectStateCode());
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-    	return "asset";
+    	return asset;
     }
 
+	/**
+	 * 資産情報削除
+	 *
+	 * @param int 資産シーケンス
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public int assetDelete(Model model, @RequestBody int assetSeq) {
+    public int assetDelete(@RequestBody int assetSeq) {
     	int result = 0;
     	try {
 	    	// 資産情報削除
@@ -154,6 +177,15 @@ public class AssetController {
         return result;
     }
 
+	/**
+	 * 資産情報修正の初期画面
+	 * コード値セッティング
+	 * 修正割資産情報セッティング
+	 *
+	 * @param int 資産シーケンス
+	 * @param Model
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
     public String assetUpdateInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
     	try {
@@ -168,9 +200,15 @@ public class AssetController {
         return "assetUpdate";
     }
 
+	/**
+	 * 資産情報修正
+	 *
+	 * @param Asset 資産情報
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public int assetUpdate(Model model, Asset asset) {
+    public int assetUpdate(Asset asset) {
     	int result = 0;
     	try {
         	//セッションにあるID値セッティング
@@ -185,9 +223,15 @@ public class AssetController {
         return result;
     }
 
+	/**
+	 * 付属品情報登録
+	 *
+	 * @param Accessories 付属品情報
+	 * @return Accessories 結果値
+	 */
     @RequestMapping(value = "/addAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public Accessories addAccessories(Model model, @RequestBody Accessories accessories) {
+    public Accessories addAccessories(@RequestBody Accessories accessories) {
     	try {
 	    	//セッションにあるID値セッティング
 	    	String id = (String) session.getAttribute("id");
@@ -200,9 +244,15 @@ public class AssetController {
         return accessories;
     }
 
+	/**
+	 * 付属品情報修正
+	 *
+	 * @param Accessories 付属品情報
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/updateAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public int updateAccessories(Model model, @RequestBody Accessories accessories) {
+    public int updateAccessories(@RequestBody Accessories accessories) {
     	int result = 0;
     	try {
 	    	//セッションにあるID値セッティング
@@ -216,9 +266,15 @@ public class AssetController {
         return result;
     }
 
+	/**
+	 * 付属品情報削除
+	 *
+	 * @param Accessories 付属品情報
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/deleteAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public int deleteAccessories(Model model, @RequestBody Accessories accessories) {
+    public int deleteAccessories(@RequestBody Accessories accessories) {
     	int result = 0;
     	try {
 	    	// 付属品削除
@@ -229,9 +285,15 @@ public class AssetController {
         return result;
     }
 
+	/**
+	 * 保守履歴情報登録
+	 *
+	 * @param MaintenanceHistory 保守履歴情報
+	 * @return MaintenanceHistory 結果値
+	 */
     @RequestMapping(value = "/addMaintenanceHistory", method = RequestMethod.POST)
     @ResponseBody
-    public MaintenanceHistory addMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
+    public MaintenanceHistory addMaintenanceHistory(@RequestBody MaintenanceHistory maintenanceHistory) {
     	try {
 	    	//セッションにあるID値セッティング
 	    	String id = (String) session.getAttribute("id");
@@ -244,6 +306,12 @@ public class AssetController {
         return maintenanceHistory;
     }
 
+	/**
+	 * 保守履歴情報修正
+	 *
+	 * @param Accessories 保守履歴情報
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/updateMaintenanceHistory", method = RequestMethod.POST)
     @ResponseBody
     public int updateMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
@@ -260,6 +328,12 @@ public class AssetController {
         return result;
     }
 
+	/**
+	 * 保守履歴情報削除
+	 *
+	 * @param Accessories 保守履歴情報
+	 * @return int 結果値
+	 */
     @RequestMapping(value = "/deleteMaintenanceHistory", method = RequestMethod.POST)
     @ResponseBody
     public int deleteMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {

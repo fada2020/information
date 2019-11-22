@@ -32,6 +32,9 @@
 		#table1 tbody tr{
 		    cursor:default;
 		}
+		#table1 tbody td{
+		    font-size:12px;
+		}
 
 		#exportExcel {
 			margin-top:10px;
@@ -49,17 +52,20 @@
 
 		}
 
+		.flat{
+			display: inline-block;
+			width: 18px;
+			height: 18px;
+			border: 2px solid #bcbcbc;
+			cursor: pointer;
+		}
+
 		.pull-right{
 			font-size:18px;
 
 		}
 		#deleteHistory{
 			margin:-5px;
-		}
-		.deleteCheck{
-			position:relative;
-			left:50%;
-			transform:translateX(-50%);
 		}
 	</style>
 
@@ -97,7 +103,7 @@
                     <span class="pull-right" style="margin-left:-10%;">管理番号</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="全体" id="assetNumber_search" maxlength="15" >
+                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15" >
                 </div>
 
 
@@ -137,7 +143,7 @@
                     <span class="pull-right">貸出者</span>
                 </div>
                 <div class="col-md-2">
-                	<input type="text" class="form-control" placeholder="全体" id="applicant_search" maxlength="15">
+                	<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
                 </div>
 
 
@@ -176,11 +182,11 @@
 
                   <div class="x_content">
 
-                    <table class="table table-striped jambo_table bulk_action dataTable no-footer" id="table1" style="width:100%;">
+                    <table class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer" id="table1" style="width:100%;">
                       <thead class="thead-light">
                       	<tr class="headings">
                       		<th colspan="3">装置</th>
-                      		<th colspan="9">使用現況</th>
+                      		<th colspan="10">使用現況</th>
                       	</tr>
                         <tr class="headings">
                           <th>管理番号</th>
@@ -286,12 +292,21 @@
 			   }
 			}).val('');
 
+			$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
+					$('#rental_search').val('');
+			});
+
+			$('#return_search').on('cancel.daterangepicker', function(ev, picker) {
+					$('#return_search').val('');
+			});
+
             //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
             		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
             	    "infoFiltered":   "",
+            	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
@@ -373,9 +388,9 @@
                     	render: function( data, type, row, meta ){
 
                     		if(row.statusCode=="02"){//貸与状態の場合
-                    			return '<input type="checkbox" class="deleteCheck" disabled="disabled" title="貸与の項目は履歴を削除できません。">';
+                    			return '<input type="checkbox" class="flat" disabled="disabled" title="貸与の項目は履歴を削除できません。">';
                     		} else{//その他の場合
-                    			return '<input type="checkbox" class="deleteCheck" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
+                    			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
                     		}
 
                     }}
