@@ -215,8 +215,8 @@ masterCode.remarks=$('#remarks').val();
 	   		 			alert("すでにあります");
 
 	   		 		}else{
-	   		 			
-	   		 			
+
+
 	   		 		}
 	   		 	}
 
@@ -264,7 +264,15 @@ masterCode.remarks=$('#remarks').val();
                 "columnDefs": [
                 	{ targets: 0, data: "codeMasterId"},
                     { targets: 1, data: "codeMasterName"},
-                    { targets: 2, data: "remarks"}
+                    { targets: 2, data: function ( d ) {
+                    	var str = '';
+                    	if(d.useFlag == 0){
+                    		str = "使用";
+                    	} else {
+                    		str = "未使用";
+                    	}
+                    	return str;
+                    }},
                 ]
             });
 
