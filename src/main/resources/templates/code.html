@@ -203,6 +203,34 @@ masterCode.codeMasterId=$('#codeMasterId').val();
 masterCode.codeMasterName=$('#codeMasterName').val();
 masterCode.useFlag=$('#use').val();
 masterCode.remarks=$('#remarks').val();
+var form = $('#antoform');
+form.validate({
+    rules: {
+    	codeMasterId : {
+    		required : true,
+    		number: true,
+    		minlength : 3
+    	},
+    	codeMasterName : {
+    		required : true
+
+    	}
+
+
+    },
+    messages: {
+    	codeMasterId : {
+    		required : "コードを入力してください"
+    	},
+    	codeMasterName : {
+    		required : "コードネームを入力してください"
+    	}
+
+
+    }
+
+});
+if (form.valid()) {
 
         	$.ajax({
 	   			"url" : "/codemaster/CodeListCheck",
@@ -215,13 +243,14 @@ masterCode.remarks=$('#remarks').val();
 	   		 			alert("すでにあります");
 
 	   		 		}else{
-	   		 			
-	   		 			
+
+
 	   		 		}
-	   		 	}
+	   		 	};
 
 
 		});
+}
         }
         $(function(){
 
