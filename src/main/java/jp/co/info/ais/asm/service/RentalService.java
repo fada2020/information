@@ -86,6 +86,9 @@ public class RentalService {
 
 	@Transactional
 	public void returnAsset(Rental rental, String applicantId, int assetSeq) {
+		/*
+		 * 返却する際にレンタルのオブジェクトに返却者等をセッティングする
+		 * */
 		try {
 			rental.setAssetSeq(assetSeq);
 			rental.setApplicantId(applicantId);
@@ -96,6 +99,7 @@ public class RentalService {
 			rental.setReturnDay(mTime);
 			int num = 0;
 			num = rentalMapper.returnAsset(rental);
+			//ちゃんと返却が出来たら資産の状態も変更する
 			if (num > 0) {
 				rentalMapper.changeAStatus(rental.getAssetSeq());
 
