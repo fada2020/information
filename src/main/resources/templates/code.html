@@ -22,9 +22,16 @@
 <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
 <!-- iCheck -->
 <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+<style>
+    	#table1 thead, th {text-align: center;}
+		#table1 tbody tr{
+		    cursor:pointer;
+		}
+</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -58,25 +65,25 @@
 								<div class="x_title">
 									<div class="well" style="overflow: auto">
 										<div class="col-md-4">
-											<label class="col-form-label col-md-3 col-sm-3 label-align"
+											<label class="col-form-label col-md-3 col-sm-3 label-align" style="font-size: 18px;"
 												for="search_id">コードID</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_id" class="form-control ">
 											</div>
 										</div>
 										<div class="col-md-4">
-											<label class="col-form-label col-md-3 col-sm-3 label-align"
+											<label class="col-form-label col-md-3 col-sm-3 label-align" style="font-size: 18px;"
 												for="search_name">コード名称</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_name" class="form-control ">
 											</div>
 										</div>
 										<div class="col-md-4">
-											<button type="button" class="btn btn-round btn-success"
+											<button type="button" class="btn btn-primary pull-right"
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-											<button type="button" class="btn btn-round btn-info"
+											<button type="button" class="btn btn-success pull-right"
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
 											</button>
@@ -86,9 +93,9 @@
 								</div>
 								<!-- /.x_title -->
 								<div class="x_content">
-									<div class="table-responsive">
+									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 										<table id="datatable-list"
-											class="table table-striped jambo_table bulk_action"
+											class="table table-bordered jambo_table bulk_action text-center"
 											style="width: 100%">
 											<thead>
 												<tr class="headings">
@@ -147,7 +154,7 @@
 							method="GET" name="frm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 1.25em;">*</span> コードID</label>
+									style="color: red; font-size: 18px;">*</span> コードID</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -159,7 +166,7 @@
 							<div class="clearfix"></div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 1.25em;">*</span> コード名称</label>
+									style="color: red; font-size: 18px;">*</span> コード名称</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -190,7 +197,7 @@
 							</div>
 							<div class="modal-footer">
 
-								<button type="button" class="btn btn-primary"
+								<button type="button" class="btn btn-warning"
 									onclick="codeInsert();">
 									<i class="fa fa-check-circle"></i> 登録
 								</button>
@@ -232,7 +239,7 @@
 							method="GET" name="frm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 1.25em;">*</span> コードID</label>
+									style="color: red; font-size: 18px;">*</span> コードID</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -244,7 +251,7 @@
 							<div class="clearfix"></div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 1.25em;">*</span> コード名称</label>
+									style="color: red; font-size: 18px;">*</span> コード名称</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -451,7 +458,7 @@
 											data : null,
 											render : function(data, type, row,
 													meta) {
-												return '<button type="button" onclick="update(this)" class="btn btn-danger updateBtn">変更</button>';
+												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button>';
 											}
 										},
 										{
