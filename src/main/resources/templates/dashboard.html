@@ -147,8 +147,11 @@
 						</tr>
 					</table>
 					</div>
-					<div th:if="${ hw <= 0 }"  align = "center"  style = "margin-top: 65px;">
-						<h1><i class="fa fa-exclamation-triangle"></i>  データなし</h1>
+					<div th:if="${ hw <= 0 }"  align = "center"  style = "margin-top: 40px;">
+						<div style="font-size: 2.5em;">
+							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
+							<p>データなし</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -220,8 +223,12 @@
 						</tr>
 					</table>
 					</div>
-					<div th:if="${ sw <= 0 }" align = "center"  style = "margin-top: 65px;" >
-						<h1><i class="fa fa-exclamation-triangle"></i>  データなし</h1>
+					<div th:if="${ sw <= 0 }" align = "center"  style = "margin-top: 40px;" >
+						<div style="font-size: 2.5em;">
+							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
+							<p>データなし</p>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -265,8 +272,12 @@
 						</div>
 					</div>
 						<!-- init_morris_chart()：custom.min.js -->
-					<div th:if="${ rsize <= 0 }" class="x_content2" align="center"  style = "padding : 15px; margin: 45px 0px;" >
-						<h1><i class="fa fa-exclamation-triangle" ></i>  データなし</h1>
+					<div th:if="${ rsize <= 0 }" class="x_content2" align="center"  style = "padding : 15px; margin: 30px 0px;" >
+						<div style="font-size: 2.5em;">
+							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
+							<div style = "word-spacing: 1px;">データなし</div>
+						</div>
+						<b>
 							[[${rentlist.fixed_rent_list01}]]
 							, [[${rentlist.fixed_rent_list02}]]
 							, [[${rentlist.fixed_rent_list03}]]
@@ -274,7 +285,7 @@
 							, [[${rentlist.fixed_rent_list05}]]
 							, [[${rentlist.fixed_rent_list06}]]
 							, [[${rentlist.fixed_rent_list07}]]のデータなし
-
+						</b>
 					</div>
 					</div>
 				</div>
