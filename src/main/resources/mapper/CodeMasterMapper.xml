@@ -97,4 +97,8 @@
 
 	</update>
 
+    <delete id="deleteMasterCode">
+        DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
+    </delete>
+
 </mapper>

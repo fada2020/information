@@ -110,6 +110,7 @@ public class CodeMasterController {
 		return num;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/updateCodeMaster", method = RequestMethod.POST)
 	@ResponseBody
 	public int updateCodeMaster(@RequestBody CodeMaster masterCode) {
@@ -124,5 +125,19 @@ public class CodeMasterController {
 
 		return num;
 	}
+=======
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public int assetDelete(@RequestBody String codeMasterId) {
+    	int result = 0;
+    	try {
+	    	// 資産情報削除
+	    	result = codeMasterService.deleteMasterCode(codeMasterId);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return result;
+    }
+>>>>>>> 3be52e8d4c16704a50ade481eb63dbaf52450ea4
 
 }
