@@ -51,4 +51,8 @@ public class CodeMasterService {
 
 	}
 
+	public int deleteMasterCode(String codeMasterId) {
+		return codeMasterMapper.deleteMasterCode(codeMasterId);
+	}
+
 }

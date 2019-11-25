@@ -28,4 +28,6 @@ public interface CodeMasterMapper {
 
 	void CodeMasterInsert(CodeMaster codeMasterId);
 
+	int deleteMasterCode(String codeMasterId);
+
 }
