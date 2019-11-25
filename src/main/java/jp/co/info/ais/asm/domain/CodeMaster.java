@@ -17,4 +17,6 @@ public class CodeMaster {
 		private String remarks;
 		private int useFlag;
 
+		int length;
+		int start;
 }
