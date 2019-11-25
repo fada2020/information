@@ -38,10 +38,6 @@
 	text-align: center;
 }
 
-#table1 tbody tr {
-	cursor: pointer;
-}
-
 .my-custom-scrollbar {
 	position: relative;
 	height: 130px;
@@ -94,7 +90,7 @@
 						</div>
 
 						<div class="col-md-1">
-							<span class="pull-right" style="margin-left: -10%;">貸与日</span>
+							<span class="pull-right" style="font-size: 18px;">貸与日</span>
 						</div>
 						<div class="col-md-2">
 							<fieldset>
@@ -145,8 +141,8 @@
 										<th class="col-md-1">使用者</th>
 										<th class="col-md-1">貸与日</th>
 										<th class="col-md-1">貸与期間</th>
-										<th class="col-md-2">選択</th>
-
+										<th class="col-md-1"></th>
+										<th class="col-md-1"></th>
 									</tr>
 
 								</thead>
@@ -158,8 +154,7 @@
 							<!--update modal -->
 							<div class="modal" id="modal3d" tabindex="-1" role="dialog"
 								style="display: none;" aria-hidden="true">
-								<div class="modal-dialog modal-xl" style="width: 70%;"
-									role="document">
+								<div class="modal-dialog modal-xl" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal"
@@ -287,8 +282,7 @@
 							<!--insert modal -->
 							<div class="modal" id="modal3d2" tabindex="-1" role="dialog"
 								style="display: none;" aria-hidden="true">
-								<div class="modal-dialog modal-xl" style="width: 70%;"
-									role="document">
+								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
 
@@ -410,7 +404,7 @@
 
 
 															</div>
-															<input type="button"  class="btn btn-success"
+															<input type="button" class="btn btn-success"
 																style="float: right" id="button1" onclick="writeItem();"
 																value="追加" />
 
@@ -512,9 +506,9 @@
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
-
+			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
-    	$.validator.messages.maxlength = '{0} 文字以下を入力';
+    		$.validator.messages.maxlength = '{0} 文字以下を入力';
 
   var modalesectiondata = null;
 
@@ -568,20 +562,19 @@
 			   });
 			  $(function() {
 
-
+/* キャンセルが出来たら一行を消す */
 				tr.remove();
 			  })
 			});
+			 /*  */
 			 $(function() {
+				/*表示されるテキストの初期化*/
 				  $('#rentalUserId').val("");
 				  $('#bpName').val("");
 				  $('#speciality').val("");
 				  $('select').find('option:first').attr('selected', 'selected');
 					$('#modal3d2').modal("hide");
 				})
-
-	   } else {
-		 //no
 
 	   }
 
@@ -601,10 +594,11 @@
             $('#rentalDay_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
+        	/*!カーレンダーの機能  */
             $('#myDatepicker').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-
+        	/*!カーレンダーの機能  */
             $('#returnPeriod_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
@@ -619,7 +613,7 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			});
-
+        	/*!貸与日で貸与情報を探す */
     		$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
 				  //do something, like clearing an input
 					$('#rental_search').val('');
@@ -662,7 +656,10 @@
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
-
+					/*二つの検索条件
+					 *1.資産ナンバーで探す
+					 *2.貸与日で探す
+					 */
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                    		d.columns[1].search.value = $('#rental_search').val();
                         return JSON.stringify(d);
@@ -671,7 +668,7 @@
                 "Error" : function(){
 					alert("初期化不可能");
 				},
-
+/*コンローラーで貰ったデータを元にしてデータを見せる  */
                 "columnDefs": [
 
 
@@ -696,12 +693,21 @@
                     	var str = d.returnPeriod;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
-
+		/* 変更ボタン */
                     { targets: 7,
-                    	data: "description",
+                    	data: "description_u",
                         render: function ( data, type, row, meta ) {
 
-                          return '<button type="button" class="btn btn-warning" id="updateButton" onclick = "researchRental(' + row.assetSeq + ')" >更新</button><button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
+                          return '<button type="button" class="btn btn-warning" id="updateButton" onclick = "researchRental(' + row.assetSeq + ')" >更新</button>';
+
+                           }
+                    },
+/* 削除ボタン  */
+                    { targets: 8,
+                    	data: "description_d",
+                        render: function ( data, type, row, meta ) {
+
+                          return '<button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
 
                            }
                     }
@@ -739,13 +745,14 @@
 function updateRental(){
 
 	 $(function() {
+		 /* 最初に日付を貰うときの有効性検査  */
 		 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
          var form = $('#updateForm');
          if ( !datatimeRegexp.test($('.date_check').val()) ) {
              alert("日付は yyyy-MM-dd 形式で入力してください.");
              return false;
          }
-
+/* 貸与日と返却期間の差を計る */
          var startDate = $( "input[name='rentalDay']" ).val(); //2017-12-10
          var startDateArr = startDate.split('-');
 
@@ -761,16 +768,24 @@ function updateRental(){
 
              return false;
          }
+         /* 計算した貸与日と返却期間の差がプラスであれば下の有個性検査を行う  */
          form.validate({
              rules: {
              	rentalUserId : {
-             		required : true
+             		required : true,
+             		maxlength : 10
              	},
              	purpose : {
-             		required : true
+             		required : true,
+             		maxlength : 10
              	},
+             	speciality : {
+
+             		maxlength : 20
+            	},
              	storageLocation : {
-             		required : true
+             		required : true,
+             		maxlength : 20
              	},
              	returnPeriod : {
              		required : true
@@ -780,7 +795,12 @@ function updateRental(){
              		required : true
              	},
              	applicantId : {
-             		required : true
+             		required : true,
+             		maxlength : 10
+             	},
+             	bpName : {
+
+             		maxlength : 10
              	}
 
              },
@@ -805,6 +825,8 @@ function updateRental(){
              	}
 
              },
+
+             /* カーレンダーの下にエラーを出力する  */
              errorPlacement: function(error, element) {
                  if (element.attr("name") == "returnPeriod") {
                    error.insertAfter("#returnPeriod_search");
@@ -819,13 +841,15 @@ function updateRental(){
          });
 
 
-
+/* 有効性を通過したら下のメソッドを行う */
          if (form.valid()) {
 
      		/*変更してもらったデータにもし-の文字があればなくすメソッド  */
         	 String.prototype.replaceAll = function(org, dest) {
         		    return this.split(org).join(dest);
         		}
+
+     		/* 変更する情報をオブジェクト化する  */
         	var rental = new Object();
         	rental.rentalNo=$('#rentalNo_view').val();
         	rental.assetNumber=$('#assetNumber_view').val();
@@ -848,7 +872,7 @@ function updateRental(){
          				data : JSON.stringify(rental),
         				success : function(data){
 
-
+/* もしアップデートが良くできたら0以上の数字をもらえる  */
 
         if(data>0){
         	location.reload(true);
@@ -904,11 +928,12 @@ function researchRental(assetSeq){
 
 });
 
-
+/* モーダルを閉じるボタン以外では閉じれない  */
 	$('#modal3d').modal({backdrop: 'static'});
 
 }
 
+/* 返却ボタンを押すと確認して返却を行う */
 	function deleteAsset(assetSeq){
 
 		 var result = confirm('返却しますか？');
@@ -938,18 +963,25 @@ function researchRental(assetSeq){
 
 
 		}
+	/* モーダルボタンをクリックしてインサートする画面を開く  */
 		function modalInsert() {
 
-
+			/* モーダルを閉じるボタン以外では閉じれない  */
     		$('#modal3d2').modal({backdrop: 'static'});
     	}
 
 		function getSubItem() {
+			/* 最初の選択地で選択してもらったデータを元にして次の選択地をセッティングする  */
 			var kub =/*[[${kubunCode}]]*/;
 
-			$('#singleSelect').click(
 
+			$('#singleSelect').click(
+					/* 二番目のボタンが押されたら下のメソッドが行われる  */
 					function() {
+						/* まだ何も選択してなければ下のメソッドは実行されない
+						* 当てはまるデータがあれば選択地にセティングする
+						*/
+						if($('#singleSelect option:selected').val()!=""){
 						var item=$('#singleSelect option:selected').val();
 
 							var html = '<option value="">選択</option>';
@@ -959,6 +991,7 @@ function researchRental(assetSeq){
 										+ value.codeDetailName + '</option>';
 							}});
 							$('#sub_singleSelect').html(html);
+						}
 						});
 		}
 
@@ -966,12 +999,16 @@ function researchRental(assetSeq){
 		function getSubSubItem() {
 
 
-
+			/* 三番目のボタンが押されたら下のメソッドが行われる  */
 			$('#sub_singleSelect').click(
 					function() {
+						/* まだ何も選択してなければ下のメソッドは実行されない
+						* 当てはまるデータがあれば選択地にセティングする
+						*/
+		if($('#sub_singleSelect option:selected').val()!=""){
 					var selectedItem = $('#sub_singleSelect option:selected').val();
 					selectedItem=selectedItem.replace(/[^0-9]/g,'');
-
+					/*ajaxを使って実際に使えるものかを確認する  */
 					$.ajax({
 	   			"url" : "/rental/getAssetList",
 	    		"type" : "post",
@@ -997,29 +1034,35 @@ function researchRental(assetSeq){
 
 
 	});
+					   }
 					}
 );
 
-      }
 
+		}
 
-
+/* 任意でリスト化した貸与情報の中で一行だけ削除するメソッド */
  function deleteRow(btn) {
 
-
+/*   */
 var assetSeq=btn.value;
+		/* 資産の状態を貸与から保管に変える  */
 		$.ajax({
    			"url" : "/rental/cancelAsset",
     		"type" : "post",
    	 		"dataType": "json",
    			"data" : assetSeq,
    			"contentType": "application/JSON",
+
+
    			"Error" : function(){
 				alert("削除不可能");
+				return false;
 			}
 		});
-  var row = btn.parentNode.parentNode;
-  row.parentNode.removeChild(row);
+		/* もし貸与から保管に変更できたら一行を消す  */
+		var row = btn.parentNode.parentNode;
+		 row.parentNode.removeChild(row);
 
 }
 
@@ -1030,7 +1073,7 @@ var assetSeq=btn.value;
  function rentalItem() {
 
 		var tdArr = new Array();
-
+		/* テーブルにある貸与情報を全て持ち込んでリスト化する */
 		$('#selectedAsset tbody tr').each(function() {
 			var rental =new Object();
 			var cellText = $(this);
@@ -1052,7 +1095,7 @@ var assetSeq=btn.value;
 		});
 
 
-
+	/* リスト化された貸与情報をデータテーブルに書き込む  */
 	$.ajax({
 		"url" : "/rental/addRental",
 		"type" : "post",
@@ -1064,6 +1107,7 @@ var assetSeq=btn.value;
 		}
 
 });
+	/* もし 一行もなければ警告する一行以上だったらページをリロードする*/
 	 if($('#selectedAsset tbody tr').length!=0){
 			location.reload(true);
 
@@ -1078,7 +1122,7 @@ var assetSeq=btn.value;
 	function writeItem() {
 
         $(function() {
-
+			/* 有効性の検査を行う  */
         	 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
             var form = $('#insertForm');
             if ( !datatimeRegexp.test($("#returnPeriod").val()) ) {
@@ -1104,13 +1148,20 @@ var assetSeq=btn.value;
             form.validate({
                 rules: {
                 	rentalUserId : {
-                		required : true
+                		required : true,
+                 		maxlength : 10
                 	},
                 	purpose : {
-                		required : true
+                		required : true,
+                 		maxlength : 10
+                	},
+                 	speciality : {
+
+                 		maxlength : 20
                 	},
                 	storageLocation : {
-                		required : true
+                		required : true,
+                 		maxlength : 20
                 	},
                 	returnPeriod : {
                 		required : true
@@ -1119,8 +1170,13 @@ var assetSeq=btn.value;
                 		required : true
                 	},
                 	applicantId : {
-                		required : true
-                	}
+                		required : true,
+                 		maxlength : 10
+                	},
+                 	bpName : {
+
+                 		maxlength : 10
+                 	}
 
                 },
                 messages: {
@@ -1158,7 +1214,7 @@ var assetSeq=btn.value;
             if (form.valid()) {
 
             	var number=$("#sub_subSelect option:selected").text();
-
+				/* もう一回資産の情報を確認してデータを表示する */
     			$.ajax({
     			   			"url" : "/rental/getAsset",
     			    		"type" : "post",
