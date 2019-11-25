@@ -29,9 +29,15 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <style>
-    	#table1 thead, th {text-align: center;}
+    	#table1 thead, th {text-align: center; }
 		#table1 tbody tr{
 		    cursor:pointer;
+		}
+		#table1 th{
+			vertical-align:middle;
+		}
+		#table1 td{
+			vertical-align:middle;
 		}
 		.my-custom-scrollbar {
 			position: relative;
@@ -140,7 +146,7 @@
 
 					<!-- 資産情報 dataTable -->
 					<div class="table-responsive">
-                    <table class="table table-bordered table-hover jambo_table table-lg text-center" id="table1">
+                    <table class="table table-bordered table-hover jambo_table dataTable table-lg text-center" style="width:100%;" id="table1">
                       <thead class="thead-light">
                         <tr>
                           <th class="col-md-2">管理番号</th>
@@ -273,6 +279,13 @@
 						  			</div>
 
 						  			<div class="col-md-12">
+						  				<span>その他</span>
+						  			</div>
+						  			<div class="col-md-12">
+						  				<span id="other_view"></span>
+						  			</div>
+
+						  			<div class="col-md-12" style="border-top: 1px solid #ddd;margin-top: 10px;">
 						  				<span>OS</span>
 						  			</div>
 						  			<div class="col-md-2">
@@ -346,13 +359,6 @@
 						  			</div>
 
 						  			<div class="col-md-12">
-						  				<span>その他</span>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span id="other_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
 						  				<span>Security</span>
 						  			</div>
 						  			<div class="col-md-3">
@@ -383,7 +389,7 @@
 						  			<div class="col-md-3">
 						  				<span id="adminAccountPW_view"></span>
 						  			</div>
-							  		<div class="col-md-12">
+							  		<div class="col-md-12" style="border-top: 1px solid #ddd;margin-top: 10px;">
 							  			<h5>付属品</h5>
 					  					<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 											<table class="table table-bordered jambo_table bulk_action text-center" id="accTable">
@@ -445,240 +451,257 @@
 					      <div class="modal-body">
 					      	<div class="container-fluid">
 							  	<div class="row">
-					            	<div class="row">
-							  			<div class="col-md-6">
-							  				<div class="row">
-									  			<div class="col-md-2">
-									  				<span>区分</span>
-									  			</div>
-									  			<div class="col-md-4">
-								                	<select name="kubunCode" class="form-control" id="psNum_search">
-								                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
-								                		th:inline="text">[[${code.codeDetailName}]]</option>
-													</select>
-									  			</div>
-									  			<div class="form-group">
-								  					<div class="col-md-2">
-									  					<span>購入日</span>
+							  		<div class="row well">
+						            	<div class="row">
+								  			<div class="col-md-6">
+								  				<div class="row">
+										  			<div class="col-md-2">
+										  				<span>区分</span>
+										  			</div>
+										  			<div class="col-md-4">
+									                	<select name="kubunCode" class="form-control" id="psNum_search">
+									                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
+									                		th:inline="text">[[${code.codeDetailName}]]</option>
+														</select>
+										  			</div>
+										  			<div class="form-group">
+									  					<div class="col-md-2">
+										  					<span>購入日</span>
+										  				</div>
+										  				<div class="col-md-4">
+														<div class="input-group date" id="myDatepicker">
+															<input type="text" class="form-control" name="purchaseDate">
+															<span class="input-group-addon">
+																<span class="glyphicon glyphicon-calendar"></span>
+														 	</span>
+														</div>
+														<div class="messages"></div>
+										  				</div>
+									  				</div>
+								  				</div>
+								  			</div>
+								  			<div class="col-md-6">
+								  				<div class="row">
+									  				<div class="col-md-2">
+									  					<span>保証期間</span>
 									  				</div>
 									  				<div class="col-md-4">
-													<div class="input-group date" id="myDatepicker">
-														<input type="text" class="form-control" name="purchaseDate">
-														<span class="input-group-addon">
-															<span class="glyphicon glyphicon-calendar"></span>
-													 	</span>
-													</div>
-													<div class="messages"></div>
+									  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
 									  				</div>
+								  					<div class="col-md-2">
+								  						<span>購入先</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="buyTo">
+								  					</div>
 								  				</div>
-							  				</div>
-							  			</div>
-							  			<div class="col-md-6">
-							  				<div class="row">
-								  				<div class="col-md-2">
-								  					<span>保証期間</span>
+								  			</div>
+										</div>
+										<div class="row">
+								  			<div class="col-md-6">
+								  				<div class="row">
+								  					<div class="col-md-2">
+								  						<span>購入金額</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control numVal" name="purchasePrice" value="0">
+								  					</div>
+								  					<div class="col-md-2">
+								  						<span>保管位置</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="storageLocation">
+								  					</div>
 								  				</div>
-								  				<div class="col-md-4">
-								  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
+								  			</div>
+								  			<div class="col-md-6">
+								  				<div class="row">
+								  					<div class="col-md-2">
+								  						<span>状態</span>
+								  					</div>
+								  					<div class="col-md-4">
+									                	<select name="statusCode" class="form-control" id="sNumber_search">
+									                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
+									                		th:inline="text">[[${code.codeDetailName}]]</option>
+														</select>
+								  					</div>
+								  					<div class="col-md-2">
+								  						<span>Maker</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="makerName">
+								  					</div>
 								  				</div>
-							  					<div class="col-md-2">
-							  						<span>購入先</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="buyTo">
-							  					</div>
-							  				</div>
-							  			</div>
+								  			</div>
+										</div>
+										<div class="row"><br></div>
+										<div class="row">
+								  			<div class="col-md-6">
+								  				<div class="row">
+								  					<div class="col-md-2">
+								  						<span>Model</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="modelName">
+								  					</div>
+								  					<div class="col-md-2">
+								  						<span>S/N</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="serialNum">
+								  					</div>
+								  				</div>
+								  			</div>
+								  			<div class="col-md-6">
+								  				<div class="row">
+								  					<div class="col-md-2">
+								  						<span>I/F</span>
+								  					</div>
+								  					<div class="col-md-4">
+								  						<input type="text" class="form-control" name="interFaceCol">
+								  					</div>
+								  					<div class="col-md-6">
+								  					</div>
+								  				</div>
+								  			</div>
+								  			<div class="col-md-12">
+								  				<br>
+								  				<span>その他</span>
+								  			</div>
+								  			<div class="col-md-12">
+								  				<input type="text" class="form-control" name="other">
+								  			</div>
+										</div>
 									</div>
-									<div class="row">
-							  			<div class="col-md-6">
-							  				<div class="row">
-							  					<div class="col-md-2">
-							  						<span>購入金額</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control numVal" name="purchasePrice" value="0">
-							  					</div>
-							  					<div class="col-md-2">
-							  						<span>保管位置</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="storageLocation">
-							  					</div>
-							  				</div>
+									<div class="x_panel">
+										<div class="x_title">
+											<div class="row">
+												<h2> PC仕様詳細入力</h2>
+												<ul class="nav navbar-right">
+													<li><a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="x_content" style="display: none;">
+											<div class="row well">
+									  			<div class="col-md-12">
+									  				<span>OS</span>
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>名(Edition)</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="osName">
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>Product Key</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="osProductKey">
+									  			</div>
+											</div>
+											<div class="row well">
+									  			<div class="col-md-12">
+									  				<span>CPU</span>
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>Processor</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="cpuProcessor">
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>動作周波数</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control numVal" name="operatingFrequency" value="0">
+									  			</div>
+								  			</div>
+								  			<div class="row well">
+								  				<div class="row">
+										  			<div class="col-md-12">
+										  				<span>Memory</span>
+										  			</div>
+										  			<div class="col-md-4">
+										  				<input type="text" class="form-control numVal" name="memory" value="0">
+										  			</div>
+										  			<div class="col-md-4 text-right">
+										  				<span>Upgarde</span>
+										  			</div>
+										  			<div class="col-md-4">
+										  				<input type="text" class="form-control numVal" name="memoryUpgarde" value="0">
+										  			</div>
+								  				</div>
+								  			</div>
+								  			<div class="row well">
+								  				<div class="row">
+										  			<div class="col-md-12">
+										  				<span>HDD</span>
+										  			</div>
+										  			<div class="col-md-4">
+										  				<input type="text" class="form-control numVal" name="hdd" value="0">
+										  			</div>
+										  			<div class="col-md-4 text-right">
+										  				<span>Upgarde</span>
+										  			</div>
+										  			<div class="col-md-4">
+										  				<input type="text" class="form-control numVal" name="hddUpgarde" value="0">
+										  			</div>
+								  				</div>
+								  			</div>
+								  			<div class="row well">
+									  			<div class="col-md-12">
+									  				<span>MAC</span>
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>LAN</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="macLan">
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>Wireless</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="macWireless">
+									  			</div>
+								  			</div>
+								  			<div class="row well">
+									  			<div class="col-md-12">
+									  				<span>Security</span>
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>BIOS</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="securityBios">
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>HDD</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="securityHdd">
+									  			</div>
+											</div>
+											<div class="row well">
+									  			<div class="col-md-12">
+									  				<span>Admin.Account</span>
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>ID</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="adminAccountId">
+									  			</div>
+									  			<div class="col-md-2">
+									  				<span>PW</span>
+									  			</div>
+									  			<div class="col-md-4">
+									  				<input type="text" class="form-control" name="adminAccountPwd">
+									  			</div>
+								  			</div>
 							  			</div>
-							  			<div class="col-md-6">
-							  				<div class="row">
-							  					<div class="col-md-2">
-							  						<span>状態</span>
-							  					</div>
-							  					<div class="col-md-4">
-								                	<select name="statusCode" class="form-control" id="sNumber_search">
-								                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
-								                		th:inline="text">[[${code.codeDetailName}]]</option>
-													</select>
-							  					</div>
-							  					<div class="col-md-2">
-							  						<span>Maker</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="makerName">
-							  					</div>
-							  				</div>
-							  			</div>
-									</div>
-									<div class="row"><br></div>
-									<div class="row">
-							  			<div class="col-md-6">
-							  				<div class="row">
-							  					<div class="col-md-2">
-							  						<span>Model</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="modelName">
-							  					</div>
-							  					<div class="col-md-2">
-							  						<span>S/N</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="serialNum">
-							  					</div>
-							  				</div>
-							  			</div>
-							  			<div class="col-md-6">
-							  				<div class="row">
-							  					<div class="col-md-2">
-							  						<span>I/F</span>
-							  					</div>
-							  					<div class="col-md-4">
-							  						<input type="text" class="form-control" name="interFaceCol">
-							  					</div>
-							  					<div class="col-md-6">
-							  					</div>
-							  				</div>
-							  			</div>
-									</div>
-						  			<div class="col-md-12">
-						  				<br>
-						  				<span>OS</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>名(Edition)</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="osName">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Product Key</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="osProductKey">
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<br>
-						  				<span>CPU</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Processor</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="cpuProcessor">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>動作周波数</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control numVal" name="operatingFrequency" value="0">
-						  			</div>
-									<div class="col-md-12">
-						  				<br>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<span>Memory</span>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<input type="text" class="form-control numVal" name="memory" value="0">
-						  			</div>
-						  			<div class="col-md-2 text-right">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<input type="text" class="form-control numVal" name="memoryUpgarde" value="0">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<input type="text" class="form-control numVal" name="hdd" value="0">
-						  			</div>
-						  			<div class="col-md-2 text-right">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<input type="text" class="form-control numVal" name="hddUpgarde" value="0">
-						  			</div>
-									<div class="col-md-12">
-						  				<br>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span>MAC</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>LAN</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="macLan">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Wireless</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="macWireless">
-						  			</div>
-									<div class="col-md-12">
-						  				<br>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span>その他</span>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<input type="text" class="form-control" name="other">
-						  			</div>
-									<div class="col-md-12">
-						  				<br>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span>Security</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>BIOS</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="securityBios">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="securityHdd">
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<br>
-						  				<span>Admin.Account</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>ID</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="adminAccountId">
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>PW</span>
-						  			</div>
-						  			<div class="col-md-4">
-						  				<input type="text" class="form-control" name="adminAccountPwd">
 						  			</div>
 							  	</div>
 						  	</div>
