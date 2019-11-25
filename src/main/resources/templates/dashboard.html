@@ -33,12 +33,6 @@
 
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
-<style>
-.test {
-	vertical-align : middle ;
-	align : center;
-		 }
-</style>
 </head>
 
 <body class="nav-md">
@@ -142,7 +136,6 @@
 										<td>[[${toplist[index].typeCnt}]] 個</td>
 									</tr>
 								</table>
-
 							</td>
 						</tr>
 					</table>
@@ -167,7 +160,7 @@
 
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content" >
+				<div class="x_content">
 				<div  th:if="${ sw > 0 }">
 					<table style="width: 100%">
 						<tr>
@@ -223,12 +216,11 @@
 						</tr>
 					</table>
 					</div>
-					<div th:if="${ sw <= 0 }" align = "center"  style = "margin-top: 40px;" >
+					<div th:if="${ sw <= 0 }"  align = "center"  style = "margin-top: 40px;">
 						<div style="font-size: 2.5em;">
 							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
 							<p>データなし</p>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -249,9 +241,8 @@
 
 							<div class="clearfix"></div>
 						</div>
-						<!-- init_morris_chart()：custom.min.js -->
-					<div th:if="${ rsize > 0 }">
-						<div class="x_content2" th:if = "${sw<=0}">
+						<!-- data -->
+						<div class="x_content2">
 							<div id="bargraph" style="width: 100%; height: 300px;"></div>
 						</div>
 						<div style="margin: 15px; padding-left: 10px;">
@@ -270,8 +261,8 @@
 								</tr>
 							</table>
 						</div>
-					</div>
-						<!-- init_morris_chart()：custom.min.js -->
+						<!-- /data -->
+						<!-- no data -->
 					<div th:if="${ rsize <= 0 }" class="x_content2" align="center"  style = "padding : 15px; margin: 30px 0px;" >
 						<div style="font-size: 2.5em;">
 							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
@@ -287,10 +278,10 @@
 							, [[${rentlist.fixed_rent_list07}]]のデータなし
 						</b>
 					</div>
+					<!-- /no data -->
 					</div>
 				</div>
 				<!-- /bar charts group -->
-
 			</div>
 		</div>
 	</div>
