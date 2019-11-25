@@ -331,4 +331,5 @@
         DELETE FROM asset WHERE asset_seq = #{assetSeq};
     </delete>
 
+
 </mapper>
