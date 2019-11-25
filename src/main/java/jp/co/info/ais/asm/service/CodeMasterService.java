@@ -51,15 +51,14 @@ public class CodeMasterService {
 
 	}
 
-<<<<<<< HEAD
-	public void updateCodeMaster(CodeMaster masterCode) {
+	public int updateCodeMaster(CodeMaster masterCode) {
 
-		 codeMasterMapper.updateCodeMaster(masterCode);
+		 return codeMasterMapper.updateCodeMaster(masterCode);
 
-=======
+	}
 	public int deleteMasterCode(String codeMasterId) {
 		return codeMasterMapper.deleteMasterCode(codeMasterId);
->>>>>>> 3be52e8d4c16704a50ade481eb63dbaf52450ea4
+
 	}
 
 }

@@ -110,14 +110,13 @@ public class CodeMasterController {
 		return num;
 	}
 
-<<<<<<< HEAD
+
 	@RequestMapping(value = "/updateCodeMaster", method = RequestMethod.POST)
 	@ResponseBody
 	public int updateCodeMaster(@RequestBody CodeMaster masterCode) {
 		int num = 0;
 		try {
-
-			codeMasterService.updateCodeMaster(masterCode);
+			 num = codeMasterService.updateCodeMaster(masterCode);
 
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
@@ -125,7 +124,7 @@ public class CodeMasterController {
 
 		return num;
 	}
-=======
+
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public int assetDelete(@RequestBody String codeMasterId) {
@@ -138,6 +137,6 @@ public class CodeMasterController {
 		}
         return result;
     }
->>>>>>> 3be52e8d4c16704a50ade481eb63dbaf52450ea4
+
 
 }
