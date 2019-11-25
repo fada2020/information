@@ -90,15 +90,15 @@
 		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
 		UPDATE code_master SET
 
-		code_master_name=#{codeMasterName}
-		remarks=#{remarks}
+		code_master_name=#{codeMasterName},
+		remarks=#{remarks},
 		use_Flag=#{useFlag}
 		WHERE code_master_id = #{codeMasterId}
 
 	</update>
 
-    <delete id="deleteMasterCode">
-        DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
-    </delete>
+	<delete id="deleteMasterCode">
+		DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
+	</delete>
 
 </mapper>

@@ -28,11 +28,11 @@ public interface CodeMasterMapper {
 
 	void CodeMasterInsert(CodeMaster codeMasterId);
 
-<<<<<<< HEAD
-	void updateCodeMaster(CodeMaster codeMasterId);
 
-=======
+	int updateCodeMaster(CodeMaster codeMasterId);
+
+
 	int deleteMasterCode(String codeMasterId);
->>>>>>> 3be52e8d4c16704a50ade481eb63dbaf52450ea4
+
 
 }
