@@ -43,11 +43,17 @@ public class CodeMasterService {
 	public int CodeMasterListCheck(CodeMaster masterCode) {
 		int num = 0;
 		num = codeMasterMapper.CodeMasterListCheck(masterCode);
-		if (num== 0) {
+		if (num == 0) {
 			codeMasterMapper.CodeMasterInsert(masterCode);
 		}
 
 		return num;
+
+	}
+
+	public void updateCodeMaster(CodeMaster masterCode) {
+
+		 codeMasterMapper.updateCodeMaster(masterCode);
 
 	}
 

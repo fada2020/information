@@ -110,4 +110,19 @@ public class CodeMasterController {
 		return num;
 	}
 
+	@RequestMapping(value = "/updateCodeMaster", method = RequestMethod.POST)
+	@ResponseBody
+	public int updateCodeMaster(@RequestBody CodeMaster masterCode) {
+		int num = 0;
+		try {
+
+			codeMasterService.updateCodeMaster(masterCode);
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
+	}
+
 }

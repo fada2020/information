@@ -64,8 +64,8 @@
 			AND code_master_name like '%${codeMasterName}%'
 		</if>
 	</select>
-	<select id="CodeMasterListCheck" parameterType="jp.co.info.ais.asm.domain.CodeMaster"
-		resultType="int">
+	<select id="CodeMasterListCheck"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster" resultType="int">
 		SELECT
 		count(*)
 		FROM code_master
@@ -81,9 +81,20 @@
 		VALUES (
 		#{codeMasterId}
 		, #{codeMasterName}
-		, #{remarks}
+		,
+		#{remarks}
 		, #{useFlag}
 		)
 	</insert>
+	<update id="updateCodeMaster"
+		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		UPDATE code_master SET
+
+		code_master_name=#{codeMasterName}
+		remarks=#{remarks}
+		use_Flag=#{useFlag}
+		WHERE code_master_id = #{codeMasterId}
+
+	</update>
 
 </mapper>

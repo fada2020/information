@@ -28,4 +28,7 @@ public interface CodeMasterMapper {
 
 	void CodeMasterInsert(CodeMaster codeMasterId);
 
+	void updateCodeMaster(CodeMaster codeMasterId);
+
+
 }
