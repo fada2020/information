@@ -20,7 +20,7 @@ public class DashboardService {
 		possession = dashboardMapper.possession();
 		return possession;
 	}
-	//	新しいアイテム
+	//	今月購入した装置
 	public int newItem() throws Exception {
 		int newItem = dashboardMapper.newItem();
 		return newItem;
