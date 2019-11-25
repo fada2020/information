@@ -110,4 +110,17 @@ public class CodeMasterController {
 		return num;
 	}
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public int assetDelete(@RequestBody String codeMasterId) {
+    	int result = 0;
+    	try {
+	    	// 資産情報削除
+	    	result = codeMasterService.deleteMasterCode(codeMasterId);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return result;
+    }
+
 }
