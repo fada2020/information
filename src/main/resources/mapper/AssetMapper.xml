@@ -326,8 +326,9 @@
     </insert>
 
     <delete id="deleteAsset">
-        DELETE FROM maintenance_history WHERE asset_seq = #{assetSeq};
+        DELETE FROM rental WHERE asset_seq = #{assetSeq};
         DELETE FROM accessories WHERE asset_seq = #{assetSeq};
+        DELETE FROM maintenance_history WHERE asset_seq = #{assetSeq};
         DELETE FROM asset WHERE asset_seq = #{assetSeq};
     </delete>
 
