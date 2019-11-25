@@ -29,11 +29,10 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String index(Model model) {
-
 		try {
 			// 保有現況装置
-			ArrayList<Dashboard> dash = dashboardService.possession();// HW, SW, Total 装置数量
-			int newItem = dashboardService.newItem();// 今月購入した装置数量
+			ArrayList<Dashboard> dash = dashboardService.possession();	// HW, SW, Total 装置数量
+			int newItem = dashboardService.newItem();	// 今月購入した装置数量
 			int hwCnt = 0;
 			int swCnt = 0;
 			for (Dashboard item : dash) {
@@ -82,10 +81,9 @@ public class MainController {
 			rslist = dashboardService.rslist();
 			int rsize = dashboardService.rslist().size();
 			// 【目録】貸与現況グラフ
-			AppConstant rentlist = new AppConstant();	// constant
+			AppConstant rentlist = new AppConstant();	// 常数
 			model.addAttribute("rentlist", rentlist);
 			model.addAttribute("rsize", rsize);
-
 			// 【数量】貸与現況グラフ：保有、貸与
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);

@@ -47,248 +47,287 @@
 			<!-- /top navigation -->
 
 			<!-- page content -->
-			    <div class="right_col" role="main">
-		<!-- top tiles -->
-
-           <div class="row tile_count" style="margin-bottom: -10px;">
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style = "padding : 10px 0px 0px;"><div class="text-center">
-              <h3><b>総ハードウェア</b></h3>
-              <div class="count"><i class="fa fa-desktop"></i>  [[${hwCnt}]] 個</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style = "padding : 10px 0px 0px;"><div class="text-center">
-              <h3><b>総ソフトウェア</b></h3>
-              <div class="count"><i class="fa fa-tasks"></i>  [[${swCnt}]] 個</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style = "padding : 10px 0px 0px;"><div class="text-center">
-             <h3><b> 総資産装置</b></h3>
-              <div class="count"><i class="fa fa-cubes"></i>  [[${totalCnt}]] 個</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style = "padding : 10px 0px 0px;"><div class="text-center">
-              <h3><b>今月購入した装置</b></h3>
-              <div class="count"><i class="fa fa-plus"></i>  [[${newItem}]] 個</div></div>
-            </div>
-          </div>
+			<div class="right_col" role="main">
+				<!-- top tiles -->
+				<div class="row tile_count" style="margin-bottom: -10px;">
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"
+						style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3>
+								<b>総ハードウェア</b>
+							</h3>
+							<div class="count">
+								<i class="fa fa-desktop"></i> [[${hwCnt}]] 個
+							</div>
+						</div>
+					</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"
+						style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3>
+								<b>総ソフトウェア</b>
+							</h3>
+							<div class="count">
+								<i class="fa fa-tasks"></i> [[${swCnt}]] 個
+							</div>
+						</div>
+					</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"
+						style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3>
+								<b> 総資産装置</b>
+							</h3>
+							<div class="count">
+								<i class="fa fa-cubes"></i> [[${totalCnt}]] 個
+							</div>
+						</div>
+					</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"
+						style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3>
+								<b>今月購入した装置</b>
+							</h3>
+							<div class="count">
+								<i class="fa fa-plus"></i> [[${newItem}]] 個
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- /top tiles -->
-<br />
-<!-- Graph  -->
-<div class="col-md-12 col-sm-8 col-xs-12">
-	<div class="row">
-		<!-- Hardware Top5  -->
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel tile fixed_height_320 overflow_hidden">
-				<div class="x_title">
-					<h2>
-						<b>ハードウェア保有現況</b>
-					</h2>
-					<div class="clearfix"></div>
+				<br />
+				<!-- Graph  -->
+				<div class="col-md-12 col-sm-8 col-xs-12">
+					<div class="row">
+						<!-- ハードウェア保有現況  -->
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel tile fixed_height_320 overflow_hidden">
+								<div class="x_title">
+									<h2>
+										<b>ハードウェア保有現況</b>
+									</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div th:if="${ hw > 0 }">
+										<table class="" style="width: 100%">
+											<tr>
+												<th style="width: 37%;">
+													<h4>
+														&nbsp;&nbsp;<b>順位</b>
+													</h4>
+												</th>
+												<th>
+													<table class="tile_info">
+														<tr>
+															<th>
+																<h4>
+																	<b>ハードウェア種別</b>
+																</h4>
+															</th>
+															<th>
+																<h4>
+																	<b>保有量</b>
+																</h4>
+															</th>
+														</tr>
+													</table>
+												</th>
+											</tr>
+											<tr>
+												<td>
+													<canvas class="canvasDoughnut1" height="140" width="140"
+														style="margin: 15px 10px 10px 0"></canvas>
+												</td>
+												<td style="vertical-align: top; padding: 15px;">
+
+													<table class="tile_info" th:if="${ hw > 4 }">
+														<tr th:each="index:${#numbers.sequence(0,4)}"
+															th:if="${#strings.equals(toplist[index].typeName,'HW')}">
+															<td>
+																<p>
+																	<i class="fa fa-square"
+																		th:style="|color: ${colorTop[index]}|"></i>
+																	[[${toplist[index].kubunName}]]
+																</p>
+															</td>
+															<td>[[${toplist[index].typeCnt}]] 個</td>
+														</tr>
+													</table>
+													<table class="tile_info" th:if="${ hw < 5 && hw > 0}">
+														<tr
+															th:each="index:${#numbers.sequence(0, #lists.size(toplist)-sw-1)}"
+															th:if="${#strings.equals(toplist[index].typeName,'HW')}">
+															<td>
+																<p>
+																	<i class="fa fa-square"
+																		th:style="|color: ${colorTop[index]}|"></i>
+																	[[${toplist[index].kubunName}]]
+																</p>
+															</td>
+															<td>[[${toplist[index].typeCnt}]] 個</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div th:if="${ hw <= 0 }" align="center"
+										style="margin-top: 40px;">
+										<div style="font-size: 2.5em;">
+											<i class="fa fa-exclamation-triangle fa-2x"
+												style="color: Tomato;"></i>
+											<p>データなし</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /ハードウェア保有現況 -->
+						<!-- ソフトウェア保有現況  -->
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel tile fixed_height_320 overflow_hidden">
+								<div class="x_title">
+									<h2>
+										<b>ソフトウェア保有現況</b>
+									</h2>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div th:if="${ sw > 0 }">
+										<table style="width: 100%">
+											<tr>
+												<th style="width: 37%;">
+													<h4>
+														&nbsp;&nbsp;<b>順位</b>
+													</h4>
+												</th>
+												<th>
+													<table class="tile_info">
+														<tr>
+															<th>
+																<h4>
+																	<b>ソフトウェア種別</b>
+																</h4>
+															</th>
+															<th>
+																<h4>
+																	<b>保有量</b>
+																</h4>
+															</th>
+														</tr>
+													</table>
+												</th>
+											</tr>
+											<tr>
+												<td>
+													<canvas class="canvasDoughnut2" height="140" width="140"
+														style="margin: 15px 10px 10px 0"></canvas>
+												</td>
+												<td style="vertical-align: top; padding: 15px;">
+													<table class="tile_info" th:if="${ sw > 4 }">
+														<tr th:each="index:${#numbers.sequence(0,4)}"
+															th:if="${#strings.equals(toplist[index].typeName,'SW')}">
+															<td>
+																<p>
+																	<i class="fa fa-square"
+																		th:style="|color: ${colorTop[index]}|"></i>
+																	[[${toplist[index+hw].kubunName}]]
+																</p>
+															</td>
+															<td>[[${toplist[index+hw].typeCnt}]] 個</td>
+														</tr>
+													</table>
+													<table class="tile_info" th:if="${ sw < 5 && sw > 0 }">
+														<tr
+															th:each="index:${#numbers.sequence(0,#lists.size(toplist)-hw-1)}"
+															th:if="${#strings.equals(toplist[index+hw].typeName,'SW')}">
+															<td>
+																<p>
+																	<i class="fa fa-square"
+																		th:style="|color: ${colorTop[index]}|"></i>
+																	[[${toplist[index+hw].kubunName}]]
+																</p>
+															</td>
+															<td>[[${toplist[index+hw].typeCnt}]] 個</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div th:if="${ sw <= 0 }" align="center"
+										style="margin-top: 40px;">
+										<div style="font-size: 2.5em;">
+											<i class="fa fa-exclamation-triangle fa-2x"
+												style="color: Tomato;"></i>
+											<p>データなし</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /ソフトウェア保有現況 -->
+					<!-- 資産貸与現況 -->
+					<div class="row">
+						<!-- bar charts group -->
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>
+										<b>資産貸与現況</b><small></small>
+									</h2>
+									<div class="clearfix"></div>
+								</div>
+								<!-- データあり -->
+								<div class="x_content2" th:if="${ rsize > 0 }">
+									<div id="bargraph" style="width: 100%; height: 300px;"></div>
+								</div>
+								<div th:if="${ rsize > 0 }"
+									style="margin: 15px; padding-left: 10px;">
+									<table>
+										<tr>
+											<td width="200px">
+												<p style="font-size: 15px;">
+													<i class="fa fa-square" style="color: blue;"></i> 保管
+												</p>
+											</td>
+											<td width="200px">
+												<p style="font-size: 15px;">
+													<i class="fa fa-square" style="color: red;"></i> 貸与
+												</p>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<!-- /データあり -->
+								<!-- データなし -->
+								<div th:if="${ rsize <= 0 }" class="x_content2" align="center"
+									style="padding: 15px; margin: 30px 0px;">
+									<div style="font-size: 2.5em;">
+										<i class="fa fa-exclamation-triangle fa-2x"
+											style="color: Tomato;"></i>
+										<div style="word-spacing: 1px;">データなし</div>
+									</div>
+									<b> [[${rentlist.fixed_rent_list01}]] ,
+										[[${rentlist.fixed_rent_list02}]] ,
+										[[${rentlist.fixed_rent_list03}]] ,
+										[[${rentlist.fixed_rent_list04}]] ,
+										[[${rentlist.fixed_rent_list05}]] ,
+										[[${rentlist.fixed_rent_list06}]] ,
+										[[${rentlist.fixed_rent_list07}]]のデータなし </b>
+								</div>
+								<!-- /データなし -->
+							</div>
+						</div>
+						<!-- /bar charts group -->
+					</div>
+					<!-- /資産貸与現況 -->
 				</div>
-				<div class="x_content">
-					<div  th:if="${ hw > 0 }">
-					<table class="" style="width: 100%">
-						<tr>
-							<th style="width: 37%;">
-								<h4>
-									&nbsp;&nbsp;<b>順位</b>
-								</h4>
-							</th>
-							<th>
-								<table class="tile_info" >
-									<tr>
-										<th>
-											<h4><b>ハードウェア種別</b></h4>
-										</th>
-										<th>
-											<h4><b>保有量</b></h4>
-										</th>
-									</tr>
-								</table>
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<canvas class="canvasDoughnut1" height="140" width="140"
-									style="margin: 15px 10px 10px 0"></canvas>
-							</td>
-							<td style = "vertical-align: top; padding : 15px;">
-
-								<table class="tile_info" th:if="${ hw > 4 }">
-									<tr th:each="index:${#numbers.sequence(0,4)}"
-										th:if="${#strings.equals(toplist[index].typeName,'HW')}">
-										<td>
-											<p>
-												<i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>
-												[[${toplist[index].kubunName}]]
-											</p>
-										</td>
-										<td>[[${toplist[index].typeCnt}]] 個</td>
-									</tr>
-								</table>
-								<table class="tile_info" th:if="${ hw < 5 && hw > 0}">
-									<tr	th:each="index:${#numbers.sequence(0, #lists.size(toplist)-sw-1)}"
-										th:if="${#strings.equals(toplist[index].typeName,'HW')}">
-										<td>
-											<p>
-												<i class="fa fa-square"
-													th:style="|color: ${colorTop[index]}|"></i>
-												[[${toplist[index].kubunName}]]
-											</p>
-										</td>
-										<td>[[${toplist[index].typeCnt}]] 個</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					</div>
-					<div th:if="${ hw <= 0 }"  align = "center"  style = "margin-top: 40px;">
-						<div style="font-size: 2.5em;">
-							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
-							<p>データなし</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Hardware Top5 -->
-		<!-- Software Top5  -->
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel tile fixed_height_320 overflow_hidden">
-				<div class="x_title">
-					<h2>
-						<b>ソフトウェア保有現況</b>
-					</h2>
-
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-				<div  th:if="${ sw > 0 }">
-					<table style="width: 100%">
-						<tr>
-							<th style="width: 37%;">
-								<h4>
-									&nbsp;&nbsp;<b>順位</b>
-								</h4>
-							</th>
-							<th>
-								<table class="tile_info" >
-									<tr>
-										<th>
-											<h4><b>ソフトウェア種別</b></h4>
-										</th>
-										<th>
-											<h4><b>保有量</b></h4>
-										</th>
-									</tr>
-								</table>
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<canvas class="canvasDoughnut2" height="140" width="140"
-									style="margin: 15px 10px 10px 0"></canvas>
-							</td>
-							<td style = "vertical-align: top; padding : 15px;">
-								<table class="tile_info" th:if="${ sw > 4 }">
-									<tr th:each="index:${#numbers.sequence(0,4)}"
-										th:if="${#strings.equals(toplist[index].typeName,'SW')}">
-										<td>
-											<p>
-												<i class="fa fa-square"	th:style="|color: ${colorTop[index]}|"></i>
-												[[${toplist[index+hw].kubunName}]]
-											</p>
-										</td>
-										<td>[[${toplist[index+hw].typeCnt}]] 個</td>
-									</tr>
-								</table>
-								<table class="tile_info" th:if="${ sw < 5 && sw > 0 }" >
-									<tr	th:each="index:${#numbers.sequence(0,#lists.size(toplist)-hw-1)}"
-										th:if="${#strings.equals(toplist[index+hw].typeName,'SW')}">
-										<td>
-											<p>
-												<i class="fa fa-square"	th:style="|color: ${colorTop[index]}|"></i>
-												[[${toplist[index+hw].kubunName}]]
-											</p>
-										</td>
-										<td>[[${toplist[index+hw].typeCnt}]] 個</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					</div>
-					<div th:if="${ sw <= 0 }"  align = "center"  style = "margin-top: 40px;">
-						<div style="font-size: 2.5em;">
-							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
-							<p>データなし</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Software Top5 -->
-
-	<div class="row">
-		<div class="">
-			<div class="row">
-				<!-- bar charts group -->
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel">
-						<div class="x_title">
-							<h2>
-								<b>資産貸与現況</b><small></small>
-							</h2>
-
-							<div class="clearfix"></div>
-						</div>
-						<!-- data -->
-						<div class="x_content2">
-							<div id="bargraph" style="width: 100%; height: 300px;"></div>
-						</div>
-						<div style="margin: 15px; padding-left: 10px;">
-							<table>
-								<tr>
-									<td width="200px">
-										<p style="font-size: 15px;">
-											<i class="fa fa-square" style="color: blue;"></i> 保管
-										</p>
-									</td>
-									<td width="200px">
-										<p style="font-size: 15px;">
-											<i class="fa fa-square" style="color: red;"></i> 貸与
-										</p>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- /data -->
-						<!-- no data -->
-					<div th:if="${ rsize <= 0 }" class="x_content2" align="center"  style = "padding : 15px; margin: 30px 0px;" >
-						<div style="font-size: 2.5em;">
-							<i class="fa fa-exclamation-triangle fa-2x"  style="color: Tomato;"></i>
-							<div style = "word-spacing: 1px;">データなし</div>
-						</div>
-						<b>
-							[[${rentlist.fixed_rent_list01}]]
-							, [[${rentlist.fixed_rent_list02}]]
-							, [[${rentlist.fixed_rent_list03}]]
-							, [[${rentlist.fixed_rent_list04}]]
-							, [[${rentlist.fixed_rent_list05}]]
-							, [[${rentlist.fixed_rent_list06}]]
-							, [[${rentlist.fixed_rent_list07}]]のデータなし
-						</b>
-					</div>
-					<!-- /no data -->
-					</div>
-				</div>
-				<!-- /bar charts group -->
-			</div>
-		</div>
-	</div>
-</div>
-<!--/Graph  -->
-
-
+				<!--/Graph  -->
 			</div>
 			<!-- /page content -->
 
@@ -319,309 +358,66 @@
 	<script src="../build/js/custom.min.js"></script>
 
 
-
-
 	<script type="text/javascript">
 
 $(document).ready(function() {
-	init_chart_doughnut1(), init_chart_doughnut2(), init_charts(), init_morris_charts_dashboard(), init_DataTables(), init_compose()
+	init_chart_doughnut1(), init_chart_doughnut2(), init_morris_charts_dashboard()
 	});
 
-	function init_charts() {
-	    if (console.log("run_charts  typeof [" + typeof Chart + "]"), "undefined" != typeof Chart) {
-	        if (console.log("init_charts"), Chart.defaults.global.legend = {
-	                enabled: !1
-	            }, $("#canvas_line").length) {
-	            new Chart(document.getElementById("canvas_line"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line1").length) {
-	            new Chart(document.getElementById("canvas_line1"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line2").length) {
-	            new Chart(document.getElementById("canvas_line2"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line3").length) {
-	            new Chart(document.getElementById("canvas_line3"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line4").length) {
-	            new Chart(document.getElementById("canvas_line4"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#lineChart").length) {
-	            var f = document.getElementById("lineChart");
-	            new Chart(f, {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#mybarChart").length) {
-	            var f = document.getElementById("mybarChart");
-	            new Chart(f, {
-	                type: "bar",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "# of Votes",
-	                        backgroundColor: "#26B99A",
-	                        data: [51, 30, 40, 28, 92, 50, 45]
-	                    }, {
-	                        label: "# of Votes",
-	                        backgroundColor: "#03586A",
-	                        data: [41, 56, 25, 48, 72, 34, 12]
-	                    }]
-	                },
-	                options: {
-	                    scales: {
-	                        yAxes: [{
-	                            ticks: {
-	                                beginAtZero: !0
-	                            }
-	                        }]
-	                    }
-	                }
-	            })
-	        }
-	        if ($("#canvasDoughnut").length) {
-	            var f = document.getElementById("canvasDoughnut"),
-	                i = {
-	                    labels: ["Dark Grey", "Purple Color", "Gray Color", "Green Color", "Blue Color"],
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        hoverBackgroundColor: ["#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA"]
-	                    }]
-	                };
-	            new Chart(f, {
-	                type: "doughnut",
-	                tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-	                data: i
-	            })
-	        }
-	        if ($("#canvasRadar").length) {
-	            var f = document.getElementById("canvasRadar"),
-	                i = {
-	                    labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.2)",
-	                        borderColor: "rgba(3, 88, 106, 0.80)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.80)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        data: [65, 59, 90, 81, 56, 55, 40]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.2)",
-	                        borderColor: "rgba(38, 185, 154, 0.85)",
-	                        pointColor: "rgba(38, 185, 154, 0.85)",
-	                        pointStrokeColor: "#fff",
-	                        pointHighlightFill: "#fff",
-	                        pointHighlightStroke: "rgba(151,187,205,1)",
-	                        data: [28, 48, 40, 19, 96, 27, 100]
-	                    }]
-	                };
-	            new Chart(f, {
-	                type: "radar",
-	                data: i
-	            })
-	        }
-	        if ($("#pieChart").length) {
-	            var f = document.getElementById("pieChart"),
-	                i = {
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        label: "My dataset"
-	                    }],
-	                    labels: ["Dark Gray", "Purple", "Gray", "Green", "Blue"]
-	                };
-	            new Chart(f, {
-	                data: i,
-	                type: "pie",
-	                otpions: {
-	                    legend: !1
-	                }
-	            })
-	        }
-	        if ($("#polarArea").length) {
-	            var f = document.getElementById("polarArea"),
-	                i = {
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        label: "My dataset"
-	                    }],
-	                    labels: ["Dark Gray", "Purple", "Gray", "Green", "Blue"]
-	                };
-	            new Chart(f, {
-	                data: i,
-	                type: "polarArea",
-	                options: {
-	                    scale: {
-	                        ticks: {
-	                            beginAtZero: !0
-	                        }
-	                    }
-	                }
-	            })
-	        }
-	    }
-	}
+// 保有現況グラフ：ハードウェア
+function init_chart_doughnut1() {
+	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
 
-// 貸与現況グラフ
+        var a = {
+            type: "doughnut",
+            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            data: {
+                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
+                datasets: [{
+                    data: ["[[${hardCnt[0]}]]","[[${hardCnt[1]}]]","[[${hardCnt[2]}]]","[[${hardCnt[3]}]]","[[${hardCnt[4]}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
+                }]
+            },
+            options: {
+                legend: !1,
+                responsive: !1
+            }
+        };
+        $(".canvasDoughnut1").each(function() {
+            var b = $(this);
+            new Chart(b, a)
+        })
+    }
+}
+
+// 保有現況グラフ：ソフトウェア
+function init_chart_doughnut2() {
+    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
+        var a = {
+            type: "doughnut",
+            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            data: {
+                labels: ["[[${softTop[0]}]]","[[${softTop[1]}]]","[[${softTop[2]}]]","[[${softTop[3]}]]","[[${softTop[4]}]]"],
+                datasets: [{
+                    data: ["[[${softCnt[0]}]]","[[${softCnt[1]}]]","[[${softCnt[2]}]]","[[${softCnt[3]}]]","[[${softCnt[4]}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
+                }]
+            },
+            options: {
+                legend: !1,
+                responsive: !1
+            }
+        };
+        $(".canvasDoughnut2").each(function() {
+            var b = $(this);
+            new Chart(b, a)
+        })
+    }
+}
+
+//貸与現況グラフ
 	function init_morris_charts_dashboard() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
@@ -666,126 +462,7 @@ $(document).ready(function() {
 	)
 	}
 
-	function init_DataTables() {
-	    if (console.log("run_datatables"), "undefined" != typeof $.fn.DataTable) {
-	        console.log("init_DataTables");
-	        var a = function() {
-	            $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
-	                dom: "Blfrtip",
-	                buttons: [{
-	                    extend: "copy",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "csv",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "excel",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "pdfHtml5",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "print",
-	                    className: "btn-sm"
-	                }],
-	                responsive: !0
-	            })
-	        };
-	        TableManageButtons = function() {
-	            "use strict";
-	            return {
-	                init: function() {
-	                    a()
-	                }
-	            }
-	        }(), $("#datatable").dataTable(), $("#datatable-keytable").DataTable({
-	            keys: !0
-	        }), $("#datatable-responsive").DataTable(), $("#datatable-scroller").DataTable({
-	            ajax: "js/datatables/json/scroller-demo.json",
-	            deferRender: !0,
-	            scrollY: 380,
-	            scrollCollapse: !0,
-	            scroller: !0
-	        }), $("#datatable-fixed-header").DataTable({
-	            fixedHeader: !0
-	        });
-	        var b = $("#datatable-checkbox");
-	        b.dataTable({
-	            order: [
-	                [1, "asc"]
-	            ],
-	            columnDefs: [{
-	                orderable: !1,
-	                targets: [0]
-	            }]
-	        }), b.on("draw.dt", function() {
-	            $("checkbox input").iCheck({
-	                checkboxClass: "icheckbox_flat-green"
-	            })
-	        }), TableManageButtons.init()
-	    }
-	}
-
-	function init_compose() {
-	    "undefined" != typeof $.fn.slideToggle && (console.log("init_compose"), $("#compose, .compose-close").click(function() {
-	        $(".compose").slideToggle()
-	    }))
-	}
-
-/* Topグラフ */
-function init_chart_doughnut1() {
-	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
-
-        var a = {
-            type: "doughnut",
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: {
-                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]"],
-                datasets: [{
-                    data: ["[[${hardCnt[0]}]]","[[${hardCnt[1]}]]","[[${hardCnt[2]}]]","[[${hardCnt[3]}]]","[[${hardCnt[4]}]]"],
-                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
-                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
-                }]
-            },
-            options: {
-                legend: !1,
-                responsive: !1
-            }
-        };
-        $(".canvasDoughnut1").each(function() {
-            var b = $(this);
-            new Chart(b, a)
-        })
-    }
-}
-
-function init_chart_doughnut2() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
-        var a = {
-            type: "doughnut",
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: {
-                labels: ["[[${softTop[0]}]]","[[${softTop[1]}]]","[[${softTop[2]}]]","[[${softTop[3]}]]","[[${softTop[4]}]]"],
-                datasets: [{
-                    data: ["[[${softCnt[0]}]]","[[${softCnt[1]}]]","[[${softCnt[2]}]]","[[${softCnt[3]}]]","[[${softCnt[4]}]]"],
-                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"],
-                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8"]
-                }]
-            },
-            options: {
-                legend: !1,
-                responsive: !1
-            }
-        };
-        $(".canvasDoughnut2").each(function() {
-            var b = $(this);
-            new Chart(b, a)
-        })
-    }
-}
-
 </script>
-
 
 	<!-- Chart.js -->
 	<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
@@ -815,8 +492,6 @@ function init_chart_doughnut2() {
 	<!-- bootstrap-daterangepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
 	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-
 	<!-- morris.js -->
 	<script src="../vendors/raphael/raphael.min.js"></script>
 	<script src="../vendors/morris.js/morris.min.js"></script>
