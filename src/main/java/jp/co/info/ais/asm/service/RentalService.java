@@ -134,4 +134,5 @@ public class RentalService {
 		return rentalMapper.updateRental(rental);
 	}
 
+
 }

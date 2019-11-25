@@ -30,7 +30,10 @@
 		r.asset_seq = a.asset_seq
 		WHERE
 		1 = 1
-		<if test="assetNumber != null and !assetNumber.equals('')">
+		<if test="storageLocation != null and !storageLocation.equals('')">
+			AND r.storage_Location LIKE '%${storageLocation}%'
+		</if>
+			<if test="assetNumber != null and !assetNumber.equals('')">
 			AND a.asset_number LIKE '%${assetNumber}%'
 		</if>
 		<if test="rentalDayS != null and rentalDayE !=null">
@@ -261,6 +264,8 @@
 		where asset_seq=#{assetSeq}
 
 	</update>
+
+
 
 </mapper>
 

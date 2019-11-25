@@ -46,4 +46,6 @@ public interface RentalMapper {
 
 	public int updateRental(Rental rental);
 
+
+
 }

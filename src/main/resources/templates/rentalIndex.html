@@ -88,7 +88,13 @@
 							<input type="text" class="form-control" placeholder="管理番号"
 								id="assetNumber_search">
 						</div>
-
+						<div class="col-md-1">
+							<span class="pull-right" style="font-size: 18px;">場所</span>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control"
+								id="storageLocation_search">
+						</div>
 						<div class="col-md-1">
 							<span class="pull-right" style="font-size: 18px;">貸与日</span>
 						</div>
@@ -110,6 +116,7 @@
 
 
 						</div>
+
 						<button type="button" id="deleteButton" class="btn btn-primary"
 							style="float: right;" onclick="modalInsert()">貸与</button>
 
@@ -143,8 +150,6 @@
 										<th class="col-md-1">貸与期間</th>
 										<th class="col-md-1"></th>
 										<th class="col-md-1"></th>
-									</tr>
-
 								</thead>
 								<tbody>
 								</tbody>
@@ -509,6 +514,17 @@
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
+    	     var deleteList="";
+    		function deleteAct(target){
+    			alert(target.value);
+            	if(target.checked == true){
+              		deleteList += target.value;
+            	} else{
+            		deleteList = deleteList.replace(target.value,"");
+            	}
+            }
+
+
 
   var modalesectiondata = null;
 
@@ -590,7 +606,9 @@
 
 
 
-        	/*!カーレンダーの機能  */
+
+        	/*!カーレンダーの機能
+        	*/
             $('#rentalDay_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
@@ -662,6 +680,7 @@
 					 */
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                    		d.columns[1].search.value = $('#rental_search').val();
+                   		d.columns[2].search.value = $('#storageLocation_search').val();
                         return JSON.stringify(d);
                     }
                 },
@@ -670,7 +689,6 @@
 				},
 /*コンローラーで貰ったデータを元にしてデータを見せる  */
                 "columnDefs": [
-
 
                 	{ targets: 0, data: "rentalNo"},
 
@@ -712,7 +730,10 @@
                            }
                     }
 
+
                 ]
+
+
             });
 
             /*assetNumberを貰ってメイン画面のデータを変える*/
@@ -731,6 +752,15 @@
                 .search(date)
                 .draw();
             });
+            $("#storageLocation_search").on( 'keyup',function () {
+                var date = $("#rental_search").val();
+
+                modalesectiontable
+                .column(2)
+                .search(this.value)
+                .draw();
+            });
+
         })
     /*]]>*/
     </script>

@@ -32,6 +32,7 @@ public class RentalController {
 
 	@Autowired
 	private RentalService rentalService;
+
 	/**
 	 * 貸与管理ルトー
 	 *
@@ -170,7 +171,10 @@ public class RentalController {
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
-
+			String storageLocation = page.getColumns().get(2).getSearch().getValue();
+			if (null != storageLocation && !storageLocation.equals("")) {
+				rental.setStorageLocation(storageLocation);
+			}
 			List<Rental> list = rentalService.selectAll(rental);
 
 			page.setData(list);
@@ -245,4 +249,7 @@ public class RentalController {
 		}
 		return successNum;
 	}
+
+
+
 }
