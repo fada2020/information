@@ -33,6 +33,12 @@
 
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
+<style>
+.test {
+	vertical-align : middle ;
+	align : center;
+		 }
+</style>
 </head>
 
 <body class="nav-md">
@@ -141,8 +147,8 @@
 						</tr>
 					</table>
 					</div>
-					<div align="center" th:if="${ hw <= 0 }">
-						<h1><i class="fa fa-exclamation black"></i>  no data</h1>
+					<div th:if="${ hw <= 0 }"  align = "center"  style = "margin-top: 65px;">
+						<h1><i class="fa fa-exclamation-triangle"></i>  データなし</h1>
 					</div>
 				</div>
 			</div>
@@ -158,7 +164,7 @@
 
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content">
+				<div class="x_content" >
 				<div  th:if="${ sw > 0 }">
 					<table style="width: 100%">
 						<tr>
@@ -214,8 +220,8 @@
 						</tr>
 					</table>
 					</div>
-					<div align="center" th:if="${ sw <= 0 }">
-						<h1><i class="fa fa-exclamation black"></i>  no data</h1>
+					<div th:if="${ sw <= 0 }" align = "center"  style = "margin-top: 65px;" >
+						<h1><i class="fa fa-exclamation-triangle"></i>  データなし</h1>
 					</div>
 				</div>
 			</div>
@@ -237,7 +243,8 @@
 							<div class="clearfix"></div>
 						</div>
 						<!-- init_morris_chart()：custom.min.js -->
-						<div class="x_content2">
+					<div th:if="${ rsize > 0 }">
+						<div class="x_content2" th:if = "${sw<=0}">
 							<div id="bargraph" style="width: 100%; height: 300px;"></div>
 						</div>
 						<div style="margin: 15px; padding-left: 10px;">
@@ -256,10 +263,23 @@
 								</tr>
 							</table>
 						</div>
+					</div>
 						<!-- init_morris_chart()：custom.min.js -->
+					<div th:if="${ rsize <= 0 }" class="x_content2" align="center"  style = "padding : 15px; margin: 45px 0px;" >
+						<h1><i class="fa fa-exclamation-triangle" ></i>  データなし</h1>
+							[[${rentlist.fixed_rent_list01}]]
+							, [[${rentlist.fixed_rent_list02}]]
+							, [[${rentlist.fixed_rent_list03}]]
+							, [[${rentlist.fixed_rent_list04}]]
+							, [[${rentlist.fixed_rent_list05}]]
+							, [[${rentlist.fixed_rent_list06}]]
+							, [[${rentlist.fixed_rent_list07}]]のデータなし
+
+					</div>
 					</div>
 				</div>
 				<!-- /bar charts group -->
+
 			</div>
 		</div>
 	</div>

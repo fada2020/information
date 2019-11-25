@@ -79,10 +79,11 @@ public class MainController {
 
 			// 貸与現況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
-			rslist = dashboardService.rslist();
+			int rsize = dashboardService.rslist().size();
 			// 【目録】貸与現況グラフ
-			AppConstant rentlist = new AppConstant();
+			AppConstant rentlist = new AppConstant();	// constant
 			model.addAttribute("rentlist", rentlist);
+			model.addAttribute("rsize", rsize);
 			// 【数量】貸与現況グラフ：保有、貸与
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);
