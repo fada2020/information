@@ -34,29 +34,37 @@
 <link href="../build/css/custom.min.css" rel="stylesheet">
 
 <style>
-#table1 thead, th {
-	text-align: center;
-}
-	#table1 th{
-			vertical-align:middle;
-		}
-		#table1 td{
-			vertical-align:middle;
-		}
-.my-custom-scrollbar {
-	position: relative;
-	height: 130px;
-	overflow: auto;
-}
+	#table1 thead, th {
+		text-align: center;
+	}
+		#table1 th{
+				vertical-align:middle;
+			}
+			#table1 td{
+				vertical-align:middle;
+			}
+	.my-custom-scrollbar {
+		position: relative;
+		height: 130px;
+		overflow: auto;
+	}
 
-.table-wrapper-scroll-y {
-	display: block;
-}
+	.table-wrapper-scroll-y {
+		display: block;
+	}
 
-.error {
-	color: red;
-	background-color: lavender;
-}
+	.error {
+		color: red;
+		background-color: lavender;
+	}
+
+	.flat{
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		border: 2px solid #bcbcbc;
+		cursor: pointer;
+	}
 </style>
 
 
@@ -546,7 +554,6 @@
 
 $(function (){
 
-
    	$('#deleteRentals').on('click',function(){
 
 
@@ -1008,7 +1015,7 @@ function researchRental(assetSeq){
 });
 
 /* モーダルを閉じるボタン以外では閉じれない  */
-	$('#modal3d').modal({backdrop: 'static'});
+	$('#modal3d').modal({    backdrop: 'static', keyboard: false});
 
 }
 
@@ -1046,7 +1053,7 @@ function researchRental(assetSeq){
 		function modalInsert() {
 
 			/* モーダルを閉じるボタン以外では閉じれない  */
-    		$('#modal3d2').modal({backdrop: 'static'});
+    		$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
     	}
 
 		function getSubItem() {
