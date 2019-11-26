@@ -101,7 +101,7 @@
 	LEFT JOIN maintenance_history c
 	ON a.asset_seq = c.asset_seq
 	WHERE a.asset_seq = #{assetSeq}
-	ORDER BY asset_seq ASC, acc_accessories_seq ASC, history_seq ASC
+	ORDER BY asset_seq DESC, acc_accessories_seq ASC, history_seq ASC
     </select>
 
     <select id="selectAssetList" resultType="Asset">
@@ -136,7 +136,7 @@
 			,admin_account_pwd
 			,storage_location
 		FROM asset
-		ORDER BY asset_seq ASC
+		ORDER BY asset_seq DESC
 	) A
 	WHERE 1 = 1
 		<if test="assetSeq > 0">
