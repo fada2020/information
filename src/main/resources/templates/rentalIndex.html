@@ -93,19 +93,24 @@
 							<input type="text" class="form-control" placeholder="管理番号"
 								id="assetNumber_search">
 						</div>
-
+						<div class="col-md-1">
+							<span class="pull-right" style="font-size: 18px;">貸与番号</span>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="rentalNo_search">
+						</div>
 						<div class="col-md-1">
 							<span class="pull-right" style="font-size: 18px;">貸与日</span>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2" style="float: left;">
 							<fieldset>
 								<div class="control-group ">
 									<div class="controls">
 										<div class="input-prepend input-group">
 											<span class="add-on input-group-addon"><i
 												class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
-												type="text" style="width: 200px" name="rental_search"
-												id="rental_search" class="form-control">
+												type="text" style="width: 200px; float: left;"
+												name="rental_search" id="rental_search" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -115,12 +120,13 @@
 
 
 						</div>
-						<button type="button" id="deleteButton" class="btn btn-primary"
-							style="float: right;" onclick="modalInsert()">貸与</button>
-
+						<div class="col-md-1 col-md-offset-1" style="float: left;">
+							<button type="button" id="deleteButton" class="btn btn-primary"
+								onclick="modalInsert()">貸与</button>
+						</div>
+						<div class="clearfix"></div>
 					</div>
-				</div>
-				<div class="row">
+
 					<div class="x_panel">
 						<div class="x_title">
 
@@ -148,8 +154,9 @@
 										<th class="col-md-1">貸与期間</th>
 										<th class="col-md-1"></th>
 										<th class="col-md-1"></th>
-									</tr>
-
+										<th class="col-md-1"><button id="deleteRentals"
+												class="btn btn-danger" title="チェックした履歴情報を削除"
+												style="font-size: 12px; font-weight: bolder;">削除</button></th>
 								</thead>
 								<tbody>
 								</tbody>
@@ -514,6 +521,45 @@
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
+    	     var deleteList=new Array();
+    		function deleteAct(target){
+
+            	if(target.checked == true){
+              		deleteList.push(target.value);
+            	} else{
+            		deleteList.pop(target.value);
+            	}
+            }
+
+$(function (){
+
+
+   	$('#deleteRentals').on('click',function(){
+
+
+  		if(deleteList.length>1){
+
+  			var confirmation = confirm(deleteList.length + " 項目のデータを削除します。");
+
+  			if(confirmation){
+				$.ajax(/*[[@{/rental/deleteRentals}]]*/ 'rental/deleteRentals',
+			       	{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(deleteList)
+					}
+				)
+				.succes(function() {
+					location.reload(true);
+
+				});
+			}
+  		}else{
+  			alert("削除項目を選択してください。");
+  		}
+  	})
+})
 
   var modalesectiondata = null;
 
@@ -595,7 +641,9 @@
 
 
 
-        	/*!カーレンダーの機能  */
+
+        	/*!カーレンダーの機能
+        	*/
             $('#rentalDay_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
@@ -667,6 +715,7 @@
 					 */
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                    		d.columns[1].search.value = $('#rental_search').val();
+                   		d.columns[2].search.value = $('#rentalNo_search').val();
                         return JSON.stringify(d);
                     }
                 },
@@ -675,7 +724,6 @@
 				},
 /*コンローラーで貰ったデータを元にしてデータを見せる  */
                 "columnDefs": [
-
 
                 	{ targets: 0, data: "rentalNo"},
 
@@ -715,9 +763,19 @@
                           return '<button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
 
                            }
+                    },
+                    { targets: 9,
+                    	data: "description_d",
+                        render: function ( data, type, row, meta ) {
+
+                          return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="' + row.assetSeq + '">';
+
+                           }
                     }
 
                 ]
+
+
             });
 
             /*assetNumberを貰ってメイン画面のデータを変える*/
@@ -736,6 +794,15 @@
                 .search(date)
                 .draw();
             });
+            $("#rentalNo_search").on( 'keyup',function () {
+
+
+                modalesectiontable
+                .column(2)
+                .search(this.value)
+                .draw();
+            });
+
         })
     /*]]>*/
     </script>
