@@ -32,7 +32,7 @@
 	<select id="rslist"
 		resultType="jp.co.info.ais.asm.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
-			, kubun_code
+			, kubun_code AS kubunCode
 			, code_detail_name kubunName
 			, status_code statusCode
 			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =

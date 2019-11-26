@@ -32,7 +32,7 @@ public class HistoryController {
 	 * 状態コード値セッティング
 	 *
 	 * @param model
-	 * @return String
+	 * @return String　画面名
 	 */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String History(Model model) {
@@ -49,7 +49,7 @@ public class HistoryController {
     /**
 	 * エクセルファイル抽出
 	 *
-	 * @return ModelAndView
+	 * @return ModelAndView　エクセル作成ページ
 	 */
     @RequestMapping("/rentalHsitory.xlsx")
     public ModelAndView exportXlsx() {
@@ -69,8 +69,8 @@ public class HistoryController {
     /**
      * 履歴情報削除
      *
-     * @param ArrayList<String>
-     * @return int
+     * @param ArrayList<String>　削除対象の貸与シークエンス
+     * @return int　削除されたデータの数
      */
     @RequestMapping("/deleteHistory")
     @ResponseBody
@@ -88,8 +88,8 @@ public class HistoryController {
     /**
      * 検索及び画面表示情報の作成
      *
-     * @param Page<History>
-     * @return Page<History>
+     * @param Page<History>　検索条件
+     * @return Page<History>　検索結果
      */
     @RequestMapping("/getHistorylist")
     @ResponseBody

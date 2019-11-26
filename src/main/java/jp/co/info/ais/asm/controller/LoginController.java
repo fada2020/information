@@ -30,7 +30,10 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginservice;
-
+	/**
+	 * Sessionの有無で画面移動
+	 * @return String login画面, dashboard画面
+	 */
 	@RequestMapping("/")
     public String index() {
 
@@ -47,14 +50,13 @@ public class LoginController {
     }
 
 
-	//Login button id & pass check
-	//매핑할때는 소문자로
+
 	/**
 	 * 社員番号とパスワード認証処理
 	 * @param assetId
 	 * @param assetPass
 	 * @param model
-	 * @return
+	 * @return String login画面
 	 */
 	@RequestMapping(value= "/loginprocess", method = RequestMethod.POST)
 	public String loginProcess(@RequestParam String assetId, @RequestParam String assetPass, Model model)  {
@@ -89,14 +91,16 @@ public class LoginController {
 	/**
 	 * ログアウト処理を行う。
 	 *
-	 * @return
+	 * @return　String インデックス
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String Logout() {
 		logger.info("LOGOUT START ====");
 		try {
+			//Session終了
 			session.invalidate();
 		} catch (Exception e) {
+			//エラーメッセージを送る
 			logger.error("ログアウト処理エラーが発生 :" + e.toString());
 		}
 		return "redirect:/";
