@@ -4,25 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
 
-	<resultMap id="rentalResult" type="Rental">
-		<id property="rentalSeq" column="rental_seq" />
-		<result property="assetSeq" column="asset_seq" />
-		<result property="assetNumber" column="asset_number" />
-		<result property="rentalDay" column="rental_day" />
-		<result property="rentalUserId" column="rental_user_id" />
-		<result property="purpose" column="purpose" />
-		<result property="speciality" column="speciality" />
-		<result property="applicantId" column="applicant_id" />
-		<result property="returnDay" column="return_day" />
-		<result property="returnUserId" column="return_user_id" />
-		<result property="returnPeriod" column="return_period" />
-		<result property="statusCode" column="status_code" />
-		<result property="storageLocation" column="storage_Location" />
-		<result property="bpName" column="bp_Name" />
-		<result property="rentalNo" column="rental_no" />
-		<result property="kubunCode" column="kubun_code" />
 
-	</resultMap>
 	<select id="selectAll"
 		resultType="jp.co.info.ais.asm.domain.Rental">
 
