@@ -212,7 +212,7 @@ public class RentalService {
 		return rentalMapper.updateRental(rental);
 	}
 
-	public void deleteRentals(String applicantId, ArrayList<String> list) {
+	public int deleteRentals(String applicantId, ArrayList<String> list) {
 int num=0;
 		try {
 			Rental rental = new Rental();
@@ -224,7 +224,7 @@ int num=0;
 			rental.setList(list);
 			num=rentalMapper.deleteRentals(rental);
 			if(num>0) {
-				rentalMapper.deleteAssets(rental.getList());
+				num=rentalMapper.deleteAssets(rental.getList());
 
 			}
 		} catch (Exception e) {
@@ -232,7 +232,7 @@ int num=0;
 			logger.debug(e.getMessage());
 		}
 
-
+return num;
 	}
 
 }
