@@ -139,7 +139,7 @@
 
 						<div class="x_content">
 							<table class="table table-bordered jambo_table bulk_action"
-								id="table1" style="text-align: center;">
+								id="table1"  style="width:100%; text-align :center;">
 
 
 								<thead class="thead-light">
@@ -156,10 +156,10 @@
 										<th class="col-md-1">貸与日</th>
 										<th class="col-md-1">貸与期間</th>
 										<th class="col-md-1"></th>
-										<th class="col-md-1"></th>
+
 										<th class="col-md-1"><button id="deleteRentals"
-												class="btn btn-danger" title="チェックした履歴情報を削除"
-												style="font-size: 12px; font-weight: bolder;">削除</button></th>
+												class="btn btn-danger" title="チェックした情報を削除"
+												style="font-size: 12px; font-weight: bolder;">返却</button></th>
 								</thead>
 								<tbody>
 								</tbody>
@@ -309,124 +309,137 @@
 											<div class="col-md-12" id="left_insert">
 
 												<br>
-												<form action="" id="insertForm" method="POST" role="form">
-													<div class="form-group row ">
-														<label class="control-label col-md-3">日付</label>
-														<div class="col-md-9 ">
-															<input type="text"
+												<div class="x_panel">
+													<div class="x_content">
+														<form action="" id="insertForm" method="POST" role="form">
+															<div class="form-group row ">
+																<label class="control-label col-md-3">貸与日</label>
+																<div class="col-md-9 ">
+																	<div class="input-group date" id="rentalsDay_search">
+																		<input type="text" class="form-control date_check"
+																			name="rentalDay" id="todayDate"
+																			th:value="${#dates.format(date,'yyyy-MM-dd')}">
+																		<span class="input-group-addon"> <span
+																			class="glyphicon glyphicon-calendar"></span>
+																		</span>
+																	</div>
+																	<!-- <input type="text"
 																class="form-control date_check col-md-10" id="todayDate"
 																name="todayDate"
 																th:value="${#dates.format(date,'yyyy-MM-dd')}"
 																readonly="readonly">
-														</div>
-													</div>
+													-->
+																</div>
+															</div>
 
-													<div class="form-group row">
-														<label class="control-label col-md-3 ">使用者</label>
-														<div class="col-md-9  ">
-															<input type="text" name="rentalUserId" id="rentalUserId"
-																required class="form-control col-md-10" />
+															<div class="form-group row">
+																<label class="control-label col-md-3 ">使用者</label>
+																<div class="col-md-9  ">
+																	<input type="text" name="rentalUserId"
+																		id="rentalUserId" required
+																		class="form-control col-md-10" />
 
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3 ">用途</label>
-														<div class="col-md-9  ">
-															<input type="text" class="form-control col-md-10"
-																name="purpose" id="purpose" value="勤務">
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3  ">場所</label>
-														<div class="col-md-9  ">
-															<input type="text" id="storageLocation"
-																name="storageLocation" value="自社"
-																class="form-control col-md-10">
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3  ">特記事項</label>
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3 ">用途</label>
+																<div class="col-md-9  ">
+																	<input type="text" class="form-control col-md-10"
+																		name="purpose" id="purpose" value="勤務">
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3  ">場所</label>
+																<div class="col-md-9  ">
+																	<input type="text" id="storageLocation"
+																		name="storageLocation" value="自社"
+																		class="form-control col-md-10">
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3  ">特記事項</label>
 
-														<div class="col-md-9  ">
-															<input type="text" id="speciality" name="speciality"
-																class="form-control col-md-10">
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3 ">分類</label>
-														<div class="col-md-9  " th:if="${kubunCode} != null">
-															<select class="form-control" id="singleSelect"
-																name="singleSelect" onchange="getSubItem()">
-																<option value="">選択</option>
-																<option th:each="productKindCode : ${kubun}"
-																	th:value="${productKindCode.codeDetailId}"
-																	th:text="${productKindCode.codeDetailName}"></option>
-															</select>
+																<div class="col-md-9  ">
+																	<input type="text" id="speciality" name="speciality"
+																		class="form-control col-md-10">
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3 ">分類</label>
+																<div class="col-md-9  " th:if="${kubunCode} != null">
+																	<select class="form-control" id="singleSelect"
+																		name="singleSelect" onchange="getSubItem()">
+																		<option value="">選択</option>
+																		<option th:each="productKindCode : ${kubun}"
+																			th:value="${productKindCode.codeDetailId}"
+																			th:text="${productKindCode.codeDetailName}"></option>
+																	</select>
 
-														</div>
-														<p th:unless="${kubunCode} != null">データがありません</p>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3  ">種類</label>
+																</div>
+																<p th:unless="${kubunCode} != null">データがありません</p>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3  ">種類</label>
 
-														<div class="col-md-9  ">
+																<div class="col-md-9  ">
 
-															<select class="select2_multiple form-control"
-																id="sub_singleSelect" name="sub_singleSelect"
-																onchange="getSubSubItem()">
+																	<select class="select2_multiple form-control"
+																		id="sub_singleSelect" name="sub_singleSelect"
+																		onchange="getSubSubItem()">
 
-																<option value="">選択</option>
-															</select>
+																		<option value="">選択</option>
+																	</select>
 
-														</div>
-
-													</div>
-
-
-													<div class="form-group row">
-														<label class="control-label col-md-3 ">選択</label>
-														<div class="col-md-9  ">
-															<select class="select2_multiple form-control"
-																id="sub_subSelect" name="sub_subSelect">
-
-																<option value="">選択</option>
-
-
-															</select>
-														</div>
-													</div>
-													<div class="form-group row">
-														<label class="control-label col-md-3  ">BP社名</label>
-														<div class="col-md-9  ">
-															<input type="text" id="bpName" name="bpName"
-																class="form-control col-md-10">
-														</div>
-													</div>
-													<div class="form-group row" style="float: left">
-														<label class="control-label col-md-3">貸与期間</label>
-
-														<div class="col-md-9  ">
-															<div class="col-md-6">
-																<div class="input-group date" id="myDatepicker"
-																	name="myDatepicker" style="float: left">
-																	<input type="text" class="form-control date_check"
-																		name="returnPeriod" id="returnPeriod" /> <span
-																		class="input-group-addon"> <span
-																		class="glyphicon glyphicon-calendar"></span>
-																	</span>
 																</div>
 
-
-
 															</div>
-															<input type="button" class="btn btn-success"
-																style="float: right" id="button1" onclick="writeItem();"
-																value="追加" />
 
-														</div>
+
+															<div class="form-group row">
+																<label class="control-label col-md-3 ">選択</label>
+																<div class="col-md-9  ">
+																	<select class="select2_multiple form-control"
+																		id="sub_subSelect" name="sub_subSelect">
+
+																		<option value="">選択</option>
+
+
+																	</select>
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="control-label col-md-3  ">BP社名</label>
+																<div class="col-md-9  ">
+																	<input type="text" id="bpName" name="bpName"
+																		class="form-control col-md-10">
+																</div>
+															</div>
+															<div class="form-group row" style="float: left">
+																<label class="control-label col-md-3">貸与期間</label>
+
+																<div class="col-md-9  ">
+																	<div class="col-md-6">
+																		<div class="input-group date" id="myDatepicker"
+																			name="myDatepicker" style="float: left">
+																			<input type="text" class="form-control date_check"
+																				name="returnPeriod" id="returnPeriod" /> <span
+																				class="input-group-addon"> <span
+																				class="glyphicon glyphicon-calendar"></span>
+																			</span>
+																		</div>
+
+
+
+																	</div>
+																	<input type="button" class="btn btn-success"
+																		style="float: right" id="button1"
+																		onclick="writeItem();" value="追加" />
+
+																</div>
+															</div>
+														</form>
 													</div>
-												</form>
-
+												</div>
 											</div>
 
 											<div class="form-group row">
@@ -540,9 +553,9 @@ $(function (){
    	$('#deleteRentals').on('click',function(){
 
 
-  		if(deleteList.length>1){
+  		if(deleteList.length>0){
 
-  			var confirmation = confirm(deleteList.length + " 項目のデータを削除します。");
+  			var confirmation = confirm(deleteList.length + " の貸与目録を返却します。");
 
   			if(confirmation){
 				$.ajax(/*[[@{/rental/deleteRentals}]]*/ 'rental/deleteRentals',
@@ -551,15 +564,13 @@ $(function (){
 						dataType: "json",
 						contentType: 'application/JSON',
 						data : JSON.stringify(deleteList)
-					}
-				)
-				.succes(function() {
-					location.reload(true);
-
-				});
+					}).success(function(result) {
+						if(result>0){
+						 location.href = '/rental';
+						}					});
 			}
   		}else{
-  			alert("削除項目を選択してください。");
+  			alert("返却項目を選択してください。");
   		}
   	})
 })
@@ -592,9 +603,8 @@ $(function (){
 	function cancelInsert(){
 
 		/*削除する前に確認する  */
-		 var result = confirm('本当ですか？');
-	 	/*もしyesであれば#selectedAssetのtbodyにあるデータのassetSeqを元にしてassetテーブルのstatus_codeを001に変える  */
-	 	if(result) {
+
+
 
 			 var rental =new Object();
 			 var tdArr = new Array();
@@ -630,7 +640,7 @@ $(function (){
 					$('#modal3d2').modal("hide");
 				})
 
-	   }
+
 
 
 
@@ -643,7 +653,9 @@ $(function (){
 
 
 
-
+        	 $('#rentalsDay_search').datetimepicker({
+                 format: 'YYYY-MM-DD'
+             });
 
         	/*!カーレンダーの機能
         	*/
@@ -759,15 +771,8 @@ $(function (){
                            }
                     },
 /* 削除ボタン  */
+
                     { targets: 8,
-                    	data: "description_d",
-                        render: function ( data, type, row, meta ) {
-
-                          return '<button type="button"id="deleteButton" class="btn btn-danger" onclick = "deleteAsset(' + row.assetSeq + ')">返却</button>';
-
-                           }
-                    },
-                    { targets: 9,
                     	data: "description_d",
                         render: function ( data, type, row, meta ) {
 
@@ -850,6 +855,7 @@ function updateRental(){
              		required : true,
              		maxlength : 10
              	},
+
              	purpose : {
              		required : true,
              		maxlength : 10
@@ -880,6 +886,7 @@ function updateRental(){
 
              },
              messages: {
+
              	rentalUserId : {
              		required : "使用者を入力してください"
              	},

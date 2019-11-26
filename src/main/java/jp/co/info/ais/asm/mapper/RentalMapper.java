@@ -49,7 +49,7 @@ public interface RentalMapper {
 
 	public int deleteRentals(Rental rental);
 
-	public void deleteAssets(ArrayList<String> list);
+	public int deleteAssets(ArrayList<String> list);
 
 
 

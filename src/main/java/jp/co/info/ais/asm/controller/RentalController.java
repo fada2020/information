@@ -251,24 +251,24 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与画面で変更する情報を持ち込む
-	 *htmlから変更する全ての情報を持ち込んで貸与データに入れ替える
-	 * @param  int assetSeq
-	 * @return Rental rental
+	 * メイン画面で資産シークエンスを持ち込んで一気に返却する
+	 *
+	 * @param  int 資産シークエンス
+	 * @return int 戻り値
 	 * */
 	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
 	@ResponseBody
-	private void deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
-
+	private int deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
+int result=0;
 		try {
 				logger.debug(sList.toString());
-		 rentalService.deleteRentals((String) session.getAttribute("id"),sList);
+				result= rentalService.deleteRentals((String) session.getAttribute("id"),sList);
 
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
-
+return result;
 	}
 
 
