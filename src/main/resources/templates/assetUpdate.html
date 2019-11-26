@@ -69,357 +69,379 @@
 
             <!-- 資産情報修正フォーム -->
             <form action="/asset/update" id="updateForm" method="POST" role="form" class="form-horizontal">
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  						<span>管理番号</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
-			  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}">
+            <div class="x_panel">
+            	<div class="x_content" style="display: block;">
+	            	<div class="row well">
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+			  						<span>管理番号</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
+					  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}">
+					  			</div>
+					  			<div class="col-md-2">
+					  				<span>区分</span>
+					  			</div>
+					  			<div class="col-md-4">
+				                	<select name="kubunCode" class="form-control" id="psNum_search">
+				                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
+				                		th:inline="text">[[${code.codeDetailName}]]</option>
+									</select>
+					  			</div>
+			  				</div>
+			  			</div>
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+				  					<span>購入日</span>
+				  				</div>
+				  				<div class="col-md-4">
+								<div class="input-group date" id="myDatepicker">
+									<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
+									<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								 </span>
+								</div>
+				  				</div>
+				  				<div class="col-md-2">
+				  					<span>保証期間</span>
+				  				</div>
+				  				<div class="col-md-4">
+				  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
+				  				</div>
+			  				</div>
+			  			</div>
+
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+			  						<span>購入先</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="buyTo" th:value="${asset.buyTo}">
+			  					</div>
+			  					<div class="col-md-2">
+			  						<span>購入金額</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
+			  					</div>
+			  				</div>
+			  			</div>
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+			  						<span>保管位置</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
+			  					</div>
+			  					<div class="col-md-2">
+			  						<span>状態</span>
+			  					</div>
+			  					<div class="col-md-4">
+				                	<select name="statusCode" class="form-control" id="sNumber_search">
+				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
+				                		th:inline="text">[[${code.codeDetailName}]]</option>
+									</select>
+			  					</div>
+			  				</div>
+			  			</div>
+
+			  			<div class="col-md-12"><br></div>
+
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+			  						<span>Maker</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="makerName" th:value="${asset.makerName}">
+			  					</div>
+			  					<div class="col-md-2">
+			  						<span>Model</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="modelName" th:value="${asset.modelName}">
+			  					</div>
+			  				</div>
+			  			</div>
+			  			<div class="col-md-6">
+			  				<div class="row">
+			  					<div class="col-md-2">
+			  						<span>S/N</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="serialNum" th:value="${asset.serialNum}">
+			  					</div>
+			  					<div class="col-md-2">
+			  						<span>I/F</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control" name="interFaceCol" th:value="${asset.interFaceCol}">
+			  					</div>
+			  				</div>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
+			  				<span>その他</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<input type="text" class="form-control" name="other" th:value="${asset.other}">
+			  			</div>
+					</div>
+					<div class="row well">
+			  			<div class="col-md-12">
+			  				<span>OS</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
 			  			</div>
 			  			<div class="col-md-2">
-			  				<span>区分</span>
+			  				<span>名(Edition)</span>
 			  			</div>
 			  			<div class="col-md-4">
-		                	<select name="kubunCode" class="form-control" id="psNum_search">
-		                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
-		                		th:inline="text">[[${code.codeDetailName}]]</option>
-							</select>
+			  				<input type="text" class="form-control" name="osName" th:value="${asset.osName}">
 			  			</div>
-	  				</div>
-	  			</div>
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-		  					<span>購入日</span>
-		  				</div>
-		  				<div class="col-md-4">
-						<div class="input-group date" id="myDatepicker">
-							<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
-							<span class="input-group-addon">
-							<span class="glyphicon glyphicon-calendar"></span>
-						 </span>
-						</div>
-		  				</div>
-		  				<div class="col-md-2">
-		  					<span>保証期間</span>
-		  				</div>
-		  				<div class="col-md-4">
-		  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
-		  				</div>
-	  				</div>
-	  			</div>
-
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  						<span>購入先</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="buyTo" th:value="${asset.buyTo}">
-	  					</div>
-	  					<div class="col-md-2">
-	  						<span>購入金額</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
-	  					</div>
-	  				</div>
-	  			</div>
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  						<span>保管位置</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
-	  					</div>
-	  					<div class="col-md-2">
-	  						<span>状態</span>
-	  					</div>
-	  					<div class="col-md-4">
-		                	<select name="statusCode" class="form-control" id="sNumber_search">
-		                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
-		                		th:inline="text">[[${code.codeDetailName}]]</option>
-							</select>
-	  					</div>
-	  				</div>
-	  			</div>
-
-	  			<div class="col-md-12"><br></div>
-
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  						<span>Maker</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="makerName" th:value="${asset.makerName}">
-	  					</div>
-	  					<div class="col-md-2">
-	  						<span>Model</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="modelName" th:value="${asset.modelName}">
-	  					</div>
-	  				</div>
-	  			</div>
-	  			<div class="col-md-6">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  						<span>S/N</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="serialNum" th:value="${asset.serialNum}">
-	  					</div>
-	  					<div class="col-md-2">
-	  						<span>I/F</span>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<input type="text" class="form-control" name="interFaceCol" th:value="${asset.interFaceCol}">
-	  					</div>
-	  				</div>
-	  			</div>
-
-	  			<div class="col-md-12">
-	  				<hr>
-	  				<span>OS</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>名(Edition)</span>
-	  			</div>
-	  			<div class="col-md-4">
-	  				<input type="text" class="form-control" name="osName" th:value="${asset.osName}">
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>Product Key</span>
-	  			</div>
-	  			<div class="col-md-4">
-	  				<input type="text" class="form-control" name="osProductKey" th:value="${asset.osProductKey}">
-	  			</div>
-
-	  			<div class="col-md-12">
-	  				<br>
-	  				<span>CPU</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>Processor</span>
-	  			</div>
-	  			<div class="col-md-4">
-	  				<input type="text" class="form-control" name="cpuProcessor" th:value="${asset.cpuProcessor}">
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>動作周波数</span>
-	  			</div>
-	  			<div class="col-md-4">
-	  				<input type="text" class="form-control numVal" name="operatingFrequency" th:value="${asset.operatingFrequency}">
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-6">
-	  				<span>Memory</span>
-	  			</div>
-	  			<div class="col-md-6">
-	  				<span>HDD</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-2">
-	  				<input type="text" class="form-control numVal" name="memory" th:value="${asset.memory}">
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>Upgarde</span>
-	  			</div>
-	  			<div class="col-md-2">
-	  				<input type="text" class="form-control numVal" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
-	  			</div>
-	  			<div class="col-md-2">
-	  				<input type="text" class="form-control numVal" name="hdd" th:value="${asset.hdd}">
-	  			</div>
-	  			<div class="col-md-2">
-	  				<span>Upgarde</span>
-	  			</div>
-	  			<div class="col-md-2">
-	  				<input type="text" class="form-control numVal" name="hddUpgarde" th:value="${asset.hddUpgarde}">
-	  			</div>
-
-	  			<div class="col-md-12">
-	  				<br>
-	  				<span>MAC</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>LAN</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="macLan" th:value="${asset.macLan}">
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>Wireless</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="macWireless" th:value="${asset.macWireless}">
-	  			</div>
-
-	  			<div class="col-md-12">
-	  				<span>その他</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<input type="text" class="form-control" name="other" th:value="${asset.other}">
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<span>Security</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>BIOS</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="securityBios" th:value="${asset.securityBios}">
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>HDD</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="securityHdd" th:value="${asset.securityHdd}">
-	  			</div>
-
-	  			<div class="col-md-12">
-	  				<br>
-	  				<span>Admin.Account</span>
-	  			</div>
-	  			<div class="col-md-12">
-	  				<br>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>ID</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="adminAccountId" th:value="${asset.adminAccountId}">
-	  			</div>
-	  			<div class="col-md-3">
-	  				<span>PW</span>
-	  			</div>
-	  			<div class="col-md-3">
-	  				<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
-	  			</div>
-	  			<div class="col-md-12 text-right">
-	  				<br>
-	  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
-	  				<button type="button" id="updateProc" class="btn btn-primary pull-right">修正</button>
-	  			</div>
+			  			<div class="col-md-2">
+			  				<span>Product Key</span>
+			  			</div>
+			  			<div class="col-md-4">
+			  				<input type="text" class="form-control" name="osProductKey" th:value="${asset.osProductKey}">
+			  			</div>
+					</div>
+					<div class="row well">
+			  			<div class="col-md-12">
+			  				<span>CPU</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
+			  			</div>
+			  			<div class="col-md-2">
+			  				<span>Processor</span>
+			  			</div>
+			  			<div class="col-md-4">
+			  				<input type="text" class="form-control" name="cpuProcessor" th:value="${asset.cpuProcessor}">
+			  			</div>
+			  			<div class="col-md-2">
+			  				<span>動作周波数</span>
+			  			</div>
+			  			<div class="col-md-4">
+			  				<input type="text" class="form-control numVal" name="operatingFrequency" th:value="${asset.operatingFrequency}">
+			  			</div>
+		  			</div>
+		  			<div class="row well">
+			  			<div class="col-md-6">
+			  				<div class="row well">
+			  					<div class="col-md-12">
+			  						<span>Memory</span>
+			  					</div>
+					  			<div class="col-md-12">
+					  				<br>
+					  			</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control numVal" name="memory" th:value="${asset.memory}">
+			  					</div>
+			  					<div class="col-md-4">
+			  						<span>Upgarde</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control numVal" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
+			  					</div>
+			  				</div>
+			  			</div>
+			  			<div class="col-md-6">
+			  				<div class="row well">
+			  					<div class="col-md-12">
+			  						<span>HDD</span>
+			  					</div>
+					  			<div class="col-md-12">
+					  				<br>
+					  			</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control numVal" name="hdd" th:value="${asset.hdd}">
+			  					</div>
+			  					<div class="col-md-4">
+			  						<span>Upgarde</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="text" class="form-control numVal" name="hddUpgarde" th:value="${asset.hddUpgarde}">
+			  					</div>
+			  				</div>
+			  			</div>
+		  			</div>
+					<div class="row well">
+			  			<div class="col-md-12">
+			  				<span>MAC</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>LAN</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="macLan" th:value="${asset.macLan}">
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>Wireless</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="macWireless" th:value="${asset.macWireless}">
+			  			</div>
+					</div>
+		  			<div class="row well">
+			  			<div class="col-md-12">
+			  				<span>Security</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>BIOS</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="securityBios" th:value="${asset.securityBios}">
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>HDD</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="securityHdd" th:value="${asset.securityHdd}">
+			  			</div>
+					</div>
+					<div class="row well">
+			  			<div class="col-md-12">
+			  				<span>Admin.Account</span>
+			  			</div>
+			  			<div class="col-md-12">
+			  				<br>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>ID</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="adminAccountId" th:value="${asset.adminAccountId}">
+			  			</div>
+			  			<div class="col-md-3">
+			  				<span>PW</span>
+			  			</div>
+			  			<div class="col-md-3">
+			  				<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
+			  			</div>
+		  			</div>
+		  			<div class="col-md-12 text-right">
+		  				<br>
+		  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
+		  				<button type="button" id="updateProc" class="btn btn-primary pull-right">修正</button>
+		  			</div>
+		  			<div class="col-md-12">
+		  				<br>
+		  			</div>
+		  		</div>
+	  		</div>
 	  		</form>
 	  		<!-- /資産情報修正フォーム -->
 
 				<!-- 付属品テーブル -->
-		  		<div class="col-md-12">
-		  			<div class="x_panel">
-						<div class="x_title">
-							<h2>付属品</h2>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content" style="display: block;">
-							<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-								<table class="table table-striped jambo_table bulk_action text-center" id="table1">
-									<thead>
-										<tr class="headings">
-											<th class="col-md-1">No </th>
-											<th class="col-md-2">品名 </th>
-											<th class="col-md-2">仕樣 </th>
-											<th class="col-md-1">数量 </th>
-											<th class="col-md-6">備考 </th>
-											<th colspan="2"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="even pointer">
-											<td></td>
-											<td><input id="itemName" type="text" maxlength="25" class="form-control"></td>
-											<td><input id="itemSpec" type="text" maxlength="25" class="form-control"></td>
-											<td><input id="itemQuantity" type="text" maxlength="11" class="form-control"></td>
-											<td><input id="remarks" type="text" maxlength="100" class="form-control"></td>
-											<td colspan="2" class="a-center">
-												<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
-											</td>
-										</tr>
-										<tr th:each="accessories : ${asset.accessoriesList}">
-											<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
-											<td><input type="text" maxlength="25" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
-											<td><input type="text" maxlength="25" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
-											<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
-											<td><input type="text" maxlength="100" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
-											<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-											<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
-										</tr>
-									</tbody>
-								</table>
+				<div class="row">
+			  		<div class="col-md-12">
+			  			<div class="x_panel">
+							<div class="x_title">
+								<h2>付属品</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content" style="display: block;">
+								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+									<table class="table table-striped jambo_table bulk_action text-center" id="table1">
+										<thead>
+											<tr class="headings">
+												<th class="col-md-1">No </th>
+												<th class="col-md-2">品名 </th>
+												<th class="col-md-2">仕樣 </th>
+												<th class="col-md-1">数量 </th>
+												<th class="col-md-6">備考 </th>
+												<th colspan="2"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="even pointer">
+												<td></td>
+												<td><input id="itemName" type="text" maxlength="25" class="form-control"></td>
+												<td><input id="itemSpec" type="text" maxlength="25" class="form-control"></td>
+												<td><input id="itemQuantity" type="text" maxlength="11" class="form-control"></td>
+												<td><input id="remarks" type="text" maxlength="100" class="form-control"></td>
+												<td colspan="2" class="a-center">
+													<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+												</td>
+											</tr>
+											<tr th:each="accessories : ${asset.accessoriesList}">
+												<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
+												<td><input type="text" maxlength="25" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
+												<td><input type="text" maxlength="25" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
+												<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
+												<td><input type="text" maxlength="100" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
+												<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+												<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>
+			  		</div>
 		  		</div>
 				<!-- /付属品テーブル -->
 
 				<!-- 保守履歴テーブル -->
-		  		<div class="col-md-12">
-		  			<div class="x_panel">
-						<div class="x_title">
-							<h2>保守履歴</h2>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content" style="display: block;">
-							<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-								<table class="table table-striped jambo_table bulk_action" id="table2">
-									<thead>
-										<tr class="headings">
-											<th class="col-md-1">No </th>
-											<th class="col-md-2">実施日 </th>
-											<th class="col-md-5">実施内容 </th>
-											<th class="col-md-2">担当 </th>
-											<th class="col-md-2">承認 </th>
-											<th colspan="2"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="even pointer">
-											<td></td>
-											<td><input id="implementationDate" maxlength="8" type="text" class="form-control"></td>
-											<td><input id="implementationDetail" maxlength="100" type="text" class="form-control"></td>
-											<td><input id="repId" maxlength="10" type="text" class="form-control"></td>
-											<td><input id="approverId" maxlength="10" type="text" class="form-control"></td>
-											<td colspan="2" class="a-center">
-												<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
-											</td>
-										</tr>
-										<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
-											<td id="historySeq" th:text="${maintenance.historySeq}"></td>
-											<td><input type="text" maxlength="8" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
-											<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
-											<td><input type="text" maxlength="10" class="form-control" id=repId th:value="${maintenance.repId}"></td>
-											<td><input type="text" maxlength="10" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
-											<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-											<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
-										</tr>
-									</tbody>
-								</table>
+				<div class="row">
+			  		<div class="col-md-12">
+			  			<div class="x_panel">
+							<div class="x_title">
+								<h2>保守履歴</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content" style="display: block;">
+								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+									<table class="table table-striped jambo_table bulk_action" id="table2">
+										<thead>
+											<tr class="headings">
+												<th class="col-md-1">No </th>
+												<th class="col-md-2">実施日 </th>
+												<th class="col-md-5">実施内容 </th>
+												<th class="col-md-2">担当 </th>
+												<th class="col-md-2">承認 </th>
+												<th colspan="2"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="even pointer">
+												<td></td>
+												<td><input id="implementationDate" maxlength="8" type="text" class="form-control"></td>
+												<td><input id="implementationDetail" maxlength="100" type="text" class="form-control"></td>
+												<td><input id="repId" maxlength="10" type="text" class="form-control"></td>
+												<td><input id="approverId" maxlength="10" type="text" class="form-control"></td>
+												<td colspan="2" class="a-center">
+													<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+												</td>
+											</tr>
+											<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
+												<td id="historySeq" th:text="${maintenance.historySeq}"></td>
+												<td><input type="text" maxlength="8" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
+												<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
+												<td><input type="text" maxlength="10" class="form-control" id=repId th:value="${maintenance.repId}"></td>
+												<td><input type="text" maxlength="10" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
+												<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+												<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>
+			  		</div>
 		  		</div>
 				<!-- /保守履歴テーブル -->
 		  	</div>
