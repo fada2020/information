@@ -1,6 +1,7 @@
 package jp.co.info.ais.asm.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -134,5 +135,27 @@ public class RentalService {
 		return rentalMapper.updateRental(rental);
 	}
 
+	public void deleteRentals(String applicantId, ArrayList<String> list) {
+int num=0;
+		try {
+			Rental rental = new Rental();
+			SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
+			Date currentTime = new Date();
+			String mTime = mSimpleDateFormat.format(currentTime);
+			rental.setReturnDay(mTime);
+			rental.setApplicantId(applicantId);
+			rental.setList(list);
+			num=rentalMapper.deleteRentals(rental);
+			if(num>0) {
+				rentalMapper.deleteAssets(rental.getList());
+
+			}
+		} catch (Exception e) {
+
+			logger.debug(e.getMessage());
+		}
+
+
+	}
 
 }

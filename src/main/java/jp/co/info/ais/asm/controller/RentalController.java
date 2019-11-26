@@ -171,9 +171,9 @@ public class RentalController {
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
-			String storageLocation = page.getColumns().get(2).getSearch().getValue();
-			if (null != storageLocation && !storageLocation.equals("")) {
-				rental.setStorageLocation(storageLocation);
+			String rentalNo = page.getColumns().get(2).getSearch().getValue();
+			if (null != rentalNo && !rentalNo.equals("")) {
+				rental.setRentalNo(rentalNo);
 			}
 			List<Rental> list = rentalService.selectAll(rental);
 
@@ -250,6 +250,26 @@ public class RentalController {
 		return successNum;
 	}
 
+	/**
+	 * 貸与画面で変更する情報を持ち込む
+	 *htmlから変更する全ての情報を持ち込んで貸与データに入れ替える
+	 * @param  int assetSeq
+	 * @return Rental rental
+	 * */
+	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
+	@ResponseBody
+	private void deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
+
+		try {
+				logger.debug(sList.toString());
+		 rentalService.deleteRentals((String) session.getAttribute("id"),sList);
+
+		} catch (Exception e) {
+
+			logger.debug(e.getMessage());
+		}
+
+	}
 
 
 }
