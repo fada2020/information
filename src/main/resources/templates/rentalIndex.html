@@ -37,12 +37,15 @@
 #table1 thead, th {
 	text-align: center;
 }
-	#table1 th{
-			vertical-align:middle;
-		}
-		#table1 td{
-			vertical-align:middle;
-		}
+
+#table1 th {
+	vertical-align: middle;
+}
+
+#table1 td {
+	vertical-align: middle;
+}
+
 .my-custom-scrollbar {
 	position: relative;
 	height: 130px;
@@ -136,7 +139,7 @@
 
 						<div class="x_content">
 							<table class="table table-bordered jambo_table bulk_action"
-								id="table1"  style="width:100%; text-align :center;">
+								id="table1" style="width: 100%; text-align: center;">
 
 
 								<thead class="thead-light">
@@ -543,7 +546,16 @@
             		deleteList.pop(target.value);
             	}
             }
+    		$(function (){
+    			$(document).keyup(function(e) {
+    			    if(e.keyCode== 27) {
+    			    	e.returnValue = false;
+    			    }
+    			});
 
+
+
+    		})
 $(function (){
 
 

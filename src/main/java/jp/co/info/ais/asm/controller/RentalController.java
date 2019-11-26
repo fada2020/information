@@ -259,17 +259,16 @@ public class RentalController {
 	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
 	@ResponseBody
 	private int deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
-int result=0;
+		int result = 0;
 		try {
-				logger.debug(sList.toString());
-				result= rentalService.deleteRentals((String) session.getAttribute("id"),sList);
+			logger.debug(sList.toString());
+			result = rentalService.deleteRentals((String) session.getAttribute("id"), sList);
 
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
-return result;
+		return result;
 	}
-
 
 }
