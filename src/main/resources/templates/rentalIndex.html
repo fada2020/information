@@ -827,8 +827,6 @@ $(function (){
 戻り値も無し
 */
 function updateRental(){
-
-	 $(function() {
 		 /* 最初に日付を貰うときの有効性検査  */
 		 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
          var form = $('#updateForm');
@@ -971,15 +969,7 @@ function updateRental(){
 
 
          }
-     });
-
-
-
-
-
 /*変更してページをリロードする  */
-
-
 	}
 
 function researchRental(assetSeq){
@@ -1207,7 +1197,6 @@ var assetSeq=btn.value;
 
 	function writeItem() {
 
-        $(function() {
 			/* 有効性の検査を行う  */
         	 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
             var form = $('#insertForm');
@@ -1343,7 +1332,6 @@ var assetSeq=btn.value;
 
 
             }
-        });
 
 	}
 		/*]]>*/
