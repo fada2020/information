@@ -1,5 +1,6 @@
 package jp.co.info.ais.asm.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import lombok.Getter;
@@ -52,4 +53,6 @@ public class Rental {
 	private Date insertDate;
 	private String updateId;
 	private Date updateDate;
+
+	private ArrayList<String>list;
 }

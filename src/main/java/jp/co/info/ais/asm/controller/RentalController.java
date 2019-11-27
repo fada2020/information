@@ -32,6 +32,7 @@ public class RentalController {
 
 	@Autowired
 	private RentalService rentalService;
+
 	/**
 	 * 貸与管理ルトー
 	 *
@@ -62,7 +63,7 @@ public class RentalController {
 	/**
 	 * 貸与管理単一の資産の情報を持ち出す
 	 * @param String assetNumber
-	 * @return Asset
+	 * @return Asset 資産の情報
 	 * */
 
 	@RequestMapping(value = "/getAsset", method = RequestMethod.POST)
@@ -87,8 +88,8 @@ public class RentalController {
 
 	/**
 	 * 貸与管理単一の資産をデータテーブルに入れ込む
-	 * @param  List<Rental rentalList
-	 * @return 無し
+	 * @param  List<Rental> 貸与情報のリスト
+	 *
 	 * */
 	@RequestMapping(value = "/addRental", method = RequestMethod.POST)
 	@ResponseBody
@@ -105,7 +106,7 @@ public class RentalController {
 
 	/**
 	 * 任意の貸与リストの資産の状態を002から001に変える
-	 * @param  int assetSeq
+	 * @param  int assetSeq 資産シークエンス
 	 * @return 無し
 	 * */
 	@RequestMapping(value = "/cancelAsset", method = RequestMethod.POST)
@@ -123,8 +124,8 @@ public class RentalController {
 	/**
 	 * 貸与メイン画面表示
 	 *資産のデータの状態が001と引数に該当するデータを持ち出す
-	 * @param   String selectedItem
-	 * @return List<Asset> assetList
+	 * @param   String 区分コード
+	 * @return List<Asset> 資産情報のリスト
 	 * */
 	@RequestMapping(value = "/getAssetList", method = RequestMethod.POST)
 	@ResponseBody
@@ -170,7 +171,10 @@ public class RentalController {
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
-
+			String rentalNo = page.getColumns().get(2).getSearch().getValue();
+			if (null != rentalNo && !rentalNo.equals("")) {
+				rental.setRentalNo(rentalNo);
+			}
 			List<Rental> list = rentalService.selectAll(rental);
 
 			page.setData(list);
@@ -189,7 +193,7 @@ public class RentalController {
 	/**
 	 * 貸与した資産を返却する
 	 * htmlから assetSeqを持ち込んで該当する貸与データの状態を002から001に変える
-	 * @param  int assetSeq
+	 * @param  int 資産シークエンス
 	 * @return 無し
 	 * */
 	@RequestMapping(value = "/returnAsset", method = RequestMethod.POST)
@@ -207,8 +211,8 @@ public class RentalController {
 	/**
 	 * 貸与画面で変更したい貸与情報があったら変更する為探す
 	 *貸与データから変更したい情報を資産情報を元にして状態が002になっている貸与情報を持ち出す
-	 * @param  int assetSeq
-	 * @return Rental rental
+	 * @param  int 資産シークエンス
+	 * @return Rental 貸与情報
 	 * */
 	@RequestMapping(value = "/researchRental", method = RequestMethod.POST)
 	@ResponseBody
@@ -228,8 +232,8 @@ public class RentalController {
 	/**
 	 * 貸与画面で変更する情報を持ち込む
 	 *htmlから変更する全ての情報を持ち込んで貸与データに入れ替える
-	 * @param  int assetSeq
-	 * @return Rental rental
+	 * @param  int 資産シークエンス
+	 * @return Rental 貸与情報
 	 * */
 	@RequestMapping(value = "/updateRental", method = RequestMethod.POST)
 	@ResponseBody
@@ -245,4 +249,27 @@ public class RentalController {
 		}
 		return successNum;
 	}
+
+	/**
+	 * メイン画面で資産シークエンスを持ち込んで一気に返却する
+	 *
+	 * @param  int 資産シークエンス
+	 * @return int 戻り値
+	 * */
+	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
+	@ResponseBody
+	private int deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
+int result=0;
+		try {
+				logger.debug(sList.toString());
+				result= rentalService.deleteRentals((String) session.getAttribute("id"),sList);
+
+		} catch (Exception e) {
+
+			logger.debug(e.getMessage());
+		}
+return result;
+	}
+
+
 }

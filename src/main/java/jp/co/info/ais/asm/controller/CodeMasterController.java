@@ -28,13 +28,22 @@ public class CodeMasterController {
 
 	@Autowired
 	HttpSession session;
-
+	/**
+	 *IDと名前存在チェック
+	 *コード値セッティング
+	 * @param model
+	 * @param codemaster
+	 * @return　String code.html
+	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String masterIdNameInsert(Model model, CodeMaster codemaster) {
 		try {
+			//idとnameの値を持ってくる
 			String id = (String) session.getAttribute("codeMasterId");
 			String name = (String) session.getAttribute("codeMasterName");
 
+
+			//入力されたidとnameが存在したらErrorMessageを送る。
 			if (id.equals(codemaster.getCodeMasterId()) && name.equals(codemaster.getCodeMasterName())) {
 				logger.info("すでに存在しています。。");
 				model.addAttribute("errorMessage", "すでに存在しています。");
@@ -42,6 +51,7 @@ public class CodeMasterController {
 				return "redirect/:";
 
 			} else {
+			//入力されたidとnameが存在しない場合登録
 
 				codemaster.setCodeMasterId(id);
 				codemaster.setCodeMasterName(name);
@@ -49,10 +59,7 @@ public class CodeMasterController {
 				codeMasterService.insertMasterId(codemaster);
 				codeMasterService.insertMasterName(codemaster);
 				session.setAttribute("codemaster", codemaster);
-
-				return "";
-
-			}
+}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -60,83 +67,103 @@ public class CodeMasterController {
 		return "code.html";
 	}
 
-	@RequestMapping(value = "/codeList", method = RequestMethod.POST)
-	@ResponseBody
-	public Page<CodeMaster> CodeList(@RequestBody Page<CodeMaster> page) {
+		/**
+		 * list出力
+		 * コード値セッティング
+		 * @param page
+		 * @return　page　CodeList
+		 */
+		@RequestMapping(value = "/codeList", method = RequestMethod.POST)
+		@ResponseBody
+		public Page<CodeMaster> CodeList(@RequestBody Page<CodeMaster> page) {
 
-		// 検索条件
-		CodeMaster condition = new CodeMaster();
+			// 検索条件
+			CodeMaster condition = new CodeMaster();
 
-		// ページング処理
-		condition.setLength(page.getLength());
-		condition.setStart(page.getStart());
+			// ページング処理
+			condition.setLength(page.getLength());
+			condition.setStart(page.getStart());
 
-		String codeMasterId = page.getColumns().get(0).getSearch().getValue();
-		if (null != codeMasterId && !codeMasterId.equals("")) {
-			condition.setCodeMasterId(codeMasterId);
+			String codeMasterId = page.getColumns().get(0).getSearch().getValue();
+			if (null != codeMasterId && !codeMasterId.equals("")) {
+				condition.setCodeMasterId(codeMasterId);
+			}
+
+			String codeMasterName = page.getColumns().get(1).getSearch().getValue();
+			if (null != codeMasterName && !codeMasterName.equals("")) {
+				condition.setCodeMasterName(codeMasterName);
+			}
+
+			// リスト照会
+			List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
+
+			// データをページオブジェクトにセット
+			page.setData(CodeList);
+
+			// 総数
+			int totalCount = codeMasterService.selectCount(condition);
+
+			page.setRecordsFiltered(totalCount);
+
+			return page;
 		}
 
-		String codeMasterName = page.getColumns().get(1).getSearch().getValue();
-		if (null != codeMasterName && !codeMasterName.equals("")) {
-			condition.setCodeMasterName(codeMasterName);
+		/**
+		 * Listの中に値の存在チェック
+		 * @param masterCode マスターコード
+		 * @return int num
+		 */
+		@RequestMapping(value = "/CodeListCheck", method = RequestMethod.POST)
+		@ResponseBody
+		public int CodeListCheck(@RequestBody CodeMaster masterCode) {
+			int num = 0;
+			try {
+				///結果が正しい場合チェックメソッド実行してnumに含める
+				num = codeMasterService.CodeMasterListCheck(masterCode);
+
+			} catch (Exception e) {
+				logger.debug(e.getMessage());
+			}
+
+			return num;
 		}
 
-		// リスト照会
-		List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
+		/**
+		 * マスターコード修正
+		 * @param masterCode マスターコード
+		 * @return int num
+		 */
+		@RequestMapping(value = "/updateCodeMaster", method = RequestMethod.POST)
+		@ResponseBody
+		public int updateCodeMaster(@RequestBody CodeMaster masterCode) {
+			int num = 0;
+			try {
+				//結果が正しい場合修正メソッド実行してnumに含める
+				 num = codeMasterService.updateCodeMaster(masterCode);
+			} catch (Exception e) {
+				logger.debug(e.getMessage());
+			}
 
-		// データをページオブジェクトにセット
-		page.setData(CodeList);
-
-		// 総数
-		int totalCount = codeMasterService.selectCount(condition);
-
-		page.setRecordsFiltered(totalCount);
-
-		return page;
-	}
-
-	@RequestMapping(value = "/CodeListCheck", method = RequestMethod.POST)
-	@ResponseBody
-	public int CodeListCheck(@RequestBody CodeMaster masterCode) {
-		int num = 0;
-		try {
-
-			num = codeMasterService.CodeMasterListCheck(masterCode);
-
-		} catch (Exception e) {
-			logger.debug(e.getMessage());
+			return num;
 		}
 
-		return num;
-	}
-
-
-	@RequestMapping(value = "/updateCodeMaster", method = RequestMethod.POST)
-	@ResponseBody
-	public int updateCodeMaster(@RequestBody CodeMaster masterCode) {
-		int num = 0;
-		try {
-			 num = codeMasterService.updateCodeMaster(masterCode);
-
-		} catch (Exception e) {
-			logger.debug(e.getMessage());
-		}
-
-		return num;
-	}
-
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public int assetDelete(@RequestBody String codeMasterId) {
-    	int result = 0;
-    	try {
-	    	// 資産情報削除
-	    	result = codeMasterService.deleteMasterCode(codeMasterId);
-    	}catch (Exception e) {
-    		logger.error(e.getMessage());
-		}
-        return result;
-    }
+		/**
+		 * マスターコード削除
+		 * @param codeMasterId マスターコード
+		 * @return result　codeMasterId
+		 */
+	    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+	    @ResponseBody
+	    public int assetDelete(@RequestBody String codeMasterId) {
+	    	int result = 0;
+	    	try {
+	    		//結果が正しい場合削除メソッド実行してresultに含める
+		    	result = codeMasterService.deleteMasterCode(codeMasterId);
+	    	}catch (Exception e) {
+	    		logger.error(e.getMessage());
+			}
+	        return result;
+	    }
 
 
 }
