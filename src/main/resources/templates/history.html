@@ -400,7 +400,15 @@
 
             //Search -S
             $('#searchButton').on( 'click', function () {
-            	modalesectiontable.column(0).search( this.value ).draw();
+
+            	var input = $('#assetNumber_search').val();
+				var after = input.replace(new RegExp("'",'g'),'');
+				$('#assetNumber_search').val(after);
+				input = $('#applicant_search').val();
+				var after = input.replace(new RegExp("'",'g'),'');
+				$('#applicant_search').val(after);
+
+				modalesectiontable.column(0).search( this.value ).draw();
             } );
           	//Search -E
 
