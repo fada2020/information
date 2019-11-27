@@ -165,7 +165,10 @@
 	<insert id="addRental" parameterType="java.util.List">
 		<selectKey resultType="String" keyProperty="rentalNo"
 			order="BEFORE">
-			SELECT CONCAT((CURDATE()+0),concat('-',
+
+
+
+			SELECT CONCAT((CURDATE()+0),CONCAT('-',
 			LPAD(IFNULL(MAX(
 			RIGHT(rental_no, 3)
 			) + 1, 1), 3 , '0')
