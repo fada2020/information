@@ -830,6 +830,7 @@ $(function (){
 
             /*assetNumberを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
+            	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
                 .column(0)
                 .search( this.value )
@@ -838,14 +839,13 @@ $(function (){
             /*rental_dayを貰ってメイン画面のデータを変える*/
             $("#rental_search").change(function () {
                 var date = $("#rental_search").val();
-
                 modalesectiontable
                 .column(1)
                 .search(date)
                 .draw();
             });
             $("#rentalNo_search").on( 'keyup',function () {
-
+            	$('#rentalNo_search').val(this.value.replace(new RegExp("'", 'g'), ''));
 
                 modalesectiontable
                 .column(2)
