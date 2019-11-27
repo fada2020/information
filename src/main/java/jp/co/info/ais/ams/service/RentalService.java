@@ -1,7 +1,6 @@
 package jp.co.info.ais.ams.service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -23,8 +22,9 @@ public class RentalService {
 
 	@Autowired
 	RentalMapper rentalMapper;
-/*エラーを見せる為の宣言*/
+	/*エラーを見せる為の宣言*/
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
+
 	/**
 	 * 全ての貸与情報を持ち出す
 	 *
@@ -35,6 +35,7 @@ public class RentalService {
 
 		return rentalMapper.selectAll(rental);
 	}
+
 	/**
 	 * 全ての貸与情報が何個か数える
 	 *
@@ -45,16 +46,18 @@ public class RentalService {
 
 		return rentalMapper.selectCount(rental);
 	}
+
 	/**
 	 * メイン画面で選択してもらったコードネームを通して該当するコード詳細の情報を持ち出す
 	 *
 	 * @param String
-	 * @return  List<CodeDetail> 
+	 * @return  List<CodeDetail>
 	 */
 	public List<CodeDetail> getSelectCodeData(String codeDetailName) {
 
 		return rentalMapper.getSelectCodeData(codeDetailName);
 	}
+
 	/**
 	 * 単一の貸与情報を持ち出す
 	 *
@@ -65,6 +68,7 @@ public class RentalService {
 
 		return rentalMapper.researchRental(assetSeq);
 	}
+
 	/**
 	 *メインページに見せるコードの詳細情報を持ち出す
 	 *
@@ -75,26 +79,29 @@ public class RentalService {
 
 		return rentalMapper.selectCodeDetail();
 	}
+
 	/**
 	 *メインページに見せるステータスコードの詳細情報を持ち出す
 	 *
-	 * @param 
+	 * @param
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectStatusCode() {
 
 		return rentalMapper.selectStatusCode();
 	}
+
 	/**
 	 *メインページに見せる詳細情報を持ち出す
 	 *
-	 * @param 
+	 * @param
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCode() {
 
 		return rentalMapper.selectCode();
 	}
+
 	/**
 	 *最後に選択してもらった資産情報を持ち出す
 	 *
@@ -105,21 +112,23 @@ public class RentalService {
 
 		return rentalMapper.selectAsset(number);
 	}
+
 	/**
 	 *選択してもらったコードを基にして該当する資産の情報を持ち出す
 	 *
 	 * @param String
-	 * @return List<Asset> 
+	 * @return List<Asset>
 	 */
 	public List<Asset> selectAssetList(String selectedItem) {
 
 		return rentalMapper.selectAssetList(selectedItem);
 	}
+
 	/**
 	 *リスト上にあるデータを持ち込んで貸与データテーブルに書き込む
 	 *
-	 * @param  List<Rental> 
-	 * @return int 
+	 * @param  List<Rental>
+	 * @return int
 	 */
 	@Transactional
 	public int addRental(List<Rental> rentalList) {
@@ -127,11 +136,12 @@ public class RentalService {
 		return rentalMapper.addRental(rentalList);
 
 	}
+
 	/**
 	 *リスト上にあるデータを持ち込んで資産データテーブルのステータスを変える
 	 *
-	 * @param  List<Rental> 
-	 * @return int 
+	 * @param  List<Rental>
+	 * @return int
 	 */
 	@Transactional
 	public int changeStatus(List<Rental> rentalList) {
@@ -139,6 +149,7 @@ public class RentalService {
 		return rentalMapper.changeStatus(rentalList);
 
 	}
+
 	/**
 	 *返却する為の情報を持ち込んで貸与データテーブルと資産データテーブルの情報を変える
 	 *
@@ -147,14 +158,16 @@ public class RentalService {
 	 * @param int
 	 */
 	@Transactional
-	public void returnAsset(Rental rental, String applicantId, int assetSeq) {
+	public void returnAsset(String updateId, String returnUserId, int assetSeq) {
 		/*
 		 * 返却する際にレンタルのオブジェクトに返却者等をセッティングする
 		 * */
+
 		try {
+			Rental rental = new Rental();
 			rental.setAssetSeq(assetSeq);
-			rental.setApplicantId(applicantId);
-			rental.setReturnUserId(applicantId);
+			rental.setUpdateId(updateId);
+			rental.setReturnUserId(returnUserId);
 			SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
 			Date currentTime = new Date();
 			String mTime = mSimpleDateFormat.format(currentTime);
@@ -172,6 +185,7 @@ public class RentalService {
 		}
 
 	}
+
 	/**
 	 *資産ナンバーを基にして資産のステータスを変える
 	 *
@@ -183,6 +197,7 @@ public class RentalService {
 
 		return rentalMapper.changeAssetStatus(assetNumber);
 	}
+
 	/**
 	 *該当する資産のステータスの情報を変える
 	 *
@@ -194,6 +209,7 @@ public class RentalService {
 
 		rentalMapper.changeAStatus(assetSeq);
 	}
+
 	/**
 	 *アップデートする為のメソッド
 	 *
@@ -212,27 +228,6 @@ public class RentalService {
 		return rentalMapper.updateRental(rental);
 	}
 
-	public int deleteRentals(String applicantId, ArrayList<String> list) {
-int num=0;
-		try {
-			Rental rental = new Rental();
-			SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
-			Date currentTime = new Date();
-			String mTime = mSimpleDateFormat.format(currentTime);
-			rental.setReturnDay(mTime);
-			rental.setApplicantId(applicantId);
-			rental.setList(list);
-			num=rentalMapper.deleteRentals(rental);
-			if(num>0) {
-				num=rentalMapper.deleteAssets(rental.getList());
 
-			}
-		} catch (Exception e) {
-
-			logger.debug(e.getMessage());
-		}
-
-return num;
-	}
 
 }
