@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.info.ais.asm.mapper.DashboardMapper">
+<mapper namespace="jp.co.info.ais.ams.mapper.DashboardMapper">
 
 	<!-- 資産タイプ別保有現況 -->
 
 	<!-- 総ハードウェア、総ソフトウェア、今月購入した装置 -->
 	<select id="possession"
-		resultType="jp.co.info.ais.asm.domain.Dashboard">
+		resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code
 			, code_detail_name AS kubunName
@@ -30,7 +30,7 @@
 
 	<!-- 資産種別貸与現況 -->
 	<select id="rslist"
-		resultType="jp.co.info.ais.asm.domain.Dashboard">
+		resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code AS kubunCode
 			, code_detail_name kubunName

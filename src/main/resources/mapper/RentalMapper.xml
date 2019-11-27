@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.info.ais.asm.mapper.RentalMapper">
+<mapper namespace="jp.co.info.ais.ams.mapper.RentalMapper">
 
 
 	<select id="selectAll"
-		resultType="jp.co.info.ais.asm.domain.Rental">
+		resultType="jp.co.info.ais.ams.domain.Rental">
 
 		SELECT
 		a.asset_seq,
@@ -65,7 +65,7 @@
 	</select>
 
 	<select id="getSelectCodeData" parameterType="String"
-		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
@@ -77,7 +77,7 @@
 
 
 	<select id="researchRental" parameterType="int"
-		resultType="jp.co.info.ais.asm.domain.Rental">
+		resultType="jp.co.info.ais.ams.domain.Rental">
 		SELECT
 		a.asset_seq,
 		a.asset_number,
@@ -102,7 +102,7 @@
 		AND r.status_code='02'
 	</select>
 	<select id="selectStatusCode"
-		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
@@ -111,7 +111,7 @@
 	</select>
 
 	<select id="selectCodeDetail"
-		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_master_id,
 		code_detail_id,
@@ -122,7 +122,7 @@
 	</select>
 
 	<select id="selectCode"
-		resultType="jp.co.info.ais.asm.domain.CodeDetail">
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
@@ -130,7 +130,7 @@
 		code_master_id='003'
 	</select>
 	<select id="selectAsset" parameterType="String"
-		resultType="jp.co.info.ais.asm.domain.Asset">
+		resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
@@ -140,7 +140,7 @@
 	</select>
 
 	<select id="selectAssetList" parameterType="String"
-		resultType="jp.co.info.ais.asm.domain.Asset">
+		resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
@@ -217,7 +217,7 @@
 	</insert>
 
 	<update id="returnAsset"
-		parameterType="jp.co.info.ais.asm.domain.Rental">
+		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 		update_id=#{applicantId},
 		status_code='01',
@@ -250,7 +250,7 @@
 	</update>
 
 	<update id="updateRental"
-		parameterType="jp.co.info.ais.asm.domain.Rental">
+		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 		rental_day =#{rentalDay},
 		rental_User_id=#{rentalUserId},
@@ -267,7 +267,7 @@
 
 
 	<update id="deleteRentals"
-		parameterType="jp.co.info.ais.asm.domain.Rental">
+		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 
 
