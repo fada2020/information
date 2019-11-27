@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="jp.co.info.ais.asm.mapper.LoginMapper">
+<mapper namespace="jp.co.info.ais.ams.mapper.LoginMapper">
 
 <select id="selectId" resultType="Integer">
     SELECT count(emp_id)
@@ -10,7 +10,7 @@
     emp_id =#{id}
     </select>
 
-  <select id="selectLogin" resultType="jp.co.info.ais.asm.domain.Login">
+  <select id="selectLogin" resultType="jp.co.info.ais.ams.domain.Login">
     SELECT
     	 emp_id
 		,emp_name
