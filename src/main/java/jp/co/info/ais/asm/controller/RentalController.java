@@ -32,6 +32,7 @@ public class RentalController {
 
 	@Autowired
 	private RentalService rentalService;
+
 	/**
 	 * 貸与管理ルトー
 	 *
@@ -170,7 +171,10 @@ public class RentalController {
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
-
+			String rentalNo = page.getColumns().get(2).getSearch().getValue();
+			if (null != rentalNo && !rentalNo.equals("")) {
+				rental.setRentalNo(rentalNo);
+			}
 			List<Rental> list = rentalService.selectAll(rental);
 
 			page.setData(list);
@@ -245,4 +249,27 @@ public class RentalController {
 		}
 		return successNum;
 	}
+
+	/**
+	 * メイン画面で資産シークエンスを持ち込んで一気に返却する
+	 *
+	 * @param  int 資産シークエンス
+	 * @return int 戻り値
+	 * */
+	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
+	@ResponseBody
+	private int deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
+int result=0;
+		try {
+				logger.debug(sList.toString());
+				result= rentalService.deleteRentals((String) session.getAttribute("id"),sList);
+
+		} catch (Exception e) {
+
+			logger.debug(e.getMessage());
+		}
+return result;
+	}
+
+
 }

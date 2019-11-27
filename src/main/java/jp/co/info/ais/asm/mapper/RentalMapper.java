@@ -1,5 +1,6 @@
 package jp.co.info.ais.asm.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -45,5 +46,11 @@ public interface RentalMapper {
 	public void changeAStatus(int assetSeq);
 
 	public int updateRental(Rental rental);
+
+	public int deleteRentals(Rental rental);
+
+	public int deleteAssets(ArrayList<String> list);
+
+
 
 }
