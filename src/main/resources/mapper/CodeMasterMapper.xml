@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="jp.co.info.ais.asm.mapper.CodeMasterMapper">
+<mapper namespace="jp.co.info.ais.ams.mapper.CodeMasterMapper">
 
 
 	<!--Insert MasterID NAME REMARKS -->
 	<insert id="insertMasterIdName"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
 		code_master_id
 		,code_master_name)
@@ -17,14 +17,14 @@
 	</insert>
 
 	<insert id="insertMasterId"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
 		code_master_id)
 		VALUES (
 		#{code_master_id})
 	</insert>
 	<insert id="insertMasterName"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
 		code_master_name)
 		VALUES (
@@ -65,14 +65,14 @@
 		</if>
 	</select>
 	<select id="CodeMasterListCheck"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster" resultType="int">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster" resultType="int">
 		SELECT
 		count(*)
 		FROM code_master
 		where code_master_id=${codeMasterId}
 	</select>
 	<insert id="CodeMasterInsert"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
 		code_master_id
 		,code_master_name
@@ -87,7 +87,7 @@
 		)
 	</insert>
 	<update id="updateCodeMaster"
-		parameterType="jp.co.info.ais.asm.domain.CodeMaster">
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		UPDATE code_master SET
 
 		code_master_name=#{codeMasterName},

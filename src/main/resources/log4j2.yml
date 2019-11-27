@@ -21,7 +21,7 @@ Configuration:
 
   Loggers:
     logger:
-      - name: jp.co.info.ais.asm
+      - name: jp.co.info.ais.ams
         level: debug
         additivity: false
         AppenderRef:
