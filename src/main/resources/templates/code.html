@@ -486,6 +486,8 @@
 
 
 			$('#searchBtn').on('click', function() {
+				$('#search_id').val($('#search_id').val().replace(new RegExp("'", 'g'), ''));
+				$('#search_name').val($('#search_name').val().replace(new RegExp("'", 'g'), ''));
 				<!--検索機能-->
 				modalesectiontable.column(0).search(this.value).draw();
 			});
