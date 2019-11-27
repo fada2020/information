@@ -14,8 +14,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.info.ais.asm.domain.Todo;
-import jp.co.info.ais.asm.mapper.TodoMapper;
+import jp.co.info.ais.ams.domain.Todo;
+import jp.co.info.ais.ams.mapper.TodoMapper;
 
 @RunWith(SpringRunner.class)
 @MybatisTest

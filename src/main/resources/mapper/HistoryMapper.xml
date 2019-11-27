@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.info.ais.asm.mapper.HistoryMapper">
+<mapper namespace="jp.co.info.ais.ams.mapper.HistoryMapper">
 
-	<select id="selectHistory" resultType="jp.co.info.ais.asm.domain.History">
+	<select id="selectHistory" resultType="jp.co.info.ais.ams.domain.History">
 		SELECT
 			ast.asset_number,
 			ast.maker_name,
@@ -41,7 +41,7 @@
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
-    <select id="selectStateCode" resultType="jp.co.info.ais.asm.domain.CodeDetail">
+    <select id="selectStateCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
     	SELECT
     		code_detail_id,
     		code_detail_name
@@ -72,7 +72,7 @@
 		</if>
     </select>
 
-    <select id="exportXlsx" resultType="jp.co.info.ais.asm.domain.History">
+    <select id="exportXlsx" resultType="jp.co.info.ais.ams.domain.History">
 		SELECT
 			ast.asset_number,
 			ast.maker_name,
