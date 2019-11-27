@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+
 <script type="text/javascript">
 function check() {}
  document.addEventListener("DOMContentLoaded", function() {
@@ -31,7 +33,7 @@ function check() {}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>IT資産管理</title>
-    
+
     <!-- favicons -->
 	<link rel="icon" href="../images/aisRogo.png">
     <!-- Bootstrap -->
@@ -68,9 +70,9 @@ function check() {}
 
                 </div>
 
-              <br>
-				<div>[[${errorMessage}]]</div>
-              <br>
+
+				<div style = "width : 250px; height : 30px; " id = "test">[[${errorMessage}]]</div>
+
 
               <div>
               	<fieldset>
@@ -86,7 +88,8 @@ function check() {}
 
 			<div id = "loginb" >
 				<div id ="logininb">
-					<input type ="submit" value="Login"id="submit_button" />
+
+					<input type ="submit" value="Login"id="submit_button" class="btn btn-success" />
 				</div>
 
 			</div>
