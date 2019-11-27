@@ -34,6 +34,8 @@
 <link href="../build/css/custom.min.css" rel="stylesheet">
 
 <style>
+<<<<<<<
+HEAD
 #table1 thead, th {
 	text-align: center;
 }
@@ -52,13 +54,44 @@
 	overflow: auto;
 }
 
-.table-wrapper-scroll-y {
+=======
+#table1 thead, th {
+	text-align: center;
+}
+
+#table1 th {
+	vertical-align: middle;
+}
+
+#table1 td {
+	vertical-align: middle;
+}
+
+.my-custom-scrollbar {
+	position: relative;
+	height: 130px;
+	overflow: auto;
+}
+
+>>>>>>>
+25
+faa3349fdee56a60939f515b0ad8ace8c94808
+
+	.table-wrapper-scroll-y {
 	display: block;
 }
 
 .error {
 	color: red;
 	background-color: lavender;
+}
+
+.flat {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
 }
 </style>
 
@@ -323,12 +356,6 @@
 																			class="glyphicon glyphicon-calendar"></span>
 																		</span>
 																	</div>
-																	<!-- <input type="text"
-																class="form-control date_check col-md-10" id="todayDate"
-																name="todayDate"
-																th:value="${#dates.format(date,'yyyy-MM-dd')}"
-																readonly="readonly">
-													-->
 																</div>
 															</div>
 
@@ -557,7 +584,6 @@
 
     		})
 $(function (){
-
 
    	$('#deleteRentals').on('click',function(){
 
@@ -832,8 +858,6 @@ $(function (){
 戻り値も無し
 */
 function updateRental(){
-
-	 $(function() {
 		 /* 最初に日付を貰うときの有効性検査  */
 		 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
          var form = $('#updateForm');
@@ -976,15 +1000,7 @@ function updateRental(){
 
 
          }
-     });
-
-
-
-
-
 /*変更してページをリロードする  */
-
-
 	}
 
 function researchRental(assetSeq){
@@ -1020,7 +1036,7 @@ function researchRental(assetSeq){
 });
 
 /* モーダルを閉じるボタン以外では閉じれない  */
-	$('#modal3d').modal({backdrop: 'static'});
+	$('#modal3d').modal({    backdrop: 'static', keyboard: false});
 
 }
 
@@ -1058,7 +1074,7 @@ function researchRental(assetSeq){
 		function modalInsert() {
 
 			/* モーダルを閉じるボタン以外では閉じれない  */
-    		$('#modal3d2').modal({backdrop: 'static'});
+    		$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
     	}
 
 		function getSubItem() {
@@ -1212,7 +1228,6 @@ var assetSeq=btn.value;
 
 	function writeItem() {
 
-        $(function() {
 			/* 有効性の検査を行う  */
         	 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
             var form = $('#insertForm');
@@ -1322,7 +1337,6 @@ var assetSeq=btn.value;
     			   				+$("#sub_singleSelect option:selected").text()+
     			   					'</td><td id="assetNumber_i">'
     			   				+number+
-
     			   					'</td><td id="purpose_i">'
     			   					+$("#purpose").val()+
     			   					'</td><td id="storageLocation_i">'
@@ -1348,7 +1362,6 @@ var assetSeq=btn.value;
 
 
             }
-        });
 
 	}
 		/*]]>*/
