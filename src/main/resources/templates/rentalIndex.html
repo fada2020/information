@@ -136,7 +136,7 @@
 
 						</div>
 						<div class="col-md-1 col-md-offset-1" style="float: left;">
-							<button type="button" id="deleteButton" class="btn btn-primary"
+							<button type="button" id="deleteButton" class="btn btn-primary pull-right"
 								onclick="modalInsert()">貸与</button>
 						</div>
 						<div class="clearfix"></div>
@@ -317,7 +317,7 @@
 
 
 										<div class="modal-footer">
-											<button type="button" class="btn btn-warning"
+											<button type="button" class="btn btn-warning pull-left"
 												id="updateButton" onclick="updateRental()">更新</button>
 											<button type="button" class="btn btn-secondary"
 												data-dismiss="modal">戻る</button>
@@ -461,8 +461,8 @@
 
 																<div class="col-md-12  ">
 
-																	<input type="button" class="btn btn-success"
-																		style="float: right" id="button1"
+																	<input type="button" class="btn btn-success pull-right"
+																		 id="button1"
 																		onclick="writeItem();" value="追加" />
 
 																</div>
@@ -511,7 +511,7 @@
 
 
 										<div class="modal-footer">
-											<input type="button" class="btn btn-primary"
+											<input type="button" class="btn btn-primary pull-left"
 												id="insertButton" value="貸与" onclick="rentalItem();" />
 											<button type="button" class="btn btn-secondary"
 												onclick="cancelInsert()">戻る</button>
@@ -1079,9 +1079,12 @@ function researchRental(assetSeq){
 		}
 	/* モーダルボタンをクリックしてインサートする画面を開く  */
 		function modalInsert() {
-
+		    var user = /*[[${session.id}]]*/ 'user';
+			if(user==null){alert("ログインしてください");
 			/* モーダルを閉じるボタン以外では閉じれない  */
-    		$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
+    		}else{$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
+
+    		}
     	}
 
 		function getSubItem() {
@@ -1357,7 +1360,7 @@ var assetSeq=btn.value;
     				   				'</td><td id="returnPeriod_i">'
     				   					+$("#returnPeriod").val()+
 
-    			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">Delete</button></td></tr>');
+    			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
 
     			   			$(function(){  $('select').find('option:first').attr('selected', 'selected');})
     			    },
