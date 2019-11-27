@@ -1,4 +1,4 @@
-package jp.co.info.ais.asm.filter;
+package jp.co.info.ais.ams.filter;
 
 import java.io.IOException;
 
@@ -33,6 +33,8 @@ public class DashboardFilter implements Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
 
+		System.out.println("Do filter");
+
 		if (servletRequest instanceof HttpServletRequest) {
 			String url = ((HttpServletRequest) servletRequest).getRequestURI().toString();
 			String queryString = ((HttpServletRequest) servletRequest).getQueryString();
@@ -44,10 +46,9 @@ public class DashboardFilter implements Filter {
 		System.out.println(loginId);
 		if( loginId == null ) {
 			HttpServletResponse res = (HttpServletResponse)servletResponse;
-	        res.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+	        res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 	        res.setHeader("Location", "/");
 		}
-		System.out.println("Do filter");
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 	/**
