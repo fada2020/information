@@ -571,6 +571,7 @@
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
+    		var rentalArray
     	     var deleteList=new Array();
     		function deleteAct(target){
 
@@ -594,7 +595,8 @@ $(function (){
 
    	$('#deleteRentals').on('click',function(){
 
-
+   	    var user = /*[[${session.id}]]*/ 'user';
+		if(user!=null){
   		if(deleteList.length>0){
 
   			var confirmation = confirm(deleteList.length + " の貸与目録を返却します。");
@@ -613,6 +615,8 @@ $(function (){
 			}
   		}else{
   			alert("返却項目を選択してください。");
+  		}}else{
+  			alert("ログインしてください");
   		}
   	})
 })

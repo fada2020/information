@@ -239,6 +239,7 @@
 	</update>
 
 	<update id="changeAStatus" parameterType="int">
+
 		update asset set
 
 		status_code='01'
@@ -268,15 +269,15 @@
 
 	<update id="deleteRentals"
 		parameterType="jp.co.info.ais.ams.domain.Rental">
+
 		update rental set
 
 
 
 
 		status_code='01',
-		applicant_id=#{applicantId},
 		return_Day=#{returnDay},
-
+		return_user_id=#{applicantId},
 		update_id=#{applicantId}
 		where
 		asset_seq in
