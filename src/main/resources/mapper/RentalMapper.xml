@@ -168,11 +168,11 @@
 
 
 
-			SELECT CONCAT((CURDATE()+0),
+			SELECT CONCAT((CURDATE()+0),CONCAT('-',
 			LPAD(IFNULL(MAX(
 			RIGHT(rental_no, 3)
 			) + 1, 1), 3 , '0')
-			)
+			))
 			FROM rental b WHERE rental_no LIKE
 			CONCAT((CURDATE()+0),'%')
 
@@ -198,7 +198,7 @@
 			separator=",">
 			(
 			(SELECT
-			IFNULL(MAX(rental_seq) + 1, 1) FROM rental r),
+			IFNULL(MAX(r.rental_seq) + 1, 1) FROM rental r),
 			#{item.assetSeq},
 			#{item.rentalDay},
 			#{item.rentalUserId},
@@ -219,7 +219,7 @@
 	<update id="returnAsset"
 		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
-		update_id=#{applicantId},
+		update_id=#{updateId},
 		status_code='01',
 		return_day=#{returnDay},
 		return_user_id=#{returnUserId}
@@ -239,6 +239,7 @@
 	</update>
 
 	<update id="changeAStatus" parameterType="int">
+
 		update asset set
 
 		status_code='01'
@@ -266,37 +267,6 @@
 	</update>
 
 
-	<update id="deleteRentals"
-		parameterType="jp.co.info.ais.ams.domain.Rental">
-		update rental set
-
-
-
-
-		status_code='01',
-		return_user_id=#{applicantId},
-		return_Day=#{returnDay},
-
-		update_id=#{applicantId}
-		where
-		asset_seq in
-		<foreach item="item" index="index" collection="list"
-			open="(" close=")" separator=",">
-			#{item}
-		</foreach>
-	</update>
-		<update id="deleteAssets"
-		parameterType="java.util.List">
-		update asset set
-
-		status_code='01'
-		where
-		asset_seq in
-		<foreach item="item" index="index" collection="list"
-			open="(" close=")" separator=",">
-			#{item}
-		</foreach>
-	</update>
 
 </mapper>
 
