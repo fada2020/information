@@ -20,4 +20,9 @@ public class AppConstant {
 	public final static String fixed_rent_list06 = "Keyboard";
 	public final static String fixed_rent_list07 = "Mouse";
 
+	public final static String STATE_STORAGE = "01";
+	public final static String STATE_RENTAL = "02";
+	public final static String STATE_BREAKDOWN = "03";
+	public final static String STATE_DISUSE = "04";
+
 }

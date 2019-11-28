@@ -39,7 +39,7 @@
 		<if test="rentalDayS != null and rentalDayE !=null">
 			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 		</if>
-		AND r.status_code = '02'
+		AND r.return_day is null
 		ORDER BY
 		asset_number ASC
 
@@ -61,7 +61,7 @@
 		<if test="rentalDayS != null and rentalDayE !=null">
 			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 		</if>
-		and r.status_code='02'
+		and r.return_day is null
 	</select>
 
 	<select id="getSelectCodeData" parameterType="String"
@@ -208,8 +208,8 @@
 			#{item.applicantId},
 			#{item.returnPeriod},
 			#{item.bpName},
-			#{item.applicantId},
-			#{item.applicantId},
+			#{item.insertId},
+			#{item.updateId},
 			#{rentalNo},
 			'02'
 			)
@@ -220,7 +220,7 @@
 		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 		update_id=#{updateId},
-		status_code='01',
+
 		return_day=#{returnDay},
 		return_user_id=#{returnUserId}
 		where asset_seq=#{assetSeq}
@@ -231,8 +231,6 @@
 		update asset set
 
 		status_code='02'
-
-
 
 		where asset_number=#{assetNumber}
 

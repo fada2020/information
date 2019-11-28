@@ -107,18 +107,19 @@ public class RentalController {
 	/**
 	 * 任意の貸与リストの資産の状態を002から001に変える
 	 * @param  int assetSeq 資産シークエンス
-	 * @return 無し
+	 * @return int 戻り値
 	 * */
 	@RequestMapping(value = "/cancelAsset", method = RequestMethod.POST)
 	@ResponseBody
-	public void cancelAsset(@RequestBody int assetSeq) {
+	public int cancelAsset(@RequestBody int assetSeq) {
+		int num=0;
 		try {
 			rentalService.changeAStatus(assetSeq);
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
-
+return num;
 	}
 
 	/**
