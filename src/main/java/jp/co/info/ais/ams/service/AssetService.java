@@ -15,6 +15,7 @@ import jp.co.info.ais.ams.domain.Accessories;
 import jp.co.info.ais.ams.domain.Asset;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.MaintenanceHistory;
+import jp.co.info.ais.ams.domain.Rental;
 import jp.co.info.ais.ams.mapper.AssetMapper;
 import jp.co.info.ais.ams.mapper.RentalMapper;
 
@@ -156,6 +157,9 @@ public class AssetService {
 	 */
 	public int updateAsset(Asset asset) {
 		if(!"".equals(asset.getPreStatusCode()) && !asset.getStatusCode().equals(asset.getPreStatusCode())) {
+			Rental rental = new Rental();
+			rental.setInsertId(asset.getInsertId());
+			rental.setUpdateId(asset.getUpdateId());
 			if(asset.getStatusCode().equals(AppConstant.STATE_RENTAL)) {
 
 			} else {
