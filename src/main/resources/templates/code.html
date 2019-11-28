@@ -148,13 +148,13 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録
-					</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
+					<h3 class="modal-title">
+						<i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録
+					</h3>
+
 				</div>
 				<div class="modal-body">
 					<div style="padding: 5px 20px;">
@@ -167,7 +167,7 @@
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
 											id="codeMasterId" name="codeMasterId" placeholder="ex)001"
-											required />
+											onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 									</fieldset>
 								</div>
 							</div>
@@ -204,7 +204,6 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-
 								<button type="button" class="btn btn-warning"
 									onclick="codeInsert();">
 									<i class="fa fa-check-circle"></i> 登録
@@ -216,12 +215,7 @@
 							</div>
 						</form>
 					</div>
-
-
-
 				</div>
-
-
 			</div>
 		</div>
 	</div>
@@ -342,7 +336,6 @@
 
 
 	<!-- page script -->
-
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var modalesectiondata = null;
@@ -356,6 +349,8 @@
 					codeMasterId : {
 						required : true,
 						number : true,
+						min : 1,
+						max : 999,
 						rangelength : [ 3, 3 ]
 					},
 					codeMasterName : {
@@ -365,15 +360,15 @@
 				messages : {
 					codeMasterId : {
 						required : "コードを入力してください",
+						number : "ナンバーで入力してください",
+						min : "1~999の定数を入力してください",
+						max : "1~999の定数を入力してください",
 						rangelength : "桁数は3文字です"
-
 					},
 					codeMasterName : {
 						required : "コード名称を入力してください"
 					}
-
 				}
-
 			});
 			<!--マスターコードとマスターコードネームの有効性チェック -->
 			if (form.valid()) {
@@ -513,7 +508,8 @@
 			});
 
 		})
-			function update(button) {
+
+		function update(button) {
 			<!--変更ボタンを押すと修正機能実行-->
 
  				var selectTr = $(button).closest("tr");
@@ -528,9 +524,6 @@
 
 				$('#modalCodeMaster_update').modal();
 			}
-
-
-
 
 			function codeUpdate() {
 				var form = $('#updateform');
@@ -584,15 +577,9 @@
 								alert('更新失敗');
 							}
 						}
-
 					});
-
-
 				}
-
-
 			}
-
 		/*]]>*/
 	</script>
 
