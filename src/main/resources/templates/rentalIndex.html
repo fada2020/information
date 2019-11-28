@@ -226,7 +226,7 @@
 																		</div>
 
 																	</div>
-																		<div class="form-group row">
+																	<div class="form-group row">
 																		<label class="control-label col-md-2">使用者</label>
 
 																		<div class="col-md-9">
@@ -375,9 +375,8 @@
 															<div class="form-group row">
 																<label class="control-label col-md-2 ">貸出者</label>
 																<div class="col-md-9 input-group ">
-																	<input type="text" name="applicantId"
-																		id="applicantId" required
-																		class="form-control col-md-9" />
+																	<input type="text" name="applicantId" id="applicantId"
+																		required class="form-control col-md-9" />
 
 																</div>
 															</div>
@@ -1159,7 +1158,8 @@ var assetSeq=btn.value;
 			rental.applicantId =cellText.find("#applicantId_i").text();
 			rental.rentalDay=$('#todayDate').val().replaceAll("-","");
 			rental.bpName=cellText.find("#bpName_i").text();
-
+			rental.insertId = /*[[${session.id}]]*/ 'user';
+			rental.updateId = /*[[${session.id}]]*/ 'user';
 			tdArr.push(rental);
 
 
@@ -1296,8 +1296,8 @@ var assetSeq=btn.value;
 
     			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td id="rentalUserId_i">'
     			   					+$('#rentalUserId').val()+
-    			   					'</td><td >'
-    			   					+$("#applicantId_i").val()+
+    			   					'</td><td id="applicantId_i">'
+    			   					+$("#applicantId").val()+
     			   					'</td><td>'
     			   				+$("#sub_singleSelect option:selected").text()+
     			   					'</td><td id="assetNumber_i">'
