@@ -9,7 +9,7 @@
 			ast.asset_number,
 			ast.maker_name,
 			ast.model_name,
-			rt.status_code,
+			IFNULL(rt.status_code,ast.status_code) AS status_code,
 			rt.rental_no,
 			rt.purpose,
 			rt.storage_location,
@@ -19,9 +19,9 @@
 			rt.rental_day rentalDayS,
 			rt.return_day returnDayS,
 			rt.rental_seq
-		FROM asset ast, rental rt
-		WHERE
-		rt.asset_seq = ast.asset_seq
+		FROM asset ast
+		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		WHERE	1 = 1
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND ast.asset_number LIKE '%${assetNumber}%'
 		</if>
@@ -29,7 +29,7 @@
 		AND rt.applicant_id LIKE '%${applicantId}%'
 		</if>
 		<if test="statusCode != null and !statusCode.equals('00')">
-		AND rt.status_code = #{statusCode}
+		AND IFNULL(rt.status_code,ast.status_code) = #{statusCode}
 		</if>
 		<if test="rentalDayS != null and rentalDayE !=null">
 		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
@@ -37,7 +37,7 @@
 		<if test="returnDayS != null and returnDayE !=null">
 		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
 		</if>
-		ORDER BY ast.asset_number
+		ORDER BY rt.rental_no DESC, ast.asset_number
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
@@ -52,17 +52,17 @@
     <select id="selectCount" resultType="int">
     	SELECT
     		COUNT(1)
-    	FROM asset ast, rental rt
-		WHERE
-		rt.asset_seq = ast.asset_seq
+    	FROM asset ast
+		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		WHERE	1 = 1
 		<if test="assetNumber != null and !assetNumber.equals('')">
 		AND ast.asset_number LIKE '%${assetNumber}%'
 		</if>
 		<if test="applicantId != null and !applicantId.equals('')">
 		AND rt.applicant_id LIKE '%${applicantId}%'
 		</if>
-		<if test="statusCode != 00">
-		AND rt.status_code = #{statusCode}
+		<if test="statusCode != null and !statusCode.equals('00')">
+		AND IFNULL(rt.status_code,ast.status_code) = #{statusCode}
 		</if>
 		<if test="rentalDayS != null and rentalDayE !=null">
 		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
@@ -86,11 +86,9 @@
 			rt.bp_name,
 			rt.rental_day rentalDayS,
 			rt.return_day returnDayS
-		FROM asset ast, rental rt
-		WHERE
-			rt.asset_seq = ast.asset_seq
-		ORDER BY
-			rt.asset_seq
+		FROM asset ast
+		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		ORDER BY rt.rental_no desc, ast.asset_number
     </select>
 
     <delete id="deleteHistory" parameterType="List">

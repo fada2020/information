@@ -366,7 +366,7 @@
                     }},
                     //貸与番号
                     { targets: 4, data: function(d){
-                    	if(d.rentalNo == ''){
+                    	if(d.rentalNo == '' || d.rentalNo == null){
                     		return '-';
                     	} else{
                     		return d.rentalNo;
@@ -374,7 +374,7 @@
                     }},
                     //用途
                     { targets: 5, data: function(d){
-                    	if(d.purpose == ''){
+                    	if(d.purpose == '' || d.purpose == null){
                     		return '-';
                     	} else{
                     		return d.purpose;
@@ -382,7 +382,7 @@
                     }},
                     //場所
                     { targets: 6, data: function(d){
-                    	if(d.storageLocation == ''){
+                    	if(d.storageLocation == '' || d.storageLocation == null){
                     		return '-';
                     	} else{
                     		return d.storageLocation;
@@ -390,7 +390,7 @@
                     }},
                     //貸出者
                     { targets: 7, data: function(d){
-                    	if(d.applicantId == ''){
+                    	if(d.applicantId == '' || d.applicantId == null){
                     		return '-';
                     	} else{
                     		return d.applicantId;
@@ -398,7 +398,7 @@
                     }},
                     //使用者
                     { targets: 8, data: function(d){
-                    	if(d.rentalUserId == ''){
+                    	if(d.rentalUserId == '' || d.rentalUserId == null){
                     		return '-';
                     	} else{
                     		return d.rentalUserId;
@@ -406,7 +406,7 @@
                     }},
                     //BP社名
                     { targets: 9, data: function(d){
-                    	if(d.bpName == ''){
+                    	if(d.bpName == '' || d.bpName == null){
                     		return '-';
                     	} else{
                     		return d.bpName;
@@ -436,7 +436,7 @@
                     {targets: 12,
                     	render: function( data, type, row, meta ){
 
-                    		if(row.statusCode=="02"){//貸与状態の場合
+                    		if(row.returnDayS=="" || row.returnDayS == null){//貸与状態の場合
                     			return '<input type="checkbox" class="flat" disabled="disabled" title="貸与の項目は履歴を削除できません。">';
                     		} else{//その他の場合
                     			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
