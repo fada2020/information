@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>IT資産管理</title>
+
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+<style>
+    	#datatable-list thead, th {text-align: center;
+    	vertical-align: middle;}
+		#datatable-list tbody tr{cursor:pointer;
+		}
+		#datatable-list th{
+			vertical-align:middle;
+		}
+		#datatable-list td{
+			vertical-align:middle;
+		}
+</style>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
+
+			<!-- top navigation -->
+			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
+
+			<!-- page content -->
+
+			<!-- page content -->
+			<!-- ここからコンテンツ作成 -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>
+								<i class="fa fa-cogs"></i> 詳細検索
+							</h3>
+						</div>
+					</div>
+					<!-- /.page-title -->
+
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<div class="well" style="overflow: auto">
+										<div class="col-md-4">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="search_master_id"style="font-size: 16px;">マスターコード</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="search_master_id" class="form-control ">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="search_detail_id" style="font-size: 16px;">コード詳細ID</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="search_detail_id" class="form-control ">
+											</div>
+										</div>
+											<div class="col-md-4">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="search_detail_name" style="font-size: 16px;">コード詳細名称</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="search_detail_name" class="form-control ">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<!-- 新規登録 ボタン -->
+											<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modalCodeMaster">
+												<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
+											</button>
+										</div>
+											<!-- 検索 ボタン -->
+										<div class="col-md-4">
+											<button type="button" class="btn btn-primary pull-right" id="searchBtn">
+												<i class="fa fa-search" aria-hidden="true"></i> 検索
+											</button>
+										</div>
+									</div>
+									<!-- /.well -->
+
+								</div>
+								<!-- /.x_title -->
+
+								<div class="x_content">
+										<div class="title_left">
+											<h3>
+												<i class="fa fa-cogs"></i> 詳細リスト
+											</h3>
+										</div>
+									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+										<table id="datatable-list"
+											class="table table-bordered jambo_table bulk_action text-center"
+											style="width: 100%">
+											<thead>
+												<tr class="headings">
+													<!--  <th class="column-title txt_center">No.</th> -->
+
+													<th class="column-title txt_center">マスターコード</th>
+													<th class="column-title txt_center">コード詳細ID</th>
+													<th class="column-title txt_center">コード詳細名称</th>
+													<th class="column-title txt_center">アイテム1</th>
+													<th class="column-title txt_center">アイテム2</th>
+													<th class="column-title txt_center">アイテム3</th>
+													<th class="column-title txt_center">アイテム4</th>
+													<th class="column-title txt_center">アイテム5</th>
+													<th class="column-title txt_center">使用有無</th>
+													<th class="column-title txt_center"></th>
+													<th class="column-title txt_center"></th>
+												</tr>
+											</thead>
+											<!-- List 出力 -->
+
+											<tbody>
+											</tbody>
+
+											<!--/. List 出力 -->
+
+										</table>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.x_content -->
+							</div>
+							<!-- /.x_panel -->
+						</div>
+					</div>
+					<!-- /.row -->
+
+				</div>
+			</div>
+			<!-- /.right_co -->
+			<!-- ここまでのコンテンツ作成 -->
+			<!-- /page content -->
+			<!-- footer content -->
+			<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+
+
+<!-- Modal Part コード登録 -->
+	<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div style="padding: 5px 20px;">
+						<form id="antoform" class="form-horizontal calender" role="form"
+							method="GET" name="frm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> マスターコード</label>
+									<div class="col-md-9 input-group " th:if="${kubunCode} != null">
+										<select class="form-control" id="selectmasterid" name="selectmasterid" onchange="">
+													<option value="">選択</option>
+														<option th:each="selectmasterid : ${codeMaster}" th:value="${}" th:text="${}"></option>
+										</select>
+								<!-- <label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> マスターコード</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"
+											id="codeMasterId" name="codeMasterId" placeholder="ex)001"
+											required />
+									</fieldset>
+								</div> -->
+							</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> コード名称</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"
+											id="codeMasterName" name="codeMasterName" placeholder="コード名称"
+											required />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">詳細</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control form-control-sm"
+										id="remarks" name="remarks">
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">使用有無</label>
+								<div class="col-sm-9">
+									<div id="use" class="btn-group" style="padding: 5px;">
+										<label style="color: blue;"><input type="radio"id="button1"
+											name="use_flag" value="0" checked>&nbsp; 使用 &nbsp;</label> <label
+											style="color: red"><input type="radio" id=""
+											name="use_flag" value="1">&nbsp; 未使用 &nbsp;</label>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+
+								<button type="button" class="btn btn-warning"
+									onclick="codeInsert();">
+									<i class="fa fa-check-circle"></i> 登録
+								</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">
+									<i class="fa fa-times-circle"></i> 閉じる
+								</button>
+							</div>
+						</form>
+					</div>
+
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- /.Modal Part :: Register End -->
+
+	<!-- Modal Part コードマスタ変更 -->
+	<div id="modalCodeMaster_update" class="modal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						<i class="fa fa-pencil-square" aria-hidden="true" style ="font-size: 18px;"></i> コードマスタ変更
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div style="padding: 5px 20px;">
+						<form id="updateform" class="form-horizontal calender" role="form"
+							method="GET" name="frm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;font-size: 18px;">*</span> コードID</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"
+											id="codeMasterId_update" name="codeMasterId_update"
+											placeholder="ex)001" required />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> コード名称</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"
+											id="codeMasterName_update" name="codeMasterName_update"
+											placeholder="コード名称" required />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">詳細</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control form-control-sm"
+										id="remarks_update" name="remarks_update">
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">使用有無</label>
+								<div class="col-sm-9">
+									<div id="use_flag_update" class="btn-group"
+										style="padding: 5px;">
+										<label style="color: blue;"><input type="radio" id="rd1"
+											name="use_flag_update" value="0"checked>&nbsp; 使用 &nbsp;</label> <label
+											style="color: red"><input type="radio" id="rd2"
+											name="use_flag_update" value="1">&nbsp; 未使用
+											&nbsp;</label>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+
+								<button type="button" class="btn btn-primary"
+									onclick="codeUpdate();">
+									<i class="fa fa-check-circle"></i> 変更
+
+								</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">
+									<i class="fa fa-times-circle"></i> 閉じる
+								</button>
+							</div>
+						</form>
+					</div>
+
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- /.Modal Part :: Register End -->
+
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+
+	<!-- jquery-validation-1.19.1 -->
+	<script
+		src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
+
+
+	<!-- page script -->
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+
+		$(function() {
+
+
+			<!--datatableの設定を変更-->
+			var modalesectiontable = $("#datatable-list")
+					.DataTable(
+							{
+								<!--ページング-->
+								"language" : {
+									"info" : "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+									"infoEmpty" : "表示 0 ~ 0 の 0 エントリ",
+									"infoFiltered" : "",
+									"emptyTable" : "表にデータがない",
+									"paginate" : {
+										"first" : "最初",
+										"last" : "最後",
+										"next" : "次へ",
+										"previous" : "前の"
+									}
+								},
+
+								<!--検索機能 -->
+								fixedHeader : true,
+								"processing" : true,
+								"serverSide" : true,
+								"start" : 0,
+								"length" : 10,
+								"searching" : false,
+								"paging" : true,
+								"lengthChange" : false,
+								"ordering" : false,
+								"ajax" : {
+									url : /*[[@{/codedetail/codedetailList}]]*/'codedetail/codedetailList',
+									type : "POST",
+									dataType : "json",
+									contentType : 'application/JSON',
+									data : function(d) {
+										d.columns[0].search.value = $(
+												'#search_master_id').val();
+										d.columns[1].search.value = $(
+												'#search_detail_id').val();
+										d.columns[2].search.value = $(
+												'#search_detail_name').val();
+										return JSON.stringify(d);
+									}
+								},
+								"columnDefs" : [
+										{
+											targets : 0,
+											data : "codeMasterId"
+										},
+										{
+											targets : 1,
+											data : "codeDetailId"
+										},
+										{
+											targets : 2,
+											data : "codeDetailName"
+										},
+										{
+											targets : 3,
+											data : "item1"
+										},
+										{
+											targets : 4,
+											data : "item2"
+										},
+										{
+											targets : 5,
+											data : "item3"
+										},
+										{
+											targets : 6,
+											data : "item4"
+										},
+										{
+											targets : 7,
+											data : "item5"
+										},
+										{
+											targets : 8,
+											data : function(d) {
+												var str = '';
+												if (d.useFlag == 0) {
+													str = "使用";
+												} else {
+													str = "未使用";
+												}
+												return str;
+											}
+										},
+										 ]
+							});
+
+
+
+			function selectMasterID() {
+				/* 最初の選択地で選択してもらったデータを元にして次の選択地をセッティングする  */
+				var mid =/*[[${codeMasterId}]]*/;
+
+
+				$('#selectmasterid').click(
+						/* 二番目のボタンが押されたら下のメソッドが行われる  */
+						function() {
+							/* まだ何も選択してなければ下のメソッドは実行されない
+							* 当てはまるデータがあれば選択地にセティングする
+							*/
+							if($('#selectmasterid option:selected').val()!=""){
+							var item=$('#selectmasterid option:selected').val();
+								var html = '<option value="">選択</option>';
+								mid.forEach(function(value) {
+								if(value.item1==item){
+									html += '<option value="' +value.selectmasterid + '"></option>';
+								}});
+							}
+							});
+			}
+
+
+			$('#searchBtn').on('click', function() {
+				<!--検索機能-->
+				modalesectiontable.column(0).search(this.value).draw();
+			});
+
+
+			function getSubSubItem() {
+
+
+				/* 三番目のボタンが押されたら下のメソッドが行われる  */
+				$('#sub_singleSelect').click(
+						function() {
+							/* まだ何も選択してなければ下のメソッドは実行されない
+							* 当てはまるデータがあれば選択地にセティングする
+							*/
+			if($('#sub_singleSelect option:selected').val()!=""){
+						var selectedItem = $('#sub_singleSelect option:selected').val();
+						selectedItem=selectedItem.replace(/[^0-9]/g,'');
+						/*ajaxを使って実際に使えるものかを確認する  */
+						$.ajax({
+		   			"url" : "/rental/getAssetList",
+		    		"type" : "post",
+		   	 		"dataType": "json",
+		   	 		"contentType": "application/JSON",
+		   			"data" : selectedItem,
+		   			contentType: 'application/JSON',
+		   		 	"success" : function(data){
+
+		   			var itemName=$('#sub_subSelect').val();
+					var html = '<option value="">選択</option>';
+
+					data.forEach(function(value) {
+
+						html += '<option value="' + value.assetSeq + '">'
+								+ value.assetNumber + '</option>';
+					});
+					$('#sub_subSelect').html(html);
+				},
+				"Error" : function(){
+					alert("貸与不可能");
+				}
+
+
+		});
+						   }
+						}
+	);
+
+
+			}
+
+
+
+		/*]]>*/
+	</script>
+
+</body>
+</html>
