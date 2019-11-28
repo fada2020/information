@@ -67,7 +67,11 @@ public class HistoryXlsxView extends AbstractXlsxView {
             row.createCell(1).setCellValue(aHistory.getMakerName());
             row.createCell(2).setCellValue(aHistory.getModelName());
             row.createCell(3).setCellValue(statusCode.get(aHistory.getStatusCode()));
-            row.createCell(4).setCellValue(aHistory.getRentalNo());
+            if(aHistory.getRentalNo().equals("999999999999")) {
+            	row.createCell(4).setCellValue("");
+            } else {
+            	row.createCell(4).setCellValue(aHistory.getRentalNo());
+            }
             row.createCell(5).setCellValue(aHistory.getPurpose());
             row.createCell(6).setCellValue(aHistory.getStorageLocation());
             row.createCell(7).setCellValue(aHistory.getApplicantId());
