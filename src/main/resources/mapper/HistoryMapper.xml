@@ -5,39 +5,61 @@
 <mapper namespace="jp.co.info.ais.ams.mapper.HistoryMapper">
 
 	<select id="selectHistory" resultType="jp.co.info.ais.ams.domain.History">
-		SELECT
-			ast.asset_number,
-			ast.maker_name,
-			ast.model_name,
-			IFNULL(rt.status_code,ast.status_code) AS status_code,
-			rt.rental_no,
-			rt.purpose,
-			rt.storage_location,
-			rt.applicant_id,
-			rt.rental_user_id,
-			rt.bp_name,
-			rt.rental_day rentalDayS,
-			rt.return_day returnDayS,
-			rt.rental_seq
-		FROM asset ast
-		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
-		WHERE	1 = 1
-		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND ast.asset_number LIKE '%${assetNumber}%'
-		</if>
-		<if test="applicantId != null and !applicantId.equals('')">
-		AND rt.applicant_id LIKE '%${applicantId}%'
-		</if>
-		<if test="statusCode != null and !statusCode.equals('00')">
-		AND IFNULL(rt.status_code,ast.status_code) = #{statusCode}
-		</if>
-		<if test="rentalDayS != null and rentalDayE !=null">
-		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
-		</if>
-		<if test="returnDayS != null and returnDayE !=null">
-		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
-		</if>
-		ORDER BY rt.rental_no DESC, ast.asset_number
+		SELECT * FROM(
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND status_code = #{statusCode}
+				</if>
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		    WHERE 1 = 1
+				<if test="assetNumber != null and !assetNumber.equals('')">
+				AND ast.asset_number LIKE '%${assetNumber}%'
+				</if>
+				<if test="applicantId != null and !applicantId.equals('')">
+				AND rt.applicant_id LIKE '%${applicantId}%'
+				</if>
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND rt.status_code = #{statusCode}
+				</if>
+				<if test="rentalDayS != null and rentalDayE !=null">
+				AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+				</if>
+				<if test="returnDayS != null and returnDayE !=null">
+				AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
+				</if>
+			)Result
+		ORDER BY asset_number,rental_no
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
@@ -50,45 +72,99 @@
     </select>
 
     <select id="selectCount" resultType="int">
-    	SELECT
-    		COUNT(1)
-    	FROM asset ast
-		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
-		WHERE	1 = 1
-		<if test="assetNumber != null and !assetNumber.equals('')">
-		AND ast.asset_number LIKE '%${assetNumber}%'
-		</if>
-		<if test="applicantId != null and !applicantId.equals('')">
-		AND rt.applicant_id LIKE '%${applicantId}%'
-		</if>
-		<if test="statusCode != null and !statusCode.equals('00')">
-		AND IFNULL(rt.status_code,ast.status_code) = #{statusCode}
-		</if>
-		<if test="rentalDayS != null and rentalDayE !=null">
-		AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
-		</if>
-		<if test="returnDayS != null and returnDayE !=null">
-		AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
-		</if>
+    			SELECT COUNT(1) FROM(
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND status_code = #{statusCode}
+				</if>
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		    WHERE 1 = 1
+				<if test="assetNumber != null and !assetNumber.equals('')">
+				AND ast.asset_number LIKE '%${assetNumber}%'
+				</if>
+				<if test="applicantId != null and !applicantId.equals('')">
+				AND rt.applicant_id LIKE '%${applicantId}%'
+				</if>
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND rt.status_code = #{statusCode}
+				</if>
+				<if test="rentalDayS != null and rentalDayE !=null">
+				AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+				</if>
+				<if test="returnDayS != null and returnDayE !=null">
+				AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
+				</if>
+			)Result
     </select>
 
     <select id="exportXlsx" resultType="jp.co.info.ais.ams.domain.History">
-		SELECT
-			ast.asset_number,
-			ast.maker_name,
-			ast.model_name,
-			rt.status_code,
-			rt.rental_no,
-			rt.purpose,
-			rt.storage_location,
-			rt.applicant_id,
-			rt.rental_user_id,
-			rt.bp_name,
-			rt.rental_day rentalDayS,
-			rt.return_day returnDayS
-		FROM asset ast
-		LEFT JOIN rental rt ON ast.asset_seq = rt.asset_seq
-		ORDER BY rt.rental_no desc, ast.asset_number
+		SELECT * FROM (
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		)Result
+		ORDER BY asset_number,rental_no
     </select>
 
     <delete id="deleteHistory" parameterType="List">
@@ -98,7 +174,6 @@
     	<foreach collection="list" item="tem" open="(" close=")" separator=",">
             #{tem}
         </foreach>
-
     </delete>
 
 </mapper>

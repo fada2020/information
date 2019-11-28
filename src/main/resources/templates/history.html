@@ -366,7 +366,7 @@
                     }},
                     //貸与番号
                     { targets: 4, data: function(d){
-                    	if(d.rentalNo == '' || d.rentalNo == null){
+                    	if(d.rentalNo == '999999999999'){
                     		return '-';
                     	} else{
                     		return d.rentalNo;
@@ -437,7 +437,7 @@
                     	render: function( data, type, row, meta ){
 
                     		if(row.returnDayS=="" || row.returnDayS == null){//貸与状態の場合
-                    			return '<input type="checkbox" class="flat" disabled="disabled" title="貸与の項目は履歴を削除できません。">';
+                    			return '<input type="checkbox" class="flat" disabled="disabled" title="保管の項目は履歴を削除できません。">';
                     		} else{//その他の場合
                     			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
                     		}
