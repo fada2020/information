@@ -23,6 +23,10 @@ public class SuppliesApplication {
 
 	@Configuration
 	public class WebConfig implements WebMvcConfigurer, WebMvcRegistrations {
+		/**
+		 * URLにフィルター連結
+		 * @return FilterRegistrationBean<DashboardFilter>
+		 */
 		@Bean
 		public FilterRegistrationBean<DashboardFilter> DashboardFilter() {
 			FilterRegistrationBean<DashboardFilter> bean = new FilterRegistrationBean<>();
