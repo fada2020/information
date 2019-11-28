@@ -19,7 +19,7 @@ public interface CodeDetailMapper {
 
 	int selectCount(CodeDetail condition);
 
-	int CodeDetailListCheck(CodeDetail masterCode);
+	int CodeDetailListCheck(CodeDetail codeDetail);
 
 	void CodeDetailInsert(CodeDetail codeMasterId);
 
@@ -34,6 +34,10 @@ public interface CodeDetailMapper {
 	List<CodeDetail> selectKubunCode();
 
 	List<CodeDetail> selectMasterCodeId();
+
+	List<CodeDetail> selectCode();
+
+	void CodeMasterInsert(CodeDetail codedetail);
 
 
 }
