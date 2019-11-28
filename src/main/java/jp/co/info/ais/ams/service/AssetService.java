@@ -1,5 +1,6 @@
 package jp.co.info.ais.ams.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,14 +156,21 @@ public class AssetService {
 	 * @param Asset 資産情報
 	 * @return int 結果値
 	 */
+	@Transactional
 	public int updateAsset(Asset asset) {
 		if(!"".equals(asset.getPreStatusCode()) && !asset.getStatusCode().equals(asset.getPreStatusCode())) {
 			Rental rental = new Rental();
 			rental.setInsertId(asset.getInsertId());
 			rental.setUpdateId(asset.getUpdateId());
+			rental.setAssetSeq(asset.getAssetSeq());
+			rental.setStatusCode(asset.getStatusCode());
 			if(asset.getStatusCode().equals(AppConstant.STATE_RENTAL)) {
-
-			} else {
+				List<Rental> itemList = new ArrayList<Rental>();
+				itemList.add(rental);
+				rentalMapper.addRental(itemList);
+			}
+			if(asset.getPreStatusCode().equals(AppConstant.STATE_RENTAL)) {
+				rentalMapper.changeAssetStatus(rental);
 			}
 		}
     	// 空白及び'-'除去

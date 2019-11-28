@@ -164,7 +164,7 @@
 		</foreach>
 	</update>
 
-	<insert id="addRental" parameterType="java.util.List">
+	<insert id="addRental" parameterType="jp.co.info.ais.ams.domain.Rental">
 		<selectKey resultType="String" keyProperty="rentalNo"
 			order="BEFORE">
 
@@ -231,7 +231,7 @@
 
 	</update>
 
-	<update id="changeAssetStatus" parameterType="String">
+	<update id="changeAssetStatus" parameterType="jp.co.info.ais.ams.domain.Rental">
 		update asset set
 		update_id=#{updateId},
 		status_code=#{statusCode}

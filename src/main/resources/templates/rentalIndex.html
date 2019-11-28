@@ -1103,8 +1103,6 @@ function researchRental(assetSeq){
 				var html = '<option value="">選択</option>';
 
 				data.forEach(function(value) {
-
-
 					if (!assetKey.has(value.assetSeq)){
 					html += '<option value="' + value.assetSeq + '">'
 							+ value.assetNumber + '</option>';
@@ -1131,7 +1129,7 @@ function researchRental(assetSeq){
 
 		var assetSeq=btn.value;
 		alert(assetSeq);
-	 assetKey.delete(assetSeq);
+	 assetKey.delete(Number(assetSeq));
 
 		/* もし貸与から保管に変更できたら一行を消す  */
 		var row = btn.parentNode.parentNode;
