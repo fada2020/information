@@ -71,14 +71,14 @@
 								<div class="x_title">
 									<div class="well" style="overflow: auto">
 										<div class="col-md-4">
-											<label class="col-form-label col-md-3 col-sm-3 label-align"
+											<label class="col-form-label col-md-6 col-sm-6 label-align"
 												for="search_id"style="font-size: 18px;">コードID</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_id" class="form-control ">
 											</div>
 										</div>
 										<div class="col-md-4">
-											<label class="col-form-label col-md-3 col-sm-3 label-align"
+											<label class="col-form-label col-md-6 col-sm-6 label-align"
 												for="search_name" style="font-size: 18px;">コード名称</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_name" class="form-control ">
@@ -86,16 +86,15 @@
 										</div>
 										<div class="col-md-4">
 										<!-- 新規登録 ボタン -->
-											<button type="button" class="btn btn-success pull-right"
+											<button type="button" class="btn btn-success pull-right col-md-5"
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
 											</button>
 										<!-- 検索 ボタン -->
-											<button type="button" class="btn btn-primary pull-right"
+											<button type="button" class="btn btn-primary pull-right col-md-5"
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-
 										</div>
 									</div>
 									<!-- /.well -->
@@ -112,7 +111,6 @@
 													<th class="column-title txt_center">コードID</th>
 													<th class="column-title txt_center">コード名称</th>
 													<th class="column-title txt_center">使用有無</th>
-													<th class="column-title txt_center"></th>
 													<th class="column-title txt_center"></th>
 												</tr>
 											</thead>
@@ -230,13 +228,14 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true" style ="font-size: 18px;"></i> コードマスタ変更
-					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
+					<h3 class="modal-title">
+						<i class="fa fa-pencil-square" aria-hidden="true" ></i> コードマスタ変更
+					</h3>
+
 				</div>
 				<div class="modal-body">
 					<div style="padding: 5px 20px;">
@@ -465,18 +464,11 @@
 										{
 											targets : 3,
 											data : null,
-											render : function(data, type, row,
-													meta) {
-												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button>';
-											}
-										},
-										{
-											targets : 4,
-											data : null,
-											render : function(data, type, row,
-													meta) {
-												return '<input type="hidden" id="useFlag" value="'+row.useFlag+'"><input type="hidden" id="detail" value="'+row.remarks+'"><button type="button" class="btn btn-danger deleteBtn"' +
-                          ' id="' + row.codeMasterId + '">削除</button>';
+											render : function(data, type, row, meta) {
+												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
+												'"><input type="hidden" id="detail" value="'+row.remarks+
+												'"><button type="button" class="btn btn-danger deleteBtn"' +
+												' id="' + row.codeMasterId + '">削除</button>';
 											}
 										}
 										 ]
