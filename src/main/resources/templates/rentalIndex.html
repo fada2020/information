@@ -1130,14 +1130,14 @@ function researchRental(assetSeq){
  function deleteRow(btn) {
 
 		var assetSeq=btn.value;
-		alert(assetSeq);
-	 assetKey.delete(assetSeq);
+
+	 assetKey.delete(Number(assetSeq));
 
 		/* もし貸与から保管に変更できたら一行を消す  */
 		var row = btn.parentNode.parentNode;
 		 row.parentNode.removeChild(row);
 
-	alert(JSON.stringify(assetKey));
+
 }
 
  String.prototype.replaceAll = function(org, dest) {
@@ -1145,7 +1145,10 @@ function researchRental(assetSeq){
 	}
 
  function rentalItem() {
-
+	 /* もし 一行もなければ警告する一行以上だったらページをリロードする*/
+	 if($('#selectedAsset tbody tr').length==0){
+			alert("貸与する物がないです。");
+		}else{
 		var tdArr = new Array();
 		/* テーブルにある貸与情報を全て持ち込んでリスト化する */
 		$('#selectedAsset tbody tr').each(function() {
@@ -1164,31 +1167,25 @@ function researchRental(assetSeq){
 			rental.insertId = /*[[${session.id}]]*/ 'user';
 			rental.updateId = /*[[${session.id}]]*/ 'user';
 			tdArr.push(rental);
-
-
-
 		});
 
 
-	/* リスト化された貸与情報をデータテーブルに書き込む  */
-	$.ajax({
-		"url" : "/rental/addRental",
-		"type" : "post",
-		"dataType": "json",
-		"contentType": "application/JSON",
-		"data" : JSON.stringify(tdArr),
-		"success" : function(d){ assetKey.clear();},
-		"Error" : function(d){
-			alert("貸与不可能");
-		}
+			/* リスト化された貸与情報をデータテーブルに書き込む  */
+			$.ajax({
+				"url" : "/rental/addRental",
+				"type" : "post",
+				"dataType": "json",
+				"contentType": "application/JSON",
+				"data" : JSON.stringify(tdArr),
+				"success" : function(d){
+					assetKey.clear();
+					},
+				"Error" : function(d){
+					alert("貸与不可能");
+				}
 
-});
-	/* もし 一行もなければ警告する一行以上だったらページをリロードする*/
-	 if($('#selectedAsset tbody tr').length!=0){
-			location.reload(true);
-
-		 }else{
-			alert("貸与する物がないです。");
+			});
+		location.href = '/rental';
 		}
 
  }
@@ -1320,7 +1317,7 @@ function researchRental(assetSeq){
     				   					+$("#returnPeriod").val()+
 
     			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
-    			   		 	alert(data.assetSeq);
+
     			   		 assetKey.set(data.assetSeq,data.assetNumber);
     			   			$(function(){  $('select').find('option:first').attr('selected', 'selected');})
     			    },

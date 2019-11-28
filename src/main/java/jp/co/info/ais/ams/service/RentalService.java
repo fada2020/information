@@ -117,8 +117,8 @@ public class RentalService {
 	 */
 	public Asset selectAsset(String number) {
 
-
-		return rentalMapper.selectAsset(new Rental(number,AppConstant.STATE_STORAGE,(String)session.getAttribute("id")));
+		return rentalMapper
+				.selectAsset(new Rental(number, AppConstant.STATE_STORAGE, (String) session.getAttribute("id")));
 	}
 
 	/**
@@ -142,13 +142,19 @@ public class RentalService {
 	 */
 	@Transactional
 	public int addRental(List<Rental> rentalList) {
-
+		int num = 0;
+		try {
 		for (Rental r : rentalList) {
 			r.setStatusCode(AppConstant.STATE_RENTAL);
 
 		}
-		return rentalMapper.addRental(rentalList);
-
+		num = rentalMapper.addRental(rentalList);
+		if (num > 0) {
+			num = rentalMapper.changeStatus(rentalList);
+		}}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		return num;
 	}
 
 	/**
@@ -210,7 +216,8 @@ public class RentalService {
 	@Transactional
 	public int changeAssetStatus(String assetNumber) {
 
-		return rentalMapper.changeAssetStatus(new Rental(assetNumber,AppConstant.STATE_RENTAL,(String)session.getAttribute("id")));
+		return rentalMapper.changeAssetStatus(
+				new Rental(assetNumber, AppConstant.STATE_RENTAL, (String) session.getAttribute("id")));
 	}
 
 	/**

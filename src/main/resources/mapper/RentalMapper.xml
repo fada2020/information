@@ -99,7 +99,8 @@
 		join asset a on
 		r.asset_seq = a.asset_seq
 		WHERE a.asset_seq=#{assetSeq}
-		AND r.status_code='02'
+		AND return_day IS NULL
+
 	</select>
 	<select id="selectStatusCode"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
@@ -153,15 +154,15 @@
 
 	<update id="changeStatus" parameterType="java.util.List">
 
-		update asset
-		set
-
-		status_code='02'
-
-		<foreach item="item" index="index" collection="itemList"
-			separator=",">
-			where asset_seq=#{item.assetSeq}
+		<foreach collection="itemList" item="item" separator=";">
+			update asset
+			<set>
+				status_code=#{item.statusCode},
+				update_id=#{item.updateId}
+			</set>
+			where asset_seq= #{item.assetSeq}
 		</foreach>
+
 	</update>
 
 	<insert id="addRental" parameterType="java.util.List">
@@ -214,7 +215,7 @@
 			#{item.insertId},
 			#{item.updateId},
 			#{rentalNo},
-			#{statusCode}
+			#{item.statusCode}
 			)
 		</foreach>
 	</insert>
@@ -231,7 +232,8 @@
 
 	</update>
 
-	<update id="changeAssetStatus" parameterType="String">
+	<update id="changeAssetStatus"
+		parameterType="jp.co.info.ais.ams.domain.Rental">
 		update asset set
 		update_id=#{updateId},
 		status_code=#{statusCode}
