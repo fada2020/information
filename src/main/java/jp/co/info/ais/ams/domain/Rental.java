@@ -58,7 +58,7 @@ public class Rental {
 	private String updateId;
 	private Date updateDate;
 
-	private ArrayList<String>list;
+	private ArrayList<Integer>list;
 
 	public Rental (int assetSeq,String statusCode,String updateId) {
 		this.assetSeq=assetSeq;
