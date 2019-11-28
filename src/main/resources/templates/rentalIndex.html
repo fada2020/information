@@ -570,12 +570,16 @@
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
+
+
+
+
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
-    		var rentalArray
-    	     var deleteList=new Array();
 
+    	     var deleteList=new Array();
+    	     var assetKey = new Map();
 
 
 
@@ -818,6 +822,9 @@
 引数はrentalのドメインを作ってajaxを利用する
 戻り値も無し
 */
+
+
+
 function updateRental(){
 		 /* 最初に日付を貰うときの有効性検査  */
 		 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
@@ -1058,8 +1065,11 @@ function researchRental(assetSeq){
 							var html = '<option value="">選択</option>';
 							kub.forEach(function(value) {
 							if(value.item1==item){
+
+
 								html += '<option value="' +value.codeDetailId + '">'
 										+ value.codeDetailName + '</option>';
+
 							}});
 							$('#sub_singleSelect').html(html);
 						}
@@ -1094,12 +1104,16 @@ function researchRental(assetSeq){
 
 				data.forEach(function(value) {
 
+
+					if (!assetKey.has(value.assetSeq)){
 					html += '<option value="' + value.assetSeq + '">'
 							+ value.assetNumber + '</option>';
+
+					}
 				});
 				$('#sub_subSelect').html(html);
 			},
-			"Error" : function(){
+			"Error" : function(value){
 				alert("貸与不可能");
 			}
 
@@ -1115,26 +1129,15 @@ function researchRental(assetSeq){
 /* 任意でリスト化した貸与情報の中で一行だけ削除するメソッド */
  function deleteRow(btn) {
 
-/*   */
-var assetSeq=btn.value;
-		/* 資産の状態を貸与から保管に変える  */
-		$.ajax({
-   			"url" : "/rental/cancelAsset",
-    		"type" : "post",
-   	 		"dataType": "json",
-   			"data" : assetSeq,
-   			"contentType": "application/JSON",
+		var assetSeq=btn.value;
+		alert(assetSeq);
+	 assetKey.delete(assetSeq);
 
-
-   			"Error" : function(){
-				alert("削除不可能");
-				return false;
-			}
-		});
 		/* もし貸与から保管に変更できたら一行を消す  */
 		var row = btn.parentNode.parentNode;
 		 row.parentNode.removeChild(row);
 
+	alert(JSON.stringify(assetKey));
 }
 
  String.prototype.replaceAll = function(org, dest) {
@@ -1174,7 +1177,8 @@ var assetSeq=btn.value;
 		"dataType": "json",
 		"contentType": "application/JSON",
 		"data" : JSON.stringify(tdArr),
-		"Error" : function(){
+		"success" : function(d){ assetKey.clear();},
+		"Error" : function(d){
 			alert("貸与不可能");
 		}
 
@@ -1316,7 +1320,8 @@ var assetSeq=btn.value;
     				   					+$("#returnPeriod").val()+
 
     			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
-
+    			   		 	alert(data.assetSeq);
+    			   		 assetKey.set(data.assetSeq,data.assetNumber);
     			   			$(function(){  $('select').find('option:first').attr('selected', 'selected');})
     			    },
     				"Error" : function(){

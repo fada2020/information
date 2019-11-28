@@ -23,15 +23,15 @@ public interface RentalMapper {
 
 	public Rental researchRental(int assetSeq);
 
-	public List<CodeDetail> selectCodeDetail();
+	public List<CodeDetail> selectCodeDetail(String codeMasterId);
 
 	public List<CodeDetail> selectStatusCode();
 
-	public List<CodeDetail> selectCode();
+	public List<CodeDetail> selectCode(String codeMasterId);
 
-	public Asset selectAsset(String number );
+	public Asset selectAsset(Rental rental );
 
-	public List<Asset> selectAssetList(String selectedItem);
+	public List<Asset> selectAssetList(Asset asset);
 
 	public int addRental(@Param ("itemList" ) List<Rental> itemList);
 
@@ -40,9 +40,9 @@ public interface RentalMapper {
 
 	public int returnAsset(Rental rental);
 
-	public int changeAssetStatus(String assetNumber);
+	public int changeAssetStatus(Rental rental);
 
-	public void changeAStatus(int assetSeq);
+	public void changeAStatus(Rental rental);
 
 	public int updateRental(Rental rental);
 
