@@ -958,7 +958,7 @@ function updateRental(){
 /* もしアップデートが良くできたら0以上の数字をもらえる  */
 
         if(data>0){
-        	location.reload(true);
+        	location.href = '/rental';
         }
         				},
         				"Error" : function(){
@@ -1020,23 +1020,15 @@ function researchRental(assetSeq){
 						dataType : "json",
 						"contentType" : "application/JSON",
 						data : JSON.stringify(assetSeq),
-						"Error" : function(){
+						"Error" : function(d){
 	    					alert("返却不可能");
 	    				}
 
 
 			});
-				location.reload(true);
-
-		 } else {
-
+				/* location.href = '/rental'; */
 
 		 }
-
-
-
-
-
 		}
 	/* モーダルボタンをクリックしてインサートする画面を開く  */
 		function modalInsert() {
