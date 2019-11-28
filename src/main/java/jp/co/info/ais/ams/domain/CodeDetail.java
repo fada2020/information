@@ -15,4 +15,11 @@ public class CodeDetail {
 	private String item2;
 	private String item3;
 	private String item4;
+	private String item5;
+	private int orderBy;
+	private String use_flag;
+
+
+	int length;//長さ
+	int start;
 }
