@@ -16,6 +16,7 @@ import jp.co.info.ais.ams.domain.Asset;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.MaintenanceHistory;
 import jp.co.info.ais.ams.mapper.AssetMapper;
+import jp.co.info.ais.ams.mapper.RentalMapper;
 
 @Service
 public class AssetService {
@@ -27,6 +28,9 @@ public class AssetService {
 
 	@Autowired
 	AssetMapper assetMapper;
+
+	@Autowired
+	RentalMapper rentalMapper;
 
 	/**
 	 * 資産詳細情報
@@ -151,6 +155,12 @@ public class AssetService {
 	 * @return int 結果値
 	 */
 	public int updateAsset(Asset asset) {
+		if(!"".equals(asset.getPreStatusCode()) && !asset.getStatusCode().equals(asset.getPreStatusCode())) {
+			if(asset.getStatusCode().equals(AppConstant.STATE_RENTAL)) {
+
+			} else {
+			}
+		}
     	// 空白及び'-'除去
     	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
 		return assetMapper.updateAsset(asset);

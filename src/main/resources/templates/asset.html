@@ -204,12 +204,12 @@
 							  				<div class="col-md-4 text-center">
 							  					<span id="purchaseDate_view"></span>
 							  				</div>
-							  				<div class="col-md-2">
-							  					<span>保証期間</span>
-							  				</div>
-							  				<div class="col-md-4 text-center">
-							  					<span id="warrantyPeriod_view"></span>
-							  				</div>
+						  					<div class="col-md-2">
+						  						<span>状態</span>
+						  					</div>
+						  					<div class="col-md-4 text-center">
+						  						<span id="sNumber_view"></span>
+						  					</div>
 						  				</div>
 						  			</div>
 
@@ -237,12 +237,12 @@
 						  					<div class="col-md-4 text-center">
 						  						<span id="storageLocation_view"></span>
 						  					</div>
-						  					<div class="col-md-2">
-						  						<span>状態</span>
-						  					</div>
-						  					<div class="col-md-4 text-center">
-						  						<span id="sNumber_view"></span>
-						  					</div>
+							  				<div class="col-md-2">
+							  					<span>保証期間</span>
+							  				</div>
+							  				<div class="col-md-4 text-center">
+							  					<span id="warrantyPeriod_view"></span>
+							  				</div>
 						  				</div>
 						  			</div>
 
@@ -483,12 +483,14 @@
 								  			</div>
 								  			<div class="col-md-6">
 								  				<div class="row">
-									  				<div class="col-md-2">
-									  					<span>保証期間</span>
-									  				</div>
-									  				<div class="col-md-4">
-									  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
-									  				</div>
+								  					<div class="col-md-2">
+								  						<span>状態</span>
+								  					</div>
+								  					<div class="col-md-4">
+									                	<select name="statusCode" class="form-control" id="sNumber_search">
+									                		<option value="01">保管</option>
+														</select>
+								  					</div>
 								  					<div class="col-md-2">
 								  						<span>購入先</span>
 								  					</div>
@@ -517,15 +519,12 @@
 								  			</div>
 								  			<div class="col-md-6">
 								  				<div class="row">
-								  					<div class="col-md-2">
-								  						<span>状態</span>
-								  					</div>
-								  					<div class="col-md-4">
-									                	<select name="statusCode" class="form-control" id="sNumber_search">
-									                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
-									                		th:inline="text">[[${code.codeDetailName}]]</option>
-														</select>
-								  					</div>
+									  				<div class="col-md-2">
+									  					<span>保証期間</span>
+									  				</div>
+									  				<div class="col-md-4">
+									  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
+									  				</div>
 								  					<div class="col-md-2">
 								  						<span>Maker</span>
 								  					</div>
@@ -823,7 +822,7 @@
 			function refreshForm(obj) {
 			    $(obj)
 			        .closest('form')
-			        .find('input[type="text"], textarea, select').val('');
+			        .find('input[type="text"], textarea').val('');
 
 			    $(obj)
 			        .closest('form')
