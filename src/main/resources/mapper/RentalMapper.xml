@@ -110,7 +110,7 @@
 		code_master_id='001'
 	</select>
 
-	<select id="selectCodeDetail"
+	<select id="selectCodeDetail" parameterType="String"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_master_id,
@@ -118,35 +118,37 @@
 		code_detail_name,
 		item1,
 		item2
-		FROM code_detail where code_master_id='002'
+		FROM code_detail where code_master_id=#{codeMasterId}
 	</select>
 
-	<select id="selectCode"
+	<select id="selectCode" parameterType="String"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
 		FROM code_detail where
-		code_master_id='003'
+		code_master_id=#{codeMasterId}
 	</select>
-	<select id="selectAsset" parameterType="String"
+	<select id="selectAsset"
+		parameterType="jp.co.info.ais.ams.domain.Rental"
 		resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
 		FROM asset where
-		asset_number=#{number} and status_code='01'
+		asset_number=#{assetNumber} and status_code=#{statusCode}
 	</select>
 
-	<select id="selectAssetList" parameterType="String"
+	<select id="selectAssetList"
+		parameterType="jp.co.info.ais.ams.domain.Asset"
 		resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
 		kubun_code
 		FROM asset where
-		status_code='01' and kubun_code=#{selectedItem}
+		status_code=#{statusCode} and kubun_code=#{kubunCode}
 	</select>
 
 	<update id="changeStatus" parameterType="java.util.List">
@@ -173,7 +175,8 @@
 			RIGHT(rental_no, 3)
 			) + 1, 1), 3 , '0')
 			))
-			FROM rental b WHERE rental_no LIKE
+			FROM rental b WHERE rental_no
+			LIKE
 			CONCAT((CURDATE()+0),'%')
 
 		</selectKey>
@@ -211,7 +214,7 @@
 			#{item.insertId},
 			#{item.updateId},
 			#{rentalNo},
-			'02'
+			#{statusCode}
 			)
 		</foreach>
 	</insert>
@@ -223,26 +226,28 @@
 
 		return_day=#{returnDay},
 		return_user_id=#{returnUserId}
-		where asset_seq=#{assetSeq}
+		where
+		asset_seq=#{assetSeq}
 
 	</update>
 
 	<update id="changeAssetStatus" parameterType="String">
 		update asset set
+		update_id=#{updateId},
+		status_code=#{statusCode}
 
-		status_code='02'
-
-		where asset_number=#{assetNumber}
+		where
+		asset_number=#{assetNumber}
 
 	</update>
 
-	<update id="changeAStatus" parameterType="int">
+	<update id="changeAStatus"
+		parameterType="jp.co.info.ais.ams.domain.Rental">
 
 		update asset set
 
-		status_code='01'
-
-
+		update_id=#{updateId},
+		status_code=#{statusCode}
 
 		where asset_seq=#{assetSeq}
 

@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.controller.RentalController;
 import jp.co.info.ais.ams.domain.Asset;
 import jp.co.info.ais.ams.domain.CodeDetail;
@@ -20,6 +23,10 @@ import jp.co.info.ais.ams.mapper.RentalMapper;
 @Service
 public class RentalService {
 
+	@Autowired
+	AppConstant appConstant;
+	@Autowired
+	HttpSession session;
 	@Autowired
 	RentalMapper rentalMapper;
 	/*エラーを見せる為の宣言*/
@@ -76,8 +83,8 @@ public class RentalService {
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCodeDetail() {
-
-		return rentalMapper.selectCodeDetail();
+		String codeMasterId = AppConstant.MASTER_DETAIL;
+		return rentalMapper.selectCodeDetail(codeMasterId);
 	}
 
 	/**
@@ -98,8 +105,8 @@ public class RentalService {
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCode() {
-
-		return rentalMapper.selectCode();
+		String codeMasterId = AppConstant.MASTER_CLASS;
+		return rentalMapper.selectCode(codeMasterId);
 	}
 
 	/**
@@ -110,7 +117,8 @@ public class RentalService {
 	 */
 	public Asset selectAsset(String number) {
 
-		return rentalMapper.selectAsset(number);
+
+		return rentalMapper.selectAsset(new Rental(number,AppConstant.STATE_STORAGE,(String)session.getAttribute("id")));
 	}
 
 	/**
@@ -120,8 +128,10 @@ public class RentalService {
 	 * @return List<Asset>
 	 */
 	public List<Asset> selectAssetList(String selectedItem) {
-
-		return rentalMapper.selectAssetList(selectedItem);
+		Asset asset = new Asset();
+		asset.setKubunCode(selectedItem);
+		asset.setStatusCode(AppConstant.STATE_STORAGE);
+		return rentalMapper.selectAssetList(asset);
 	}
 
 	/**
@@ -133,6 +143,10 @@ public class RentalService {
 	@Transactional
 	public int addRental(List<Rental> rentalList) {
 
+		for (Rental r : rentalList) {
+			r.setStatusCode(AppConstant.STATE_RENTAL);
+
+		}
 		return rentalMapper.addRental(rentalList);
 
 	}
@@ -176,7 +190,8 @@ public class RentalService {
 			num = rentalMapper.returnAsset(rental);
 			//ちゃんと返却が出来たら資産の状態も変更する
 			if (num > 0) {
-				rentalMapper.changeAStatus(rental.getAssetSeq());
+				rental.setStatusCode(AppConstant.STATE_STORAGE);
+				rentalMapper.changeAStatus(rental);
 
 			}
 		} catch (Exception e) {
@@ -195,19 +210,24 @@ public class RentalService {
 	@Transactional
 	public int changeAssetStatus(String assetNumber) {
 
-		return rentalMapper.changeAssetStatus(assetNumber);
+		return rentalMapper.changeAssetStatus(new Rental(assetNumber,AppConstant.STATE_RENTAL,(String)session.getAttribute("id")));
 	}
 
 	/**
 	 *該当する資産のステータスの情報を変える
+	 * @param updateId
 	 *
 	 * @param int 資産シークエンス
 	 *  @return int 戻り値
 	 */
 	@Transactional
-	public void changeAStatus(int assetSeq) {
+	public void changeAStatus(int assetSeq, String updateId) {
 
-		rentalMapper.changeAStatus(assetSeq);
+		try {
+			rentalMapper.changeAStatus(new Rental(assetSeq, AppConstant.STATE_STORAGE, updateId));
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
 	}
 
 	/**
@@ -220,14 +240,14 @@ public class RentalService {
 	@Transactional
 	public int updateRental(Rental rental, String updateId) {
 		try {
+
 			rental.setUpdateId(updateId);
+
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
 		return rentalMapper.updateRental(rental);
 	}
-
-
 
 }

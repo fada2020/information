@@ -59,4 +59,15 @@ public class Rental {
 	private Date updateDate;
 
 	private ArrayList<String>list;
+
+	public Rental (int assetSeq,String statusCode,String updateId) {
+		this.assetSeq=assetSeq;
+		this.statusCode=statusCode;
+		this.updateId=updateId;
+	}
+	public Rental (String assetNumber,String statusCode,String updateId) {
+		this.assetNumber=assetNumber;
+		this.statusCode=statusCode;
+		this.updateId=updateId;
+	}
 }

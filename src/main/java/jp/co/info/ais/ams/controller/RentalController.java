@@ -73,11 +73,6 @@ public class RentalController {
 		try {
 			//戻り値はAssetで引数はasset_numberを使う
 			asset = rentalService.selectAsset(number);
-			//もし
-			if (asset != null) {
-				rentalService.changeAssetStatus(number);
-				model.addAttribute("asset", asset);
-			}
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
@@ -114,7 +109,7 @@ public class RentalController {
 	public int cancelAsset(@RequestBody int assetSeq) {
 		int num=0;
 		try {
-			rentalService.changeAStatus(assetSeq);
+			rentalService.changeAStatus(assetSeq,(String)session.getAttribute("id"));
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
