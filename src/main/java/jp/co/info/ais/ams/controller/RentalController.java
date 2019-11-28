@@ -107,18 +107,19 @@ public class RentalController {
 	/**
 	 * 任意の貸与リストの資産の状態を002から001に変える
 	 * @param  int assetSeq 資産シークエンス
-	 * @return 無し
+	 * @return int 戻り値
 	 * */
 	@RequestMapping(value = "/cancelAsset", method = RequestMethod.POST)
 	@ResponseBody
-	public void cancelAsset(@RequestBody int assetSeq) {
+	public int cancelAsset(@RequestBody int assetSeq) {
+		int num=0;
 		try {
 			rentalService.changeAStatus(assetSeq);
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
-
+return num;
 	}
 
 	/**
@@ -200,7 +201,7 @@ public class RentalController {
 	public void deleteRental(Model model, @RequestBody int assetSeq) {
 
 		try {
-			rentalService.returnAsset(new Rental(), (String) session.getAttribute("id"), assetSeq);
+			rentalService.returnAsset((String) session.getAttribute("id"), (String) session.getAttribute("name"), assetSeq);
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
@@ -250,26 +251,6 @@ public class RentalController {
 		return successNum;
 	}
 
-	/**
-	 * メイン画面で資産シークエンスを持ち込んで一気に返却する
-	 *
-	 * @param  int 資産シークエンス
-	 * @return int 戻り値
-	 * */
-	@RequestMapping(value = "/deleteRentals", method = RequestMethod.POST)
-	@ResponseBody
-	private int deleteRentals(Model model, @RequestBody ArrayList<String> sList) {
-int result=0;
-		try {
-				logger.debug(sList.toString());
-				result= rentalService.deleteRentals((String) session.getAttribute("id"),sList);
-
-		} catch (Exception e) {
-
-			logger.debug(e.getMessage());
-		}
-return result;
-	}
 
 
 }

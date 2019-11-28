@@ -59,7 +59,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>IT資産情報修正</h3>
+                <h3>IT資産情報変更</h3>
               </div>
             </div>
 
@@ -67,7 +67,7 @@
 
             <div class="row">
 
-            <!-- 資産情報修正フォーム -->
+            <!-- 資産情報変更フォーム -->
             <form action="/asset/update" id="updateForm" method="POST" role="form" class="form-horizontal">
             <div class="x_panel">
             	<div class="x_content" style="display: block;">
@@ -79,7 +79,7 @@
 			  					</div>
 			  					<div class="col-md-4">
 			  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
-					  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}">
+					  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}" disabled >
 					  			</div>
 					  			<div class="col-md-2">
 					  				<span>区分</span>
@@ -98,19 +98,23 @@
 				  					<span>購入日</span>
 				  				</div>
 				  				<div class="col-md-4">
-								<div class="input-group date" id="myDatepicker">
-									<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
-									<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-								 </span>
-								</div>
+									<div class="input-group date" id="myDatepicker">
+										<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
+										<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									 </span>
+									</div>
 				  				</div>
-				  				<div class="col-md-2">
-				  					<span>保証期間</span>
-				  				</div>
-				  				<div class="col-md-4">
-				  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
-				  				</div>
+			  					<div class="col-md-2">
+			  						<span>状態</span>
+			  					</div>
+			  					<div class="col-md-4">
+			  						<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}">
+				                	<select name="statusCode" class="form-control" id="sNumber_search">
+				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
+				                		th:inline="text">[[${code.codeDetailName}]]</option>
+									</select>
+			  					</div>
 			  				</div>
 			  			</div>
 
@@ -138,15 +142,12 @@
 			  					<div class="col-md-4">
 			  						<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
 			  					</div>
-			  					<div class="col-md-2">
-			  						<span>状態</span>
-			  					</div>
-			  					<div class="col-md-4">
-				                	<select name="statusCode" class="form-control" id="sNumber_search">
-				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
-				                		th:inline="text">[[${code.codeDetailName}]]</option>
-									</select>
-			  					</div>
+				  				<div class="col-md-2">
+				  					<span>保証期間</span>
+				  				</div>
+				  				<div class="col-md-4">
+				  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
+				  				</div>
 			  				</div>
 			  			</div>
 
@@ -332,10 +333,10 @@
 			  				<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
 			  			</div>
 		  			</div>
-		  			<div class="col-md-12 text-right">
+		  			<div class="col-md-12 text-left">
 		  				<br>
-		  				<button type="button" class="btn btn-primary" onclick = "location.href ='/asset'">戻る</button>
-		  				<button type="button" id="updateProc" class="btn btn-primary pull-right">修正</button>
+		  				<button type="button" class="btn btn-secondary pull-right" onclick = "location.href ='/asset'">戻る</button>
+		  				<button type="button" id="updateProc" class="btn btn-primary">変更</button>
 		  			</div>
 		  			<div class="col-md-12">
 		  				<br>
@@ -343,7 +344,7 @@
 		  		</div>
 	  		</div>
 	  		</form>
-	  		<!-- /資産情報修正フォーム -->
+	  		<!-- /資産情報変更フォーム -->
 
 				<!-- 付属品テーブル -->
 				<div class="row">
@@ -569,7 +570,7 @@
 
             });
 
-			// 付属品修正プロセス
+			// 付属品変更プロセス
             $('#table1 tbody').on("click","#updateAccessories", function() {
             	var selectTr = $(this).closest("tr");
 
@@ -594,7 +595,7 @@
 					if(result == 0) {
 						alert('エラーが発生しました。');
 					} else {
-						alert('修正されました。');
+						alert('変更されました。');
 					}
 				}).error(function(xhr, textStatus, error) {
                 	alert('通信失敗');
@@ -680,7 +681,7 @@
 
             });
 
-			// 保守履歴修正プロセス
+			// 保守履歴変更プロセス
             $('#table2 tbody').on("click","#updateMaintenanceHistory", function() {
             	var selectTr = $(this).closest("tr");
 
@@ -705,7 +706,7 @@
 					if(result == 0) {
 						alert('エラーが発生しました。');
 					} else {
-						alert('修正されました。');
+						alert('変更されました。');
 					}
 				}).error(function(xhr, textStatus, error) {
                 	alert('通信失敗');
@@ -748,7 +749,7 @@
 
             });
 
-			// 資産修正プロセス
+			// 資産変更プロセス
             $('#updateProc').on('click', function() {
                 var form = $('#updateForm');
 
@@ -879,7 +880,7 @@
                         	if(result == 0){
                         		alert('エラーが発生しました。');
                         	}else{
-                        		alert('修正されました。');
+                        		alert('変更されました。');
                         		$('html').scrollTop(0);
                         	}
                         },

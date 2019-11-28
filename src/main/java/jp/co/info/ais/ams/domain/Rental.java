@@ -3,13 +3,17 @@ package jp.co.info.ais.ams.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rental {
 
 	//貸与情報管理の基本

@@ -23,6 +23,9 @@ public class Asset {
 	int purchasePrice;
 	String storageLocation;
 	String statusCode;
+
+	String preStatusCode;
+
 	String makerName;
 	String modelName;
 	String serialNum;

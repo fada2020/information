@@ -88,7 +88,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>資産支給履歴</h3>
+                <h3><i class="fa fa-list-alt"></i> 資産支給履歴</h3>
               </div>
             </div>
 
@@ -110,7 +110,7 @@
 
 
                 <div class="col-md-1">
-                    <span class="pull-right" style="margin-left:-10%;">貸与日</span>
+                    <span class="pull-right" style="margin-left:-10%;">貸与期間</span>
                 </div>
                 <div class="col-md-2">
 					<fieldset>
@@ -150,7 +150,7 @@
 
 
 				<div class="col-md-1">
-                    <span class="pull-right">返却日</span>
+                    <span class="pull-right">返却期間</span>
                 </div>
                 <div class="col-md-2">
 					<fieldset>
@@ -345,29 +345,77 @@
                     //資産番号
                 	{ targets: 0, data: "assetNumber"},
                     //メーカー
-                    { targets: 1, data: "makerName"},
+                    { targets: 1, data: function(d){
+                    	if(d.makerName == ''){
+                    		return '-';
+                    	} else{
+                    		return d.makerName;
+                    	}
+                    }},
                     //モデル
-                    { targets: 2, data: "modelName"},
+                    { targets: 2, data: function(d){
+                    	if(d.modelName == ''){
+                    		return '-';
+                    	} else{
+                    		return d.modelName;
+                    	}
+                    }},
                     //状態
                     { targets: 3, data: function ( d ) {
                     	return stateCodeMap.get(d.statusCode);
                     }},
                     //貸与番号
-                    { targets: 4, data: "rentalNo"},
+                    { targets: 4, data: function(d){
+                    	if(d.rentalNo == '' || d.rentalNo == null){
+                    		return '-';
+                    	} else{
+                    		return d.rentalNo;
+                    	}
+                    }},
                     //用途
-                    { targets: 5, data: "purpose"},
+                    { targets: 5, data: function(d){
+                    	if(d.purpose == '' || d.purpose == null){
+                    		return '-';
+                    	} else{
+                    		return d.purpose;
+                    	}
+                    }},
                     //場所
-                    { targets: 6, data: "storageLocation"},
+                    { targets: 6, data: function(d){
+                    	if(d.storageLocation == '' || d.storageLocation == null){
+                    		return '-';
+                    	} else{
+                    		return d.storageLocation;
+                    	}
+                    }},
                     //貸出者
-                    { targets: 7, data: "applicantId"},
+                    { targets: 7, data: function(d){
+                    	if(d.applicantId == '' || d.applicantId == null){
+                    		return '-';
+                    	} else{
+                    		return d.applicantId;
+                    	}
+                    }},
                     //使用者
-                    { targets: 8, data: "rentalUserId"},
+                    { targets: 8, data: function(d){
+                    	if(d.rentalUserId == '' || d.rentalUserId == null){
+                    		return '-';
+                    	} else{
+                    		return d.rentalUserId;
+                    	}
+                    }},
                     //BP社名
-                    { targets: 9, data: "bpName"},
+                    { targets: 9, data: function(d){
+                    	if(d.bpName == '' || d.bpName == null){
+                    		return '-';
+                    	} else{
+                    		return d.bpName;
+                    	}
+                    }},
                     //貸与日
                     { targets: 10, data: function ( d ) {
                     	if( d.rentalDayS =='' || d.rentalDayS == null){
-                    		return null;
+                    		return '-';
                     	}else{
                     		var str = d.rentalDayS;
                         	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
@@ -377,7 +425,7 @@
                     //返却日
                     { targets: 11, data: function ( d ) {
                     	if( d.returnDayS =='' || d.returnDayS == null){
-                    		return null;
+                    		return '-';
                     	}else{
                     		var str = d.returnDayS;
                         	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
@@ -388,7 +436,7 @@
                     {targets: 12,
                     	render: function( data, type, row, meta ){
 
-                    		if(row.statusCode=="02"){//貸与状態の場合
+                    		if(row.returnDayS=="" || row.returnDayS == null){//貸与状態の場合
                     			return '<input type="checkbox" class="flat" disabled="disabled" title="貸与の項目は履歴を削除できません。">';
                     		} else{//その他の場合
                     			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
@@ -400,7 +448,15 @@
 
             //Search -S
             $('#searchButton').on( 'click', function () {
-            	modalesectiontable.column(0).search( this.value ).draw();
+
+            	var input = $('#assetNumber_search').val();
+				var after = input.replace(new RegExp("'",'g'),'');
+				$('#assetNumber_search').val(after);
+				input = $('#applicant_search').val();
+				var after = input.replace(new RegExp("'",'g'),'');
+				$('#applicant_search').val(after);
+
+				modalesectiontable.column(0).search( this.value ).draw();
             } );
           	//Search -E
 
