@@ -41,6 +41,7 @@ public class CodeMasterController {
 			//idとnameの値を持ってくる
 			String id = (String) session.getAttribute("codeMasterId");
 			String name = (String) session.getAttribute("codeMasterName");
+			int radio = (int) session.getAttribute("useFlag");
 
 
 			//入力されたidとnameが存在したらErrorMessageを送る。
@@ -55,9 +56,11 @@ public class CodeMasterController {
 
 				codemaster.setCodeMasterId(id);
 				codemaster.setCodeMasterName(name);
+				codemaster.setUseFlag(radio);
 
 				codeMasterService.insertMasterId(codemaster);
 				codeMasterService.insertMasterName(codemaster);
+
 				session.setAttribute("codemaster", codemaster);
 }
 		} catch (Exception e) {
@@ -102,9 +105,9 @@ public class CodeMasterController {
 
 			// 総数
 			int totalCount = codeMasterService.selectCount(condition);
-
+			try {
 			page.setRecordsFiltered(totalCount);
-
+			}catch(Exception e) { logger.debug(e.getMessage());}
 			return page;
 		}
 
@@ -117,6 +120,7 @@ public class CodeMasterController {
 		@ResponseBody
 		public int CodeListCheck(@RequestBody CodeMaster masterCode) {
 			int num = 0;
+			logger.debug(masterCode);
 			try {
 				///結果が正しい場合チェックメソッド実行してnumに含める
 				num = codeMasterService.CodeMasterListCheck(masterCode);
