@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.info.ais.ams.domain.CodeDetail;
+import jp.co.info.ais.ams.domain.CodeMaster;
 import jp.co.info.ais.ams.mapper.CodeDetailMapper;
 
 @Service
@@ -40,10 +41,9 @@ public class CodeDetailService {
 	 * @param masterCode
 	 * @return int num
 	 */
-	public int CodeDetailListCheck(CodeDetail masterCode) {
+	public int CodeDetailListCheck(CodeDetail codedetail) {
 		int num = 0;
-		num = codeDetailMapper.CodeDetailListCheck(masterCode);
-
+		num = codeDetailMapper.CodeDetailListCheck(codedetail);
 		return num;
 
 	}
@@ -66,8 +66,11 @@ public class CodeDetailService {
 	public List<CodeDetail> selectStateCode() {
 		return codeDetailMapper.selectStateCode();
 	}
-	public List<CodeDetail> selectKubunCode() {
-		return codeDetailMapper.selectStateCode();
+
+
+	public List<CodeDetail> selectCode() {
+
+		return codeDetailMapper.selectCode();
 	}
 	/**
 	 *修正Update
@@ -89,4 +92,9 @@ public class CodeDetailService {
 
 			}
 			*/
+
+	public List<CodeMaster> masterid() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
