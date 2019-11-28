@@ -85,14 +85,17 @@
 											</div>
 										</div>
 										<div class="col-md-4">
-											<button type="button" class="btn btn-primary pull-right"
-												id="searchBtn">
-												<i class="fa fa-search" aria-hidden="true"></i> 検索
-											</button>
+										<!-- 新規登録 ボタン -->
 											<button type="button" class="btn btn-success pull-right"
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
 											</button>
+										<!-- 検索 ボタン -->
+											<button type="button" class="btn btn-primary pull-right"
+												id="searchBtn">
+												<i class="fa fa-search" aria-hidden="true"></i> 検索
+											</button>
+
 										</div>
 									</div>
 									<!-- /.well -->
@@ -196,10 +199,10 @@
 								<label class="col-sm-3 control-label">使用有無</label>
 								<div class="col-sm-9">
 									<div id="use" class="btn-group" style="padding: 5px;">
-										<label style="color: blue;"><input type="radio"
-											name="use_flag" value="0">&nbsp; 使用 &nbsp;</label> <label
-											style="color: red"><input type="radio"
-											name="use_flag" value="1" checked>&nbsp; 未使用 &nbsp;</label>
+										<label style="color: blue;"><input type="radio"id="button1"
+											name="use_flag" value="0" checked>&nbsp; 使用 &nbsp;</label> <label
+											style="color: red"><input type="radio" id=""
+											name="use_flag" value="1">&nbsp; 未使用 &nbsp;</label>
 									</div>
 								</div>
 							</div>
@@ -283,9 +286,9 @@
 									<div id="use_flag_update" class="btn-group"
 										style="padding: 5px;">
 										<label style="color: blue;"><input type="radio" id="rd1"
-											name="use_flag_update" value="0">&nbsp; 使用 &nbsp;</label> <label
+											name="use_flag_update" value="0"checked>&nbsp; 使用 &nbsp;</label> <label
 											style="color: red"><input type="radio" id="rd2"
-											name="use_flag_update" value="1" checked>&nbsp; 未使用
+											name="use_flag_update" value="1">&nbsp; 未使用
 											&nbsp;</label>
 									</div>
 								</div>
@@ -380,7 +383,7 @@
 				var masterCode = new Object();
 				masterCode.codeMasterId = $('#codeMasterId').val();
 				masterCode.codeMasterName = $('#codeMasterName').val();
-				masterCode.useFlag = $('#use').val();
+				masterCode.useFlag = $('input[name=use_flag]:checked').val();
 				masterCode.remarks = $('#remarks').val();
 				$.ajax({
 					"url" : "/codemaster/CodeListCheck",
@@ -421,7 +424,7 @@
 									}
 								},
 								<!--検索機能 -->
-								fixedHeader : true,
+								"fixedHeader" : true,
 								"processing" : true,
 								"serverSide" : true,
 								"start" : 0,
@@ -455,8 +458,8 @@
 										{
 											targets : 2,
 											data : function(d) {
-												var str = '';
-												if (d.useFlag == 0) {
+												var str ='';
+												if (d.useFlag==0) {
 													str = "使用";
 												} else {
 													str = "未使用";
