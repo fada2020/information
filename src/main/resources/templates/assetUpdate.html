@@ -109,7 +109,7 @@
 			  						<span>状態</span>
 			  					</div>
 			  					<div class="col-md-4">
-			  						<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}}">
+			  						<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}">
 				                	<select name="statusCode" class="form-control" id="sNumber_search">
 				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
 				                		th:inline="text">[[${code.codeDetailName}]]</option>
