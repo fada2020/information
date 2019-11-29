@@ -190,8 +190,7 @@
 						<form id="antoform" class="form-horizontal calender" role="form"
 							method="GET" name="frm">
 							<div class="form-group">
-<!--  -->				<label class="col-sm-3 control-label"><span
-					style="color: red; font-size: 18px;">*</span> マスターコード</label>
+				<label class="col-sm-3 control-label"><span style="color: red; font-size: 18px;">*</span> マスターコード</label>
 					<div class="col-md-9 input-group " th:if="${selectmasterid} != null">
 						<select class="form-control" id="selectmasterid" name="selectmasterid" onchange="">
 									<option value="">選択</option>
@@ -288,7 +287,6 @@
 							</div>
 						</form>
 					</div>
-
 
 
 				</div>
@@ -532,18 +530,12 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-						alert(result);
 						location.href = '/codedetail';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
 					});
 				}
-
 			});
-
-
-
-
 
 			$('#searchBtn').on('click', function() {
 				$('#search_master_id').val($('#search_master_id').val().replace(new RegExp("'", 'g'), ''));
@@ -560,8 +552,6 @@
 			function selectMasterID() {
 				/* 最初の選択地で選択してもらったデータを元にして次の選択地をセッティングする  */
 				var mid =/*[[${codeMasterId}]]*/;
-
-
 				$('#selectmasterid').click(
 						/* 二番目のボタンが押されたら下のメソッドが行われる  */
 						function() {

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import jp.co.info.ais.ams.filter.DashboardFilter;
+import jp.co.info.ais.ams.filter.UserFilter;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -28,9 +28,9 @@ public class SuppliesApplication {
 		 * @return FilterRegistrationBean<DashboardFilter>
 		 */
 		@Bean
-		public FilterRegistrationBean<DashboardFilter> DashboardFilter() {
-			FilterRegistrationBean<DashboardFilter> bean = new FilterRegistrationBean<>();
-			bean.setFilter(new DashboardFilter());
+		public FilterRegistrationBean<UserFilter> UserFilter() {
+			FilterRegistrationBean<UserFilter> bean = new FilterRegistrationBean<>();
+			bean.setFilter(new UserFilter());
 			bean.setUrlPatterns(Arrays.asList("/dashboard","/rental","/history","/asset","/codemaster"));
 			return bean;
 		}
