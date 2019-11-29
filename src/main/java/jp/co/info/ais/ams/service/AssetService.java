@@ -1,8 +1,11 @@
 package jp.co.info.ais.ams.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -162,15 +165,25 @@ public class AssetService {
 			Rental rental = new Rental();
 			rental.setInsertId(asset.getInsertId());
 			rental.setUpdateId(asset.getUpdateId());
+			rental.setRentalUserId(asset.getInsertId());
 			rental.setAssetSeq(asset.getAssetSeq());
 			rental.setStatusCode(asset.getStatusCode());
+			rental.setPurpose("");
+			rental.setStorageLocation("");
+			rental.setSpeciality("");
+			SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
+			Date currentTime = new Date();
+			String mTime = mSimpleDateFormat.format(currentTime);
+			rental.setRentalDay(mTime);
+			rental.setReturnDay(mTime);
+			rental.setReturnPeriod(mTime);
 			if(asset.getStatusCode().equals(AppConstant.STATE_RENTAL)) {
 				List<Rental> itemList = new ArrayList<Rental>();
 				itemList.add(rental);
 				rentalMapper.addRental(itemList);
 			}
 			if(asset.getPreStatusCode().equals(AppConstant.STATE_RENTAL)) {
-				rentalMapper.changeAssetStatus(rental);
+				rentalMapper.returnAsset(rental);
 			}
 		}
     	// 空白及び'-'除去
