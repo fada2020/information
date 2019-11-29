@@ -29,8 +29,6 @@
 <style>
     	#datatable-list thead, th {text-align: center;
     	vertical-align: middle;}
-		#datatable-list tbody tr{cursor:pointer;
-		}
 		#datatable-list th{
 			vertical-align:middle;
 		}
@@ -86,23 +84,18 @@
 												<input type="text" id="search_name" class="form-control ">
 											</div>
 										</div>
-										<div class="col-md-2"></div>
-										<div class="col-md-2">
+										<div class="col-md-4">
 										<!-- 検索 ボタン -->
-										<div class = "col-md-6">
 											<button type="button" class="btn btn-primary pull-right "
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-										</div>
 										<!-- 新規登録 ボタン -->
-										<div class = "col-md-6">
 											<button type="button" class="btn btn-success pull-right "
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
 											</button>
 										</div>
-									</div>
 								</div>
 									<!-- /.well -->
 								</div>
@@ -116,10 +109,10 @@
 											<thead>
 												<tr class="headings">
 													<!--  <th class="column-title txt_center">No.</th> -->
-													<th class="column-title txt_center">コードID</th>
-													<th class="column-title txt_center">コード名</th>
-													<th class="column-title txt_center">使用有無</th>
-													<th class="column-title txt_center"></th>
+													<th class="column-title txt_center col-md-3">コードID</th>
+													<th class="column-title txt_center col-md-4">コード名</th>
+													<th class="column-title txt_center col-md-3">使用有無</th>
+													<th class="column-title txt_center col-md-2"></th>
 												</tr>
 											</thead>
 											<!-- List 出力 -->
