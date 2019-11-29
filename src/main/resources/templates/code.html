@@ -294,6 +294,13 @@
 									</div>
 								</div>
 							</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+
+								<input type="hidden" id="codeMasterId_hidden"
+											name="codeMasterId_hidden">
+							</div>
+								<div class="clearfix"></div>
 							<div class="modal-footer">
 
 								<button type="button" class="btn btn-primary"
@@ -521,6 +528,7 @@
  				$('#codeMasterId_update').val(selectTr.find('td').eq(0).text());
 				$('#codeMasterName_update').val(selectTr.find('td').eq(1).text());
 				$('#remarks_update').val(selectTr.find('#detail').val());
+				$('#codeMasterId_hidden').val(selectTr.find('td').eq(0).text());
 				if(selectTr.find('#useFlag').val() == 0){
 					$("#rd1").attr("checked", true);
 				}else {
@@ -569,7 +577,7 @@
 					masterCode.codeMasterName = $('#codeMasterName_update').val();
 					masterCode.useFlag = $('input[name=use_flag_update]:checked').val();
 					masterCode.remarks = $('#remarks_update').val();
-
+					masterCode.codeMasterIdOld=$('#codeMasterId_hidden').val();
 					$.ajax({
 						"url" : "/codemaster/updateCodeMaster",
 						"type" : "post",
