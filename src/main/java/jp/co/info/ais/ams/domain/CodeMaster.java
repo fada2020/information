@@ -16,7 +16,7 @@ public class CodeMaster {
 		private String codeMasterName;//コードネーム
 		private String remarks;//
 		private int useFlag;//使用未使用
-		private String codeMasterIdOld;//コードID
+
 		int length;//長さ
 		int start;
 }
