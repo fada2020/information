@@ -35,8 +35,8 @@ public class CodeDetailController {
 	    	try {
 	    		// コード値セッティング
 	    	model.addAttribute("selectmasterid", codeDetailService.selectMasterCodeId());
-			/*	model.addAttribute("stateCode", codeDetailService.selectStateCode());
-				model.addAttribute("kubunCode", codeDetailService.selectKubunCode());*/
+
+	    	model.addAttribute("masterid",codeDetailService.selectCode());
 	    	}catch (Exception e) {
 	    		logger.error(e.getMessage());
 			}
@@ -79,5 +79,21 @@ public class CodeDetailController {
 		page.setRecordsFiltered(totalCount);
 
 		return page;
+	}
+
+	@RequestMapping(value = "/detaillistcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public int CodeListCheck(@RequestBody CodeDetail codedetail) {
+		int num = 0;
+		logger.debug(codedetail);
+		try {
+			///結果が正しい場合チェックメソッド実行してnumに含める
+			num = codeDetailService.CodeDetailListCheck(codedetail);
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
 	}
 }
