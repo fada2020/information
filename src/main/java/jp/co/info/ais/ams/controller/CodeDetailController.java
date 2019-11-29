@@ -99,4 +99,25 @@ public class CodeDetailController {
 
 		return num;
 	}
+
+	/**
+	 * マスターコード修正
+	 * @param masterCode マスターコード
+	 * @return int num
+	 */
+	@RequestMapping(value = "/updateCodeDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public int updateCodeDetail(@RequestBody CodeDetail detailCode) {
+		int num = 0;
+		try {
+			//結果が正しい場合修正メソッド実行してnumに含める
+			num=codeDetailService.updateCodeDetail(detailCode);
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
+	}
+
 }

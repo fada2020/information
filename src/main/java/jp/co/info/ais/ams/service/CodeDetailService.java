@@ -97,4 +97,18 @@ public class CodeDetailService {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+
+	public int updateCodeDetail(CodeDetail detailCode) {
+
+		int num=0;
+		try {
+
+		num =codeDetailMapper.updateCodeDetail(detailCode);
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		 return num;
+	}
+
+
 }

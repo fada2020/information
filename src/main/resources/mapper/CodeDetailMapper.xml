@@ -7,17 +7,18 @@
 
 
 
-<select id="CodeDetailListCheck"
+	<select id="CodeDetailListCheck"
 		parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="int">
 		SELECT
 		count(*)
 		FROM code_detail
 		WHERE code_master_id=${codeMasterId}
 	</select>
-	<select id="selectCodeDetailList" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectCodeDetailList"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT A.* FROM(
 		SELECT
-		 code_master_id
+		code_master_id
 		,code_detail_id
 		,code_detail_name
 		,item1
@@ -27,9 +28,10 @@
 		,item5
 		,use_flag
 		FROM code_detail
-		ORDER BY code_master_id ASC
+		ORDER BY
+		code_master_id ASC
 		)A
-	where 1=1
+		where 1=1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
 		</if>
@@ -42,20 +44,21 @@
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
- 	<select id="selectAllList" resultType="jp.co.info.ais.ams.domain.CodeDetail">
-    	SELECT
-    		 code_master_id
-    		,code_detail_id
-    		,code_detail_name
-    		,item1
-    		,item2
-    		,item3
-			,item4
-			,item5
-    	FROM code_detail
-    </select>
+	<select id="selectAllList"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		FROM code_detail
+	</select>
 
-    <select id="selectCount" resultType="int">
+	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
 		FROM code_detail
 		WHERE 1 = 1
@@ -70,62 +73,90 @@
 		</if>
 	</select>
 
-	<select id="selectMasterCodeId" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectMasterCodeId"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
-    		 code_master_id
-    	FROM code_detail
-	</select>
-
-	   <select id="selectProductCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
-    	SELECT
-    		 code_master_id
-    		,code_detail_id
-    		,code_detail_name
-    		,item1
-    		,item2
-    		,item3
-    		,item4
-    		,item5
-  			,use_flag
-    	FROM code_detail
-		WHERE code_master_id = '001'
-    </select>
-
-    <select id="selectStateCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
-    	SELECT
-    		 code_master_id
-    		,code_detail_id
-    		,code_detail_name
-    		,item1
-    		,item2
-    		,item3
-    		,item4
-    		,item5
-  			,use_flag
-    	FROM code_detail
-		WHERE code_master_id = '002'
-    </select>
-
-       <select id="selectKubunCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
-    	SELECT
-    		 code_master_id
-    		,code_detail_id
-    		,code_detail_name
-    		,item1
-    		,item2
-    		,item3
-    		,item4
-    		,item5
-  			,use_flag
-    	FROM code_detail
-		WHERE code_master_id = '003'
-    </select>
-
-    	<select id="selectCode"	resultType="jp.co.info.ais.ams.domain.CodeDetail">
-		SELECT DISTINCT
 		code_master_id
 		FROM code_detail
 	</select>
 
+	<select id="selectProductCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		,use_flag
+		FROM code_detail
+		WHERE code_master_id
+		= '001'
+	</select>
 
-	</mapper>
+	<select id="selectStateCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		,use_flag
+		FROM code_detail
+		WHERE code_master_id
+		= '002'
+	</select>
+
+	<select id="selectKubunCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		,use_flag
+		FROM code_detail
+		WHERE code_master_id
+		= '003'
+	</select>
+
+	<select id="selectCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT DISTINCT
+		code_master_id
+		FROM code_detail
+	</select>
+	<update id="updateCodeDetail"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		update code_detail set
+		code_master_id=#{codeMasterId}
+		,code_detail_id=#{codeDetailId}
+		,code_detail_name=#{codeDetailName}
+		,item1=#{item1}
+		,item2=#{item2}
+		,item3=#{item3}
+		,item4=#{item4}
+		,item5=#{item5}
+		,use_flag=#{useFlag}
+		where
+		code_master_id=#{codeMasterIdOld} and code_detail_id=#{codeDetailIdOld}
+	</update>
+<!-- 	<select id="checkCodeDetail"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail"
+		resultType="int">
+		select count(*) from code_detail where code_detail_id=#{codeDetailId} and
+		code_master_id=#{codeMasterId}
+	</select>
+ -->
+</mapper>
