@@ -39,5 +39,7 @@ public interface CodeDetailMapper {
 
 	void CodeMasterInsert(CodeDetail codedetail);
 
+	int deleteDetailCode(String codeMDetail);
+
 
 }

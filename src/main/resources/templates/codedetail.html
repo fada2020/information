@@ -124,7 +124,7 @@
 											</h3>
 										</div>
 									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-										<table id="datatable1"
+										<table id="datatable-list"
 											class="table table-bordered jambo_table bulk_action text-center"
 											style="width: 100%">
 											<thead>
@@ -140,7 +140,8 @@
 													<th class="column-title txt_center">アイテム4</th>
 													<th class="column-title txt_center">アイテム5</th>
 													<th class="column-title txt_center">使用有無</th>
-												<th class="column-title txt_center"></th>
+													<th class="column-title txt_center"></th>
+
 												</tr>
 											</thead>
 											<!-- List 出力 -->
@@ -170,10 +171,6 @@
 			<!-- footer content -->
 			<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
 			<!-- /footer content -->
-		</div>
-	</div>
-
-
 
 <!-- Modal Part コード登録 -->
 	<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
@@ -420,13 +417,9 @@
 
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-
-
 		$(function() {
-
-
 			<!--datatableの設定を変更-->
-			var modalesectiontable = $("#datatable1").DataTable(
+			var modalesectiontable = $("#datatable-list").DataTable(
 							{
 								<!--ページング-->
 								"language" : {
@@ -440,7 +433,7 @@
 										"next" : "次へ",
 										"previous" : "前の"
 									}
-								},
+								},//
 
 								<!--検索機能 -->
 								fixedHeader : true,
@@ -466,7 +459,7 @@
 												'#search_detail_name').val();
 										return JSON.stringify(d);
 									}
-								},
+								},//
 								"columnDefs" : [
 										{
 											targets : 0,
@@ -518,12 +511,36 @@
 											render : function(data, type, row, meta) {
 												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
 												'"><button type="button" class="btn btn-danger deleteBtn"' +
-												' id="' + row.codeMasterId + '">削除</button>';
+												' id="' + row.codeMasterId+row.codeDetailId + '">削除</button>';
 
 										}
 										}
 										 ]
 							});
+
+			$('#datatable-list tbody').on("click", ".deleteBtn", function() {
+				<!--削除機能-->
+				if (!confirm('本当に削除しますか？')) {
+					<!-- キャンセルの時の処理 -->
+					return false;
+				} else {
+					<!-- OKの時の処理-->/
+					$.ajax(
+					/*[[@{/codedetail/delete}]]*/'codedetail/delete', {
+						type : "POST",
+						dataType : "json",
+						contentType : 'application/JSON',
+						data : this.id
+					}).success(function(result) {
+						alert(result);
+						location.href = '/codedetail';
+					}).error(function(xhr, textStatus, error) {
+						alert('通信失敗');
+					});
+				}
+
+			});
+
 
 
 
@@ -537,7 +554,7 @@
 				modalesectiontable.column(0).search(this.value).draw();
 			});
 
-
+		});
 
 
 			function selectMasterID() {
@@ -561,7 +578,7 @@
 							}
 							});
 			}
-		})
+
 
 
 

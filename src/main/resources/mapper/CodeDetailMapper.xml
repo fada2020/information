@@ -120,12 +120,17 @@
     	FROM code_detail
 		WHERE code_master_id = '003'
     </select>
-
     	<select id="selectCode"	resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT DISTINCT
 		code_master_id
 		FROM code_detail
 	</select>
+
+	<!-- 詳細ーコード削除 -->
+	<delete id="deleteDetailCode">
+		DELETE FROM code_detail
+			WHERE (SELECT CONCAT(code_master_id, code_detail_id)) = #{codeMDetail}
+	</delete>
 
 
 	</mapper>
