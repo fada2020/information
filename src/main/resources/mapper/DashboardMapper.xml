@@ -7,16 +7,14 @@
 	<!-- 資産タイプ別保有現況 -->
 
 	<!-- 総ハードウェア、総ソフトウェア、今月購入した装置 -->
-	<select id="possession"
-		resultType="jp.co.info.ais.ams.domain.Dashboard">
+	<select id="possession" resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code
 			, code_detail_name AS kubunName
 			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =
 			"003" AND code_detail_id = cdl.item1) AS typeName
 		FROM asset JOIN
-		code_detail cdl ON code_master_id = "002" AND kubun_code =
-		code_detail_id
+		code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
 		GROUP BY kubun_code
 		ORDER BY typeName, typeCnt DESC
 	</select>
@@ -29,8 +27,7 @@
 	</select>
 
 	<!-- 資産種別貸与現況 -->
-	<select id="rslist"
-		resultType="jp.co.info.ais.ams.domain.Dashboard">
+	<select id="rslist" resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code AS kubunCode
 			, code_detail_name kubunName

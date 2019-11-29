@@ -24,7 +24,7 @@ public class DashboardFilter implements Filter {
 	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.info("init filter!!");
+		logger.debug("init filter!!");
 	}
 	/**
 	 * dofilter : ログインしないで、ダッシュボード進入禁止
@@ -33,13 +33,12 @@ public class DashboardFilter implements Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
 
-		System.out.println("Do filter");
 
 		if (servletRequest instanceof HttpServletRequest) {
 			String url = ((HttpServletRequest) servletRequest).getRequestURI().toString();
 			String queryString = ((HttpServletRequest) servletRequest).getQueryString();
-			logger.info("url::" + url);
-			logger.info("url::" + queryString);
+			logger.debug("url::" + url);
+			logger.debug("url::" + queryString);
 		}
 
 		Object loginId = ((HttpServletRequest) servletRequest).getSession().getAttribute("id");
@@ -56,7 +55,7 @@ public class DashboardFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		logger.info("destroy filter!");
+		logger.debug("destroy filter!");
 	}
 
 }

@@ -97,4 +97,8 @@ public class CodeDetailService {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+
+	public int deleteDetailCode(String codeMDetail) {
+		return codeDetailMapper.deleteDetailCode(codeMDetail);
+	}
 }

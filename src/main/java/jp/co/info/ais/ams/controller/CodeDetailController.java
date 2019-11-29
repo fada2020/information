@@ -20,7 +20,6 @@ import jp.co.info.ais.ams.service.CodeDetailService;
 
 @Controller
 @RequestMapping("/codedetail")
-
 public class CodeDetailController {
 	private static final Logger logger = LogManager.getLogger(CodeMasterController.class);
 	@Autowired
@@ -93,7 +92,26 @@ public class CodeDetailController {
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
 		}
-
 		return num;
 	}
+
+	/**
+	 * 詳細ーコード削除
+	 * @param
+	 * @return
+	 */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public int assetDelete(@RequestBody String codeMDetail) {
+    	int result = 0;
+    	try {
+    		//結果が正しい場合削除メソッド実行してresultに含める
+	    	result = codeDetailService.deleteDetailCode(codeMDetail);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return result;
+    }
+
+
 }
