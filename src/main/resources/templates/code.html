@@ -90,7 +90,7 @@
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-										<!-- 新規登録 ボタン -->
+										<!-- 登録 ボタン -->
 											<button type="button" class="btn btn-success "
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
@@ -145,7 +145,7 @@
 	</div>
 
 
-	<!-- Modal Part コードマスタ登録 -->
+	<!-- Modal Part マスターコード登録 -->
 	<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -154,7 +154,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h3 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true"></i> コードマスタ登録
+						<i class="fa fa-pencil-square" aria-hidden="true"></i> マスターコード登録
 					</h3>
 
 				</div>
@@ -234,7 +234,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h3 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true" ></i> コードマスタ変更
+						<i class="fa fa-pencil-square" aria-hidden="true" ></i> マスターコード変更
 					</h3>
 
 				</div>
@@ -249,7 +249,7 @@
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
 											id="codeMasterId_update" name="codeMasterId_update"
-											placeholder="ex)001" required />
+											placeholder="ex)001" onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 									</fieldset>
 								</div>
 							</div>
