@@ -17,9 +17,9 @@ public class CodeDetail {
 	private String item4;
 	private String item5;
 	private int orderBy;
-	private String use_flag;
+	private String useFlag;
 
 
-	int length;//長さ
-	int start;
+	private int length = 10;
+	private int start;
 }

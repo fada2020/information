@@ -28,7 +28,8 @@
 		,use_flag
 		FROM code_detail
 		ORDER BY code_master_id ASC
-			) A
+		)A
+	where 1=1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
 		</if>
@@ -56,16 +57,16 @@
 
     <select id="selectCount" resultType="int">
 		SELECT COUNT(1)
-		FROM code_master
+		FROM code_detail
 		WHERE 1 = 1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
 		</if>
 		<if test="codeDetailId != null and !codeDetailId.equals('')">
-			AND code_master_name like '%${codeMasterName}%'
+			AND code_detail_id like '%${codeDetailId}%'
 		</if>
 		<if test="codeDetailName != null and !codeDetailName.equals('')">
-			AND code_master_name like '%${codeMasterName}%'
+			AND code_detail_name like '%${codeDetailName}%'
 		</if>
 	</select>
 

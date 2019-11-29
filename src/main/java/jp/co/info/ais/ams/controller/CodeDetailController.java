@@ -29,54 +29,57 @@ public class CodeDetailController {
 	@Autowired
 	HttpSession session;
 
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String assetList(Model model) {
+		try {
+			// コード値セッティング
+			model.addAttribute("selectmasterid", codeDetailService.selectMasterCodeId());
 
-	    @RequestMapping(value = "", method = RequestMethod.GET)
-	    public String assetList(Model model) {
-	    	try {
-	    		// コード値セッティング
-	    	model.addAttribute("selectmasterid", codeDetailService.selectMasterCodeId());
+			model.addAttribute("masterid", codeDetailService.selectCode());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return "codedetail";
+	}
 
-	    	model.addAttribute("masterid",codeDetailService.selectCode());
-	    	}catch (Exception e) {
-	    		logger.error(e.getMessage());
-			}
-	        return "codedetail.html";
-	    }
-
-
-	@RequestMapping(value = "/codedetaileList", method = RequestMethod.POST)
+	@RequestMapping(value = "/codedetailList", method = RequestMethod.POST)
 	@ResponseBody
-	public Page<CodeDetail> CodeDetailList(@RequestBody Page<CodeDetail> page){
+	public Page<CodeDetail> CodeDetailList(@RequestBody Page<CodeDetail> page) {
+		try {
+			// 検索条件
+			CodeDetail condition = new CodeDetail();
 
-		// 検索条件
-		CodeDetail condition = new CodeDetail();
+			// ページング処理
+			condition.setLength(page.getLength());
+			condition.setStart(page.getStart());
 
-		// ページング処理
-		condition.setLength(page.getLength());
-		condition.setStart(page.getStart());
+						String codeMasterId = page.getColumns().get(0).getSearch().getValue();
+						if (null != codeMasterId && !codeMasterId.equals("")) {
+							condition.setCodeMasterId(codeMasterId);
+						}
 
-		String codeMasterId = page.getColumns().get(0).getSearch().getValue();
-		if (null != codeMasterId && !codeMasterId.equals("")) {
-			condition.setCodeMasterId(codeMasterId);
+						String codeDetailId = page.getColumns().get(1).getSearch().getValue();
+						if (null != codeDetailId && !codeDetailId.equals("")) {
+							condition.setCodeDetailId(codeDetailId);
+						}
+
+						String codeDetailName = page.getColumns().get(2).getSearch().getValue();
+						if (null != codeDetailName && !codeDetailName.equals("")) {
+							condition.setCodeDetailId(codeDetailName);
+						}
+			// リスト照会
+			List<CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);
+
+			page.setData(CodeDetailList);
+
+			int totalCount = codeDetailService.selectCount(condition);
+
+			page.setRecordsFiltered(totalCount);
+
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
 		}
-
-		String codeDetailId = page.getColumns().get(1).getSearch().getValue();
-		if (null != codeDetailId && !codeDetailId.equals("")) {
-			condition.setCodeDetailId(codeDetailId);
-		}
-
-		String codeDetailName = page.getColumns().get(1).getSearch().getValue();
-		if (null != codeDetailName && !codeDetailName.equals("")) {
-			condition.setCodeDetailId(codeDetailName);
-		}
-		// リスト照会
-		List <CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);
-
-		page.setData(CodeDetailList);
-
-		int totalCount = codeDetailService.selectCount(condition);
-
-		page.setRecordsFiltered(totalCount);
 
 		return page;
 	}
