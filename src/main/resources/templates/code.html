@@ -85,15 +85,15 @@
 											</div>
 										</div>
 										<div class="col-md-4">
-										<!-- 新規登録 ボタン -->
-											<button type="button" class="btn btn-success pull-right "
-												data-toggle="modal" data-target="#modalCodeMaster">
-												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
-											</button>
 										<!-- 検索 ボタン -->
 											<button type="button" class="btn btn-primary pull-right "
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
+											</button>
+										<!-- 新規登録 ボタン -->
+											<button type="button" class="btn btn-success pull-right "
+												data-toggle="modal" data-target="#modalCodeMaster">
+												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
 											</button>
 										</div>
 								</div>
@@ -504,7 +504,6 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-
 						location.href = '/codemaster';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
@@ -541,6 +540,8 @@
 						codeMasterId_update : {
 							required : true,
 							number : true,
+							min : 1,
+							max : 999,
 							rangelength : [ 3, 3 ]
 						},
 						codeMasterName_update : {
@@ -550,9 +551,10 @@
 					messages : {
 						codeMasterId_update : {
 							required : "コードを入力してください",
-							rangelength : "桁数は3文字です",
-							number : "数字を入力してください"
-
+							number : "ナンバーで入力してください",
+							min : "1~999の定数を入力してください",
+							max : "1~999の定数を入力してください",
+							rangelength : "桁数は3文字です"
 						},
 						codeMasterName_update : {
 							required : "コード名称を入力してください"
