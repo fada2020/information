@@ -19,9 +19,9 @@ public interface CodeDetailMapper {
 
 	int selectCount(CodeDetail condition);
 
-	int CodeDetailListCheck(CodeDetail codeDetail);
+	int codeDetailListCheck(CodeDetail codeDetail);
 
-	void CodeDetailInsert(CodeDetail codeMasterId);
+	void codeDetailInsert(CodeDetail codeDetail);
 
 	int updateCodeDetail(CodeDetail detailCode);
 
@@ -42,6 +42,7 @@ public interface CodeDetailMapper {
 	int checkCodeDetail(CodeDetail detailCode);
 
 	int deleteDetailCode(String codeMDetail);
+
 
 
 }

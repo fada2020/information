@@ -137,6 +137,21 @@ public class CodeDetailController {
 		}
         return result;
     }
+	@RequestMapping(value = "/codeListCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public int codeListCheck(@RequestBody CodeDetail codeMDetail) {
+		int num = 0;
+
+		try {
+			///結果が正しい場合チェックメソッド実行してnumに含める
+			num = codeDetailService.codeDetailListCheck(codeMDetail);
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
+	}
 
 
 

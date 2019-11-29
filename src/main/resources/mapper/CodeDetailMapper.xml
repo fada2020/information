@@ -7,13 +7,6 @@
 
 
 
-	<select id="CodeDetailListCheck"
-		parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="int">
-		SELECT
-		count(*)
-		FROM code_detail
-		WHERE code_master_id=${codeMasterId}
-	</select>
 	<select id="selectCodeDetailList"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT A.* FROM(
@@ -131,7 +124,8 @@
 		= '003'
 	</select>
 
-    <select id="selectCode"	resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT DISTINCT
 		code_master_id
 		FROM code_detail
@@ -150,14 +144,45 @@
 		,item5=#{item5}
 		,use_flag=#{useFlag}
 		where
-		code_master_id=#{codeMasterIdOld} and code_detail_id=#{codeDetailIdOld}
+		code_master_id=#{codeMasterIdOld} and
+		code_detail_id=#{codeDetailIdOld}
 	</update>
 
 	<!-- 詳細ーコード削除 -->
 	<delete id="deleteDetailCode">
 		DELETE FROM code_detail
-			WHERE (SELECT CONCAT(code_master_id, code_detail_id)) = #{codeMDetail}
+		WHERE (SELECT CONCAT(code_master_id, code_detail_id)) = #{codeMDetail}
 	</delete>
 
-
+	<insert id="codeDetailInsert"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		INSERT INTO code_detail(
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		,use_flag)
+		VALUES (
+		#{codeMasterId}
+		, #{codeDetailId}
+		, #{codeDetailName}
+		, #{item1}
+		, #{item2}
+		, #{item3}
+		, #{item4}
+		, #{item5}
+		, #{useFlag}
+		)
+	</insert>
+	<select id="codeDetailListCheck"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="int">
+		SELECT
+		count(*)
+		FROM code_detail
+		where code_master_id=#{codeMasterId} and code_detail_id=#{codeDetailId}
+	</select>
 </mapper>
