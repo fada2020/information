@@ -23,7 +23,7 @@ public interface CodeDetailMapper {
 
 	void CodeDetailInsert(CodeDetail codeMasterId);
 
-	int updateCodeDetail(CodeDetail codeMasterId);
+	int updateCodeDetail(CodeDetail detailCode);
 
 	int deleteCodeDetail(String codeMasterId);
 
@@ -38,6 +38,8 @@ public interface CodeDetailMapper {
 	List<CodeDetail> selectCode();
 
 	void CodeMasterInsert(CodeDetail codedetail);
+
+	int checkCodeDetail(CodeDetail detailCode);
 
 	int deleteDetailCode(String codeMDetail);
 

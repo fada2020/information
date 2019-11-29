@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 public class CodeDetail {
 
@@ -19,7 +20,8 @@ public class CodeDetail {
 	private int orderBy;
 	private String useFlag;
 
-
 	private int length = 10;
 	private int start;
+	private String codeMasterIdOld;
+	private String codeDetailIdOld;
 }

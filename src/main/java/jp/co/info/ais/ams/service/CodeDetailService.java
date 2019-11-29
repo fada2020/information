@@ -98,6 +98,18 @@ public class CodeDetailService {
 		return null;
 	}
 
+	public int updateCodeDetail(CodeDetail detailCode) {
+
+		int num=0;
+		try {
+
+		num =codeDetailMapper.updateCodeDetail(detailCode);
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		 return num;
+	}
+
 	public int deleteDetailCode(String codeMDetail) {
 		return codeDetailMapper.deleteDetailCode(codeMDetail);
 	}
