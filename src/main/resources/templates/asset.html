@@ -141,7 +141,9 @@
                 <!-- /検索条件 -->
 
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-success pull-right" id="insertBtn">資産登録</button>
+                    <button type="button" class="btn btn-success pull-right" id="insertBtn">
+                    	<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
+                    </button>
                 </div>
                 <div class="x_panel">
                   <div class="x_content">
@@ -712,7 +714,7 @@
 					      <div class="modal-footer">
 					      	<div class="row">
 						      	<div class="col-md-6">
-							        <button type="button" class="btn btn-info pull-left" id="insertProc">登録</button>
+							        <button type="button" class="btn btn-info pull-left btn-success" id="insertProc">資産登録</button>
 						        </div>
 						        <div class="col-md-6">
 						        	<button type="button" class="btn btn-primary" id="initBtn">初期化</button>
@@ -908,7 +910,7 @@
                     	data: null,
                         render: function ( data, type, row, meta ) {
                         var html = '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                        	'/asset/' + row.assetSeq + '\'">更新</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
+                        	'/asset/' + row.assetSeq + '\'">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
                         		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';
