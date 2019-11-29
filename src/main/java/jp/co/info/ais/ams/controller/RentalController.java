@@ -193,14 +193,9 @@ return num;
 	 * @return 無し
 	 * */
 	@RequestMapping(value = "/returnAsset", method = RequestMethod.POST)
+	@ResponseBody
 	public void deleteRental(Model model, @RequestBody int assetSeq) {
-
-		try {
 			rentalService.returnAsset((String) session.getAttribute("id"), (String) session.getAttribute("name"), assetSeq);
-		} catch (Exception e) {
-
-			logger.debug(e.getMessage());
-		}
 
 	}
 

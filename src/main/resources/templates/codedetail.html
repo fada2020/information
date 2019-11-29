@@ -140,6 +140,8 @@
 													<th class="column-title txt_center">アイテム4</th>
 													<th class="column-title txt_center">アイテム5</th>
 													<th class="column-title txt_center">使用有無</th>
+													<th class="column-title txt_center"></th>
+
 												</tr>
 											</thead>
 											<!-- List 出力 -->
@@ -169,12 +171,6 @@
 			<!-- footer content -->
 			<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
 			<!-- /footer content -->
-<!-- test -->
-				<button type="button" class="btn btn-danger deleteBtn" id="00401">削除</button>
-		</div>
-	</div>
-
-
 
 <!-- Modal Part コード登録 -->
 	<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
@@ -423,8 +419,7 @@
 		/*<![CDATA[*/
 		$(function() {
 			<!--datatableの設定を変更-->
-			var modalesectiontable = $("#datatable-list")
-					.DataTable(
+			var modalesectiontable = $("#datatable-list").DataTable(
 							{
 								<!--ページング-->
 								"language" : {
@@ -510,33 +505,56 @@
 												return str;
 											}
 										},
+										{
+											targets : 9,
+											data : null,
+											render : function(data, type, row, meta) {
+												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
+												'"><button type="button" class="btn btn-danger deleteBtn"' +
+												' id="' + row.codeMasterId+row.codeDetailId + '">削除</button>';
 
-                                         ]
-                            });
+										}
+										}
+										 ]
+							});
 
-						$('#datatable-list tbody').on("click", ".deleteBtn", function() {
-							<!--削除機能-->
-							if (!confirm('本当に削除しますか？')) {
-								<!-- キャンセルの時の処理 -->
-								return false;
-							} else {
-								<!-- OKの時の処理-->/
-								$.ajax(
-								/*[[@{/codemaster/delete}]]*/'codedetail/delete', {
-									type : "POST",
-									dataType : "json",
-									contentType : 'application/JSON',
-									data : this.id
-								}).success(function(result) {
-									location.href = '/codedetail';
-								}).error(function(xhr, textStatus, error) {
-									alert('通信失敗');
-								});
-							}
+			$('#datatable-list tbody').on("click", ".deleteBtn", function() {
+				<!--削除機能-->
+				if (!confirm('本当に削除しますか？')) {
+					<!-- キャンセルの時の処理 -->
+					return false;
+				} else {
+					<!-- OKの時の処理-->/
+					$.ajax(
+					/*[[@{/codedetail/delete}]]*/'codedetail/delete', {
+						type : "POST",
+						dataType : "json",
+						contentType : 'application/JSON',
+						data : this.id
+					}).success(function(result) {
+						alert(result);
+						location.href = '/codedetail';
+					}).error(function(xhr, textStatus, error) {
+						alert('通信失敗');
+					});
+				}
 
-						});
-				});
+			});
 
+
+
+
+
+			$('#searchBtn').on('click', function() {
+				$('#search_master_id').val($('#search_master_id').val().replace(new RegExp("'", 'g'), ''));
+				$('#search_detail_id').val($('#search_detail_id').val().replace(new RegExp("'", 'g'), ''));
+				$('#search_detail_name').val($('#search_detail_name').val().replace(new RegExp("'", 'g'), ''));
+
+				<!--検索機能-->
+				modalesectiontable.column(0).search(this.value).draw();
+			});
+
+		});
 
 
 			function selectMasterID() {
@@ -560,59 +578,6 @@
 							}
 							});
 			}
-
-			$('#searchBtn').on('click', function() {
-				$('#search_master_id').val($('#search_master_id').val().replace(new RegExp("'", 'g'), ''));
-				$('#search_detail_id').val($('#search_detail_id').val().replace(new RegExp("'", 'g'), ''));
-				$('#search_detail_name').val($('#search_detail_name').val().replace(new RegExp("'", 'g'), ''));
-
-				<!--検索機能-->
-				modalesectiontable.column(0).search(this.value).draw();
-			});
-
-
-
-			function getSubSubItem() {
-
-
-				/* 三番目のボタンが押されたら下のメソッドが行われる  */
-				$('#sub_singleSelect').click(
-					function() {
-						/* まだ何も選択してなければ下のメソッドは実行されない
-						* 当てはまるデータがあれば選択地にセティングする
-						*/
-						if($('#sub_singleSelect option:selected').val()!=""){
-									var selectedItem = $('#sub_singleSelect option:selected').val();
-									selectedItem=selectedItem.replace(/[^0-9]/g,'');
-									/*ajaxを使って実際に使えるものかを確認する  */
-									$.ajax({
-					   			"url" : "/rental/getAssetList",
-					    		"type" : "post",
-					   	 		"dataType": "json",
-					   	 		"contentType": "application/JSON",
-					   			"data" : selectedItem,
-					   			contentType: 'application/JSON',
-					   		 	"success" : function(data){
-
-					   			var itemName=$('#sub_subSelect').val();
-								var html = '<option value="">選択</option>';
-
-								data.forEach(function(value) {
-
-									html += '<option value="' + value.assetSeq + '">'
-											+ value.assetNumber + '</option>';
-								});
-								$('#sub_subSelect').html(html);
-							},
-							"Error" : function(){
-								alert("貸与不可能");
-							}
-
-									});
-					  	}
-					}
-				);
-
 
 
 
