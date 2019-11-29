@@ -43,7 +43,7 @@ public class CodeDetailService {
 	 */
 	public int CodeDetailListCheck(CodeDetail codedetail) {
 		int num = 0;
-		num = codeDetailMapper.CodeDetailListCheck(codedetail);
+		num = codeDetailMapper.codeDetailListCheck(codedetail);
 		return num;
 
 	}
@@ -112,5 +112,19 @@ public class CodeDetailService {
 
 	public int deleteDetailCode(String codeMDetail) {
 		return codeDetailMapper.deleteDetailCode(codeMDetail);
+	}
+	public int codeDetailListCheck(CodeDetail codeMDetail) {
+		int num = 0;
+		try {
+		num = codeDetailMapper.codeDetailListCheck(codeMDetail);
+		if (num == 0) {
+			codeDetailMapper.codeDetailInsert(codeMDetail);
+		}
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
+
 	}
 }
