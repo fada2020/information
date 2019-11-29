@@ -27,20 +27,20 @@
 
 
 <style>
-#datatable-list thead, th {
+#datatable1 thead, th {
 	text-align: center;
 	vertical-align: middle;
 }
 
-#datatable-list tbody tr {
+#datatable1 tbody tr {
 	cursor: pointer;
 }
 
-#datatable-list th {
+#datatable1 th {
 	vertical-align: middle;
 }
 
-#datatable-list td {
+#datatable1 td {
 	vertical-align: middle;
 }
 </style>
@@ -116,7 +116,7 @@
 														<i class="fa fa-search" aria-hidden="true"></i> 検索
 													</button>
 												</div>
-												<!-- 新規登録 ボタン -->
+												<!-- 登録 ボタン -->
 												<div class="col-md-6">
 													<button type="button" class="btn btn-success pull-right"
 														data-toggle="modal" data-target="#modalCodedetail">
@@ -132,11 +132,6 @@
 									<!-- /.x_title -->
 
 									<div class="x_content">
-										<div class="title_left">
-											<h3>
-												<i class="fa fa-cogs"></i> 詳細リスト
-											</h3>
-										</div>
 										<div
 											class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 											<table id="datatable1"
@@ -193,13 +188,13 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">
-							<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
-						</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
+						<h3 class="modal-title">
+							<i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード登録
+						</h3>
 					</div>
 					<div class="modal-body">
 						<div style="padding: 5px 20px;">
@@ -229,7 +224,7 @@
 										<fieldset>
 											<input type="text" class="form-control form-control-sm"
 												id="codeDetailId" name="codeDetailId" placeholder="コードID"
-												required />
+												onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 										</fieldset>
 									</div>
 								</div>
@@ -345,14 +340,13 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true"
-							style="font-size: 18px;"></i> コード詳細変更
-					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
+					<h3 class="modal-title">
+						<i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード変更
+					</h3>
 				</div>
 				<div class="modal-body">
 					<div style="padding: 5px 20px;">
@@ -385,7 +379,7 @@
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
 											id="codeDetailId_update" name="codeDetailId_update"
-										 required />
+										 onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 									</fieldset>
 								</div>
 							</div>
