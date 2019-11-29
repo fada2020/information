@@ -15,6 +15,7 @@
 			"003" AND code_detail_id = cdl.item1) AS typeName
 		FROM asset JOIN
 		code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
+		WHERE code_master_id = "002" AND status_code != "04"
 		GROUP BY kubun_code
 		ORDER BY typeName, typeCnt DESC
 	</select>
