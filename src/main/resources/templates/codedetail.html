@@ -27,16 +27,22 @@
 
 
 <style>
-    	#datatable-list thead, th {text-align: center;
-    	vertical-align: middle;}
-		#datatable-list tbody tr{cursor:pointer;
-		}
-		#datatable-list th{
-			vertical-align:middle;
-		}
-		#datatable-list td{
-			vertical-align:middle;
-		}
+#datatable-list thead, th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#datatable-list tbody tr {
+	cursor: pointer;
+}
+
+#datatable-list th {
+	vertical-align: middle;
+}
+
+#datatable-list td {
+	vertical-align: middle;
+}
 </style>
 </head>
 <body class="nav-md">
@@ -63,229 +69,253 @@
 							</h3>
 						</div>
 					</div>
-				<!-- /.page-title -->
-				<div class="clearfix"></div>
+					<!-- /.page-title -->
+					<div class="clearfix"></div>
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
 									<div class="well" style="overflow: auto">
 
-										<div class ="row">
+										<div class="row">
 											<div class="col-md-10">
 												<div class="col-md-4">
-													<label class="col-form-label col-md-7 label-align" for="search_master_id" style = "font-size: 18px;">
+													<label class="col-form-label col-md-7 label-align"
+														for="search_master_id" style="font-size: 18px;">
 														マスターコード</label>
 													<div class="col-md-5 ">
-														<input type="text" id="search_master_id" class="form-control">
+														<input type="text" id="search_master_id"
+															class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<label class="col-form-label col-md-6 label-align" for="search_detail_id" style = "font-size: 18px;">
+													<label class="col-form-label col-md-6 label-align"
+														for="search_detail_id" style="font-size: 18px;">
 														詳細コードID</label>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_id" class="form-control" style = "font-size: 18px;">
+														<input type="text" id="search_detail_id"
+															class="form-control" style="font-size: 18px;">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<label class="col-form-label col-md-6 label-align" for="search_detail_name" style = "font-size: 18px;">
+													<label class="col-form-label col-md-6 label-align"
+														for="search_detail_name" style="font-size: 18px;">
 														詳細コード名</label>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_name" class="form-control ">
+														<input type="text" id="search_detail_name"
+															class="form-control ">
 													</div>
 												</div>
 
 											</div>
 											<div class="col-md-2">
 												<!-- 検索 ボタン -->
-												<div class="col-md-6" >
-													<button type="button" class="btn btn-primary pull-right" id="searchBtn">
+												<div class="col-md-6">
+													<button type="button" class="btn btn-primary pull-right"
+														id="searchBtn">
 														<i class="fa fa-search" aria-hidden="true"></i> 検索
 													</button>
 												</div>
-													<!-- 新規登録 ボタン -->
+												<!-- 新規登録 ボタン -->
 												<div class="col-md-6">
-													<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modalCodedetail">
+													<button type="button" class="btn btn-success pull-right"
+														data-toggle="modal" data-target="#modalCodedetail">
 														<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
 													</button>
 												</div>
 											</div>
 										</div>
 
-								<!-- /.well -->
+										<!-- /.well -->
 
-								</div>
-								<!-- /.x_title -->
+									</div>
+									<!-- /.x_title -->
 
-								<div class="x_content">
+									<div class="x_content">
 										<div class="title_left">
 											<h3>
 												<i class="fa fa-cogs"></i> 詳細リスト
 											</h3>
 										</div>
-									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-										<table id="datatable-list"
-											class="table table-bordered jambo_table bulk_action text-center"
-											style="width: 100%">
-											<thead>
-												<tr class="headings">
-													<!--  <th class="column-title txt_center">No.</th> -->
+										<div
+											class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+											<table id="datatable1"
+												class="table table-bordered jambo_table bulk_action text-center"
+												style="width: 100%">
+												<thead>
+													<tr class="headings">
+														<!--  <th class="column-title txt_center">No.</th> -->
 
-													<th class="column-title txt_center">マスターコード</th>
-													<th class="column-title txt_center">コード詳細ID</th>
-													<th class="column-title txt_center">詳細コード名</th>
-													<th class="column-title txt_center">アイテム1</th>
-													<th class="column-title txt_center">アイテム2</th>
-													<th class="column-title txt_center">アイテム3</th>
-													<th class="column-title txt_center">アイテム4</th>
-													<th class="column-title txt_center">アイテム5</th>
-													<th class="column-title txt_center">使用有無</th>
-													<th class="column-title txt_center"></th>
+														<th class="column-title txt_center">マスターコード</th>
+														<th class="column-title txt_center">コード詳細ID</th>
+														<th class="column-title txt_center">詳細コード名</th>
+														<th class="column-title txt_center">アイテム1</th>
+														<th class="column-title txt_center">アイテム2</th>
+														<th class="column-title txt_center">アイテム3</th>
+														<th class="column-title txt_center">アイテム4</th>
+														<th class="column-title txt_center">アイテム5</th>
+														<th class="column-title txt_center">使用有無</th>
+														<th class="column-title txt_center"></th>
+													</tr>
+												</thead>
+												<!-- List 出力 -->
 
-												</tr>
-											</thead>
-											<!-- List 出力 -->
+												<tbody>
+												</tbody>
 
-											<tbody>
-											</tbody>
+												<!--/. List 出力 -->
 
-											<!--/. List 出力 -->
+											</table>
 
-										</table>
-
+										</div>
+										<!-- /.table-responsive -->
 									</div>
-									<!-- /.table-responsive -->
+									<!-- /.x_content -->
 								</div>
-								<!-- /.x_content -->
+								<!-- /.x_panel -->
 							</div>
-							<!-- /.x_panel -->
 						</div>
-					</div>
-					<!-- /.row -->
-
-				</div>
-			</div>
-			<!-- /.right_co -->
-			<!-- ここまでのコンテンツ作成 -->
-			<!-- /page content -->
-			<!-- footer content -->
-			<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
-			<!-- /footer content -->
-
-<!-- Modal Part コード登録 -->
-	<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
-					</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div style="padding: 5px 20px;">
-						<form id="antoform" class="form-horizontal calender" role="form"
-							method="GET" name="frm">
-							<div class="form-group">
-<!--  -->				<label class="col-sm-3 control-label"><span
-					style="color: red; font-size: 18px;">*</span> マスターコード</label>
-					<div class="col-md-9 input-group " th:if="${selectmasterid} != null">
-						<select class="form-control" id="selectmasterid" name="selectmasterid" onchange="">
-									<option value="">選択</option>
-										<option th:each="selectmasterid : ${masterid}" th:value="${selectmasterid.codeMasterId}" th:text="${selectmasterid.codeMasterId}"></option>
-						</select>
+						<!-- /.row -->
 
 					</div>
-			</div>
-			<div class="clearfix"></div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><span
-					style="color: red; font-size: 18px;">*</span>詳細コードID</label>
-				<div class="col-sm-9">
-					<fieldset>
-						<input type="text" class="form-control form-control-sm"
-							id="codeDetailId" name="codeDetailId" placeholder="コード名称"
-							required />
-					</fieldset>
 				</div>
+				<!-- /.right_co -->
+				<!-- ここまでのコンテンツ作成 -->
+				<!-- /page content -->
+				<!-- footer content -->
+				<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+				<!-- /footer content -->
 			</div>
+		</div>
 
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label"style ="font-size= 18px;">アイテム2</label>
-								<div class="col-sm-9">
-									<fieldset>
-										<input type="text" class="form-control form-control-sm"
-											id="item2" name="item2"
-											 />
-									</fieldset>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label"style ="font-size= 18px;">アイテム3</label>
-								<div class="col-sm-9">
-									<fieldset>
-										<input type="text" class="form-control form-control-sm"
-											id="item3" name="item3"
-											 />
-									</fieldset>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label"style ="font-size= 18px;">アイテム4</label>
-								<div class="col-sm-9">
-									<fieldset>
-										<input type="text" class="form-control form-control-sm"
-											id="item4" name="item4"
-											 />
-									</fieldset>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label"style ="font-size= 18px;">アイテム5</label>
-								<div class="col-sm-9">
-									<fieldset>
-										<input type="text" class="form-control form-control-sm"
-											id="item5" name="item5"
-											 />
-									</fieldset>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">使用有無</label>
-								<div class="col-sm-9">
-									<div id="use" class="btn-group" style="padding: 5px;">
-										<label style="color: blue;"><input type="radio"id="button1"
-											name="use_flag" value="0" checked>&nbsp; 使用 &nbsp;</label> <label
-											style="color: red"><input type="radio" id=""
-											name="use_flag" value="1">&nbsp; 未使用 &nbsp;</label>
+
+
+		<!-- Modal Part コード登録 -->
+		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">
+							<i class="fa fa-pencil-square" aria-hidden="true"></i> 新規登録
+						</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div style="padding: 5px 20px;">
+							<form id="antoform" class="form-horizontal calender" role="form"
+								method="GET" name="frm">
+								<div class="form-group">
+									<!--  -->
+									<label class="col-sm-3 control-label"><span
+										style="color: red; font-size: 18px;">*</span> マスターコード</label>
+									<div class="col-md-9 input-group "
+										th:if="${selectmasterid} != null">
+										<select class="form-control" id="selectmasterid"
+											name="selectmasterid" onchange="">
+											<option value="">選択</option>
+											<option th:each="selectmasterid : ${masterid}"
+												th:value="${selectmasterid.codeMasterId}"
+												th:text="${selectmasterid.codeMasterId}"></option>
+										</select>
+
 									</div>
 								</div>
-							</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><span
+										style="color: red; font-size: 18px;">*</span>詳細コードID</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="codeDetailId" name="codeDetailId" placeholder="コード名称"
+												required />
+										</fieldset>
+									</div>
+								</div>
 
-								</form>
+								<div class="clearfix"></div>
+									<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム1</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item1" name="item1" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム2</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item2" name="item2" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム3</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item3" name="item3" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム4</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item4" name="item4" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム5</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item5" name="item5" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">使用有無</label>
+									<div class="col-sm-9">
+										<div id="use" class="btn-group" style="padding: 5px;">
+											<label style="color: blue;"><input type="radio"
+												id="button1" name="use_flag" value="0" checked>&nbsp;
+												使用 &nbsp;</label> <label style="color: red"><input
+												type="radio" id="" name="use_flag" value="1">&nbsp;
+												未使用 &nbsp;</label>
+										</div>
+									</div>
+								</div>
+
+							</form>
 							<div class="clearfix"></div>
-							</div>
+						</div>
 
 
-							<div class="modal-footer">
+						<div class="modal-footer">
 
-								<button type="button" class="btn btn-warning"
-									onclick="codeInsert();">
-									<i class="fa fa-check-circle"></i> 登録
-								</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">
-									<i class="fa fa-times-circle"></i> 閉じる
-								</button>
-							</div>
+							<button type="button" class="btn btn-warning"
+								onclick="codeInsert();">
+								<i class="fa fa-check-circle"></i> 登録
+							</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">
+								<i class="fa fa-times-circle"></i> 閉じる
+							</button>
+						</div>
 						</form>
 					</div>
 
@@ -300,13 +330,14 @@
 	<!-- /.Modal Part :: Register End -->
 
 	<!-- Modal Part コードマスタ変更 -->
-	<div id="modalCodeMaster_update" class="modal" tabindex="-1"
+	<div id="modalCodeDetail_update" class="modal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true" style ="font-size: 18px;"></i> コードマスタ変更
+						<i class="fa fa-pencil-square" aria-hidden="true"
+							style="font-size: 18px;"></i> コード詳細変更
 					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
@@ -318,50 +349,116 @@
 						<form id="updateform" class="form-horizontal calender" role="form"
 							method="GET" name="frm">
 							<div class="form-group">
+								<!--  -->
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;font-size: 18px;">*</span> コードID</label>
+									style="color: red; font-size: 18px;">*</span> マスターコード</label>
+								<div class="col-md-9 input-group "
+									th:if="${selectmasterid} != null">
+									<select class="form-control" id="codeMasterId_update"
+										name="codeMasterId_update" onchange="">
+										<option value="">選択</option>
+										<option th:each="selectmasterid : ${masterid}"
+											th:value="${selectmasterid.codeMasterId}"
+											th:text="${selectmasterid.codeMasterId}"></option>
+									</select>
+
+								</div>
+							</div>
+
+
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px; font-size: 18px;">*</span>
+									コード詳細ID</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
-											id="codeMasterId_update" name="codeMasterId_update"
-											placeholder="ex)001" required />
+											id="codeDetailId_update" name="codeDetailId_update"
+										 required />
 									</fieldset>
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コード名</label>
+									style="color: red; font-size: 18px;">*</span> コード詳細名</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
-											id="codeMasterName_update" name="codeMasterName_update"
-											placeholder="コード名" required />
+											id="codeDetailName_update" name="codeDetailName_update"
+											 required />
 									</fieldset>
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">詳細</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control form-control-sm"
-										id="remarks_update" name="remarks_update">
+									<label class="col-sm-3 control-label" style="">アイテム1</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item1_update" name="item1_update" />
+										</fieldset>
+									</div>
 								</div>
-							</div>
-							<div class="clearfix"></div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム2</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item2_update" name="item2_update" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム3</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item3_update" name="item3_update" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム4</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item4_update" name="item4_update" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム5</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item5_update" name="item5_update" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">使用有無</label>
 								<div class="col-sm-9">
 									<div id="use_flag_update" class="btn-group"
 										style="padding: 5px;">
-										<label style="color: blue;"><input type="radio" id="rd1"
-											name="use_flag_update" value="0"checked>&nbsp; 使用 &nbsp;</label> <label
-											style="color: red"><input type="radio" id="rd2"
-											name="use_flag_update" value="1">&nbsp; 未使用
-											&nbsp;</label>
+										<label style="color: blue;"><input type="radio"
+											id="rd1" name="use_flag_update" value="0" checked>&nbsp;
+											使用 &nbsp;</label> <label style="color: red"><input
+											type="radio" id="rd2" name="use_flag_update" value="1">&nbsp;
+											未使用 &nbsp;</label>
 									</div>
 								</div>
 							</div>
+							<div class="form-group">
+							<input type="hidden" id="codeMasterId_hidden" name="codeMasterId_hidden">
+							<input type="hidden" id="codeDetailId_hidden" name="codeDetailId_hidden">
+								</div>
 							<div class="modal-footer">
 
 								<button type="button" class="btn btn-primary"
@@ -417,9 +514,12 @@
 
 	<script th:inline="javascript">
 		/*<![CDATA[*/
+  		$.validator.messages.number = '有効な数字を入力';
+    		$.validator.messages.maxlength = '{0} 文字以下を入力';
+
 		$(function() {
 			<!--datatableの設定を変更-->
-			var modalesectiontable = $("#datatable-list").DataTable(
+			var modalesectiontable = $("#datatable1").DataTable(
 							{
 								<!--ページング-->
 								"language" : {
@@ -475,23 +575,54 @@
 										},
 										{
 											targets : 3,
-											data : "item1"
+											data: function(d){
+						                    	if(d.item1 == ''|| d.item1 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item1;
+						                    	}
+						                    }
+
 										},
 										{
 											targets : 4,
-											data : "item2"
+											data: function(d){
+						                    	if(d.item2 == ''|| d.item2 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item2;
+						                    	}
+						                    }
 										},
 										{
 											targets : 5,
-											data : "item3"
+											data: function(d){
+						                    	if(d.item3 == ''|| d.item3 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item3;
+						                    	}
+						                    }
 										},
 										{
 											targets : 6,
-											data : "item4"
+											data: function(d){
+						                    	if(d.item4 == ''|| d.item4 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item4;
+						                    	}
+						                    }
 										},
 										{
 											targets : 7,
-											data : "item5"
+											data: function(d){
+						                    	if(d.item5 == ''|| d.item5 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item5;
+						                    	}
+						                    }
 										},
 										{
 											targets : 8,
@@ -518,7 +649,7 @@
 										 ]
 							});
 
-			$('#datatable-list tbody').on("click", ".deleteBtn", function() {
+			$('#datatable1 tbody').on("click", ".deleteBtn", function() {
 				<!--削除機能-->
 				if (!confirm('本当に削除しますか？')) {
 					<!-- キャンセルの時の処理 -->
@@ -532,7 +663,7 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-						alert(result);
+
 						location.href = '/codedetail';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
@@ -580,8 +711,100 @@
 			}
 
 
+function update(button) {
+			<!--変更ボタンを押すと修正機能実行-->
+
+ 				var selectTr = $(button).closest("tr");
+ 				$('#codeMasterId_update').val(selectTr.find('td').eq(0).text());
+ 				$('#codeDetailId_update').val(selectTr.find('td').eq(1).text());
+				$('#codeDetailName_update').val(selectTr.find('td').eq(2).text());
+				$('#item1_update').val(selectTr.find('td').eq(3).text().replace("-",""));
+				$('#item2_update').val(selectTr.find('td').eq(4).text().replace("-",""));
+				$('#item3_update').val(selectTr.find('td').eq(5).text().replace("-",""));
+				$('#item4_update').val(selectTr.find('td').eq(6).text().replace("-",""));
+				$('#item5_update').val(selectTr.find('td').eq(7).text().replace("-",""));
+				$('#codeMasterId_hidden').val(selectTr.find('td').eq(0).text());
+ 				$('#codeDetailId_hidden').val(selectTr.find('td').eq(1).text());
+				if(selectTr.find('#useFlag').val() == 0){
+					$("#rd1").attr("checked", true);
+				}else {
+					$("#rd2").attr("checked", true);
+				}
+
+				$('#modalCodeDetail_update').modal();
+			}
+
+			function codeUpdate() {
+				var form = $('#updateform');
+
+				form.validate({
+					<!--有効性チェック -->
+					rules : {
+						codeMasterId_update : {
+							required : true
+						},
+						codeDetailId_update : {
+							required : true,
+							rangelength : [2, 2 ],
+							number : true
+						},
+						codeDetailName_update : {
+							required : true
+						}
+					},
+					messages : {
+						codeMasterId_update : {
+							required : "コードを入力してください",
 
 
+						},
+						codeDetailId_update : {
+							required : "コードを入力してください",
+							rangelength : "桁数は2文字です",
+							number : "数字で入力してください"
+
+						},
+						codeMasterName_update : {
+							required : "コード名称を入力してください"
+						}
+
+					}
+
+				});
+				if (form.valid()) {
+
+					var detailCode = new Object();
+					detailCode.codeMasterId = $('#codeMasterId_update').val();
+					detailCode.codeDetailId = $('#codeDetailId_update').val();
+					detailCode.codeDetailName = $('#codeDetailName_update').val();
+					detailCode.item1 = $('#item1_update').val();
+					detailCode.item2 = $('#item2_update').val();
+					detailCode.item3 = $('#item3_update').val();
+					detailCode.item4 = $('#item4_update').val();
+					detailCode.item5 = $('#item5_update').val();
+					detailCode.useFlag = $('input[name=use_flag_update]:checked').val();
+					detailCode.codeMasterIdOld = $('#codeMasterId_hidden').val();
+					detailCode.codeDetailIdOld = $('#codeDetailId_hidden').val();
+
+
+					$.ajax({
+						"url" : "/codedetail/updateCodeDetail",
+						"type" : "post",
+						"dataType" : "json",
+						"data" : JSON.stringify(detailCode),
+						"contentType" : "application/JSON",
+						"success" : function(data) {
+							if (data > 0) {
+								<!--更新成功 -->
+								location.reload(true);
+							} else {
+								<!--更新失敗 -->
+								alert('更新失敗');
+							}
+						}
+					});
+				}
+			}
 		/*]]>*/
 	</script>
 
