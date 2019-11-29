@@ -760,8 +760,13 @@
                     	return kubunItemMap.get(d.kubunCode);
                     }},
 
-                    { targets: 3, data: "storageLocation"},
-
+                    { targets: 3, data: function ( d ) {
+                    	if(d.storageLocation == '') {
+                    		return '-';
+                    	} else {
+                    		return d.storageLocation;
+                    	}
+                    }},
                     { targets: 4, data: "rentalUserId"},
 
                     { targets: 5, data: function ( d ) {

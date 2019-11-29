@@ -973,6 +973,14 @@
                 .draw();
             });
 
+            function changeNull(value){
+            	if(value == null || value == "") {
+            		return "-";
+            	} else {
+            		return value;
+            	}
+            }
+
 			// tbodyクリック時、詳細情報照会
             $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
@@ -1001,19 +1009,19 @@
                     		$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
                     		$('#warrantyPeriod_view').text(data.warrantyPeriod + "年");
 
-                    		$('#buyTo_view').text(data.buyTo);
+                    		$('#buyTo_view').text(changeNull(data.buyTo));
                     		$('#purchasePrice_view').text(data.purchasePrice);
-                    		$('#storageLocation_view').text(data.storageLocation);
+                    		$('#storageLocation_view').text(changeNull(data.storageLocation));
                     		$('#sNumber_view').text(stateCodeMap.get(data.statusCode));
 
-                    		$('#maker_view').text(data.makerName);
-                    		$('#model_view').text(data.modelName);
-                    		$('#serialNum_view').text(data.serialNum);
-                    		$('#interFaceCol_view').text(data.interFaceCol);
+                    		$('#maker_view').text(changeNull(data.makerName));
+                    		$('#model_view').text(changeNull(data.modelName));
+                    		$('#serialNum_view').text(changeNull(data.serialNum));
+                    		$('#interFaceCol_view').text(changeNull(data.interFaceCol));
 
-                    		$('#OSName_view').text(data.osName);
-                    		$('#OSProductKey_view').text(data.osProductKey);
-                    		$('#CPUProcessor_view').text(data.cpuProcessor);
+                    		$('#OSName_view').text(changeNull(data.osName));
+                    		$('#OSProductKey_view').text(changeNull(data.osProductKey));
+                    		$('#CPUProcessor_view').text(changeNull(data.cpuProcessor));
                     		$('#operatingFrequency_view').text(data.operatingFrequency + " GHz");
 
                     		$('#memory_view').text(data.memory + " GB");
@@ -1021,26 +1029,26 @@
                     		$('#HDD_view').text(data.hdd + " GB");
                     		$('#HDDUpgarde_view').text(data.hddUpgarde + " GB");
 
-                    		$('#MACLAN_view').text(data.macLan);
-                    		$('#MACWireless_view').text(data.macWireless);
+                    		$('#MACLAN_view').text(changeNull(data.macLan));
+                    		$('#MACWireless_view').text(changeNull(data.macWireless));
 
-                    		$('#other_view').text(data.other);
+                    		$('#other_view').text(changeNull(data.other));
 
-                    		$('#securityBIOS_view').text(data.securityBios);
-                    		$('#securityHDD_view').text(data.securityHdd);
+                    		$('#securityBIOS_view').text(changeNull(data.securityBios));
+                    		$('#securityHDD_view').text(changeNull(data.securityHdd));
 
-                    		$('#adminAccountID_view').text(data.adminAccountId);
-                    		$('#adminAccountPW_view').text(data.adminAccountPwd);
+                    		$('#adminAccountID_view').text(changeNull(data.adminAccountId));
+                    		$('#adminAccountPW_view').text(changeNull(data.adminAccountPwd));
 
                     		// 付属品セッティング
                     		data.accessoriesList.forEach(function( data ) {
 								$('#accTable tbody').append(
 									 '<tr>'
-									 +'<td>'+data.accessoriesSeq+'</td>'
-									 +'<td>'+data.itemName+'</td>'
-									 +'<td>'+data.itemSpec+'</td>'
-									 +'<td>'+data.itemQuantity+'</td>'
-									 +'<td>'+data.remarks+'</td>'
+									 +'<td>'+changeNull(data.accessoriesSeq)+'</td>'
+									 +'<td>'+changeNull(data.itemName)+'</td>'
+									 +'<td>'+changeNull(data.itemSpec)+'</td>'
+									 +'<td>'+changeNull(data.itemQuantity)+'</td>'
+									 +'<td>'+changeNull(data.remarks)+'</td>'
 									 +'</tr>'
 								);
                         	});
@@ -1054,10 +1062,10 @@
                     		data.maintenanceHistoryList.forEach(function( data ) {
 								$('#maintenTable tbody').append(
 									 '<tr>'
-									 +'<td>'+data.implementationDate+'</td>'
-									 +'<td>'+data.implementationDetail+'</td>'
-									 +'<td>'+data.repId+'</td>'
-									 +'<td>'+data.approverId+'</td>'
+									 +'<td>'+changeNull(data.implementationDate)+'</td>'
+									 +'<td>'+changeNull(data.implementationDetail)+'</td>'
+									 +'<td>'+changeNull(data.repId)+'</td>'
+									 +'<td>'+changeNull(data.approverId)+'</td>'
 									 +'</tr>'
 								);
                         	});
