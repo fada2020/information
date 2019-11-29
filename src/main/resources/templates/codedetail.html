@@ -188,8 +188,6 @@
 			</div>
 		</div>
 
-
-
 		<!-- Modal Part コード登録 -->
 		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
@@ -331,7 +329,6 @@
 						</div>
 
 					</div>
-
 
 
 				</div>
@@ -676,18 +673,12 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-
 						location.href = '/codedetail';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
 					});
 				}
-
 			});
-
-
-
-
 
 			$('#searchBtn').on('click', function() {
 				$('#search_master_id').val($('#search_master_id').val().replace(new RegExp("'", 'g'), ''));
@@ -704,8 +695,6 @@
 			function selectMasterID() {
 				/* 最初の選択地で選択してもらったデータを元にして次の選択地をセッティングする  */
 				var mid =/*[[${codeMasterId}]]*/;
-
-
 				$('#selectmasterid').click(
 						/* 二番目のボタンが押されたら下のメソッドが行われる  */
 						function() {

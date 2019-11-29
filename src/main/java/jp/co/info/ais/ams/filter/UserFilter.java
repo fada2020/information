@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -16,23 +15,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DashboardFilter implements Filter {
+public class UserFilter implements Filter {
 
-	private static final Logger logger = LogManager.getLogger(DashboardFilter.class);
+	private static final Logger logger = LogManager.getLogger(UserFilter.class);
 	/**
-	 * init filter
-	 */
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.debug("init filter!!");
-	}
-	/**
-	 * dofilter : ログインしないで、ダッシュボード進入禁止
+	 * ログインしないで、ダッシュボード進入禁止
 	 */
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
-
 
 		if (servletRequest instanceof HttpServletRequest) {
 			String url = ((HttpServletRequest) servletRequest).getRequestURI().toString();
@@ -49,13 +40,6 @@ public class DashboardFilter implements Filter {
 	        res.setHeader("Location", "/");
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
-	}
-	/**
-	 * destroy filter
-	 */
-	@Override
-	public void destroy() {
-		logger.debug("destroy filter!");
 	}
 
 }

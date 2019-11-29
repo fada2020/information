@@ -29,8 +29,6 @@
 <style>
     	#datatable-list thead, th {text-align: center;
     	vertical-align: middle;}
-		#datatable-list tbody tr{cursor:pointer;
-		}
 		#datatable-list th{
 			vertical-align:middle;
 		}
@@ -86,24 +84,18 @@
 												<input type="text" id="search_name" class="form-control ">
 											</div>
 										</div>
-										<div class="col-md-2"></div>
-										<div class="col-md-2">
-									
+										<div class="col-md-4 text-right">
 										<!-- 検索 ボタン -->
-										<div class = "col-md-6">
-											<button type="button" class="btn btn-primary pull-right "
+											<button type="button" class="btn btn-primary "
 												id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-										</div>
-											<!-- 新規登録 ボタン -->
-										<div class = "col-md-6">
-											<button type="button" class="btn btn-success pull-right "
+										<!-- 新規登録 ボタン -->
+											<button type="button" class="btn btn-success "
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
 											</button>
 										</div>
-									</div>
 								</div>
 									<!-- /.well -->
 								</div>
@@ -117,10 +109,10 @@
 											<thead>
 												<tr class="headings">
 													<!--  <th class="column-title txt_center">No.</th> -->
-													<th class="column-title txt_center">コードID</th>
-													<th class="column-title txt_center">コード名</th>
-													<th class="column-title txt_center">使用有無</th>
-													<th class="column-title txt_center"></th>
+													<th class="column-title txt_center col-md-3">コードID</th>
+													<th class="column-title txt_center col-md-4">コード名</th>
+													<th class="column-title txt_center col-md-3">使用有無</th>
+													<th class="column-title txt_center col-md-2"></th>
 												</tr>
 											</thead>
 											<!-- List 出力 -->
@@ -512,7 +504,6 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-
 						location.href = '/codemaster';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
@@ -549,6 +540,8 @@
 						codeMasterId_update : {
 							required : true,
 							number : true,
+							min : 1,
+							max : 999,
 							rangelength : [ 3, 3 ]
 						},
 						codeMasterName_update : {
@@ -558,9 +551,10 @@
 					messages : {
 						codeMasterId_update : {
 							required : "コードを入力してください",
-							rangelength : "桁数は3文字です",
-							number : "数字を入力してください"
-
+							number : "ナンバーで入力してください",
+							min : "1~999の定数を入力してください",
+							max : "1~999の定数を入力してください",
+							rangelength : "桁数は3文字です"
 						},
 						codeMasterName_update : {
 							required : "コード名称を入力してください"
