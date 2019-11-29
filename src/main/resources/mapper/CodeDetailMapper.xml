@@ -126,9 +126,9 @@
 
 	<select id="selectCode"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
-		SELECT DISTINCT
+		SELECT
 		code_master_id
-		FROM code_detail
+		FROM code_master
 	</select>
 
 	<update id="updateCodeDetail"
@@ -178,10 +178,11 @@
 		, #{useFlag}
 		)
 	</insert>
+
 	<select id="codeDetailListCheck"
 		parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="int">
 		SELECT
-		count(*)
+		count(1)
 		FROM code_detail
 		where code_master_id=#{codeMasterId} and code_detail_id=#{codeDetailId}
 	</select>
