@@ -518,10 +518,8 @@
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
 
 		$(function() {
-
-
 			<!--datatableの設定を変更-->
-			var modalesectiontable = $("#datatable1").DataTable(
+			var modalesectiontable = $("#datatable-list").DataTable(
 							{
 								<!--ページング-->
 								"language" : {
@@ -535,7 +533,7 @@
 										"next" : "次へ",
 										"previous" : "前の"
 									}
-								},
+								},//
 
 								<!--検索機能 -->
 								fixedHeader : true,
@@ -561,7 +559,7 @@
 												'#search_detail_name').val();
 										return JSON.stringify(d);
 									}
-								},
+								},//
 								"columnDefs" : [
 										{
 											targets : 0,
@@ -644,12 +642,36 @@
 											render : function(data, type, row, meta) {
 												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
 												'"><button type="button" class="btn btn-danger deleteBtn"' +
-												' id="' + row.codeMasterId + '">削除</button>';
+												' id="' + row.codeMasterId+row.codeDetailId + '">削除</button>';
 
 										}
 										}
 										 ]
 							});
+
+			$('#datatable-list tbody').on("click", ".deleteBtn", function() {
+				<!--削除機能-->
+				if (!confirm('本当に削除しますか？')) {
+					<!-- キャンセルの時の処理 -->
+					return false;
+				} else {
+					<!-- OKの時の処理-->/
+					$.ajax(
+					/*[[@{/codedetail/delete}]]*/'codedetail/delete', {
+						type : "POST",
+						dataType : "json",
+						contentType : 'application/JSON',
+						data : this.id
+					}).success(function(result) {
+						alert(result);
+						location.href = '/codedetail';
+					}).error(function(xhr, textStatus, error) {
+						alert('通信失敗');
+					});
+				}
+
+			});
+
 
 
 
@@ -663,7 +685,7 @@
 				modalesectiontable.column(0).search(this.value).draw();
 			});
 
-
+		});
 
 
 			function selectMasterID() {
@@ -687,7 +709,7 @@
 							}
 							});
 			}
-		})
+
 
 function update(button) {
 			<!--変更ボタンを押すと修正機能実行-->

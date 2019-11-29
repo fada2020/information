@@ -124,7 +124,7 @@
 											</thead>
 											<!-- List 出力 -->
 
-											<tbody class ="list">
+											<tbody>
 											</tbody>
 
 											<!--/. List 出力 -->
@@ -511,6 +511,7 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
+						alert(result);
 						location.href = '/codemaster';
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');

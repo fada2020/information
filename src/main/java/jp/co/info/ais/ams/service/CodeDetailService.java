@@ -110,5 +110,7 @@ public class CodeDetailService {
 		 return num;
 	}
 
-
+	public int deleteDetailCode(String codeMDetail) {
+		return codeDetailMapper.deleteDetailCode(codeMDetail);
+	}
 }

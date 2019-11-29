@@ -41,5 +41,7 @@ public interface CodeDetailMapper {
 
 	int checkCodeDetail(CodeDetail detailCode);
 
+	int deleteDetailCode(String codeMDetail);
+
 
 }
