@@ -54,10 +54,10 @@
 			AND status_code = #{statusCode}
 			</if>
 			<if test="rentalDayS != null and rentalDayE !=null">
-			AND rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+			AND rentalDayS BETWEEN #{rentalDayS} AND #{rentalDayE}
 			</if>
 			<if test="returnDayS != null and returnDayE !=null">
-			AND return_day BETWEEN #{returnDayS} AND #{returnDayE}
+			AND returnDayS BETWEEN #{returnDayS} AND #{returnDayE}
 			</if>
 		ORDER BY asset_number,rental_no
 		LIMIT #{length} OFFSET #{start}
@@ -121,10 +121,10 @@
 				AND status_code = #{statusCode}
 				</if>
 				<if test="rentalDayS != null and rentalDayE !=null">
-				AND rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+				AND rentalDayS BETWEEN #{rentalDayS} AND #{rentalDayE}
 				</if>
 				<if test="returnDayS != null and returnDayE !=null">
-				AND return_day BETWEEN #{returnDayS} AND #{returnDayE}
+				AND returnDayS BETWEEN #{returnDayS} AND #{returnDayE}
 				</if>
     </select>
 
