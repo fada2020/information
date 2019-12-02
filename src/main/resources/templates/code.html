@@ -350,6 +350,10 @@
 	<!-- page script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
+
+				/*validationの重なるエラーメッセージ  */
+    		$.validator.messages.number = '有効な数字を入力';
+    		$.validator.messages.maxlength = '{0} 文字以下を入力';
 		var modalesectiondata = null;
 
 		function codeInsert() {
@@ -361,20 +365,19 @@
 					codeMasterId : {
 						required : true,
 						number : true,
-						min : 1,
-						max : 999,
+
 						rangelength : [ 3, 3 ]
 					},
 					codeMasterName : {
-						required : true
+						required : true,
+						maxlength : 50
 					}
 				},
 				messages : {
 					codeMasterId : {
 						required : "コードを入力してください",
 						number : "ナンバーで入力してください",
-						min : "1~999の定数を入力してください",
-						max : "1~999の定数を入力してください",
+
 						rangelength : "桁数は3文字です"
 					},
 					codeMasterName : {
