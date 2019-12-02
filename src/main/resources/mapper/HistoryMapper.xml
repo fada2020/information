@@ -42,23 +42,23 @@
 				rt.rental_seq
 			FROM asset ast
 			JOIN rental rt ON ast.asset_seq = rt.asset_seq
-		    WHERE 1 = 1
-				<if test="assetNumber != null and !assetNumber.equals('')">
-				AND ast.asset_number LIKE '%${assetNumber}%'
-				</if>
-				<if test="applicantId != null and !applicantId.equals('')">
-				AND rt.applicant_id LIKE '%${applicantId}%'
-				</if>
-				<if test="statusCode != null and !statusCode.equals('00')">
-				AND rt.status_code = #{statusCode}
-				</if>
-				<if test="rentalDayS != null and rentalDayE !=null">
-				AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
-				</if>
-				<if test="returnDayS != null and returnDayE !=null">
-				AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
-				</if>
 			)Result
+	    WHERE 1 = 1
+			<if test="assetNumber != null and !assetNumber.equals('')">
+			AND asset_number LIKE '%${assetNumber}%'
+			</if>
+			<if test="applicantId != null and !applicantId.equals('')">
+			AND applicant_id LIKE '%${applicantId}%'
+			</if>
+			<if test="statusCode != null and !statusCode.equals('00')">
+			AND status_code = #{statusCode}
+			</if>
+			<if test="rentalDayS != null and rentalDayE !=null">
+			AND rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+			</if>
+			<if test="returnDayS != null and returnDayE !=null">
+			AND return_day BETWEEN #{returnDayS} AND #{returnDayE}
+			</if>
 		ORDER BY asset_number,rental_no
 		LIMIT #{length} OFFSET #{start}
 	</select>
@@ -109,23 +109,23 @@
 				rt.rental_seq
 			FROM asset ast
 			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+			)Result
 		    WHERE 1 = 1
 				<if test="assetNumber != null and !assetNumber.equals('')">
-				AND ast.asset_number LIKE '%${assetNumber}%'
+				AND asset_number LIKE '%${assetNumber}%'
 				</if>
 				<if test="applicantId != null and !applicantId.equals('')">
-				AND rt.applicant_id LIKE '%${applicantId}%'
+				AND applicant_id LIKE '%${applicantId}%'
 				</if>
 				<if test="statusCode != null and !statusCode.equals('00')">
-				AND rt.status_code = #{statusCode}
+				AND status_code = #{statusCode}
 				</if>
 				<if test="rentalDayS != null and rentalDayE !=null">
-				AND rt.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+				AND rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 				</if>
 				<if test="returnDayS != null and returnDayE !=null">
-				AND rt.return_day BETWEEN #{returnDayS} AND #{returnDayE}
+				AND return_day BETWEEN #{returnDayS} AND #{returnDayE}
 				</if>
-			)Result
     </select>
 
     <select id="exportXlsx" resultType="jp.co.info.ais.ams.domain.History">
