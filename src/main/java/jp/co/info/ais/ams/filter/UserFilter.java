@@ -33,7 +33,6 @@ public class UserFilter implements Filter {
 		}
 
 		Object loginId = ((HttpServletRequest) servletRequest).getSession().getAttribute("id");
-		System.out.println(loginId);
 		if( loginId == null ) {
 			HttpServletResponse res = (HttpServletResponse)servletResponse;
 	        res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
