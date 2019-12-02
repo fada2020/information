@@ -27,14 +27,18 @@
 
 
 <style>
-    	#datatable-list thead, th {text-align: center;
-    	vertical-align: middle;}
-		#datatable-list th{
-			vertical-align:middle;
-		}
-		#datatable-list td{
-			vertical-align:middle;
-		}
+#datatable-list thead, th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#datatable-list th {
+	vertical-align: middle;
+}
+
+#datatable-list td {
+	vertical-align: middle;
+}
 </style>
 </head>
 <body class="nav-md">
@@ -72,7 +76,7 @@
 									<div class="well" style="overflow: auto">
 										<div class="col-md-4">
 											<label class="col-form-label col-md-6 col-sm-6 label-align"
-												for="search_id"style="font-size: 18px;">コードID</label>
+												for="search_id" style="font-size: 18px;">コードID</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_id" class="form-control ">
 											</div>
@@ -85,23 +89,23 @@
 											</div>
 										</div>
 										<div class="col-md-4 text-right">
-										<!-- 検索 ボタン -->
-											<button type="button" class="btn btn-primary "
-												id="searchBtn">
+											<!-- 検索 ボタン -->
+											<button type="button" class="btn btn-primary " id="searchBtn">
 												<i class="fa fa-search" aria-hidden="true"></i> 検索
 											</button>
-										<!-- 登録 ボタン -->
+											<!-- 登録 ボタン -->
 											<button type="button" class="btn btn-success "
 												data-toggle="modal" data-target="#modalCodeMaster">
 												<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
 											</button>
 										</div>
-								</div>
+									</div>
 									<!-- /.well -->
 								</div>
 								<!-- /.x_title -->
 								<div class="x_content">
-									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+									<div
+										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 
 										<table id="datatable-list"
 											class="table table-bordered jambo_table bulk_action text-center"
@@ -146,11 +150,13 @@
 
 
 	<!-- Modal Part マスターコード登録 -->
-	<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
+	<div id="modalCodeMaster" class="modal" tabindex="-1" role="dialog"
+		data-backdrop="static">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h3 class="modal-title">
@@ -169,7 +175,8 @@
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
 											id="codeMasterId" name="codeMasterId" placeholder="ex)001"
-											onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
+											onKeyup="this.value = this.value.replace(/[^0-9]/g,'');"
+											required />
 									</fieldset>
 								</div>
 							</div>
@@ -198,20 +205,19 @@
 								<label class="col-sm-3 control-label">使用有無</label>
 								<div class="col-sm-9">
 									<div id="use" class="btn-group" style="padding: 5px;">
-										<label style="color: blue;"><input type="radio"id="button1"
-											name="use_flag" value="0" checked>&nbsp; 使用 &nbsp;</label> <label
-											style="color: red"><input type="radio" id=""
-											name="use_flag" value="1">&nbsp; 未使用 &nbsp;</label>
+										<label style="color: blue;"><input type="radio"
+											id="button1" name="use_flag" value="0" checked>&nbsp;
+											使用 &nbsp;</label> <label style="color: red"><input
+											type="radio" id="" name="use_flag" value="1">&nbsp;
+											未使用 &nbsp;</label>
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-success" onclick="codeInsert();">
-									登録
-								</button>
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">
-									戻る
-								</button>
+								<button type="button" class="btn btn-success"
+									onclick="codeInsert();">登録</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">戻る</button>
 							</div>
 						</form>
 					</div>
@@ -232,7 +238,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h3 class="modal-title">
-						<i class="fa fa-pencil-square" aria-hidden="true" ></i> マスターコード変更
+						<i class="fa fa-pencil-square" aria-hidden="true"></i> マスターコード変更
 					</h3>
 
 				</div>
@@ -242,12 +248,15 @@
 							method="GET" name="frm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;font-size: 18px;">*</span> コードID</label>
+									style="color: red; font-size: 18px; font-size: 18px;">*</span>
+									コードID</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
 											id="codeMasterId_update" name="codeMasterId_update"
-											placeholder="ex)001" onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
+											placeholder="ex)001"
+											onKeyup="this.value = this.value.replace(/[^0-9]/g,'');"
+											required />
 									</fieldset>
 								</div>
 							</div>
@@ -277,31 +286,27 @@
 								<div class="col-sm-9">
 									<div id="use_flag_update" class="btn-group"
 										style="padding: 5px;">
-										<label style="color: blue;"><input type="radio" id="rd1"
-											name="use_flag_update" value="0"checked>&nbsp; 使用 &nbsp;</label> <label
-											style="color: red"><input type="radio" id="rd2"
-											name="use_flag_update" value="1">&nbsp; 未使用
-											&nbsp;</label>
+										<label style="color: blue;"><input type="radio"
+											id="rd1" name="use_flag_update" value="0" checked>&nbsp;
+											使用 &nbsp;</label> <label style="color: red"><input
+											type="radio" id="rd2" name="use_flag_update" value="1">&nbsp;
+											未使用 &nbsp;</label>
 									</div>
 								</div>
 							</div>
-								<div class="clearfix"></div>
-								<div class="form-group">
+							<div class="clearfix"></div>
+							<div class="form-group">
 
 								<input type="hidden" id="codeMasterId_hidden"
-											name="codeMasterId_hidden">
+									name="codeMasterId_hidden">
 							</div>
-								<div class="clearfix"></div>
+							<div class="clearfix"></div>
 							<div class="modal-footer">
 
-								<button type="button" class="btn btn-primary btn-warning" onclick="codeUpdate();">
-									変更
-
-								</button>
+								<button type="button" class="btn btn-primary btn-warning"
+									onclick="codeUpdate();">変更</button>
 								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">
-									戻る
-								</button>
+									data-dismiss="modal">戻る</button>
 							</div>
 						</form>
 					</div>
