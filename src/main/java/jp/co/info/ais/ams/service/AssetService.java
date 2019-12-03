@@ -44,7 +44,14 @@ public class AssetService {
 	 * @return Asset  資産Object
 	 */
 	public Asset selectAsset(int assetSeq) {
-		return assetMapper.selectAsset(assetSeq);
+		Asset asset = assetMapper.selectAsset(assetSeq);
+		// その他改行
+		String other = asset.getOther();
+		if(null != other && !other.equals("")) {
+			other = other.replaceAll("<br>", "\n");
+			asset.setOther(other);
+		}
+		return asset;
 	}
 
 	/**
@@ -188,6 +195,12 @@ public class AssetService {
 		}
     	// 空白及び'-'除去
     	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
+		// その他改行
+		String other = asset.getOther();
+		if(null != other && !other.equals("")) {
+			other = other.replaceAll("\n", "<br>");
+			asset.setOther(other);
+		}
 		return assetMapper.updateAsset(asset);
 	}
 
@@ -205,6 +218,12 @@ public class AssetService {
 		if(null != date && !date.equals("")) {
 			date = date.replaceAll("[-]", "");
 			asset.setPurchaseDate(date);
+		}
+		// その他改行
+		String other = asset.getOther();
+		if(null != other && !other.equals("")) {
+			other = other.replaceAll("\n", "<br>");
+			asset.setOther(other);
 		}
 		// 製品コード照会
 		List<CodeDetail> pdCodeList = assetMapper.selectProductCode();

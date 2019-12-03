@@ -27,9 +27,8 @@ server:
 constant:
    companyCode: AIS
    
-   # spring boot의 기본 properties
 server.error:
   include-exception: false
-  include-stacktrace: never # 오류 응답에 stacktrace 내용을 포함할 지 여부
-  path: '/error' # 오류 응답을 처리할 Handler의 경로
-  whitelabel.enabled: true # 서버 오류 발생시 브라우저에 보여줄 기본 페이지 생성 여부
+  include-stacktrace: never
+  path: '/error'
+  whitelabel.enabled: true

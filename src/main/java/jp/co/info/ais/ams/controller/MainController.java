@@ -102,15 +102,6 @@ public class MainController {
 					// Desktop貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DT002", item.getTypeCnt());
-					} else {
-						model.addAttribute("DT002", 0);
-						model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);
-						model.addAttribute("TBL001", 0); model.addAttribute("TBL002", 0);
-						model.addAttribute("MD001", 0); model.addAttribute("MD002", 0);
-						model.addAttribute("DP001", 0); model.addAttribute("DP002", 0);
-						model.addAttribute("KBD001", 0); model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("03")) {
@@ -121,14 +112,6 @@ public class MainController {
 					// Notebook貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("NB002", item.getTypeCnt());
-					} else {
-						model.addAttribute("NB002", 0);
-						model.addAttribute("TBL001", 0); model.addAttribute("TBL002", 0);
-						model.addAttribute("MD001", 0); model.addAttribute("MD002", 0);
-						model.addAttribute("DP001", 0); model.addAttribute("DP002", 0);
-						model.addAttribute("KBD001", 0); model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("04")) {
@@ -139,13 +122,6 @@ public class MainController {
 					// Tablet貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("TBL002", item.getTypeCnt());
-					} else {
-						model.addAttribute("TBL002", 0);
-						model.addAttribute("MD001", 0); model.addAttribute("MD002", 0);
-						model.addAttribute("DP001", 0); model.addAttribute("DP002", 0);
-						model.addAttribute("KBD001", 0); model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("05")) {
@@ -156,12 +132,6 @@ public class MainController {
 					// Mobile貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MD002", item.getTypeCnt());
-					} else {
-						model.addAttribute("MD002", 0);
-						model.addAttribute("DP001", 0); model.addAttribute("DP002", 0);
-						model.addAttribute("KBD001", 0); model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("06")) {
@@ -172,11 +142,6 @@ public class MainController {
 					// Monitor貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DP002", item.getTypeCnt());
-					} else {
-						model.addAttribute("DP002", 0);
-						model.addAttribute("KBD001", 0); model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("07")) {
@@ -187,10 +152,6 @@ public class MainController {
 					// Keyboard貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("KBD002", item.getTypeCnt());
-					} else {
-						model.addAttribute("KBD002", 0);
-						model.addAttribute("MS001", 0); model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 				if (item.getKubunCode().equals("08")) {
@@ -201,9 +162,6 @@ public class MainController {
 					// Keyboard貸与
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MS002", item.getTypeCnt());
-					} else {
-						model.addAttribute("MS002", 0);
-						continue;
 					}
 				}
 			}
