@@ -504,6 +504,7 @@
 																	<th class="col-md-1" id="storageLocation_insert">場所</th>
 																	<th class="col-md-1" id="speciality_insert">特記事項</th>
 																	<th class="col-md-1" id="bpName_insert">BP社名</th>
+																		<th class="col-md-1" id="rentalDay_insert">貸与日</th>
 																	<th class="col-md-1" id="returnPeriod_insert">返却期間</th>
 																	<th class="col-md-1" id="cancel_insert">取消</th>
 																</tr>
@@ -1164,7 +1165,7 @@ function researchRental(assetSeq){
 			rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
 			rental.assetSeq=cellText.find("#assetSeq_i").text();
 			rental.applicantId =cellText.find("#applicantId_i").text();
-			rental.rentalDay=$('#todayDate').val().replaceAll("-","");
+			rental.rentalDay=cellText.find('#rentalDay_i').text().replaceAll("-","");
 			rental.bpName=cellText.find("#bpName_i").text();
 			rental.insertId = /*[[${session.id}]]*/ 'user';
 			rental.updateId = /*[[${session.id}]]*/ 'user';
@@ -1317,6 +1318,8 @@ function researchRental(assetSeq){
     				   				+data.assetSeq+
     				   				'</td><td id="returnPeriod_i">'
     				   					+$("#returnPeriod").val()+
+    				   					'</td><td id="rentalDay_i">'
+    				   					+$("#todayDate").val()+
 
     			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
 
