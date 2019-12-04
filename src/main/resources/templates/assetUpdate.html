@@ -27,7 +27,7 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <style>
-    	#table1, #table2, thead, th {text-align: center;}
+    	#am_table1, #am_table2, thead, th {text-align: center;}
 		.my-custom-scrollbar {
 			position: relative;
 			height: 200px;
@@ -68,7 +68,7 @@
             <div class="row">
 
             <!-- 資産情報変更フォーム -->
-            <form action="/asset/update" id="updateForm" method="POST" role="form" class="form-horizontal">
+            <form action="/asset/update" id="am_updateForm" method="POST" role="form" class="form-horizontal">
             <div class="x_panel">
             	<div class="x_content" style="display: block;">
 	            	<div class="row well">
@@ -85,7 +85,7 @@
 					  				<span>区分</span>
 					  			</div>
 					  			<div class="col-md-4">
-				                	<select name="kubunCode" class="form-control" id="psNum_search">
+				                	<select name="kubunCode" class="form-control" id="am_psNum_search">
 				                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
 				                		th:inline="text">[[${code.codeDetailName}]]</option>
 									</select>
@@ -98,7 +98,7 @@
 				  					<span>購入日</span>
 				  				</div>
 				  				<div class="col-md-4">
-									<div class="input-group date" id="myDatepicker">
+									<div class="input-group date" id="am_myDatepicker">
 										<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
 										<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -110,7 +110,7 @@
 			  					</div>
 			  					<div class="col-md-4">
 			  						<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}">
-				                	<select name="statusCode" class="form-control" id="sNumber_search">
+				                	<select name="statusCode" class="form-control" id="am_sNumber_search">
 				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
 				                		th:inline="text">[[${code.codeDetailName}]]</option>
 									</select>
@@ -336,7 +336,7 @@
 		  			<div class="col-md-12 text-left">
 		  				<br>
 		  				<button type="button" class="btn btn-secondary pull-right" onclick = "location.href ='/asset'">戻る</button>
-		  				<button type="button" id="updateProc" class="btn btn-primary btn-warning">変更</button>
+		  				<button type="button" id="am_updateProc" class="btn btn-primary btn-warning">変更</button>
 		  			</div>
 		  			<div class="col-md-12">
 		  				<br>
@@ -356,7 +356,7 @@
 							</div>
 							<div class="x_content" style="display: block;">
 								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-									<table class="table table-striped jambo_table bulk_action text-center" id="table1">
+									<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
 										<thead>
 											<tr class="headings">
 												<th class="col-md-1">No </th>
@@ -370,22 +370,22 @@
 										<tbody>
 											<tr class="even pointer">
 												<td></td>
-												<td><input id="itemName" type="text" maxlength="25" class="form-control"></td>
-												<td><input id="itemSpec" type="text" maxlength="25" class="form-control"></td>
-												<td><input id="itemQuantity" type="text" maxlength="11" class="form-control"></td>
-												<td><input id="remarks" type="text" maxlength="100" class="form-control"></td>
+												<td><input id="am_itemName" type="text" maxlength="25" class="form-control"></td>
+												<td><input id="am_itemSpec" type="text" maxlength="25" class="form-control"></td>
+												<td><input id="am_itemQuantity" type="text" maxlength="11" class="form-control"></td>
+												<td><input id="am_remarks" type="text" maxlength="100" class="form-control"></td>
 												<td colspan="2" class="a-center">
-													<a id="addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+													<a id="am_addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 												</td>
 											</tr>
 											<tr th:each="accessories : ${asset.accessoriesList}">
-												<td id="accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
-												<td><input type="text" maxlength="25" class="form-control" id="itemName" th:value="${accessories.itemName}"></td>
-												<td><input type="text" maxlength="25" class="form-control" id=itemSpec th:value="${accessories.itemSpec}"></td>
-												<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" th:value="${accessories.itemQuantity}"></td>
-												<td><input type="text" maxlength="100" class="form-control" id="remarks" th:value="${accessories.remarks}"></td>
-												<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-												<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+												<td id="am_accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
+												<td><input type="text" maxlength="25" class="form-control" id="am_itemName" th:value="${accessories.itemName}"></td>
+												<td><input type="text" maxlength="25" class="form-control" id=am_itemSpec th:value="${accessories.itemSpec}"></td>
+												<td><input type="text" maxlength="11" class="form-control" id="am_itemQuantity" th:value="${accessories.itemQuantity}"></td>
+												<td><input type="text" maxlength="100" class="form-control" id="am_remarks" th:value="${accessories.remarks}"></td>
+												<td class="a-center"><a id="am_updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+												<td class="a-center"><a id="am_deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 											</tr>
 										</tbody>
 									</table>
@@ -406,7 +406,7 @@
 							</div>
 							<div class="x_content" style="display: block;">
 								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-									<table class="table table-striped jambo_table bulk_action" id="table2">
+									<table class="table table-striped jambo_table bulk_action" id="am_table2">
 										<thead>
 											<tr class="headings">
 												<th class="col-md-1">No </th>
@@ -420,22 +420,22 @@
 										<tbody>
 											<tr class="even pointer">
 												<td></td>
-												<td><input id="implementationDate" maxlength="8" type="text" class="form-control"></td>
-												<td><input id="implementationDetail" maxlength="100" type="text" class="form-control"></td>
-												<td><input id="repId" maxlength="10" type="text" class="form-control"></td>
-												<td><input id="approverId" maxlength="10" type="text" class="form-control"></td>
+												<td><input id="am_implementationDate" maxlength="8" type="text" class="form-control"></td>
+												<td><input id="am_implementationDetail" maxlength="100" type="text" class="form-control"></td>
+												<td><input id="am_repId" maxlength="10" type="text" class="form-control"></td>
+												<td><input id="am_approverId" maxlength="10" type="text" class="form-control"></td>
 												<td colspan="2" class="a-center">
-													<a id="addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
+													<a id="am_addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
 												</td>
 											</tr>
 											<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
-												<td id="historySeq" th:text="${maintenance.historySeq}"></td>
-												<td><input type="text" maxlength="8" class="form-control" id="implementationDate" th:value="${maintenance.implementationDate}"></td>
-												<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" th:value="${maintenance.implementationDetail}"></td>
-												<td><input type="text" maxlength="10" class="form-control" id=repId th:value="${maintenance.repId}"></td>
-												<td><input type="text" maxlength="10" class="form-control" id="approverId" th:value="${maintenance.approverId}"></td>
-												<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-												<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+												<td id="am_historySeq" th:text="${maintenance.historySeq}"></td>
+												<td><input type="text" maxlength="8" class="form-control" id="am_implementationDate" th:value="${maintenance.implementationDate}"></td>
+												<td><input type="text" maxlength="100" class="form-control" id="am_implementationDetail" th:value="${maintenance.implementationDetail}"></td>
+												<td><input type="text" maxlength="10" class="form-control" id=am_repId th:value="${maintenance.repId}"></td>
+												<td><input type="text" maxlength="10" class="form-control" id="am_approverId" th:value="${maintenance.approverId}"></td>
+												<td class="a-center"><a id="am_updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
+												<td class="a-center"><a id="am_deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
 											</tr>
 										</tbody>
 									</table>
@@ -467,7 +467,8 @@
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
 
-    <!-- jquery-validation-1.19.1 -->
+    <!-- jquery-val
+ation-1.19.1 -->
     <script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
 
     <!-- FastClick -->
@@ -487,7 +488,7 @@
     /*<![CDATA[*/
 
     	// datetimepickerセッティング
-        $('#myDatepicker').datetimepicker({
+        $('#am_myDatepicker').datetimepicker({
             format: 'YYYY-MM-DD'
         });
 
@@ -511,7 +512,7 @@
         $(function(){
 
         	// 数量文字入力制限
-        	$('#table1 tbody').on('keyup','#itemQuantity', function() {
+        	$('#am_table1 tbody').on('keyup','#am_itemQuantity', function() {
         	    if (/\D/.test(this.value)) {
         	        this.value = this.value.replace(/\D/g, '')
         	        alert('半角数字のみ入力');
@@ -519,7 +520,7 @@
         	});
 
         	// 実施日文字入力制限
-        	$('#table2 tbody').on('keyup','#implementationDate', function() {
+        	$('#am_table2 tbody').on('keyup','#am_implementationDate', function() {
         	    if (/\D/.test(this.value)) {
         	        this.value = this.value.replace(/\D/g, '')
         	        alert('半角数字のみ入力');
@@ -527,15 +528,15 @@
         	});
 
 			// 付属品登録プロセス
-            $('#addAccessories').on('click', function () {
+            $('#am_addAccessories').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
             	var accessories ={
             			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"itemName" : selectTr.find("#itemName").val(),
-            			"itemSpec" : selectTr.find("#itemSpec").val(),
-            			"itemQuantity" : selectTr.find("#itemQuantity").val(),
-            			"remarks" : selectTr.find("#remarks").val()
+            			"itemName" : selectTr.find("#am_itemName").val(),
+            			"itemSpec" : selectTr.find("#am_itemSpec").val(),
+            			"itemQuantity" : selectTr.find("#am_itemQuantity").val(),
+            			"remarks" : selectTr.find("#am_remarks").val()
             	};
 
                 $.ajax({
@@ -548,15 +549,15 @@
                     	if(data.accessoriesSeq == 0){
     						alert('エラーが発生しました。');
     					}else {
-    						 $('#table1 tbody').append(
+    						 $('#am_table1 tbody').append(
     								 '<tr>'
-    								 +'<td id="accessoriesSeq">'+data.accessoriesSeq+'</td>'
-    								 +'<td><input type="text" maxlength="25" class="form-control" id="itemName" value="'+data.itemName+'"></td>'
-    								 +'<td><input type="text" maxlength="25" class="form-control" id="itemSpec" value="'+data.itemSpec+'"></td>'
-    								 +'<td><input type="text" maxlength="11" class="form-control" id="itemQuantity" value="'+data.itemQuantity+'"></td>'
-    								 +'<td><input type="text" maxlength="100" class="form-control" id="remarks" value="'+data.remarks+'"></td>'
-    								 +'<td class="a-center"><a id="updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-    								 +'<td class="a-center"><a id="deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
+    								 +'<td id="am_accessoriesSeq">'+data.accessoriesSeq+'</td>'
+    								 +'<td><input type="text" maxlength="25" class="form-control" id="am_itemName" value="'+data.itemName+'"></td>'
+    								 +'<td><input type="text" maxlength="25" class="form-control" id="am_itemSpec" value="'+data.itemSpec+'"></td>'
+    								 +'<td><input type="text" maxlength="11" class="form-control" id="am_itemQuantity" value="'+data.itemQuantity+'"></td>'
+    								 +'<td><input type="text" maxlength="100" class="form-control" id="am_remarks" value="'+data.remarks+'"></td>'
+    								 +'<td class="a-center"><a id="am_updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+    								 +'<td class="a-center"><a id="am_deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
     								 +'</tr>'
     						 );
     						 alert('追加されました。');
@@ -571,16 +572,16 @@
             });
 
 			// 付属品変更プロセス
-            $('#table1 tbody').on("click","#updateAccessories", function() {
+            $('#am_table1 tbody').on("click","#am_updateAccessories", function() {
             	var selectTr = $(this).closest("tr");
 
             	var accessories ={
             			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"accessoriesSeq" : selectTr.find("#accessoriesSeq").text(),
-            			"itemName" : selectTr.find("#itemName").val(),
-            			"itemSpec" : selectTr.find("#itemSpec").val(),
-            			"itemQuantity" : selectTr.find("#itemQuantity").val(),
-            			"remarks" : selectTr.find("#remarks").val()
+            			"accessoriesSeq" : selectTr.find("#am_accessoriesSeq").text(),
+            			"itemName" : selectTr.find("#am_itemName").val(),
+            			"itemSpec" : selectTr.find("#am_itemSpec").val(),
+            			"itemQuantity" : selectTr.find("#am_itemQuantity").val(),
+            			"remarks" : selectTr.find("#am_remarks").val()
             	};
 
             	$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
@@ -604,7 +605,7 @@
             });
 
 			// 付属品削除プロセス
-            $('#table1 tbody').on("click","#deleteAccessories", function() {
+            $('#am_table1 tbody').on("click","#am_deleteAccessories", function() {
 
             	if(!confirm('本当に削除しますか？')){
                     /* キャンセルの時の処理 */
@@ -614,7 +615,7 @@
 
                 	var accessories ={
                 			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-                			"accessoriesSeq" : selectTr.find("#accessoriesSeq").text()
+                			"accessoriesSeq" : selectTr.find("#am_accessoriesSeq").text()
                 	};
 
                 	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
@@ -639,15 +640,15 @@
             });
 
 			// 保守履歴登録プロセス
-            $('#addMaintenanceHistory').on('click', function () {
+            $('#am_addMaintenanceHistory').on('click', function () {
             	var selectTr = $(this).closest("tr");
 
             	var maintenanceHistory ={
             			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"implementationDate" : selectTr.find("#implementationDate").val(),
-            			"implementationDetail" : selectTr.find("#implementationDetail").val(),
-            			"repId" : selectTr.find("#repId").val(),
-            			"approverId" : selectTr.find("#approverId").val()
+            			"implementationDate" : selectTr.find("#am_implementationDate").val(),
+            			"implementationDetail" : selectTr.find("#am_implementationDetail").val(),
+            			"repId" : selectTr.find("#am_repId").val(),
+            			"approverId" : selectTr.find("#am_approverId").val()
             	};
 
             	$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
@@ -662,15 +663,15 @@
 					if(data.historySeq == 0){
 						alert('エラーが発生しました。');
 					}else {
-						 $('#table2 tbody').append(
+						 $('#am_table2 tbody').append(
 								 '<tr>'
-								 +'<td id="historySeq">'+data.historySeq+'</td>'
-								 +'<td><input type="text" maxlength="8" class="form-control" id="implementationDate" value="'+data.implementationDate+'"></td>'
-								 +'<td><input type="text" maxlength="100" class="form-control" id="implementationDetail" value="'+data.implementationDetail+'"></td>'
-								 +'<td><input type="text" maxlength="10" class="form-control" id="repId" value="'+data.repId+'"></td>'
-								 +'<td><input type="text" maxlength="10" class="form-control" id="approverId" value="'+data.approverId+'"></td>'
-								 +'<td class="a-center"><a id="updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-								 +'<td class="a-center"><a id="deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
+								 +'<td id="am_historySeq">'+data.historySeq+'</td>'
+								 +'<td><input type="text" maxlength="8" class="form-control" id="am_implementationDate" value="'+data.implementationDate+'"></td>'
+								 +'<td><input type="text" maxlength="100" class="form-control" id="am_implementationDetail" value="'+data.implementationDetail+'"></td>'
+								 +'<td><input type="text" maxlength="10" class="form-control" id="am_repId" value="'+data.repId+'"></td>'
+								 +'<td><input type="text" maxlength="10" class="form-control" id="am_approverId" value="'+data.approverId+'"></td>'
+								 +'<td class="a-center"><a id="am_updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
+								 +'<td class="a-center"><a id="am_deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
 								 +'</tr>'
 						 );
 						 alert('追加されました。');
@@ -682,16 +683,16 @@
             });
 
 			// 保守履歴変更プロセス
-            $('#table2 tbody').on("click","#updateMaintenanceHistory", function() {
+            $('#am_table2 tbody').on("click","#am_updateMaintenanceHistory", function() {
             	var selectTr = $(this).closest("tr");
 
             	var maintenanceHistory ={
             			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"historySeq" : selectTr.find("#historySeq").text(),
-            			"implementationDate" : selectTr.find("#implementationDate").val(),
-            			"implementationDetail" : selectTr.find("#implementationDetail").val(),
-            			"repId" : selectTr.find("#repId").val(),
-            			"approverId" : selectTr.find("#approverId").val()
+            			"historySeq" : selectTr.find("#am_historySeq").text(),
+            			"implementationDate" : selectTr.find("#am_implementationDate").val(),
+            			"implementationDetail" : selectTr.find("#am_implementationDetail").val(),
+            			"repId" : selectTr.find("#am_repId").val(),
+            			"approverId" : selectTr.find("#am_approverId").val()
             	};
 
             	$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
@@ -715,7 +716,7 @@
             });
 
 			// 保守履歴削除プロセス
-            $('#table2 tbody').on("click","#deleteMaintenanceHistory", function() {
+            $('#am_table2 tbody').on("click","#am_deleteMaintenanceHistory", function() {
 
             	if(!confirm('本当に削除しますか？')){
                     /* キャンセルの時の処理 */
@@ -725,7 +726,7 @@
 
                 	var maintenanceHistory ={
                 			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-                			"historySeq" : selectTr.find("#historySeq").text()
+                			"historySeq" : selectTr.find("#am_historySeq").text()
                 	};
 
                 	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
@@ -750,8 +751,8 @@
             });
 
 			// 資産変更プロセス
-            $('#updateProc').on('click', function() {
-                var form = $('#updateForm');
+            $('#am_updateProc').on('click', function() {
+                var form = $('#am_updateForm');
 
 				// 有効性検査条件セッティング
                 form.validate({
@@ -855,7 +856,7 @@
                     },
                     errorPlacement: function(error, element) {
                         if (element.attr("name") == "purchaseDate") {
-                          error.insertAfter("#myDatepicker");
+                          error.insertAfter("#am_myDatepicker");
                         } else {
                           error.insertAfter(element);
                         }
