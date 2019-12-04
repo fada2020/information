@@ -81,7 +81,7 @@
 											<div class="col-md-10">
 												<div class="col-md-4">
 													<label class="col-form-label col-md-7 label-align"
-														for="search_master_id" style="font-size: 18px;">
+														for="search_master_id" >
 														マスターコード</label>
 													<div class="col-md-5 ">
 														<input type="text" id="search_master_id"
@@ -90,7 +90,7 @@
 												</div>
 												<div class="col-md-4">
 													<label class="col-form-label col-md-6 label-align"
-														for="search_detail_id" style="font-size: 18px;">
+														for="search_detail_id" >
 														詳細コードID</label>
 													<div class="col-md-6">
 														<input type="text" id="search_detail_id"
@@ -99,7 +99,7 @@
 												</div>
 												<div class="col-md-4">
 													<label class="col-form-label col-md-6 label-align"
-														for="search_detail_name" style="font-size: 18px;">
+														for="search_detail_name" >
 														詳細コード名</label>
 													<div class="col-md-6">
 														<input type="text" id="search_detail_name"
@@ -110,14 +110,14 @@
 											</div>
 											<div class="col-md-2">
 												<!-- 検索 ボタン -->
-												<div class="col-md-6">
+												<div class="col-md-6-offset-1">
 													<button type="button" class="btn btn-primary pull-right"
 														id="searchBtn">
 														<i class="fa fa-search" aria-hidden="true"></i> 検索
 													</button>
 												</div>
 												<!-- 登録 ボタン -->
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<button type="button" class="btn btn-success pull-right"
 														data-toggle="modal" data-target="#modalCodedetail">
 														<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
@@ -133,7 +133,7 @@
 
 									<div class="x_content">
 										<div
-											class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+											class="table">
 											<table id="datatable1"
 												class="table table-bordered jambo_table bulk_action text-center"
 												style="width: 100%">
@@ -202,8 +202,8 @@
 								method="GET" name="frm">
 								<div class="form-group">
 									<!--  -->
-									<label class="col-sm-3 control-label"><span
-										style="color: red; font-size: 18px;">*</span> マスターコード</label>
+									<label class="col-sm-3 control-label"> マスターコード<span
+										style="color: red; font-size: 18px;">*</span></label>
 									<div class="col-md-9 input-group "
 										th:if="${selectmasterid} != null">
 										<select class="form-control" id="codeMasterId"
@@ -218,12 +218,12 @@
 								</div>
 								<div class="clearfix"></div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label"><span
-										style="color: red; font-size: 18px;">*</span>詳細コードID</label>
+									<label class="col-sm-3 control-label">詳細コードID<span
+										style="color: red; font-size: 18px;">*</span></label>
 									<div class="col-sm-9">
 										<fieldset>
 											<input type="text" class="form-control form-control-sm"
-												id="codeDetailId" name="codeDetailId" placeholder="コードID"
+												id="codeDetailId" name="codeDetailId" placeholder="ex)01"
 												onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 										</fieldset>
 									</div>
@@ -231,12 +231,12 @@
 
 								<div class="clearfix"></div>
 									<div class="form-group">
-									<label class="col-sm-3 control-label"><span
-										style="color: red; font-size: 18px;">*</span>詳細コードネーム</label>
+									<label class="col-sm-3 control-label">詳細コード名<span
+										style="color: red; font-size: 18px;">*</span></label>
 									<div class="col-sm-9">
 										<fieldset>
 											<input type="text" class="form-control form-control-sm"
-												id="codeDetailName" name="codeDetailName" placeholder="コード名称"
+												id="codeDetailName" name="codeDetailName" placeholder="ex)Desktop"
 												required />
 										</fieldset>
 									</div>
@@ -352,8 +352,8 @@
 							method="GET" name="frm">
 							<div class="form-group">
 								<!--  -->
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> マスターコード</label>
+								<label class="col-sm-3 control-label"> マスターコード<span
+									style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-md-9 input-group "
 									th:if="${selectmasterid} != null">
 									<select class="form-control" id="codeMasterId_update"
@@ -370,9 +370,9 @@
 
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px; font-size: 18px;">*</span>
-									コード詳細ID</label>
+								<label class="col-sm-3 control-label">
+									詳細コードID<span
+									style="color: red; font-size: 18px; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -383,8 +383,8 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コード詳細名</label>
+								<label class="col-sm-3 control-label"> 詳細コード名<span
+									style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -524,15 +524,15 @@
 							{
 								<!--ページング-->
 								"language" : {
-									"info" : "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
-									"infoEmpty" : "表示 0 ~ 0 の 0 エントリ",
+									"info" : "_START_ ~ _END_ の _TOTAL_ 件",
+									"infoEmpty" : "0 ~ 0 の 0 件",
 									"infoFiltered" : "",
 									"emptyTable" : "表にデータがない",
 									"paginate" : {
 										"first" : "最初",
 										"last" : "最後",
-										"next" : "次へ",
-										"previous" : "前の"
+										"next" : "次",
+										"previous" : "前"
 									}
 								},//
 
