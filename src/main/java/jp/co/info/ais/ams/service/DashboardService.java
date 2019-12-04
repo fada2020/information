@@ -44,4 +44,9 @@ public class DashboardService {
 		rslist = dashboardMapper.rslist();
 		return rslist;
 	}
+
+	public int kosyouItem() {
+		int kosyouItem = dashboardMapper.kosyouItem();
+		return kosyouItem;
+	}
 }

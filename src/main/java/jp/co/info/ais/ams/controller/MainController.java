@@ -31,8 +31,9 @@ public class MainController {
 	public String index(Model model) {
 		try {
 			// 保有現況装置
-			ArrayList<Dashboard> dash = dashboardService.possession();	// HW, SW, Total 装置数量
+			ArrayList<Dashboard> dash = dashboardService.possession();	// HW, SW 装置数量
 			int newItem = dashboardService.newItem();	// 今月購入した装置数量
+			int kosyouCnt = dashboardService.kosyouItem();	//故障した装置
 			int hwCnt = 0;
 			int swCnt = 0;
 			for (Dashboard item : dash) {
@@ -44,10 +45,12 @@ public class MainController {
 			}
 			model.addAttribute("hwCnt", hwCnt);		// HW 装置数量
 			model.addAttribute("swCnt", swCnt);		// SW 装置数量
-			model.addAttribute("totalCnt", hwCnt + swCnt);	// Total 装置数量
+			model.addAttribute("kosyouCnt", kosyouCnt);	//故障した装置
 			model.addAttribute("newItem", newItem);	// 今月購入した装置数量
+
 			// 保有現況グラフ
 			int i = 0, j = 0, hw = 0, sw = 0;	// i, j, hw, sw 値を初期化
+			int hw5Total = 0, sw5Total =0; // hw5Total, sw5Total 値を初期化
 			String[] hardTop = new String[20];
 			String[] softTop = new String[5];
 			String[] colorTop = {"#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7"};
@@ -58,6 +61,9 @@ public class MainController {
 				if (item.getTypeName().equals("HW")) {
 					hardTop[j] = item.getKubunName();
 					hardCnt[j] = item.getTypeCnt();
+					if(j < 5){
+						hw5Total += item.getTypeCnt();
+					}
 					j += 1;
 					hw += 1;
 				} else {
@@ -65,13 +71,18 @@ public class MainController {
 					softCnt[i] = item.getTypeCnt();
 					i += 1;
 					sw += 1;
+					if(i < 5) {
+						sw5Total += item.getTypeCnt();
+					}
 				}
 			}
 			model.addAttribute("toplist", dash);		// Top5 table list
 			model.addAttribute("hardTop", hardTop);		// HW Top5 Graph list
 			model.addAttribute("softTop", softTop);		// SW Top5 Graph list
 			model.addAttribute("hardCnt", hardCnt);		// HW Top5 Graph Cnt
+			model.addAttribute("hwsonotaCnt", hwCnt-hw5Total);	// HWその他の装置
 			model.addAttribute("softCnt", softCnt);		// SW Top5 Graph Cnt
+			model.addAttribute("swsonotaCnt", swCnt-sw5Total);	// SWその他の装置
 			model.addAttribute("colorTop", colorTop);	// color list
 			model.addAttribute("hw", hw);		// 登録したHW種数
 			model.addAttribute("sw", sw);		// 登録したSW種数

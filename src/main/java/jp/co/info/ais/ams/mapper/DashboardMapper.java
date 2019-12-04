@@ -16,4 +16,6 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸与現況
 
+	public int kosyouItem();					// 故障した装置数
+
 }
