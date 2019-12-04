@@ -43,29 +43,23 @@
 	</style>
 
   </head>
-  <body class="nav-md">
+  <body class="nav-md" style="width: 100%;">
     <div class="container body">
       <div class="main_container">
-      	<!-- sidebar -->
-		<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
-        <!-- sidebar -->
 
-        <!-- top navigation -->
-        <div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
-        <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>IT資産情報変更</h3>
+                <h3>&nbsp;IT資産情報変更</h3>
               </div>
             </div>
 
             <div class="clearfix"></div>
 
-            <div class="row">
+            <div class="row" style="width:100%; margin-left:0%">
 
             <!-- 資産情報変更フォーム -->
             <form action="/asset/update" id="am_updateForm" method="POST" role="form" class="form-horizontal">
