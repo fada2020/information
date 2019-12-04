@@ -76,14 +76,14 @@
 									<div class="well" style="overflow: auto">
 										<div class="col-md-4">
 											<label class="col-form-label col-md-6 col-sm-6 label-align"
-												for="search_id" style="font-size: 18px;">コードID</label>
+												for="search_id">コードID</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_id" class="form-control ">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<label class="col-form-label col-md-6 col-sm-6 label-align"
-												for="search_name" style="font-size: 18px;">コード名</label>
+												for="search_name" >コード名</label>
 											<div class="col-md-6 col-sm-6 ">
 												<input type="text" id="search_name" class="form-control ">
 											</div>
@@ -105,7 +105,7 @@
 								<!-- /.x_title -->
 								<div class="x_content">
 									<div
-										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+										class="table">
 
 										<table id="datatable-list"
 											class="table table-bordered jambo_table bulk_action text-center"
@@ -169,8 +169,8 @@
 						<form id="antoform" class="form-horizontal calender" role="form"
 							method="GET" name="frm">
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コードID</label>
+								<label class="col-sm-3 control-label"> コードID<span
+										style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -182,8 +182,8 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コード名</label>
+								<label class="col-sm-3 control-label"> コード名<span
+										style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -247,9 +247,9 @@
 						<form id="updateform" class="form-horizontal calender" role="form"
 							method="GET" name="frm">
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px; font-size: 18px;">*</span>
-									コードID</label>
+								<label class="col-sm-3 control-label">
+									コードID<span
+									style="color: red; font-size: 18px; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -262,8 +262,8 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コード名称</label>
+								<label class="col-sm-3 control-label"> コード名<span
+									style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -419,15 +419,15 @@
 							{
 								<!--ページング-->
 								"language" : {
-									"info" : "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
-									"infoEmpty" : "表示 0 ~ 0 の 0 エントリ",
+									"info" : "_START_ ~ _END_ の _TOTAL_ 件",
+									"infoEmpty" : " 0 ~ 0 の 0 件",
 									"infoFiltered" : "",
 									"emptyTable" : "表にデータがない",
 									"paginate" : {
 										"first" : "最初",
 										"last" : "最後",
-										"next" : "次へ",
-										"previous" : "前の"
+										"next" : "次",
+										"previous" : "前"
 									}
 								},
 								<!--検索機能 -->
