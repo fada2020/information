@@ -64,7 +64,7 @@ public class CodeDetailController {
 
 						String codeDetailName = page.getColumns().get(2).getSearch().getValue();
 						if (null != codeDetailName && !codeDetailName.equals("")) {
-							condition.setCodeDetailId(codeDetailName);
+							condition.setCodeDetailName(codeDetailName);
 						}
 			// リスト照会
 			List<CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);

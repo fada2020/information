@@ -1,254 +1,269 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>IT資産管理</title>
+<title>IT資産管理</title>
 
-    <!-- favicons -->
-	<link rel="icon" href="../images/aisRogo.png">
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- bootstrap-daterangepicker -->
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
 
-    <style>
-    	#table1 thead th{
-		    text-align:center;
-		    vertical-align:middle;
-    	}
+<style>
+#table1 thead th {
+	text-align: center;
+	vertical-align: middle;
+}
 
-		#table1 tbody tr{
-		    cursor:default;
-		}
-		#table1 tbody td{
-		    font-size:12px;
-		    vertical-align:middle;
-		}
+#table1 tbody tr {
+	cursor: default;
+}
 
-		#exportExcel {
-			margin-top:10px;
-			float:right;
-		}
+#table1 tbody td {
+	font-size: 12px;
+	vertical-align: middle;
+}
 
-		.col-md-1{
-			margin-left:5%;
-		}
+#exportExcel {
+	margin-top: 10px;
+	float: right;
+}
 
-		#exportExcel, #searchButton{
-			width:80px;
-			font-size:14px;
-			font-weight: bolder;
+.col-md-1 {
+	margin-left: 5%;
+}
 
-		}
+#exportExcel, #searchButton {
+	width: 80px;
+	font-size: 14px;
+	font-weight: bolder;
+}
 
-		.flat{
-			display: inline-block;
-			width: 18px;
-			height: 18px;
-			border: 2px solid #bcbcbc;
-			cursor: pointer;
-		}
+.flat {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+}
 
-		.pull-right{
-			font-size:18px;
+.pull-right {
+	font-size: 18px;
+}
 
-		}
-		#deleteHistory{
-			margin:-5px;
-		}
-	</style>
+#deleteHistory {
+	margin: -5px;
+}
+</style>
 
-  </head>
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-      	<!-- sidebar -->
-		<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
-        <!-- sidebar -->
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
 
-        <!-- top navigation -->
-        <div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
-        <!-- /top navigation -->
+			<!-- top navigation -->
+			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
 
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3><i class="fa fa-list-alt"></i> 資産支給履歴</h3>
-              </div>
-            </div>
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>
+								<i class="fa fa-list-alt"></i> 資産支給履歴
+							</h3>
+						</div>
+					</div>
 
-            <div class="clearfix"></div>
+					<div class="clearfix"></div>
 
-            <div class="row">
-              <div class="col">
+					<div class="row">
+						<div class="col">
 
-				<!-- searching condition -S -->
-				<!-- 1st line -->
-				<div class="row">
+							<!-- searching condition -S -->
+							<!-- 1st line -->
+							<div class="row">
 
-                <div class="col-md-1">
-                    <span class="pull-right" style="margin-left:-10%;">管理番号</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15" >
-                </div>
+								<div class="col-md-1">
+									<span class="pull-right" style="margin-left: -10%;">管理番号</span>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control" placeholder="管理番号"
+										id="assetNumber_search" maxlength="15">
+								</div>
 
 
-                <div class="col-md-1">
-                    <span class="pull-right" style="margin-left:-10%;">貸与期間</span>
-                </div>
-                <div class="col-md-2">
-					<fieldset>
-						<div class="control-group ">
-							<div class="controls">
-								<div class="input-prepend input-group">
-									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-									<input type="text" style="width: 200px" name="rental_search" id="rental_search" class="form-control">
+								<div class="col-md-1">
+									<span class="pull-right" style="margin-left: -10%;">貸与期間</span>
+								</div>
+								<div class="col-md-2">
+									<fieldset>
+										<div class="control-group ">
+											<div class="controls">
+												<div class="input-prepend input-group">
+													<span class="add-on input-group-addon"><i
+														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
+														type="text" style="width: 200px" name="rental_search"
+														id="rental_search" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+
+								<div class="col-md-1">
+									<span class="pull-right">状態</span>
+								</div>
+								<div class="col-md-2">
+									<select class="form-control" id="status_search"
+										style="width: 120px;">
+										<option value="00">全体</option>
+										<option th:each="code : ${stateCode}"
+											th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+									</select>
+								</div>
+							</div>
+							<!-- 1st line -->
+
+							<!-- 2nd line -->
+							<div class="row" style="height: 50px;">
+
+								<div class="col-md-1">
+									<span class="pull-right">貸出者</span>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control" placeholder="貸出者"
+										id="applicant_search" maxlength="15">
+								</div>
+
+
+								<div class="col-md-1">
+									<span class="pull-right">返却期間</span>
+								</div>
+								<div class="col-md-2">
+									<fieldset>
+										<div class="control-group ">
+											<div class="controls">
+												<div class="input-prepend input-group">
+													<span class="add-on input-group-addon"><i
+														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
+														type="text" style="width: 200px" name="return_search"
+														id="return_search" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+
+						
+
+							</div>
+							<!-- 2nd line -->
+
+							<!-- searching condition -E -->
+
+
+							<div class="x_panel">
+								<button id=exportExcel class="btn btn-success pull-right"
+									title="履歴データをエクセルファイルでダウンロード">Excel</button>
+								<br>
+								<br>
+								<br>
+								<div class="x_title"></div>
+
+								<div class="x_content">
+
+									<table
+										class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer"
+										id="table1" style="width: 100%;">
+										<thead class="thead-light">
+											<tr class="headings">
+												<th colspan="3">装置</th>
+												<th colspan="10">使用現況</th>
+											</tr>
+											<tr class="headings">
+												<th>管理番号</th>
+												<th>Maker</th>
+												<th>Model</th>
+
+												<th>状態</th>
+												<th>貸与番号</th>
+												<th>用途</th>
+												<th>場所(Site名)</th>
+												<th>貸出者</th>
+												<th>使用者</th>
+												<th>BP社名</th>
+												<th>貸与日</th>
+												<th>返却日</th>
+												<th style="width: 40px;">
+													<button id="deleteHistory" class="btn btn-danger"
+														title="チェックした履歴情報を削除"
+														style="font-size: 12px; font-weight: bolder;">削除</button>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-					</fieldset>
-                </div>
-
-                <div class="col-md-1">
-                    <span class="pull-right">状態</span>
-                </div>
-                <div class="col-md-2">
-                	<select class="form-control" id="status_search" style="width:120px;">
-						<option value="00">全体</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
-                		th:inline="text">[[${code.codeDetailName}]]</option>
-					</select>
-                </div>
+					</div>
 				</div>
-				<!-- 1st line -->
+			</div>
+			<!-- /page content -->
 
-				<!-- 2nd line -->
-				<div class="row" style="height:50px;">
+			<!-- footer content -->
+			<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+			<!-- /footer content -->
+		</div>
+	</div>
 
-				<div class="col-md-1">
-                    <span class="pull-right">貸出者</span>
-                </div>
-                <div class="col-md-2">
-                	<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
-                </div>
-
-
-				<div class="col-md-1">
-                    <span class="pull-right">返却期間</span>
-                </div>
-                <div class="col-md-2">
-					<fieldset>
-						<div class="control-group ">
-							<div class="controls">
-								<div class="input-prepend input-group">
-									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-									<input type="text" style="width: 200px" name="return_search" id="return_search" class="form-control">
-								</div>
-							</div>
-						</div>
-					</fieldset>
-                </div>
-
-                <div class="col-md-1" style="width:5%; float:right; margin-right:60px;">
-                	<button id="searchButton" class="btn btn-primary" >検索</button>
-                </div>
-
-                </div>
-				<!-- 2nd line -->
-
-				<!-- searching condition -E -->
-
-
-                <div class="x_panel">
-                	<button id=exportExcel class="btn btn-success pull-right" title="履歴データをエクセルファイルでダウンロード">Excel</button>
-	              <br><br><br>
-                  <div class="x_title">
-
-                  </div>
-
-                  <div class="x_content">
-
-                    <table class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer" id="table1" style="width:100%;">
-                      <thead class="thead-light">
-                      	<tr class="headings">
-                      		<th colspan="3">装置</th>
-                      		<th colspan="10">使用現況</th>
-                      	</tr>
-                        <tr class="headings">
-                          <th>管理番号</th>
-                          <th>Maker</th>
-                          <th>Model</th>
-
-                          <th>状態</th>
-                          <th>貸与番号</th>
-                          <th>用途</th>
-                          <th>場所(Site名)</th>
-                          <th>貸出者</th>
-                          <th>使用者</th>
-                          <th>BP社名</th>
-                          <th>貸与日</th>
-                          <th>返却日</th>
-                          <th style="width:40px;">
-                          	<button id="deleteHistory" class="btn btn-danger" title="チェックした履歴情報を削除" style="font-size:12px; font-weight: bolder;">削除</button>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <div th:insert="fragments/footer :: footer" th:remove="tag"></div>
-        <!-- /footer content -->
-      </div>
-    </div>
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
 
-    <!-- page script -->
-    <script th:inline="javascript">
+	<!-- page script -->
+	<script th:inline="javascript">
 
     /*<![CDATA[*/
 
@@ -285,7 +300,7 @@
 
 			//返却日のデートピッカー
 			$('#return_search').daterangepicker({
-				startDate: moment().add(0, "months"),
+				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 			 locale: {
 			       format: 'YYYY/MM/DD'
@@ -293,7 +308,25 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			}).val('');
+			$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#rental_search').val('');
+				    var date = $("#rental_search").val();
+				    modalesectiontable
+				    .column(3)
+				    .search(date)
+				    .draw();
+			});
 
+			$('#return_search').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#return_search').val('');
+				    var date = $("#return_search").val();
+				    modalesectiontable
+				    .column(4)
+				    .search(date)
+				    .draw();
+			});
 			$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
 					$('#rental_search').val('');
 			});
@@ -446,20 +479,46 @@
                     ]
             });
 
-            //Search -S
-            $('#searchButton').on( 'click', function () {
-
-            	var input = $('#assetNumber_search').val();
-				var after = input.replace(new RegExp("'",'g'),'');
-				$('#assetNumber_search').val(after);
-				input = $('#applicant_search').val();
-				var after = input.replace(new RegExp("'",'g'),'');
-				$('#applicant_search').val(after);
-
-				modalesectiontable.column(0).search( this.value ).draw();
+            /*assetNumberを貰ってメイン画面のデータを変える*/
+            $('#assetNumber_search').on( 'keyup', function () {
+            	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable
+                .column(0)
+                .search( this.value )
+                .draw();
             } );
-          	//Search -E
 
+            $('#applicant_search').on( 'keyup', function () {
+            	$('#applicant_search').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable
+                .column(1)
+                .search( this.value )
+                .draw();
+            } );
+
+            $('#status_search').change(function () {
+            	$('#status_search').val(this.value);
+            	modalesectiontable
+                .column(2)
+                .search( this.value )
+                .draw();
+            } );
+
+
+            $("#rental_search").change(function () {
+                var date = $("#rental_search").val();
+                modalesectiontable
+                .column(3)
+                .search(date)
+                .draw();
+            });
+            $("#return_search").change(function () {
+                var date = $("#return_search").val();
+                modalesectiontable
+                .column(4)
+                .search(date)
+                .draw();
+            });
           	//table Exportion -S
 
           	$('#exportExcel').on('click',function(){

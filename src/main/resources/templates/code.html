@@ -72,27 +72,22 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
+								<div class="">
 									<div class="well" style="overflow: auto">
 										<div class="col-md-4">
-											<label class="col-form-label col-md-6 col-sm-6 label-align"
-												for="search_id">コードID</label>
+											<span class="pull-left"  style="font-size: 18px;">コードID</span>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="search_id" class="form-control ">
+												<input type="text" id="search_id" class="form-control " placeholder="コードID">
 											</div>
 										</div>
 										<div class="col-md-4">
-											<label class="col-form-label col-md-6 col-sm-6 label-align"
-												for="search_name" >コード名</label>
+									<span class="pull-left"  style="font-size: 18px;">コード名</span>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="search_name" class="form-control ">
+												<input type="text" id="search_name" class="form-control " placeholder="コード名">
 											</div>
 										</div>
 										<div class="col-md-4 text-right">
-											<!-- 検索 ボタン -->
-											<button type="button" class="btn btn-primary " id="searchBtn">
-												<i class="fa fa-search" aria-hidden="true"></i> 検索
-											</button>
+
 											<!-- 登録 ボタン -->
 											<button type="button" class="btn btn-success "
 												data-toggle="modal" data-target="#modalCodeMaster">
@@ -187,7 +182,7 @@
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
-											id="codeMasterName" name="codeMasterName" placeholder="コード名"
+											id="codeMasterName" name="codeMasterName" placeholder="ex)status_code"
 											required />
 									</fieldset>
 								</div>
@@ -488,13 +483,20 @@
 							});
 
 
-			$('#searchBtn').on('click', function() {
-				$('#search_id').val($('#search_id').val().replace(new RegExp("'", 'g'), ''));
-				$('#search_name').val($('#search_name').val().replace(new RegExp("'", 'g'), ''));
-				<!--検索機能-->
-				modalesectiontable.column(0).search(this.value).draw();
-			});
-
+			  $('#search_id').on( 'keyup', function () {
+	            	$('#search_id').val(this.value.replace(new RegExp("'", 'g'), ''));
+	            	modalesectiontable
+	                .column(0)
+	                .search( this.value )
+	                .draw();
+	            } );
+			  $('#search_name').on( 'keyup', function () {
+	            	$('#search_name').val(this.value.replace(new RegExp("'", 'g'), ''));
+	            	modalesectiontable
+	                .column(1)
+	                .search( this.value )
+	                .draw();
+	            } );
 			$('#datatable-list tbody').on("click", ".deleteBtn", function() {
 				<!--削除機能-->
 				if (!confirm('本当に削除しますか？')) {
