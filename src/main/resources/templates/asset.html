@@ -729,8 +729,6 @@
 					<!-- /登録 modal -->
 
 					<!-- /資産情報変更 modal -->
-					<a href="asset/105" class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal">
-						LMKing</a>
 
 					<div class="modal fade" id="assetUpdateModal" >
 
@@ -807,6 +805,11 @@
     	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
+    	function closeUpdate(){
+    		$("#assetUpdateDiv").remove();
+    		alert("lmk");
+    	}
 
     	// オンロード
         $(function(){
@@ -926,7 +929,7 @@
                     	data: null,
                         render: function ( data, type, row, meta ) {
                         var html = '<button href =\'' +
-                        	'/asset/' + row.assetSeq + '\'"  class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal" >変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
+                        	'/asset/' + row.assetSeq + '\'"  class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" >変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
                         		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';

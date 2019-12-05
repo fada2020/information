@@ -329,7 +329,7 @@
 		  			</div>
 		  			<div class="col-md-12 text-left">
 		  				<br>
-		  				<button type="button" class="btn btn-secondary pull-right" onclick = "location.href ='/asset'">戻る</button>
+		  				<button type="button" class="btn btn-secondary pull-right" onclick = "modalClose();">戻る</button>
 		  				<button type="button" id="am_updateProc" class="btn btn-primary btn-warning">変更</button>
 		  			</div>
 		  			<div class="col-md-12">
@@ -502,6 +502,11 @@ ation-1.19.1 -->
     	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
+    	function modalClose(){
+    		window.parent.closeUpdate();
+    	}
+
 
         $(function(){
 
