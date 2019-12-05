@@ -28,4 +28,7 @@ public class AppConstant {
 	public final static String MASTER_STATE = "001";
 	public final static String MASTER_DETAIL = "002";
 	public final static String MASTER_CLASS= "003";
+
+	public final static String USE_CODE= "0";
+	public final static String UNUSE_CODE= "1";
 }

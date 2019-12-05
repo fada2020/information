@@ -102,14 +102,14 @@
 				<div class="clearfix"></div>
 
 				<div class="row">
+					<div class="col-md-2">
+						<span class="pull-left" style="font-size: 18px;">貸与番号</span>
+					</div>
+					<div class="col-md-2">
+						<input type="text" class="form-control" id="rentalNo_search"
+							placeholder="貸与番号">
+					</div>
 
-					<div class="col-md-2">
-						<span class="pull-left" style="font-size: 18px;">管理番号</span>
-					</div>
-					<div class="col-md-2">
-						<input type="text" class="form-control" placeholder="管理番号"
-							id="assetNumber_search">
-					</div>
 
 					<div class="col-md-2">
 						<span class="pull-left" style="font-size: 18px;">返却予定日</span>
@@ -119,10 +119,10 @@
 							<div class="control-group ">
 								<div class="controls">
 									<div class="input-prepend input-group">
-										<span class="add-on input-group-addon"><i
-											class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
+										<input
 											type="text" style="width: 200px;" name="rental_search"
-											id="rental_search" class="form-control">
+											id="rental_search" class="form-control"><span class="add-on input-group-addon"><i
+											class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
 									</div>
 								</div>
 							</div>
@@ -133,13 +133,15 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="row">
+
 					<div class="col-md-2">
-						<span class="pull-left" style="font-size: 18px;">貸与番号</span>
+						<span class="pull-left" style="font-size: 18px;">管理番号</span>
 					</div>
 					<div class="col-md-2">
-						<input type="text" class="form-control" id="rentalNo_search"
-							placeholder="貸与番号">
+						<input type="text" class="form-control" placeholder="管理番号"
+							id="assetNumber_search">
 					</div>
+
 
 
 					<div class="col-md-2 pull-right">
@@ -305,9 +307,9 @@
 
 																<div class="form-group row">
 																	<label class="control-label col-md-2">特記事項</label>
-																	<div class="col-md-9">
+																	<div class="col-md-10">
 																		<textarea id="speciality_view" name="speciality"
-																			class="form-control"></textarea>
+																			class="form-control col-md-10"></textarea>
 																	</div>
 
 																</div>
@@ -362,14 +364,14 @@
 
 									<div class="modal-body" id="insert_modalBody">
 
-										<div class="col-md-12" id="left_insert">
-											<div class="x_panel">
+
+											<div class="x_panel" style="padding:0;">
 												<div class="x_content">
 													<form action="" id="insertForm" method="POST" role="form">
 														<div class="form-group row ">
 															<label class="control-label col-md-2">貸与日<span
 																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4">
+															<div class="col-md-3">
 																<div class="input-group date" id="rentalsDay_search"
 																	name="rentalsDay_search">
 																	<input type="text" class="form-control date_check"
@@ -383,7 +385,7 @@
 															<label class="control-label col-md-2">返却予定日<span
 																style="color: red; font-size: 18px;">*</span></label>
 
-															<div class="col-md-4">
+															<div class="col-md-3">
 																<div class="input-group date" id="myDatepicker"
 																	name="myDatepicker" style="float: left">
 																	<input type="text" class="form-control date_check"
@@ -399,14 +401,15 @@
 															<label class="control-label col-md-2 "
 																style="float: left">貸出者<span
 																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4 input-group " style="float: left">
+															<div class="col-md-3 input-group " style="float: left">
 																<input type="text" name="applicantId" id="applicantId"
 																	required class="form-control col-md-3" />
 
 															</div>
 
 															<label class="control-label col-md-2 "
-																style="float: left">分類</label>
+																style="float: left">分類<span
+																style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-4 input-group " style="float: left"
 																th:if="${kubunCode} != null">
 																<select class="form-control" id="singleSelect"
@@ -429,29 +432,32 @@
 														<div class="form-group row">
 
 
-															<label class="control-label col-md-2 " style="float: left">使用者<span
+															<label class="control-label col-md-2 "
+																style="float: left">使用者<span
 																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4 input-group " style="float: left">
+															<div class="col-md-3 input-group " style="float: left">
 																<input type="text" name="rentalUserId" id="rentalUserId"
 																	required class="form-control col-md-4" />
 
 															</div>
 
-															<div class="form-group row" >
-																<label class="control-label col-md-2  " style="float: left">種類</label>
 
-																<div class="col-md-4 input-group " style="float: left">
+															<label class="control-label col-md-2  "
+																style="float: left">種類<span
+																style="color: red; font-size: 18px;">*</span></label>
 
-																	<select class="select2_multiple form-control"
-																		id="sub_singleSelect" name="sub_singleSelect"
-																		onchange="getSubSubItem()">
+															<div class="col-md-4 input-group " style="float: left">
 
-																		<option value="">選択</option>
-																	</select>
+																<select class="select2_multiple form-control"
+																	id="sub_singleSelect" name="sub_singleSelect"
+																	onchange="getSubSubItem()">
 
-																</div>
+																	<option value="">選択</option>
+																</select>
 
 															</div>
+
+
 
 
 
@@ -460,14 +466,17 @@
 
 														<div class="form-group row">
 
-															<label class="control-label col-md-2 " style="float: left">用途<span
+															<label class="control-label col-md-2 "
+																style="float: left">用途<span
 																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4  input-group" style="float: left">
+															<div class="col-md-3  input-group" style="float: left">
 																<input type="text" class="form-control col-md-9"
 																	name="purpose" id="purpose" value="勤務">
 															</div>
 
-																<label class="control-label col-md-2 " style="float: left">選択</label>
+															<label class="control-label col-md-2 "
+																style="float: left">選択<span
+																style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-4 input-group " style="float: left">
 																<select class="select2_multiple form-control"
 																	id="sub_subSelect" name="sub_subSelect">
@@ -483,15 +492,17 @@
 
 
 														<div class="form-group row">
-														<label class="control-label col-md-2  "style="float: left">場所<span
+															<label class="control-label col-md-2  "
+																style="float: left">場所<span
 																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4 input-group "style="float: left">
+															<div class="col-md-3 input-group " style="float: left">
 																<input type="text" id="storageLocation"
 																	name="storageLocation" value="自社"
 																	class="form-control col-md-4">
 															</div>
-															<label class="control-label col-md-2  "style="float: left">BP社名</label>
-															<div class="col-md-4 input-group "style="float: left">
+															<label class="control-label col-md-2  "
+																style="float: left">BP社名</label>
+															<div class="col-md-4 input-group " style="float: left">
 																<input type="text" id="bpName" name="bpName"
 																	class="form-control col-md-4">
 															</div>
@@ -518,10 +529,10 @@
 													</form>
 												</div>
 											</div>
-										</div>
 
 
-										<div class="x_panel">
+
+										<div class="x_panel" style="padding:0;">
 											<div class="x_title">
 												<h2>貸与目録</h2>
 												<div class="clearfix"></div>
@@ -529,7 +540,7 @@
 											<div class="x_content">
 												<div class="form-group row" style="text-align: center;">
 
-													<table id="selectedAsset">
+													<table id="selectedAsset" style="font-size :12px;">
 														<thead>
 															<tr>
 

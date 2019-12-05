@@ -5,33 +5,6 @@
 
 
 	<!--Insert MasterID NAME REMARKS -->
-	<insert id="insertMasterIdName"
-		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
-		INSERT INTO code_master(
-		code_master_id
-		,code_master_name)
-		VALUES (
-		#{code_master_id}
-		,#{code_master_name}
-		)
-	</insert>
-
-	<insert id="insertMasterId"
-		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
-		INSERT INTO code_master(
-		code_master_id)
-		VALUES (
-		#{code_master_id})
-	</insert>
-	<insert id="insertMasterName"
-		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
-		INSERT INTO code_master(
-		code_master_name)
-		VALUES (
-
-		#{code_master_name}
-		)
-	</insert>
 
 	<select id="selectCodeMasterList" resultType="CodeMaster">
 		SELECT A.* FROM(
@@ -97,8 +70,10 @@
 
 	</update>
 
-	<delete id="deleteMasterCode">
-		DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
+	<delete id="deleteMasterCode"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		delete from code_master  WHERE
+		code_master_id = #{codeMasterId}
 	</delete>
 
 </mapper>

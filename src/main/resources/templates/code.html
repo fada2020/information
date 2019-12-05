@@ -511,7 +511,10 @@
 						contentType : 'application/JSON',
 						data : this.id
 					}).success(function(result) {
-						location.href = '/codemaster';
+						if(result!=0){
+							alert("使っているコードは削除できません。");
+						}else{
+						location.href = '/codemaster';}
 					}).error(function(xhr, textStatus, error) {
 						alert('通信失敗');
 					});

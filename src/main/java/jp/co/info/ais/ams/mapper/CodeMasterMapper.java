@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
 
 /**
@@ -32,7 +33,7 @@ public interface CodeMasterMapper {
 	int updateCodeMaster(CodeMaster codeMasterId);
 
 
-	int deleteMasterCode(String codeMasterId);
+	int deleteMasterCode(CodeDetail condition);
 
 
 }
