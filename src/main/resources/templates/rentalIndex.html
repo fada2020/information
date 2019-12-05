@@ -8,73 +8,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>IT資産管理</title>
-
 <!-- favicons -->
 <link rel="icon" href="../images/aisRogo.png">
 <!-- Bootstrap -->
-<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
-<link href="../vendors/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet">
+<link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <!-- NProgress -->
 <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
 <!-- iCheck -->
 <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
 <!-- bootstrap-daterangepicker -->
-<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <!-- bootstrap-datetimepicker -->
-<link
-	href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
+<link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
-
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
-
 <style>
-#table1 thead, th {
-	text-align: center;
-}
-
-#table1 th {
-	vertical-align: middle;
-}
-
-#table1 td {
-	vertical-align: middle;
-}
-
-.my-custom-scrollbar {
-	position: relative;
-	height: 130px;
-	overflow: auto;
-}
-
-.table-wrapper-scroll-y {
-	display: block;
-}
-
-.error {
-	color: red;
-	background-color: lavender;
-}
-
-.flat {
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	border: 2px solid #bcbcbc;
-	cursor: pointer;
-}
-
-.control-label {
-	text-align: center;
-}
+	#table1 thead, th {text-align: center;}
+	#table1 th {vertical-align: middle;}
+	#table1 td {vertical-align: middle;}
+	.my-custom-scrollbar {
+		position: relative;
+		height: 130px;
+		overflow: auto;
+	}
+	.table-wrapper-scroll-y {
+		display: block;
+	}
+	.error {
+		color: red;
+		background-color: lavender;
+	}
+	.flat {
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		border: 2px solid #bcbcbc;
+		cursor: pointer;
+	}
+	.control-label {
+		text-align: center;
+	}
 </style>
-
-
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -82,93 +59,75 @@
 			<!-- sidebar -->
 			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
 			<!-- sidebar -->
-
 			<!-- top navigation -->
 			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
 			<!-- top navigation -->
-
 			<!-- page content -->
 			<div class="right_col" role="main">
-
+				<!--START ページ名 -->
 				<div class="page-title">
 					<div class="title_left">
-						<h3>
-							<i class="fa fa-file-text-o"></i> 貸与一覧
-						</h3>
+						<h3><i class="fa fa-file-text-o"></i> 貸与一覧</h3>
 					</div>
 				</div>
-
+				<!--END ページ名 -->
 				<div class="clearfix"></div>
-
+				<!--START 検索メソッド -->
 				<div class="row">
+					<!--START 貸与番号検索 -->
 					<div class="col-md-2">
 						<span class="pull-left" style="font-size: 18px;">貸与番号</span>
 					</div>
 					<div class="col-md-2">
-						<input type="text" class="form-control" id="rentalNo_search"
-							placeholder="貸与番号">
+						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸与番号">
 					</div>
-
-
+					<!--END 貸与番号検索 -->
+					<!--START 返却予定日検索 -->
 					<div class="col-md-2">
 						<span class="pull-left" style="font-size: 18px;">返却予定日</span>
 					</div>
 					<div class="col-md-2">
 						<fieldset>
-							<div class="control-group ">
+							<div class="control-group">
 								<div class="controls">
 									<div class="input-prepend input-group">
-										<input
-											type="text" style="width: 200px;" name="rental_search"
-											id="rental_search" class="form-control"><span class="add-on input-group-addon"><i
-											class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+										<input type="text" style="width: 200px;" name="rental_search"id="rental_search" class="form-control">
+										<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
 									</div>
 								</div>
 							</div>
 						</fieldset>
-
-
 					</div>
+					<!--END 返却予定日検索  -->
 				</div>
+				<!--END 検索メソッド  -->
 				<div class="clearfix"></div>
+				<!--START 管理番号検索 -->
 				<div class="row">
-
+					<!--START 検索の二行目  -->
 					<div class="col-md-2">
 						<span class="pull-left" style="font-size: 18px;">管理番号</span>
 					</div>
 					<div class="col-md-2">
-						<input type="text" class="form-control" placeholder="管理番号"
-							id="assetNumber_search">
+						<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search">
 					</div>
-
-
-
+					<!--END 管理番号検索 -->
+					<!--START 貸与登録ボタン -->
 					<div class="col-md-2 pull-right">
-						<button type="button" id="deleteButton"
-							class="btn btn-success pull-right" onclick="modalInsert()">
-							<i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録
-						</button>
+						<button type="button" id="deleteButton" class="btn btn-success pull-right" onclick="modalInsert()">
+							<i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</button>
 					</div>
 				</div>
-
+				<!--END 検索の二行目 -->
 				<div class="clearfix"></div>
+				<!--START 貸与リスト -->
 				<div class="row">
 					<div class="x_panel">
-
-
-
 						<div class="x_content">
-							<table class="table table-bordered jambo_table bulk_action"
-								id="table1" style="width: 100%; text-align: center;">
-
-
+							<table class="table table-bordered jambo_table bulk_action" id="table1" style="width: 100%; text-align: center;">
 								<thead class="thead-light">
-
-
 									<tr class="headings">
-
-
 										<th class="col-md-2">貸与番号</th>
 										<th class="col-md-2">管理番号</th>
 										<th class="col-md-1">品目</th>
@@ -177,8 +136,6 @@
 										<th class="col-md-1">貸与日</th>
 										<th class="col-md-1">返却予定日</th>
 										<th class="col-md-2"></th>
-
-
 									</tr>
 								</thead>
 								<tbody>
@@ -186,352 +143,250 @@
 							</table>
 						</div>
 					</div>
+					<!--END 貸与リスト -->
 					<!--update modal -->
 					<div class="row">
-						<div class="modal" id="modal3d" tabindex="-1" role="dialog"
-							style="display: none;" aria-hidden="true">
+						<div class="modal" id="modal3d" tabindex="-1" role="dialog"style="display: none;" aria-hidden="true">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">×</span>
-										</button>
+									<!--START 変更モーダルの戻るボタン -->
+										<button type="button" class="close" data-dismiss="modal"aria-label="Close"><span aria-hidden="true">×</span></button>
+									<!--END 変更モーダルの戻るボタン -->
 										<h3 class="modal-title">貸与情報変更</h3>
 									</div>
-
 									<div class="modal-body">
 										<div class="container-fluid">
 											<div class="row" id="rowUpdate">
 												<div class="col-md-12" id="moddal_update">
 													<div class="x_panel">
 														<div class="x_content">
-															<form action="" id="updateForm" method="POST" role="form"
-																class="form-horizontal">
+														<!--START 変更モーダルのフォーム -->
+															<form action="" id="updateForm" method="POST" role="form"class="form-horizontal">
+															<!--START 貸与日と返却予定日の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">貸与日<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-3">
 																		<div class="input-group date" id="rentalDay_search">
-																			<input type="text" class="form-control date_check"
-																				name="rentalDay" id="rentalDay_view"> <span
-																				class="input-group-addon"> <span
-																				class="glyphicon glyphicon-calendar"></span>
+																			<input type="text" class="form-control date_check" name="rentalDay" id="rentalDay_view">
+																			<span class="input-group-addon">
+																				<span class="glyphicon glyphicon-calendar"></span>
 																			</span>
 																		</div>
 																	</div>
-
-																	<label class="control-label col-md-2">返却予定日<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-3">
-																		<div class="input-group date" id="returnPeriod_search"
-																			name="myDatepicker">
-																			<input type="text" class="form-control date_check"
-																				name="returnPeriod" id="returnPeriod_view">
-																			<span class="input-group-addon"> <span
-																				class="glyphicon glyphicon-calendar"></span>
+																		<div class="input-group date" id="returnPeriod_search" name="myDatepicker">
+																			<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod_view">
+																			<span class="input-group-addon">
+																				<span class="glyphicon glyphicon-calendar"></span>
 																			</span>
 																		</div>
 																	</div>
-
 																</div>
+																<!--END 貸与日と返却予定日の変更 -->
+																<!--START 使用者の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">使用者<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">使用者<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-9">
-																		<input type="text" id="rentalUserId_view"
-																			name="rentalUserId" class="form-control" />
+																		<input type="text" id="rentalUserId_view" name="rentalUserId" class="form-control" />
 																	</div>
 																</div>
+																<!--END 使用者の変更 -->
+																<!--START 貸出者の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">貸出者<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">貸出者<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-9">
-																		<input type="text" id="applicantId_view"
-																			name="applicantId" class="form-control" />
+																		<input type="text" id="applicantId_view" name="applicantId" class="form-control" />
 																	</div>
 																</div>
-
-
+																<!--END 貸出者の変更 -->
+																<!--START 貸与番号の表示（変更不可能） -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">貸与番号</label>
-
 																	<div class="col-md-9">
-																		<input type="text" id="rentalNo_view"
-																			readonly="readonly" class="form-control" />
+																		<input type="text" id="rentalNo_view" readonly="readonly" class="form-control" />
 																	</div>
 																</div>
-
+																<!--END 貸与番号の表示（変更不可能） -->
+																<!--START 管理番号の表示（変更不可能） -->
 																<div class="form-group row">
-
 																	<label class="control-label col-md-2">管理番号</label>
-
 																	<div class="col-md-9">
-																		<input type="text" id="assetNumber_view"
-																			readonly="readonly" class="form-control" />
+																		<input type="text" id="assetNumber_view" readonly="readonly" class="form-control" />
 																	</div>
 																</div>
-
-
+																<!--END 管理番号の表示（変更不可能） -->
+																<!--START 品目と貸出者の変更（変更不可能） -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">品目</label>
-
 																	<div class="col-md-9">
-																		<input type="text" id="codeDetailName_view"
-																			readonly="readonly" class="form-control" />
+																		<input type="text" id="codeDetailName_view" readonly="readonly" class="form-control" />
 																	</div>
 																</div>
-
+																<!--END 品目と貸出者の変更（変更不可能） -->
+																<!--START 用途の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">用途<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">用途<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-9">
-																		<input type="text" id="purpose_view" name="purpose"
-																			class="form-control" />
+																		<input type="text" id="purpose_view" name="purpose" class="form-control" />
 																	</div>
 																</div>
+																<!--END 用途の変更 -->
+																<!--START 場所の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">場所<span
-																		style="color: red; font-size: 18px;">*</span></label>
-
+																	<label class="control-label col-md-2">場所<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-9">
-																		<input type="text" id="storageLocation_view"
-																			name="storageLocation" class="form-control" />
+																		<input type="text" id="storageLocation_view" name="storageLocation" class="form-control" />
 																	</div>
 																</div>
-
+																<!--END 場所の変更 -->
+																<!--START 特記事項の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">特記事項</label>
 																	<div class="col-md-10">
-																		<textarea id="speciality_view" name="speciality"
-																			class="form-control col-md-10"></textarea>
+																		<textarea id="speciality_view" name="speciality" class="form-control col-md-9"></textarea>
 																	</div>
-
 																</div>
-
-
-																<input type="hidden" id="assetSeq_hidden"
-																	class="form-control" />
-
-
+																<!--END 特記事項の変更 -->
+																<!--START Hidden資産シークエンス -->
+																<input type="hidden" id="assetSeq_hidden" class="form-control" />
+																<!--END Hidden資産シークエンス -->
 															</form>
+															<!--END 変更モーダルのフォーム -->
 														</div>
 													</div>
 												</div>
 											</div>
-
-
-
-
 										</div>
 									</div>
-
-
-
+									<!--START 変更ボタンと戻るボタン -->
 									<div class="modal-footer">
-										<button type="button" class="btn btn-warning pull-left"
-											id="updateButton" onclick="updateRental()">変更</button>
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">戻る</button>
+										<button type="button" class="btn btn-warning pull-left" id="updateButton" onclick="updateRental()">変更</button>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
 									</div>
+									<!--END 変更ボタンと戻るボタン -->
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<!-- /update modal -->
-
 					<!--insert modal -->
 					<div class="row">
-						<div class="modal" id="modal3d2" tabindex="-1" role="dialog"
-							style="display: none;" aria-hidden="true">
+						<div class="modal" id="modal3d2" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">×</span>
-										</button>
-										<h3 class="modal-title">
-											<i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録
-										</h3>
+										<!--START 変更モーダルの戻るボタン -->
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+										<!--END 変更モーダルの戻るボタン -->
+										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</h3>
 									</div>
-
 									<div class="modal-body" id="insert_modalBody">
-
-
 											<div class="x_panel" style="padding:0;">
 												<div class="x_content">
+													<!--START 登録フォーム -->
 													<form action="" id="insertForm" method="POST" role="form">
+														<!--START 貸与日と返却予定日の入力 -->
 														<div class="form-group row ">
-															<label class="control-label col-md-2">貸与日<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3">
-																<div class="input-group date" id="rentalsDay_search"
-																	name="rentalsDay_search">
-																	<input type="text" class="form-control date_check"
-																		name="rentalDay" id="todayDate"
-																		th:value="${#dates.format(date,'yyyy-MM-dd')}">
-																	<span class="input-group-addon"> <span
-																		class="glyphicon glyphicon-calendar"></span>
+																<div class="input-group date" id="rentalsDay_search" name="rentalsDay_search">
+																	<input type="text" class="form-control date_check" name="rentalDay" id="todayDate" th:value="${#dates.format(date,'yyyy-MM-dd')}">
+																	<span class="input-group-addon">
+																		<span class="glyphicon glyphicon-calendar"></span>
 																	</span>
 																</div>
 															</div>
-															<label class="control-label col-md-2">返却予定日<span
-																style="color: red; font-size: 18px;">*</span></label>
-
+															<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3">
-																<div class="input-group date" id="myDatepicker"
-																	name="myDatepicker" style="float: left">
-																	<input type="text" class="form-control date_check"
-																		name="returnPeriod" id="returnPeriod" /> <span
-																		class="input-group-addon"> <span
-																		class="glyphicon glyphicon-calendar"></span>
+																<div class="input-group date" id="myDatepicker" name="myDatepicker" style="float: left">
+																	<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod" />
+																	<span class="input-group-addon">
+																		<span class="glyphicon glyphicon-calendar"></span>
 																	</span>
 																</div>
 															</div>
-
 														</div>
+														<!--END 貸与日と返却予定日の入力 -->
+														<!--START 貸出者入力とマスタコードの選択 -->
 														<div class="form-group row">
-															<label class="control-label col-md-2 "
-																style="float: left">貸出者<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2" style="float: left">貸出者<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3 input-group " style="float: left">
-																<input type="text" name="applicantId" id="applicantId"
-																	required class="form-control col-md-3" />
-
+																<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-3" />
 															</div>
-
-															<label class="control-label col-md-2 "
-																style="float: left">分類<span
-																style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-4 input-group " style="float: left"
-																th:if="${kubunCode} != null">
-																<select class="form-control" id="singleSelect"
-																	name="singleSelect" onchange="getSubItem()">
+															<label class="control-label col-md-2"style="float: left">分類<span style="color: red; font-size: 18px;">*</span></label>
+															<div class="col-md-4 input-group " style="float: left" th:if="${kubunCode} != null">
+																<select class="form-control" id="singleSelect" name="singleSelect" onchange="getSubItem()">
 																	<option value="">選択</option>
-																	<option th:each="productKindCode : ${kubun}"
-																		th:value="${productKindCode.codeDetailId}"
-																		th:text="${productKindCode.codeDetailName}"></option>
+																	<option th:each="productKindCode : ${kubun}" th:value="${productKindCode.codeDetailId}" th:text="${productKindCode.codeDetailName}"></option>
 																</select>
-
-
 															</div>
 															<div class="col-md-3">
 																<p th:unless="${kubunCode} != null">データがありません</p>
 															</div>
-
-
 														</div>
-
+														<!--END 貸出者入力とマスタコードの選択-->
+														<!--START 使用者の入力と詳細コード名の選択 -->
 														<div class="form-group row">
-
-
-															<label class="control-label col-md-2 "
-																style="float: left">使用者<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3 input-group " style="float: left">
-																<input type="text" name="rentalUserId" id="rentalUserId"
-																	required class="form-control col-md-4" />
-
+																<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-4" />
 															</div>
-
-
-															<label class="control-label col-md-2  "
-																style="float: left">種類<span
-																style="color: red; font-size: 18px;">*</span></label>
-
+															<label class="control-label col-md-2" style="float: left">種類<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-4 input-group " style="float: left">
-
-																<select class="select2_multiple form-control"
-																	id="sub_singleSelect" name="sub_singleSelect"
-																	onchange="getSubSubItem()">
-
+																<select class="select2_multiple form-control" id="sub_singleSelect" name="sub_singleSelect" onchange="getSubSubItem()">
 																	<option value="">選択</option>
 																</select>
-
 															</div>
-
-
-
-
-
 														</div>
-
-
+														<!--END 使用者の入力と詳細コード名の選択 -->
+														<!--START 用途の入力と資産管理番号の選択 -->
 														<div class="form-group row">
-
-															<label class="control-label col-md-2 "
-																style="float: left">用途<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2" style="float: left">用途<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3  input-group" style="float: left">
-																<input type="text" class="form-control col-md-9"
-																	name="purpose" id="purpose" value="勤務">
+																<input type="text" class="form-control col-md-9" name="purpose" id="purpose" value="勤務">
 															</div>
-
-															<label class="control-label col-md-2 "
-																style="float: left">選択<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2" style="float: left">選択<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-4 input-group " style="float: left">
-																<select class="select2_multiple form-control"
-																	id="sub_subSelect" name="sub_subSelect">
-
+																<select class="select2_multiple form-control" id="sub_subSelect" name="sub_subSelect">
 																	<option value="">選択</option>
-
-
 																</select>
 															</div>
-
 														</div>
-
-
-
+														<!--END 用途の入力と資産管理番号の選択-->
+														<!--START 場所とBP社名の入力 -->
 														<div class="form-group row">
-															<label class="control-label col-md-2  "
-																style="float: left">場所<span
-																style="color: red; font-size: 18px;">*</span></label>
+															<label class="control-label col-md-2" style="float: left">場所<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3 input-group " style="float: left">
-																<input type="text" id="storageLocation"
-																	name="storageLocation" value="自社"
-																	class="form-control col-md-4">
+																<input type="text" id="storageLocation" name="storageLocation" value="自社" class="form-control col-md-4">
 															</div>
-															<label class="control-label col-md-2  "
-																style="float: left">BP社名</label>
+															<label class="control-label col-md-2" style="float: left">BP社名</label>
 															<div class="col-md-4 input-group " style="float: left">
-																<input type="text" id="bpName" name="bpName"
-																	class="form-control col-md-4">
+																<input type="text" id="bpName" name="bpName" class="form-control col-md-4">
 															</div>
 														</div>
-
+														<!--END 場所とBP社名の入力 -->
+														<!--START 特記事項の入力 -->
 														<div class="form-group row">
 															<label class="control-label col-md-2  ">特記事項</label>
-
 															<div class="col-md-9 input-group ">
-																<textarea id="speciality" name="speciality"
-																	class="form-control col-md-9"></textarea>
+																<textarea id="speciality" name="speciality" class="form-control col-md-9"></textarea>
 															</div>
 														</div>
+														<!--END 特記事項の入力 -->
+														<!--START 追加ボタン -->
 														<div class="form-group row">
-
-
 															<div class="col-md-12  ">
-
-																<input type="button" class="btn btn-primary pull-right"
-																	id="button1" onclick="writeItem();" value="追加" />
-
+																<input type="button" class="btn btn-primary pull-right"id="button1" onclick="writeItem();" value="追加" />
 															</div>
 														</div>
+														<!--END 追加ボタン -->
 													</form>
+													<!--END 登録フォーム -->
 												</div>
 											</div>
-
-
-
+										<!--START 貸与目録 -->
 										<div class="x_panel" style="padding:0;">
 											<div class="x_title">
 												<h2>貸与目録</h2>
@@ -539,11 +394,9 @@
 											</div>
 											<div class="x_content">
 												<div class="form-group row" style="text-align: center;">
-
 													<table id="selectedAsset" style="font-size :12px;">
 														<thead>
 															<tr>
-
 																<th class="col-md-1" id="rentalUserId_insert">使用者</th>
 																<th class="col-md-1" id="applicantId_insert">貸出者</th>
 																<th class="col-md-1" id="item1_insert">種類</th>
@@ -557,58 +410,44 @@
 																<th class="col-md-1" id="cancel_insert"></th>
 															</tr>
 														</thead>
-														<tbody></tbody>
+														<tbody>
+														</tbody>
 													</table>
-
 												</div>
 											</div>
 										</div>
-
+										<!--END 貸与目録 -->
 									</div>
-
+									<!--START 貸与ボタンと戻るボタン -->
 									<div class="modal-footer">
-										<input type="button"
-											class="btn btn-primary pull-left btn-success"
-											id="insertButton" value="貸与" onclick="rentalItem();" />
-										<button type="button" class="btn btn-secondary"
-											onclick="cancelInsert()">戻る</button>
+										<input type="button"class="btn btn-primary pull-left btn-success"id="insertButton" value="貸与" onclick="rentalItem();" />
+										<button type="button" class="btn btn-secondary"onclick="cancelInsert()">戻る</button>
 									</div>
+									<!--END 貸与ボタンと戻るボタン -->
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- /insert modal -->
-
-
 				</div>
-
-
 			</div>
 		</div>
 		<!-- /page content -->
-
 		<!-- footer content -->
 		<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
 		<!-- /footer content -->
 	</div>
-
-
 	<!-- jQuery -->
 	<script src="../vendors/jquery/dist/jquery.min.js"></script>
 	<!-- jquery-validation-1.19.1 -->
-	<script
-		src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
-
-
+	<script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
 	<!-- FastClick -->
 	<script src="../vendors/fastclick/lib/fastclick.js"></script>
 	<!-- NProgress -->
@@ -618,104 +457,77 @@
 	<!-- bootstrap-datetimepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
 	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<script
-		src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="../build/js/custom.min.js"></script>
-
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
-
-
-
-
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
-
-    	     var deleteList=new Array();
-    	     var assetKey = new Map();
-
-
-
-
-  var modalesectiondata = null;
-
-    	var kubunCodeMap = new Map();
-    	var kubunItemMap = new Map();
-    	/*listで区分コードを呼び出す  */
-		var kubunCode = /*[[${kubunCode}]]*/;
-		/* keyはitem1でcodeDetailNameがvalueになるmapを作る */
-		kubunCode.forEach(function( value ) {
-
+			/*選択した資産はセレクトできなしようにする為のマップ*/
+    	    var assetKey = new Map();
+			/*最初にデータテーブルを使うための変数を宣言*/
+			var modalesectiondata = null;
+			/*資産区分コードを最初に取り込む*/
+    		var kubunCodeMap = new Map();
+    		/*資産区分コードを最初に取り込む*/
+    		var kubunItemMap = new Map();
+    		/*listで区分コードを呼び出す  */
+			var kubunCode = /*[[${kubunCode}]]*/;
+			/* keyはitem1でcodeDetailNameがvalueになるmapを作る */
+			kubunCode.forEach(function( value ) {
 			kubunCodeMap.set(value.item1,value.codeDetailName);
-
-    	});
-		/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
-		kubunCode.forEach(function( value ) {
-
-		kubunItemMap.set(value.codeDetailId, value.codeDetailName);});
-    	var statusCodeMap = new Map();
-    	/*listで状態コードを呼び出す  */
-    	var statusCode = /*[[${statusCode}]]*/;
-    	/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
-    	statusCode.forEach(function( value ) {
-
+    		});
+			/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
+			kubunCode.forEach(function( value ) {
+				kubunItemMap.set(value.codeDetailId, value.codeDetailName);});
+    		var statusCodeMap = new Map();
+    		/*listで状態コードを呼び出す  */
+    		var statusCode = /*[[${statusCode}]]*/;
+    		/* keyはcodeDetailIdでcodeDetailNameがvalueになるmapを作る */
+    		statusCode.forEach(function( value ) {
     		statusCodeMap.set(value.codeDetailId, value.codeDetailName);
-    	});
-
+    		});
+    /*登録を取り消したら作動するメソッド  */
 	function cancelInsert(){
-
-		/*削除する前に確認する  */
-
-					$('#selectedAsset > tbody').empty();
-            		$('#insertForm').find('input[type="text"], textarea').val('');
-					$('select').find('option:first').attr('selected', 'selected');
-
-					var today = new Date();
-					var dd = today.getDate();
-					var mm = today.getMonth()+1; //January is 0!
-					var yyyy = today.getFullYear();
-					if(dd<10) {
-					    dd='0'+dd
-					}
-					$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
-
-					$('#modal3d2').modal("hide");
-
-
-
-
-
-
-
+    	//貸与目録をリセットする
+		$('#selectedAsset > tbody').empty();
+    	//登録フォームのテキストをリセットする
+        $('#insertForm').find('input[type="text"], textarea').val('');
+     	//登録フォームのセレクトをリセットする
+		$('select').find('option:first').attr('selected', 'selected');
+     	//START登録フォームのデートをリセットする
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10) {
+			 dd='0'+dd
+		}
+		$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
+		//END登録フォームのデートをリセットする
+		$('#modal3d2').modal("hide");
     }
-
-
+    //START ONLOADのメソッド
         $(function(){
-
-
-
-
-        	 $('#rentalsDay_search').datetimepicker({
+        	//登録フォームの貸与日のカーレンダー
+       	 	$('#rentalsDay_search').datetimepicker({
                  format: 'YYYY-MM-DD'
              });
-
-        	/*!カーレンダーの機能
-        	*/
+       		//変更フォームの貸与日のカーレンダー
             $('#rentalDay_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-        	/*!カーレンダーの機能  */
+          	//登録フォームの返却予定日のカーレンダー
             $('#myDatepicker').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-        	/*!カーレンダーの機能  */
+          	//変更フォームの返却予定日のカーレンダー
             $('#returnPeriod_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-
             /*二つ一つの日付を選べるカーレンダーのフォーマットを決める  */
         	$('#rental_search').daterangepicker({
 				startDate: moment().add(-1, "months"),
@@ -738,9 +550,8 @@
 			});
         	/*カーレンダーで期間を無くして今貸与されてるものを全部見えることにする */
         	$('#rental_search').val('');
-        	/*／!カーレンダーの機能  */
+     		//START データテーブルをセッティングする
             var modalesectiontable = $("#table1").DataTable({
-
             	"language": {
             		"info":           " _START_ ~ _END_ の _TOTAL_ 件",
             		"infoEmpty":      " 0 ~ 0 の 0 件",
@@ -762,7 +573,6 @@
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-
                 "ajax": {
                 	url: /*[[@{/rental/getRentalList}]]*/ 'rental/getRentalList',
                 	type: "POST",
@@ -782,17 +592,17 @@
                 "Error" : function(d){
 					alert("初期化不可能");
 				},
-/*コンローラーで貰ったデータを元にしてデータを見せる  */
+				/*コンローラーで貰ったデータを元にしてデータを見せる  */
                 "columnDefs": [
-
+                	/* 貸与ナンバー */
                 	{ targets: 0, data: "rentalNo"},
-
+                	/* 資産ナンバー */
                     { targets: 1, data: "assetNumber"},
-
+                    /*品目名 */
                     { targets: 2, data: function ( d ) {
                     	return kubunItemMap.get(d.kubunCode);
                     }},
-
+                    /* 使う場所 */
                     { targets: 3, data: function ( d ) {
                     	if(d.storageLocation == '') {
                     		return '-';
@@ -801,175 +611,142 @@
                     	}
                     }},
                     { targets: 4, data: "rentalUserId"},
-
+                    /* 貸与日 */
                     { targets: 5, data: function ( d ) {
                     	var str = d.rentalDay;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
-
+                    /* 返却予定日 */
                     { targets: 6, data: function ( d ) {
                     	var str = d.returnPeriod;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
                     }},
-		/* 変更ボタン */
+					/* 変更ボタンと返却ボタン */
                     { targets: 7,
                     	data: "description_u",
                         render: function ( data, type, row, meta ) {
-
                           return '<button type="button" class="btn btn-warning" id="updateButton" onclick = "researchRental(' + row.assetSeq + ')" >変更</button>'
                           +'<button type="button" class="btn btn-danger" id="deleteButton" onclick = "deleteAsset(' + row.assetSeq + ')" >返却</button>';
-
                            }
                     }
-
                 ]
-
-
             });
-
-            /*assetNumberを貰ってメイン画面のデータを変える*/
+        	//END データテーブルをセッティングする
+            /*資産ナンバーを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
             	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
-            	modalesectiontable
-                .column(0)
-                .search( this.value )
-                .draw();
+            	modalesectiontable.column(0).search( this.value ).draw();
             } );
-            /*rental_dayを貰ってメイン画面のデータを変える*/
+            /*貸与日を貰ってメイン画面のデータを変える*/
             $("#rental_search").change(function () {
                 var date = $("#rental_search").val();
-                modalesectiontable
-                .column(1)
-                .search(date)
-                .draw();
+                modalesectiontable.column(1).search(date).draw();
             });
+            /*貸与ナンバーを貰ってメイン画面のデータを変える*/
             $("#rentalNo_search").on( 'keyup',function () {
             	$('#rentalNo_search').val(this.value.replace(new RegExp("'", 'g'), ''));
-
-                modalesectiontable
-                .column(2)
-                .search(this.value)
-                .draw();
+                modalesectiontable .column(2).search(this.value).draw();
             });
-
         })
+    //END ONLOADのメソッド
     /*]]>*/
     </script>
-
-
 	<script th:inline="javascript">
 	/*<![CDATA[*/
-/*データのupdateメソッド
-引数はrentalのドメインを作ってajaxを利用する
-戻り値も無し
-*/
+	/*データのupdateメソッド
+	引数はrentalのドメインを作ってajaxを利用する
+	戻り値も無し
+	*/
+	function updateRental(){
+			 /* 最初に日付を貰うときの有効性検査  */
+			 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
+	         var form = $('#updateForm');
+			 /*START 貸与日と返却予定日の差を計る */
+	         var startDate = $( "input[name='rentalDay']" ).val(); //2017-12-10
+	         var startDateArr = startDate.split('-');
+	         var endDate = $( "input[name='returnPeriod']" ).val(); //2017-12-09
+	         var endDateArr = endDate.split('-');
+	         var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
+	         var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);
+	         /*END 貸与日と返却予定日の差を計る */
+	         //貸与日と返却予定日を比較する
+	         if(startDateCompare.getTime() > endDateCompare.getTime()) {
+	             alert("貸与日と返却予定日を確認してください。");
+	             return false;
+	         }
+	         /*START 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
+	         form.validate({
+	             rules: {
+	             	rentalUserId : {
+	             		required : true,
+	             		maxlength : 15
+	             	},
+	             	purpose : {
+	             		required : true,
+	             		maxlength : 15
+	             	},
+	             	speciality : {
 
+	             		maxlength : 200
+	            	},
+	             	storageLocation : {
+	             		required : true,
+	             		maxlength : 20
+	             	},
+	             	returnPeriod : {
+	             		required : true
 
-
-function updateRental(){
-		 /* 最初に日付を貰うときの有効性検査  */
-		 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
-         var form = $('#updateForm');
-
-/* 貸与日と返却予定日の差を計る */
-         var startDate = $( "input[name='rentalDay']" ).val(); //2017-12-10
-         var startDateArr = startDate.split('-');
-
-         var endDate = $( "input[name='returnPeriod']" ).val(); //2017-12-09
-         var endDateArr = endDate.split('-');
-
-         var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
-         var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);
-
-         if(startDateCompare.getTime() > endDateCompare.getTime()) {
-
-             alert("貸与日と返却予定日を確認してください。");
-
-             return false;
-         }
-         /* 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
-         form.validate({
-             rules: {
-             	rentalUserId : {
-             		required : true,
-             		maxlength : 15
-             	},
-
-             	purpose : {
-             		required : true,
-             		maxlength : 15
-             	},
-             	speciality : {
-
-             		maxlength : 200
-            	},
-             	storageLocation : {
-             		required : true,
-             		maxlength : 20
-             	},
-             	returnPeriod : {
-             		required : true
-
-             	},
-             	rentalDay : {
-             		required : true
-             	},
-             	applicantId : {
-             		required : true,
-             		maxlength : 15
-             	},
-             	bpName : {
-
-             		maxlength : 15
-             	}
-
-             },
-             messages: {
-
-             	rentalUserId : {
-             		required : "使用者を入力してください"
-             	},
-             	purpose : {
-             		required : "用途を入力してください"
-             	},
-             	storageLocation : {
-             		required : "場所を入力してください"
-             	},
-             	returnPeriod : {
-             		required : "返却予定日を指定してください"
-             	},
-             	rentalDay : {
-             		required : "貸与日を指定してください"
-             	},
-             	applicantId : {
-             		required : "貸与者を指定してください"
-             	}
-
-             },
-
-             /* カーレンダーの下にエラーを出力する  */
-             errorPlacement: function(error, element) {
-                 if (element.attr("name") == "returnPeriod") {
-                   error.insertAfter("#returnPeriod_search");
-                 }else if(element.attr("name") == "rentalDay") {
-                   error.insertAfter("#rentalDay_search");
-                 }
-
-                 else {
-                   error.insertAfter(element);
-                 }
-             }
-         });
-
-
-/* 有効性を通過したら下のメソッドを行う */
-         if (form.valid()) {
-
-     		/*変更してもらったデータにもし-の文字があればなくすメソッド  */
-        	 String.prototype.replaceAll = function(org, dest) {
-        		    return this.split(org).join(dest);
-        		}
-
+	             	},
+	             	rentalDay : {
+	             		required : true
+	             	},
+	             	applicantId : {
+	             		required : true,
+	             		maxlength : 15
+	             	},
+	             	bpName : {
+	             		maxlength : 15
+	             	}
+	             },
+	             messages: {
+	             	rentalUserId : {
+	             		required : "使用者を入力してください"
+	             	},
+	             	purpose : {
+	             		required : "用途を入力してください"
+	             	},
+	             	storageLocation : {
+	             		required : "場所を入力してください"
+	             	},
+	             	returnPeriod : {
+	             		required : "返却予定日を指定してください"
+	             	},
+	             	rentalDay : {
+	             		required : "貸与日を指定してください"
+	             	},
+	             	applicantId : {
+	             		required : "貸与者を指定してください"
+	             	}
+	             },
+	             /* カーレンダーの下にエラーを出力する  */
+	             errorPlacement: function(error, element) {
+	                 if (element.attr("name") == "returnPeriod") {
+	                   error.insertAfter("#returnPeriod_search");
+	                 }else if(element.attr("name") == "rentalDay") {
+	                   error.insertAfter("#rentalDay_search");
+	                 }
+	                 else {
+	                   error.insertAfter(element);
+	                 }
+	             }
+	         });
+	         /*END 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
+			/* 有効性を通過したら下のメソッドを行う */
+         	if (form.valid()) {
+	     		/*変更してもらったデータにもし-の文字があればなくすメソッド  */
+	        	 String.prototype.replaceAll = function(org, dest) {
+	        		    return this.split(org).join(dest);
+	        }
      		/* 変更する情報をオブジェクト化する  */
         	var rental = new Object();
         	rental.rentalNo=$('#rentalNo_view').val();
@@ -984,7 +761,6 @@ function updateRental(){
         	rental.bpName=$('#bpName_view').val();
         	rental.applicantId=$('#applicantId_view').val();
         	rental.assetSeq=$('#assetSeq_hidden').val();
-
             		$.ajax({
          			   type  : "POST",
          			   url : "/rental/updateRental",
@@ -992,9 +768,7 @@ function updateRental(){
          				"contentType" : "application/JSON",
          				data : JSON.stringify(rental),
         				success : function(data){
-
-/* もしアップデートが良くできたら0以上の数字をもらえる  */
-
+		/* もしアップデートが良くできたら0以上の数字をもらえる  */
         if(data>0){
         	location.href = '/rental';
         }
@@ -1003,16 +777,10 @@ function updateRental(){
         					alert("変更不可能");
         				}
          	});
-
-
          }
-/*変更してページをリロードする  */
 	}
-
+//貸与情報を変更する為のメソッド
 function researchRental(assetSeq){
-
-
-
 	$.ajax({
 		   type  : "POST",
 		   url : "/rental/researchRental",
@@ -1020,7 +788,6 @@ function researchRental(assetSeq){
 			"contentType" : "application/JSON",
 			data : JSON.stringify(assetSeq),
 			success : function(data){
-
 				var returnPeriod=data.returnPeriod;
 				returnPeriod=returnPeriod.substring(0, 4) + "-" + returnPeriod.substring(4, 6) + "-" + returnPeriod.substring(6, 8);
 				var	rentalDay=data.rentalDay;
@@ -1036,19 +803,13 @@ function researchRental(assetSeq){
 			$('#rentalUserId_view').val(data.rentalUserId);
 			$('#applicantId_view').val(data.applicantId);
 			$('#assetSeq_hidden').val(data.assetSeq);
-
 			}
-
-});
-
-/* モーダルを閉じるボタン以外では閉じれない  */
+	});
+	/* モーダルを閉じるボタン以外では閉じれない  */
 	$('#modal3d').modal({ backdrop: 'static', keyboard: false});
-
 }
-
-/* 返却ボタンを押すと確認して返却を行う */
+	/* 返却ボタンを押すと確認して返却を行う */
 	function deleteAsset(assetSeq){
-
 		 var result = confirm('返却しますか？');
 		 /*もしyesであれば選択した行のデータを元にして貸与テーブルのデータを削除する  */
 		 if(result) {
@@ -1061,11 +822,8 @@ function researchRental(assetSeq){
 						"Error" : function(d){
 	    					alert("返却不可能");
 	    				}
-
-
 			});
 			 location.href = '/rental';
-
 		 }
 		}
 	/* モーダルボタンをクリックしてインサートする画面を開く  */
@@ -1073,133 +831,101 @@ function researchRental(assetSeq){
 		    var user = /*[[${session.id}]]*/ 'user';
 			if(user==null){alert("ログインしてください");
 			/* モーダルを閉じるボタン以外では閉じれない  */
-    		}else{$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
-
+    		}else{
+    			$('#modal3d2').modal({    backdrop: 'static', keyboard: false});
     		}
     	}
-
 		function getSubItem() {
 			/* 最初の選択地で選択してもらったデータを元にして次の選択地をセッティングする  */
 			var kub =/*[[${kubunCode}]]*/;
-
-
-			$('#singleSelect').click(
-					/* 二番目のボタンが押されたら下のメソッドが行われる  */
-					function() {
+			$('#singleSelect').click(function() {
+						/* 二番目のボタンが押されたら下のメソッドが行われる  */
 						/* まだ何も選択してなければ下のメソッドは実行されない
 						* 当てはまるデータがあれば選択地にセティングする
 						*/
 						if($('#singleSelect option:selected').val()!=""){
 						var item=$('#singleSelect option:selected').val();
-
 							var html = '<option value="">選択</option>';
 							kub.forEach(function(value) {
-							if(value.item1==item){
-
-
-								html += '<option value="' +value.codeDetailId + '">'
-										+ value.codeDetailName + '</option>';
-
-							}});
+								if(value.item1==item){
+									html += '<option value="' +value.codeDetailId + '">'+ value.codeDetailName + '</option>';
+								}
+							});
 							$('#sub_singleSelect').html(html);
 						}
-						});
+			});
 		}
-
-
 		function getSubSubItem() {
-
-
 			/* 三番目のボタンが押されたら下のメソッドが行われる  */
-			$('#sub_singleSelect').click(
-					function() {
+			$('#sub_singleSelect').click(function() {
 						/* まだ何も選択してなければ下のメソッドは実行されない
 						* 当てはまるデータがあれば選択地にセティングする
 						*/
-		if($('#sub_singleSelect option:selected').val()!=""){
+				if($('#sub_singleSelect option:selected').val()!=""){
 					var selectedItem = $('#sub_singleSelect option:selected').val();
 					selectedItem=selectedItem.replace(/[^0-9]/g,'');
 					/*ajaxを使って実際に使えるものかを確認する  */
 					$.ajax({
-	   			"url" : "/rental/getAssetList",
-	    		"type" : "post",
-	   	 		"dataType": "json",
-	   	 		"contentType": "application/JSON",
-	   			"data" : selectedItem,
-	   			contentType: 'application/JSON',
-	   		 	"success" : function(data){
-
-	   			var itemName=$('#sub_subSelect').val();
-				var html = '<option value="">選択</option>';
-
-				data.forEach(function(value) {
-
-
-					if (!assetKey.has(value.assetSeq)){
-					html += '<option value="' + value.assetSeq + '">'
-							+ value.assetNumber + '</option>';
-
-					}
-				});
-				$('#sub_subSelect').html(html);
-			},
-			"Error" : function(value){
-				alert("貸与不可能");
-			}
-
-
-	});
-					   }
-					}
-);
-
-
+			   			"url" : "/rental/getAssetList",
+			    		"type" : "post",
+			   	 		"dataType": "json",
+			   	 		"contentType": "application/JSON",
+			   			"data" : selectedItem,
+			   			contentType: 'application/JSON',
+			   		 	"success" : function(data){
+				   			var itemName=$('#sub_subSelect').val();
+							var html = '<option value="">選択</option>';
+							data.forEach(function(value) {
+								if (!assetKey.has(value.assetSeq)){
+									html += '<option value="' + value.assetSeq + '">'+ value.assetNumber + '</option>';
+								}
+							});
+								$('#sub_subSelect').html(html);
+						},
+						"Error" : function(value){
+							alert("貸与不可能");
+								}
+					});
+				}
+			});
 		}
-
 /* 任意でリスト化した貸与情報の中で一行だけ削除するメソッド */
- function deleteRow(btn) {
-
+ 	function deleteRow(btn) {
 		var assetSeq=btn.value;
-
-	 assetKey.delete(Number(assetSeq));
-
+	 	assetKey.delete(Number(assetSeq));
 		/* もし貸与から保管に変更できたら一行を消す  */
 		var row = btn.parentNode.parentNode;
-		 row.parentNode.removeChild(row);
-
-
-}
-
- String.prototype.replaceAll = function(org, dest) {
-	    return this.split(org).join(dest);
+		row.parentNode.removeChild(row);
 	}
+//全ての文字を一気に変えるためのメソッド
+String.prototype.replaceAll = function(org, dest) {
+	return this.split(org).join(dest);
+}
 
  function rentalItem() {
 	 /* もし 一行もなければ警告する一行以上だったらページをリロードする*/
 	 if($('#selectedAsset tbody tr').length==0){
 			alert("貸与する物がないです。");
 		}else{
-		var tdArr = new Array();
-		/* テーブルにある貸与情報を全て持ち込んでリスト化する */
-		$('#selectedAsset tbody tr').each(function() {
-			var rental =new Object();
-			var cellText = $(this);
-			rental.rentalUserId =cellText.find("#rentalUserId_i").text();
-			rental.assetNumber =cellText.find("#assetNumber_i").text();
-			rental.purpose  =cellText.find("#purpose_i").text();
-			rental.storageLocation =cellText.find("#storageLocation_i").text();
-			rental.speciality =cellText.find("#speciality_i").text();
-			rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
-			rental.assetSeq=cellText.find("#assetSeq_i").text();
-			rental.applicantId =cellText.find("#applicantId_i").text();
-			rental.rentalDay=cellText.find('#rentalDay_i').text().replaceAll("-","");
-			rental.bpName=cellText.find("#bpName_i").text();
-			rental.insertId = /*[[${session.id}]]*/ 'user';
-			rental.updateId = /*[[${session.id}]]*/ 'user';
-			tdArr.push(rental);
-		});
-
-
+			var tdArr = new Array();
+			/* テーブルにある貸与情報を全て持ち込んでリスト化する */
+			$('#selectedAsset tbody tr').each(function() {
+				var rental =new Object();
+				var cellText = $(this);
+				rental.rentalUserId =cellText.find("#rentalUserId_i").text();
+				rental.assetNumber =cellText.find("#assetNumber_i").text();
+				rental.purpose  =cellText.find("#purpose_i").text();
+				rental.storageLocation =cellText.find("#storageLocation_i").text();
+				rental.speciality =cellText.find("#speciality_i").text();
+				rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
+				rental.assetSeq=cellText.find("#assetSeq_i").text();
+				rental.applicantId =cellText.find("#applicantId_i").text();
+				rental.rentalDay=cellText.find('#rentalDay_i').text().replaceAll("-","");
+				rental.bpName=cellText.find("#bpName_i").text();
+				rental.insertId = /*[[${session.id}]]*/ 'user';
+				rental.updateId = /*[[${session.id}]]*/ 'user';
+				tdArr.push(rental);
+			});
 			/* リスト化された貸与情報をデータテーブルに書き込む  */
 			$.ajax({
 				"url" : "/rental/addRental",
@@ -1215,35 +941,27 @@ function researchRental(assetSeq){
 				}
 
 			});
-		location.href = '/rental';
+			location.href = '/rental';
 		}
 
  }
-
-
-
+    //貸与目録に追加する
 	function writeItem() {
-
 			/* 有効性の検査を行う  */
-        	 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
+        	var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
             var form = $('#insertForm');
-
-
             var startDate =$("#todayDate").val(); //2017-12-10
             var startDateArr = startDate.split('-');
-
             var endDate = $("#returnPeriod").val(); //2017-12-09
             var endDateArr = endDate.split('-');
-
             var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
             var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);
 
             if(startDateCompare.getTime() > endDateCompare.getTime()) {
-
                 alert("貸与日と返却予定日を確認してください。");
-
                 return false;
             }
+            /*START 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
             form.validate({
                 rules: {
                 	rentalUserId : {
@@ -1273,10 +991,8 @@ function researchRental(assetSeq){
                  		maxlength : 15
                 	},
                  	bpName : {
-
                  		maxlength : 15
                  	}
-
                 },
                 messages: {
                 	rentalUserId : {
@@ -1297,26 +1013,21 @@ function researchRental(assetSeq){
                 	applicantId : {
                 		required : "貸与者を指定してください"
                 	}
-
                 },
-
-            errorPlacement: function(error, element) {
-                if (element.attr("name") == "returnPeriod") {
-                  error.insertAfter("#myDatepicker");
-                }else if(element.attr("name") == "rentalDay") {
-                  error.insertAfter("#rentalsDay_search");
-                }
-
-                else {
-                  error.insertAfter(element);
-                }
+            	errorPlacement: function(error, element) {
+	                if (element.attr("name") == "returnPeriod") {
+	                  error.insertAfter("#myDatepicker");
+	                }else if(element.attr("name") == "rentalDay") {
+	                  error.insertAfter("#rentalsDay_search");
+	                }
+	                else {
+	                  error.insertAfter(element);
+	                }
             }
         });
-
-
-
+            /*END 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
+           /*START 有効性を通過したら下のメソッドを行う */
             if (form.valid()) {
-
             	var number=$("#sub_subSelect option:selected").text();
 				/* もう一回資産の情報を確認してデータを表示する */
     			$.ajax({
@@ -1326,15 +1037,14 @@ function researchRental(assetSeq){
     			   			"data" : number,
     			   			"contentType": "application/JSON",
     			   		 	"success" : function(data){
-
     			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td id="rentalUserId_i">'
     			   					+$('#rentalUserId').val()+
     			   					'</td><td id="applicantId_i">'
     			   					+$("#applicantId").val()+
     			   					'</td><td>'
-    			   				+$("#sub_singleSelect option:selected").text()+
+    			   					+$("#sub_singleSelect option:selected").text()+
     			   					'</td><td id="assetNumber_i">'
-    			   				+number+
+    			   					+number+
     			   					'</td><td id="purpose_i">'
     			   					+$("#purpose").val()+
     			   					'</td><td id="storageLocation_i">'
@@ -1346,27 +1056,21 @@ function researchRental(assetSeq){
     			   					'</td><td id="assetSeq_i" style="display:none;"> '
     				   				+data.assetSeq+
     				   				'</td><td id="returnPeriod_i">'
-    				   					+$("#returnPeriod").val()+
-    				   					'</td><td id="rentalDay_i">'
-    				   					+$("#todayDate").val()+
-
+    				   				+$("#returnPeriod").val()+
+    				   				'</td><td id="rentalDay_i">'
+    				   				+$("#todayDate").val()+
     			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
-
-    			   		 assetKey.set(data.assetSeq,data.assetNumber);
-    			   			$(function(){  $('select').find('option:first').attr('selected', 'selected');})
-    			    },
-    				"Error" : function(){
-    					alert("貸与不可能");
-    				}
+    			   		 			assetKey.set(data.assetSeq,data.assetNumber);
+    			   					$(function(){  $('select').find('option:first').attr('selected', 'selected');})
+    			   	 		},
+    						"Error" : function(){
+    							alert("貸与不可能");
+    						}
     			});
-
-
-
             }
-
+            /*END 有効性を通過したら下のメソッドを行う */
 	}
 		/*]]>*/
 	</script>
-
 </body>
 </html>

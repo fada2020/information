@@ -728,6 +728,22 @@
 					</div>
 					<!-- /登録 modal -->
 
+					<!-- /資産情報変更 modal -->
+					<a href="asset/105" class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal">
+						LMKing</a>
+
+					<div class="modal fade" id="assetUpdateModal" >
+
+							<div class="modal-dialog">
+            <div class="modal-content" style="width:170%; left:-30%">
+                <!-- Content will be loaded here from "remote.php" file -->
+            </div>
+        </div>
+
+					</div>
+
+					<!-- /資産情報変更 modal -->
+
                   </div>
                 </div>
               </div>
@@ -907,8 +923,8 @@
                     	targets: 7,
                     	data: null,
                         render: function ( data, type, row, meta ) {
-                        var html = '<button type="button" class="btn btn-warning" onclick = "location.href =\'' +
-                        	'/asset/' + row.assetSeq + '\'">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
+                        var html = '<button href =\'' +
+                        	'/asset/' + row.assetSeq + '\'"  class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal" >変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
                         		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';
