@@ -350,6 +350,10 @@
 							</div>
 							<div class="x_content" style="display: block;">
 								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+			 <div class="clearfix">
+				<button type="button" id="sisanupdate" class="btn btn-primary btn-warning">変更test</button>
+			</div>
+
 									<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
 										<thead>
 											<tr class="headings">
@@ -362,24 +366,27 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr class="even pointer">
-												<td></td>
-												<td><input id="am_itemName" type="text" maxlength="25" class="form-control"></td>
-												<td><input id="am_itemSpec" type="text" maxlength="25" class="form-control"></td>
-												<td><input id="am_itemQuantity" type="text" maxlength="11" class="form-control"></td>
-												<td><input id="am_remarks" type="text" maxlength="100" class="form-control"></td>
-												<td colspan="2" class="a-center">
-													<a id="am_addAccessories" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
-												</td>
-											</tr>
-											<tr th:each="accessories : ${asset.accessoriesList}">
-												<td id="am_accessoriesSeq" th:text="${accessories.accessoriesSeq}"></td>
-												<td><input type="text" maxlength="25" class="form-control" id="am_itemName" th:value="${accessories.itemName}"></td>
-												<td><input type="text" maxlength="25" class="form-control" id=am_itemSpec th:value="${accessories.itemSpec}"></td>
-												<td><input type="text" maxlength="11" class="form-control" id="am_itemQuantity" th:value="${accessories.itemQuantity}"></td>
-												<td><input type="text" maxlength="100" class="form-control" id="am_remarks" th:value="${accessories.remarks}"></td>
+											<!-- 付属品10個項目 -->
+											<!-- 既存 付属品 -->
+											<tr id="accupdate1" th:each="accessories,accnum : ${asset.accessoriesList}">
+												<input type="hidden" th:id="${#ids.seq('am_key')}" th:value="${accessories.accessoriesSeq}">
+												<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${accnum.index+1}"></td>
+												<td><input type="text" maxlength="25" class="form-control" th:id="${#ids.seq('am_itemName')}" th:value="${accessories.itemName}"></td>
+												<td><input type="text" maxlength="25" class="form-control"  th:id="${#ids.seq('am_itemSpec')}" th:value="${accessories.itemSpec}"></td>
+												<td><input type="text" maxlength="11" class="form-control"  th:id="${#ids.seq('am_itemQuantity')}" th:value="${accessories.itemQuantity}"></td>
+												<td><input type="text" maxlength="100" class="form-control"  th:id="${#ids.seq('am_remarks')}" th:value="${accessories.remarks}"></td>
 												<td class="a-center"><a id="am_updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
 												<td class="a-center"><a id="am_deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+											</tr>
+											<!-- 付属品を追加ため空欄 -->
+											<tr id="accupdate2" th:if="${#lists.size(asset.accessoriesList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
+												<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${index+#lists.size(asset.accessoriesList)}"></td>
+												<td><input type="text" maxlength="8" class="form-control" th:id="${#ids.seq('am_itemName')}" ></td>
+												<td><input type="text" maxlength="100" class="form-control"  th:id="${#ids.seq('am_itemSpec')}"></td>
+												<td><input type="text" maxlength="10" class="form-control" th:id="${#ids.seq('am_itemQuantity')}"></td>
+												<td><input type="text" maxlength="10" class="form-control" th:id="${#ids.seq('am_remarks')}"></td>
+												<td class="a-center"></td>
+												<td class="a-center"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -521,117 +528,279 @@ ation-1.19.1 -->
         	    }
         	});
 
-			// 付属品登録プロセス
-            $('#am_addAccessories').on('click', function () {
-            	var selectTr = $(this).closest("tr");
+        	// sisanupdate button
+        	$('#sisanupdate').click(function(){
+        		assupdate(), accinsert(),accupdate()
+        	});//click event sisanupdate end
 
-            	var accessories ={
-            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"itemName" : selectTr.find("#am_itemName").val(),
-            			"itemSpec" : selectTr.find("#am_itemSpec").val(),
-            			"itemQuantity" : selectTr.find("#am_itemQuantity").val(),
-            			"remarks" : selectTr.find("#am_remarks").val()
-            	};
+        		// 資産変更プロセス
+            function assupdate() {
+                var form = $('#am_updateForm');
 
-                $.ajax({
-                    url: /*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
-                    type: "POST",
-                    dataType: "json",
-                    contentType: 'application/JSON',
-                    data : JSON.stringify(accessories),
-                    success: function(data) {
-                    	if(data.accessoriesSeq == 0){
-    						alert('エラーが発生しました。');
-    					}else {
-    						 $('#am_table1 tbody').append(
-    								 '<tr>'
-    								 +'<td id="am_accessoriesSeq">'+data.accessoriesSeq+'</td>'
-    								 +'<td><input type="text" maxlength="25" class="form-control" id="am_itemName" value="'+data.itemName+'"></td>'
-    								 +'<td><input type="text" maxlength="25" class="form-control" id="am_itemSpec" value="'+data.itemSpec+'"></td>'
-    								 +'<td><input type="text" maxlength="11" class="form-control" id="am_itemQuantity" value="'+data.itemQuantity+'"></td>'
-    								 +'<td><input type="text" maxlength="100" class="form-control" id="am_remarks" value="'+data.remarks+'"></td>'
-    								 +'<td class="a-center"><a id="am_updateAccessories" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-    								 +'<td class="a-center"><a id="am_deleteAccessories" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
-    								 +'</tr>'
-    						 );
-    						 alert('追加されました。');
-    					}
+				// 有効性検査条件セッティング
+                form.validate({
+                    rules: {
+                    	kubunCode : {
+                    		required : true
+                    	},
+                    	purchaseDate: {
+                            required: true
+                        },
+                        statusCode: {
+                        	required: true
+                        },
+                        warrantyPeriod: {
+                        	number: true,
+                        	maxlength: 2
+                        },
+                        buyTo: {
+                        	maxlength: 15
+                        },
+                        storageLocation: {
+                        	maxlength: 15
+                        },
+                        makerName: {
+                        	maxlength: 25
+                        },
+                        modelName: {
+                        	maxlength: 25
+                        },
+                        serialNum: {
+                        	maxlength: 100
+                        },
+                        interFaceCol: {
+                        	maxlength: 25
+                        },
+                        osName: {
+                        	maxlength: 50
+                        },
+                        osProductKey: {
+                        	maxlength: 50
+                        },
+                        cpuProcessor: {
+                        	maxlength: 50
+                        },
+                        purchasePrice: {
+                        	number: true,
+                        	maxlength: 11
+                        },
+                        operatingFrequency: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memory: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        memoryUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hdd: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        hddUpgarde: {
+                        	number: true,
+                        	maxlength: 7
+                        },
+                        macLan: {
+                        	maxlength: 25
+                        },
+                        macWireless: {
+                        	maxlength: 25
+                        },
+                        other: {
+                        	maxlength: 100
+                        },
+                        securityBios: {
+                        	maxlength: 25
+                        },
+                        securityHdd: {
+                        	maxlength: 25
+                        },
+                        adminAccountId: {
+                        	maxlength: 25
+                        },
+                        adminAccountPwd: {
+                        	maxlength: 25
+                        }
                     },
-                    // 通信失敗時の処理
-                    error: function(xhr, textStatus, error) {
-                    	alert('通信失敗');
+                    messages: {
+                    	kubunCode : {
+                    		required : "区分を選択"
+                    	},
+                    	purchaseDate: {
+                            required: "日付を入力"
+                        },
+                        statusCode: {
+                        	required: "状態を選択"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "purchaseDate") {
+                          error.insertAfter("#am_myDatepicker");
+                        } else {
+                          error.insertAfter(element);
+                        }
                     }
-                });
+                });//validate
 
-            });
-
-			// 付属品変更プロセス
-            $('#am_table1 tbody').on("click","#am_updateAccessories", function() {
-            	var selectTr = $(this).closest("tr");
-
-            	var accessories ={
-            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"accessoriesSeq" : selectTr.find("#am_accessoriesSeq").text(),
-            			"itemName" : selectTr.find("#am_itemName").val(),
-            			"itemSpec" : selectTr.find("#am_itemSpec").val(),
-            			"itemQuantity" : selectTr.find("#am_itemQuantity").val(),
-            			"remarks" : selectTr.find("#am_remarks").val()
-            	};
-
-            	$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(accessories)
-					}
-            	)
-				.success(function(result) {
-					if(result == 0) {
-						alert('エラーが発生しました。');
-					} else {
-						alert('変更されました。');
-					}
-				}).error(function(xhr, textStatus, error) {
-                	alert('通信失敗');
-                });
-
-            });
-
-			// 付属品削除プロセス
-            $('#am_table1 tbody').on("click","#am_deleteAccessories", function() {
-
-            	if(!confirm('本当に削除しますか？')){
-                    /* キャンセルの時の処理 */
-                    return false;
-                }else{
-                	var selectTr = $(this).closest("tr");
-
-                	var accessories ={
-                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-                			"accessoriesSeq" : selectTr.find("#am_accessoriesSeq").text()
-                	};
-
-                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
-    					{
-    						type: "POST",
-    						dataType: "json",
-    						contentType: 'application/JSON',
-    						data : JSON.stringify(accessories)
-    					}
-                	)
-    				.success(function(result) {
-    					if(result == 0) {
-    						alert('エラーが発生しました。');
-    					} else {
-    						selectTr.remove();
-    					}
-    				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗');
+				// 有効性検査成功時
+                if (form.valid()) {
+                	// number基本値セッティング
+                    form.find('.numVal').each(function( ) {
+                    	if($(this).val() == '') {
+                    		$(this).val('0');
+                    	}
                     });
-                }
 
-            });
+                    // 送信
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: form.serialize(),
+                        success: function(result, textStatus, xhr) {
+                        	if(result == 0){
+                        		alert('エラーが発生しました。');
+                        	}else{
+                        		alert('変更されました。');
+                        		$('html').scrollTop(0);
+                        	}
+                        },
+                        // 通信失敗時の処理
+                        error: function(xhr, textStatus, error) {
+                        	alert('通信失敗');
+                        }
+                    });
+                };
+
+            }
+
+			function accupdate() {
+				var selectTr1 = $(accupdate1);
+				var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+ 				//accessories update
+				for(var i = 1; i < acclength + 1 ; i++){
+					var am_accessoriesSeq = '#am_accessoriesSeq'+i;
+					var am_itemName = '#am_itemName'+i;
+					var am_itemSpec = '#am_itemSpec'+i;
+					var am_itemQuantity = '#am_itemQuantity'+i;
+					var am_remarks = '#am_remarks'+i;
+					var am_key = '#am_key'+i;
+
+					var accessories ={
+	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+	            			"accessoriesSeq" : selectTr1.find(am_key).val(),
+	            			"itemName" : selectTr1.find(am_itemName).val(),
+	            			"itemSpec" : selectTr1.find(am_itemSpec).val(),
+	            			"itemQuantity" : selectTr1.find(am_itemQuantity).val(),
+	            			"remarks" : selectTr1.find(am_remarks).val(),
+	            	};
+					if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""){
+					// 付属品削除プロセス
+						if(!confirm('本当に削除しますか？')){
+		                    /* キャンセルの時の処理 */
+		                    return false;
+		                }else{
+		                	var accessories ={
+		                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+		                			"accessoriesSeq" :  selectTr1.find(am_key).val()
+		                	};
+
+		                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(accessories)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。delete');
+		    					} else {
+		    						selectTr.remove();
+		    						alert('削除しました');
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });
+		                }
+					}//削除if
+					else{
+						$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(accessories)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。update');
+		    					} else {
+
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });//ajax end
+	           		}//変更else
+	            };//for end
+			}//function accupdate
+
+			function accinsert() {
+	            var selectTr2 = $(accupdate2);
+	        	var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+
+	          //accessories insert
+				for(var i = acclength+1; i < 11 ; i++){
+					var am_accessoriesSeq = '#am_accessoriesSeq'+i;
+					var am_itemName = '#am_itemName'+i;
+					var am_itemSpec = '#am_itemSpec'+i;
+					var am_itemQuantity = '#am_itemQuantity'+i;
+					var am_remarks = '#am_remarks'+i;
+
+					var accessories ={
+	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+	            			"accessoriesSeq" : selectTr2.find(am_accessoriesSeq).text(),
+	            			"itemName" : selectTr2.find(am_itemName).val(),
+	            			"itemSpec" : selectTr2.find(am_itemSpec).val(),
+	            			"itemQuantity" : selectTr2.find(am_itemQuantity).val(),
+	            			"remarks" : selectTr2.find(am_remarks).val()
+	            	};
+					if(selectTr2.find(am_itemName).val() == ""){
+						alert(i+'行目の品名が空きます。');
+						break;
+					} else if ( selectTr2.find(am_itemSpec).val() == ""){
+						alert(i+'行目の仕樣が空きます。');
+						break;
+					} else {
+						$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(accessories)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。'+i);
+		    					} else {
+		    						alert(i-1+'torokuされました。');
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });//ajax end
+					}//end else
+	            };//for end
+
+			}//function accinsert
+
+
+
 
 			// 保守履歴登録プロセス
             $('#am_addMaintenanceHistory').on('click', function () {
@@ -744,149 +913,7 @@ ation-1.19.1 -->
 
             });
 
-			// 資産変更プロセス
-            $('#am_updateProc').on('click', function() {
-                var form = $('#am_updateForm');
 
-				// 有効性検査条件セッティング
-                form.validate({
-                    rules: {
-                    	kubunCode : {
-                    		required : true
-                    	},
-                    	purchaseDate: {
-                            required: true
-                        },
-                        statusCode: {
-                        	required: true
-                        },
-                        warrantyPeriod: {
-                        	number: true,
-                        	maxlength: 2
-                        },
-                        buyTo: {
-                        	maxlength: 15
-                        },
-                        storageLocation: {
-                        	maxlength: 15
-                        },
-                        makerName: {
-                        	maxlength: 25
-                        },
-                        modelName: {
-                        	maxlength: 25
-                        },
-                        serialNum: {
-                        	maxlength: 100
-                        },
-                        interFaceCol: {
-                        	maxlength: 25
-                        },
-                        osName: {
-                        	maxlength: 50
-                        },
-                        osProductKey: {
-                        	maxlength: 50
-                        },
-                        cpuProcessor: {
-                        	maxlength: 50
-                        },
-                        purchasePrice: {
-                        	number: true,
-                        	maxlength: 11
-                        },
-                        operatingFrequency: {
-                        	number: true,
-                        	maxlength: 7
-                        },
-                        memory: {
-                        	number: true,
-                        	maxlength: 7
-                        },
-                        memoryUpgarde: {
-                        	number: true,
-                        	maxlength: 7
-                        },
-                        hdd: {
-                        	number: true,
-                        	maxlength: 7
-                        },
-                        hddUpgarde: {
-                        	number: true,
-                        	maxlength: 7
-                        },
-                        macLan: {
-                        	maxlength: 25
-                        },
-                        macWireless: {
-                        	maxlength: 25
-                        },
-                        other: {
-                        	maxlength: 100
-                        },
-                        securityBios: {
-                        	maxlength: 25
-                        },
-                        securityHdd: {
-                        	maxlength: 25
-                        },
-                        adminAccountId: {
-                        	maxlength: 25
-                        },
-                        adminAccountPwd: {
-                        	maxlength: 25
-                        }
-                    },
-                    messages: {
-                    	kubunCode : {
-                    		required : "区分を選択"
-                    	},
-                    	purchaseDate: {
-                            required: "日付を入力"
-                        },
-                        statusCode: {
-                        	required: "状態を選択"
-                        }
-                    },
-                    errorPlacement: function(error, element) {
-                        if (element.attr("name") == "purchaseDate") {
-                          error.insertAfter("#am_myDatepicker");
-                        } else {
-                          error.insertAfter(element);
-                        }
-                    }
-                });
-
-				// 有効性検査成功時
-                if (form.valid()) {
-                	// number基本値セッティング
-                    form.find('.numVal').each(function( ) {
-                    	if($(this).val() == '') {
-                    		$(this).val('0');
-                    	}
-                    });
-
-                    // 送信
-                    $.ajax({
-                        url: form.attr('action'),
-                        type: form.attr('method'),
-                        data: form.serialize(),
-                        success: function(result, textStatus, xhr) {
-                        	if(result == 0){
-                        		alert('エラーが発生しました。');
-                        	}else{
-                        		alert('変更されました。');
-                        		$('html').scrollTop(0);
-                        	}
-                        },
-                        // 通信失敗時の処理
-                        error: function(xhr, textStatus, error) {
-                        	alert('通信失敗');
-                        }
-                    });
-                };
-
-            });
 
         })
     /*]]>*/
