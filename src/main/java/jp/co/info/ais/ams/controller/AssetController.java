@@ -277,6 +277,7 @@ public class AssetController {
     @RequestMapping(value = "/deleteAccessories", method = RequestMethod.POST)
     @ResponseBody
     public int deleteAccessories(@RequestBody Accessories accessories) {
+    	logger.debug(":::::::::::::::::{}", accessories);
     	int result = 0;
     	try {
 	    	// 付属品削除
