@@ -4,7 +4,7 @@
 <mapper namespace="jp.co.info.ais.ams.mapper.CodeMasterMapper">
 
 
-	<!--Insert MasterID NAME REMARKS -->
+	<!--Insert MasterID NAME  -->
 	<insert id="insertMasterIdName"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
@@ -16,6 +16,7 @@
 		)
 	</insert>
 
+	<!--Insert MasterID  -->
 	<insert id="insertMasterId"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
@@ -23,16 +24,18 @@
 		VALUES (
 		#{code_master_id})
 	</insert>
+
+	<!--Insert MasterNAME  -->
 	<insert id="insertMasterName"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
 		code_master_name)
 		VALUES (
-
 		#{code_master_name}
 		)
 	</insert>
 
+	<!-- Select All CodeMaster -->
 	<select id="selectCodeMasterList" resultType="CodeMaster">
 		SELECT A.* FROM(
 		SELECT
@@ -53,6 +56,7 @@
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
+	<!-- 総数 -->
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
 		FROM code_master
@@ -71,6 +75,9 @@
 		FROM code_master
 		where code_master_id=${codeMasterId}
 	</select>
+
+
+	<!--新規登録  -->
 	<insert id="CodeMasterInsert"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		INSERT INTO code_master(
@@ -86,6 +93,7 @@
 		, #{useFlag}
 		)
 	</insert>
+	<!-- 変更 -->
 	<update id="updateCodeMaster"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		UPDATE code_master SET
@@ -97,6 +105,7 @@
 
 	</update>
 
+	<!-- 削除 -->
 	<delete id="deleteMasterCode">
 		DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
 	</delete>

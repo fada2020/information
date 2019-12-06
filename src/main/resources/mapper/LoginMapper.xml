@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jp.co.info.ais.ams.mapper.LoginMapper">
-
+<!-- idが存在したら１を送る -->
 <select id="selectId" resultType="Integer">
     SELECT count(emp_id)
     FROM emp
     WHERE
     emp_id =#{id}
     </select>
-
+	<!--認証処理エラーが発生   -->
   <select id="selectLogin" resultType="jp.co.info.ais.ams.domain.Login">
     SELECT
     	 emp_id

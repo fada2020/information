@@ -11,12 +11,18 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class CodeMaster {
+		//コードID
+		private String codeMasterId;
+		//コードネーム
+		private String codeMasterName;
 
-		private String codeMasterId;//コードID
-		private String codeMasterName;//コードネーム
-		private String remarks;//
-		private int useFlag;//使用未使用
-		private String codeMasterIdOld;//コードID
-		int length;//長さ
+		private String remarks;
+
+		//使用未使用
+		private int useFlag;
+		//コードID
+		private String codeMasterIdOld;
+		//長さ
+		int length;
 		int start;
 }

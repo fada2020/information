@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- コード詳細 -->
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -49,11 +50,11 @@
 	<div class="container body">
 		<div class="main_container">
 			<!-- sidebar -->
-			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
 			<!-- sidebar -->
 
 			<!-- top navigation -->
-			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -81,29 +82,29 @@
 											<div class="col-md-10">
 												<div class="col-md-4">
 													<label class="col-form-label col-md-7 label-align"
-														for="search_master_id" >
+														for="search_master_id" style="font-size: 18px;">
 														マスターコード</label>
 													<div class="col-md-5 ">
 														<input type="text" id="search_master_id"
-															class="form-control"  placeholder="マスターコード">
+															class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
 													<label class="col-form-label col-md-6 label-align"
-														for="search_detail_id" >
+														for="search_detail_id" style="font-size: 18px;">
 														詳細コードID</label>
 													<div class="col-md-6">
 														<input type="text" id="search_detail_id"
-															class="form-control" placeholder="詳細コードID">
+															class="form-control" style="font-size: 18px;">
 													</div>
 												</div>
 												<div class="col-md-4">
 													<label class="col-form-label col-md-6 label-align"
-														for="search_detail_name" >
+														for="search_detail_name" style="font-size: 18px;">
 														詳細コード名</label>
 													<div class="col-md-6">
 														<input type="text" id="search_detail_name"
-															class="form-control " placeholder="詳細コード名">
+															class="form-control ">
 													</div>
 												</div>
 
@@ -111,7 +112,7 @@
 											<div class="col-md-2">
 
 												<!-- 登録 ボタン -->
-												<div class="col">
+												<div class="col-md-6">
 													<button type="button" class="btn btn-success pull-right"
 														data-toggle="modal" data-target="#modalCodedetail">
 														<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
@@ -127,7 +128,7 @@
 
 									<div class="x_content">
 										<div
-											class="table">
+											class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 											<table id="datatable1"
 												class="table table-bordered jambo_table bulk_action text-center"
 												style="width: 100%">
@@ -172,7 +173,7 @@
 				<!-- ここまでのコンテンツ作成 -->
 				<!-- /page content -->
 				<!-- footer content -->
-				<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+				<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
 				<!-- /footer content -->
 			</div>
 		</div>
@@ -196,8 +197,8 @@
 								method="GET" name="frm">
 								<div class="form-group">
 									<!--  -->
-									<label class="col-sm-3 control-label"> マスターコード<span
-										style="color: red; font-size: 18px;">*</span></label>
+									<label class="col-sm-3 control-label"><span
+										style="color: red; font-size: 18px;">*</span> マスターコード</label>
 									<div class="col-md-9 input-group "
 										th:if="${selectmasterid} != null">
 										<select class="form-control" id="codeMasterId"
@@ -212,12 +213,12 @@
 								</div>
 								<div class="clearfix"></div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">詳細コードID<span
-										style="color: red; font-size: 18px;">*</span></label>
+									<label class="col-sm-3 control-label"><span
+										style="color: red; font-size: 18px;">*</span>詳細コードID</label>
 									<div class="col-sm-9">
 										<fieldset>
 											<input type="text" class="form-control form-control-sm"
-												id="codeDetailId" name="codeDetailId" placeholder="ex)01"
+												id="codeDetailId" name="codeDetailId" placeholder="コードID"
 												onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
 										</fieldset>
 									</div>
@@ -225,12 +226,12 @@
 
 								<div class="clearfix"></div>
 									<div class="form-group">
-									<label class="col-sm-3 control-label">詳細コード名<span
-										style="color: red; font-size: 18px;">*</span></label>
+									<label class="col-sm-3 control-label"><span
+										style="color: red; font-size: 18px;">*</span>詳細コードネーム</label>
 									<div class="col-sm-9">
 										<fieldset>
 											<input type="text" class="form-control form-control-sm"
-												id="codeDetailName" name="codeDetailName" placeholder="ex)Desktop"
+												id="codeDetailName" name="codeDetailName" placeholder="コード名称"
 												required />
 										</fieldset>
 									</div>
@@ -346,8 +347,8 @@
 							method="GET" name="frm">
 							<div class="form-group">
 								<!--  -->
-								<label class="col-sm-3 control-label"> マスターコード<span
-									style="color: red; font-size: 18px;">*</span></label>
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> マスターコード</label>
 								<div class="col-md-9 input-group "
 									th:if="${selectmasterid} != null">
 									<select class="form-control" id="codeMasterId_update"
@@ -364,9 +365,9 @@
 
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">
-									詳細コードID<span
-									style="color: red; font-size: 18px; font-size: 18px;">*</span></label>
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px; font-size: 18px;">*</span>
+									コード詳細ID</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -377,8 +378,8 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"> 詳細コード名<span
-									style="color: red; font-size: 18px;">*</span></label>
+								<label class="col-sm-3 control-label"><span
+									style="color: red; font-size: 18px;">*</span> コード詳細名</label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
@@ -518,15 +519,15 @@
 							{
 								<!--ページング-->
 								"language" : {
-									"info" : "_START_ ~ _END_ の _TOTAL_ 件",
-									"infoEmpty" : "0 ~ 0 の 0 件",
+									"info" : "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+									"infoEmpty" : "表示 0 ~ 0 の 0 エントリ",
 									"infoFiltered" : "",
 									"emptyTable" : "表にデータがない",
 									"paginate" : {
 										"first" : "最初",
 										"last" : "最後",
-										"next" : "次",
-										"previous" : "前"
+										"next" : "次へ",
+										"previous" : "前の"
 									}
 								},//
 
@@ -665,7 +666,6 @@
 				}
 			});
 
-
 		    $('#search_master_id').on( 'keyup', function () {
             	$('#search_master_id').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
@@ -689,6 +689,10 @@
             } );
 
 
+
+
+
+			
 		});
 
 

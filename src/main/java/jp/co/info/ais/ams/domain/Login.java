@@ -8,15 +8,24 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class Login {
-	private String empId;//社員番号
-	private String empName;//氏名
-	private String passwd;//パスワード
-	private String organizationCode;//所属コード
-	private String useFlag;//使用と未使用チェック
-	private String createUser;//ユーザー生成
-	private Date createDate;//生成日数
-	private String updateUser;//修正ユーザー
-	private Date updateDate;//修正日数
+	//社員番号
+	private String empId;
+	//氏名
+	private String empName;
+	//パスワード
+	private String passwd;
+	//所属コード
+	private String organizationCode;
+	//使用と未使用チェック
+	private String useFlag;
+	//ユーザー生成
+	private String createUser;
+	//生成日数
+	private Date createDate;
+	//修正ユーザー
+	private String updateUser;
+	//修正日数
+	private Date updateDate;
 
 
 

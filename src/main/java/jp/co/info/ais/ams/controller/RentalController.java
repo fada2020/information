@@ -25,11 +25,14 @@ import jp.co.info.ais.ams.service.RentalService;
 @RequestMapping("/rental")
 public class RentalController {
 
+	//エラーを表すための宣言
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
+	//ログイン情報を得るための宣言
 	@Autowired
 	HttpSession session;
 
+	//サービスのメソッドを使うための宣言
 	@Autowired
 	private RentalService rentalService;
 
@@ -49,14 +52,14 @@ public class RentalController {
 			model.addAttribute("statusCode", rentalService.selectStatusCode());
 			//区分コードの習得
 			model.addAttribute("kubun", rentalService.selectCode());
-
+			//今日の日付を習得
 			Date date = new Date();
 			model.addAttribute("date", date);
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
 		}
-		//戻り値 区分データ,ステータースデータ
+		//戻り値 区分データ,ステータースデータ,今日の日付
 		return "rentalIndex";
 	}
 
@@ -91,6 +94,7 @@ public class RentalController {
 	public void addRental(Model model, @RequestBody List<Rental> rentalList) {
 
 		try {
+			//ウェブから貸与リストを取り込んでサービス処理をする
 			rentalService.addRental(rentalList);
 
 		} catch (Exception e) {
@@ -99,23 +103,6 @@ public class RentalController {
 		}
 	}
 
-	/**
-	 * 任意の貸与リストの資産の状態を002から001に変える
-	 * @param  int assetSeq 資産シークエンス
-	 * @return int 戻り値
-	 * */
-	@RequestMapping(value = "/cancelAsset", method = RequestMethod.POST)
-	@ResponseBody
-	public int cancelAsset(@RequestBody int assetSeq) {
-		int num=0;
-		try {
-			rentalService.changeAStatus(assetSeq,(String)session.getAttribute("id"));
-		} catch (Exception e) {
-
-			logger.debug(e.getMessage());
-		}
-return num;
-	}
 
 	/**
 	 * 貸与メイン画面表示
@@ -128,7 +115,7 @@ return num;
 	public List<Asset> selectAssetList(@RequestBody String selectedItem) {
 		List<Asset> assetList = new ArrayList<Asset>();
 		try {
-			selectedItem = selectedItem.replaceAll("[^0-9]", "");
+			//ウェブから資産の名を取り込んでデータテーブルから資産管理番号を探すメソッド
 			assetList = rentalService.selectAssetList(selectedItem);
 		} catch (Exception e) {
 
@@ -151,14 +138,16 @@ return num;
 	public Page<Rental> getuserlist(@RequestBody Page<Rental> page) {
 		try {
 			Rental rental = new Rental();
+			//ページに表示する個数を決める
 			rental.setLength(page.getLength());
+			//ページのスタート時点を決める
 			rental.setStart(page.getStart());
-			//もし資産番号を検索したらrentalのオブジェクトに入れて該当するデータを持ち出す
+			//もし資産番号を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String assetNumber = page.getColumns().get(0).getSearch().getValue();
 			if (null != assetNumber && !assetNumber.equals("")) {
 				rental.setAssetNumber(assetNumber);
 			}
-			//もし貸与期間を検索したらrentalのオブジェクトに入れて該当するデータを持ち出す
+			//もし貸与期間を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String rentalPeriod = page.getColumns().get(1).getSearch().getValue();
 			if (null != rentalPeriod && !rentalPeriod.equals("")) {
 				//rentalPeriodに数字以外の文字が入っていると除去する
@@ -167,12 +156,14 @@ return num;
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
+			//もし貸与ナンバーを検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String rentalNo = page.getColumns().get(2).getSearch().getValue();
 			if (null != rentalNo && !rentalNo.equals("")) {
 				rental.setRentalNo(rentalNo);
 			}
+			//貸与情報に該当するリストを取り出すメソッド
 			List<Rental> list = rentalService.selectAll(rental);
-
+			//ページの
 			page.setData(list);
 
 			int totalCount = rentalService.selectCount(rental);
