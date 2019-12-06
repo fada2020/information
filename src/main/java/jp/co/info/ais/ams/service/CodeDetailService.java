@@ -58,14 +58,6 @@ public class CodeDetailService {
 		return codeDetailMapper.selectMasterCodeId();
 	}
 
-	/**
-	 * 状態コード情報
-	 *
-	 * @return List<CodeDetail> 状態コード情報リスト
-	 */
-	public List<CodeDetail> selectStateCode() {
-		return codeDetailMapper.selectStateCode();
-	}
 
 
 	public List<CodeDetail> selectCode() {
@@ -111,12 +103,9 @@ public class CodeDetailService {
 	}
 
 	public int deleteDetailCode(String codeMDetail) {
-
-
-
-
 		return codeDetailMapper.deleteDetailCode(codeMDetail);
 	}
+
 	public int codeDetailListCheck(CodeDetail codeMDetail) {
 		int num = 0;
 		try {

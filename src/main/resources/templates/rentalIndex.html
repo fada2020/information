@@ -1030,6 +1030,7 @@ String.prototype.replaceAll = function(org, dest) {
             if (form.valid()) {
             	var number=$("#sub_subSelect option:selected").text();
 				/* もう一回資産の情報を確認してデータを表示する */
+				//ajax通信して資産ナンバーを転送して資産情報を取り込む
     			$.ajax({
     			   			"url" : "/rental/getAsset",
     			    		"type" : "post",

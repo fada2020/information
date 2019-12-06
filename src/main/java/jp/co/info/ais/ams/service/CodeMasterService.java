@@ -7,10 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.info.ais.ams.common.AppConstant;
-import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
-import jp.co.info.ais.ams.mapper.CodeDetailMapper;
 import jp.co.info.ais.ams.mapper.CodeMasterMapper;
 
 @Service
@@ -18,12 +15,7 @@ public class CodeMasterService {
 	private static final Logger logger = LogManager.getLogger(CodeMasterService.class);
 
 	@Autowired
-	private CodeDetailMapper codeDetailMapper;
-	@Autowired
-	private AppConstant appConstant;
-	@Autowired
 	private CodeMasterMapper codeMasterMapper;
-
 	/**
 	 *マスターコードと名前をInsert
 	 * @param codeMasterId
@@ -33,7 +25,6 @@ public class CodeMasterService {
 		codeMasterMapper.insertMasterIdName(codeMasterId, codeMasterName);
 
 	}
-
 	/**
 	 *名前をInsert
 	 * @param codeMasterName
@@ -42,7 +33,6 @@ public class CodeMasterService {
 
 		codeMasterMapper.insertMasterName(codeMasterName);
 	}
-
 	/**
 	 *マスターコードInsert
 	 * @param codeMasterId
@@ -51,7 +41,6 @@ public class CodeMasterService {
 
 		codeMasterMapper.insertMasterName(codeMasterId);
 	}
-
 	/**
 	 *　Listで転送
 	 * @param condition
@@ -60,7 +49,6 @@ public class CodeMasterService {
 	public List<CodeMaster> selectCodeMasterList(CodeMaster condition) {
 		return codeMasterMapper.selectCodeMasterList(condition);
 	}
-
 	/**
 	 *
 	 * @param condition
@@ -69,7 +57,6 @@ public class CodeMasterService {
 	public int selectCount(CodeMaster condition) {
 		return codeMasterMapper.selectCount(condition);
 	}
-
 	/**
 	 *Listに値の存在チェック
 	 * @param masterCode
@@ -77,7 +64,6 @@ public class CodeMasterService {
 	 */
 	public int CodeMasterListCheck(CodeMaster masterCode) {
 		int num = 0;
-
 		num = codeMasterMapper.CodeMasterListCheck(masterCode);
 		if (num == 0) {
 			codeMasterMapper.CodeMasterInsert(masterCode);
@@ -86,7 +72,6 @@ public class CodeMasterService {
 		return num;
 
 	}
-
 	/**
 	 *修正Update
 	 * @param masterCode
@@ -94,31 +79,19 @@ public class CodeMasterService {
 	 */
 	public int updateCodeMaster(CodeMaster masterCode) {
 
-		return codeMasterMapper.updateCodeMaster(masterCode);
+		 return codeMasterMapper.updateCodeMaster(masterCode);
 
 	}
-
 	/**
 	 *マスターコード削除
 	 * @param codeMasterId
 	 * @return int codeMasterId
 	 */
 	public int deleteMasterCode(String codeMasterId) {
-		int result = 0;
-
-		try {
-			CodeDetail condition = new CodeDetail();
-			condition.setCodeMasterId(codeMasterId);
-			result = codeDetailMapper.selectCount(condition);
-			if (result == 0) {
-
-				codeMasterMapper.deleteMasterCode(condition);
-			}
-		} catch (Exception e) {
-			logger.debug(e.getMessage());
-		}
-		return result;
+		return codeMasterMapper.deleteMasterCode(codeMasterId);
 
 	}
+
+
 
 }

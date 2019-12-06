@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
+	<!-- page script -->
 <script type="text/javascript">
 function check() {}
  document.addEventListener("DOMContentLoaded", function() {
@@ -22,8 +23,6 @@ function check() {}
 </script>
 
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -62,6 +61,7 @@ function check() {}
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
+
            <!--th:object="${login}"-->
             <form method="POST" action="/loginprocess" class="form-horizontal" name = "frm" >
 
@@ -69,32 +69,27 @@ function check() {}
                   <h1>IT資産管理システム </h1>
 
                 </div>
-
-
+				<!-- errorMessage表示 -->
 				<div style = "width : 250px; height : 30px; " id = "test">[[${errorMessage}]]</div>
-
-
               <div>
+
               	<fieldset>
                 	<input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" required />
               	</fieldset>
               </div>
-
               <div>
            	   	 <fieldset>
             	    <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" required/>
              	 </fieldset>
               </div>
-
 			<div id = "loginb" >
 				<div id ="logininb">
-
 					<input type ="submit" value="Login"id="submit_button" class="btn btn-success" />
 				</div>
-
 			</div>
 
-            </form> <!-- /logincheckform -->
+            </form>
+             <!-- /logincheckform -->
           </section>
        		  				 </div><!-- animate form login_form -->
                			</div><!-- login_wrapper -->

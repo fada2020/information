@@ -15,32 +15,31 @@ import jp.co.info.ais.ams.domain.CodeDetail;
 public interface CodeDetailMapper {
 
 
+	// リスト照会
 	List<CodeDetail> selectCodeDetailList(CodeDetail condition);
 
+	//ページング
 	int selectCount(CodeDetail condition);
 
+	// Listを確認してINTタイプで送る
 	int codeDetailListCheck(CodeDetail codeDetail);
 
+	//詳細新規登録
 	void codeDetailInsert(CodeDetail codeDetail);
 
+	//変更Update
 	int updateCodeDetail(CodeDetail detailCode);
 
+	//詳細ーコード削除
 	int deleteCodeDetail(String codeMasterId);
 
-	List<CodeDetail> selectProductCode();
-
-	List<CodeDetail> selectStateCode();
-
-	List<CodeDetail> selectKubunCode();
-
+	// マスターコードIDで選択 (code_detailテーブルから)
 	List<CodeDetail> selectMasterCodeId();
 
+	//マスターコードIDで選択 (code_masterテーブルから)-
 	List<CodeDetail> selectCode();
 
-	void CodeMasterInsert(CodeDetail codedetail);
-
-	int checkCodeDetail(CodeDetail detailCode);
-
+	//詳細ーコード削除
 	int deleteDetailCode(String codeMDetail);
 
 
