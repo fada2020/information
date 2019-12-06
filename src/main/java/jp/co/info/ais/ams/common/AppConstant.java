@@ -25,9 +25,9 @@ public class AppConstant {
 	public final static String STATE_BREAKDOWN = "03";
 	public final static String STATE_DISUSE = "04";
 
-	public final static String MASTER_STATE = "001";
-	public final static String MASTER_DETAIL = "002";
-	public final static String MASTER_CLASS= "003";
+	public final static int MASTER_STATE = 1;
+	public final static int MASTER_DETAIL = 2;
+	public final static int MASTER_CLASS= 3;
 
 	public final static String USE_CODE= "0";
 	public final static String UNUSE_CODE= "1";

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.ams.mapper.RentalMapper">
-
-
-	<select id="selectAll"
-		resultType="jp.co.info.ais.ams.domain.Rental">
-
+	<!--START 検索した情報及び全体リストを貸与のメイン画面に取り込む  -->
+	<select id="selectAll" resultType="jp.co.info.ais.ams.domain.Rental">
 		SELECT
 		a.asset_seq,
 		a.asset_number,
@@ -41,14 +36,14 @@
 		</if>
 		AND r.return_day is null
 		ORDER BY
-		asset_number ASC
-
-
+		r.rental_no desc
 		LIMIT #{length}
 		OFFSET
 		#{start}
 	</select>
+	<!--END 検索した情報及び全体リストを貸与のメイン画面に取り込む  -->
 
+	<!--START 検索した情報及び全体リストを貸与のメイン画面のカウントのためのメソッド  -->
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
 		FROM rental r
@@ -66,9 +61,10 @@
 		</if>
 		and r.return_day is null
 	</select>
+	<!--END 検索した情報及び全体リストを貸与のメイン画面のカウントのためのメソッド  -->
 
-	<select id="getSelectCodeData" parameterType="String"
-		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<!--START データコードをセレクト  -->
+	<select id="getSelectCodeData" parameterType="String" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
@@ -77,10 +73,10 @@
 		item1=${codeDetailName}
 
 	</select>
+	<!--END データコードをセレクト  -->
 
-
-	<select id="researchRental" parameterType="int"
-		resultType="jp.co.info.ais.ams.domain.Rental">
+	<!--START 単一の貸与情報を取り出す  -->
+	<select id="researchRental" parameterType="int" resultType="jp.co.info.ais.ams.domain.Rental">
 		SELECT
 		a.asset_seq,
 		a.asset_number,
@@ -105,17 +101,20 @@
 		AND return_day IS NULL
 
 	</select>
-	<select id="selectStatusCode"
-		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<!--END 単一の貸与情報を取り出す  -->
+
+	<!--START メインページに見せる資産コードの詳細情報を取り出す  -->
+	<select id="selectStatusCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
 		FROM code_detail where
 		code_master_id='001'
 	</select>
+	<!--END メインページに見せる資産コードの詳細情報を取り出す  -->
 
-	<select id="selectCodeDetail" parameterType="String"
-		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<!--START メインページに見せるコードの詳細情報を取り出す  -->
+	<select id="selectCodeDetail" parameterType="int" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_master_id,
 		code_detail_id,
@@ -124,18 +123,20 @@
 		item2
 		FROM code_detail where code_master_id=#{codeMasterId}
 	</select>
+	<!--END メインページに見せるコードの詳細情報を取り出す  -->
 
-	<select id="selectCode" parameterType="String"
-		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<!--START メインページに見せるHW,SWなどの情報を取り出す  -->
+	<select id="selectCode" parameterType="int" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
 		FROM code_detail where
 		code_master_id=#{codeMasterId}
 	</select>
-	<select id="selectAsset"
-		parameterType="jp.co.info.ais.ams.domain.Rental"
-		resultType="jp.co.info.ais.ams.domain.Asset">
+	<!--END メインページに見せるHW,SWなどの情報を取り出す  -->
+
+	<!--START 最後に選択してもらった資産情報を取り出す -->
+	<select id="selectAsset" parameterType="jp.co.info.ais.ams.domain.Rental" resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
@@ -143,10 +144,10 @@
 		FROM asset where
 		asset_number=#{assetNumber} and status_code=#{statusCode}
 	</select>
+	<!--END 最後に選択してもらった資産情報を取り出す -->
 
-	<select id="selectAssetList"
-		parameterType="jp.co.info.ais.ams.domain.Asset"
-		resultType="jp.co.info.ais.ams.domain.Asset">
+	<!--START選択してもらったコードを基にして該当する資産の情報を取り出す -->
+	<select id="selectAssetList" parameterType="jp.co.info.ais.ams.domain.Asset" resultType="jp.co.info.ais.ams.domain.Asset">
 		SELECT
 		asset_seq,
 		asset_number,
@@ -154,9 +155,10 @@
 		FROM asset where
 		status_code=#{statusCode} and kubun_code=#{kubunCode}
 	</select>
+	<!--END 選択してもらったコードを基にして該当する資産の情報を取り出す -->
 
+	<!--START リスト上にあるデータを取り込んで資産データテーブルのステータスを変える -->
 	<update id="changeStatus" parameterType="java.util.List">
-
 		<foreach collection="itemList" item="item" separator=";">
 			update asset
 			<set>
@@ -165,15 +167,12 @@
 			</set>
 			where asset_seq= #{item.assetSeq}
 		</foreach>
-
 	</update>
+	<!--END リスト上にあるデータを取り込んで資産データテーブルのステータスを変える -->
 
+	<!--START リスト上にあるデータを取り込んで貸与データテーブルに書き込む -->
 	<insert id="addRental" parameterType="java.util.List">
-		<selectKey resultType="String" keyProperty="rentalNo"
-			order="BEFORE">
-
-
-
+		<selectKey resultType="String" keyProperty="rentalNo" order="BEFORE">
 			SELECT CONCAT((CURDATE()+0),CONCAT('-',
 			LPAD(IFNULL(MAX(
 			RIGHT(rental_no, 3)
@@ -182,84 +181,78 @@
 			FROM rental b WHERE rental_no
 			LIKE
 			CONCAT((CURDATE()+0),'%')
-
 		</selectKey>
-		INSERT INTO rental(
-		rental_Seq,
-		asset_Seq,
-		rental_day,
-		rental_User_id,
-		purpose,
-		storage_Location,
-		speciality,
-		applicant_id,
-		return_Period,
-		bp_name,
-		insert_id,
-		update_id,
-		rental_no,
-		status_code
-		)
-		VALUES
-		<foreach item="item" index="index" collection="itemList"
-			separator=",">
+			INSERT INTO rental(
+			rental_Seq,
+			asset_Seq,
+			rental_day,
+			rental_User_id,
+			purpose,
+			storage_Location,
+			speciality,
+			applicant_id,
+			return_Period,
+			bp_name,
+			insert_id,
+			update_id,
+			rental_no,
+			status_code
+			)
+			VALUES
+		<foreach item="item" index="index" collection="itemList" separator=",">
 			(
-			(SELECT
-			IFNULL(MAX(r.rental_seq) + 1, 1) FROM rental r),
-			#{item.assetSeq},
-			#{item.rentalDay},
-			#{item.rentalUserId},
-			#{item.purpose},
-			#{item.storageLocation},
-			#{item.speciality},
-			#{item.applicantId},
-			#{item.returnPeriod},
-			#{item.bpName},
-			#{item.insertId},
-			#{item.updateId},
-			#{rentalNo},
-			#{item.statusCode}
+				(SELECT
+					IFNULL(MAX(r.rental_seq) + 1, 1) FROM rental r),
+					#{item.assetSeq},
+					#{item.rentalDay},
+					#{item.rentalUserId},
+					#{item.purpose},
+					#{item.storageLocation},
+					#{item.speciality},
+					#{item.applicantId},
+					#{item.returnPeriod},
+					#{item.bpName},
+					#{item.insertId},
+					#{item.updateId},
+					#{rentalNo},
+					#{item.statusCode}
 			)
 		</foreach>
 	</insert>
+	<!--END リスト上にあるデータを取り込んで貸与データテーブルに書き込む -->
 
-	<update id="returnAsset"
-		parameterType="jp.co.info.ais.ams.domain.Rental">
+	<!--START 返却する為の情報を取り込んで貸与データテーブルと資産データテーブルの情報を変える -->
+	<update id="returnAsset" parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 		update_id=#{updateId},
-
 		return_day=#{returnDay},
 		return_user_id=#{returnUserId}
 		where
 		asset_seq=#{assetSeq}
-
 	</update>
+	<!--END 返却する為の情報を取り込んで貸与データテーブルと資産データテーブルの情報を変える -->
 
-	<update id="changeAssetStatus"
-		parameterType="jp.co.info.ais.ams.domain.Rental">
+	<!--START 返却が出来たら資産の状態も変更する -->
+	<update id="changeAssetStatus" parameterType="jp.co.info.ais.ams.domain.Rental">
 		update asset set
 		update_id=#{updateId},
 		status_code=#{statusCode}
-
 		where
 		asset_number=#{assetNumber}
-
 	</update>
+	<!--END 返却が出来たら資産の状態も変更する -->
 
-	<update id="changeAStatus"
-		parameterType="jp.co.info.ais.ams.domain.Rental">
-
+	<!--START 該当する資産のステータスの情報を変える -->
+	<update id="changeAStatus" parameterType="jp.co.info.ais.ams.domain.Rental">
 		update asset set
-
 		update_id=#{updateId},
 		status_code=#{statusCode}
-
 		where asset_seq=#{assetSeq}
-
 	</update>
+	<!--END 該当する資産のステータスの情報を変える -->
 
-	<update id="updateRental"
-		parameterType="jp.co.info.ais.ams.domain.Rental">
+	<!--START アップデートする為のメソッド -->
+	<update id="updateRental" parameterType="jp.co.info.ais.ams.domain.Rental">
 		update rental set
 		rental_day =#{rentalDay},
 		rental_User_id=#{rentalUserId},
@@ -271,9 +264,6 @@
 		bp_name=#{bpName},
 		update_id=#{updateId}
 		where asset_seq=#{assetSeq}
-
 	</update>
-
-
-
+	<!--END アップデートする為のメソッド -->
 </mapper>

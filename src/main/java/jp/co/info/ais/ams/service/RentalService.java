@@ -33,7 +33,7 @@ public class RentalService {
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
 	/**
-	 * 全ての貸与情報を持ち出す
+	 * 全ての貸与情報を取り出す
 	 *
 	 * @param Rental
 	 * @return List<Rental>
@@ -66,7 +66,7 @@ public class RentalService {
 	}
 
 	/**
-	 * 単一の貸与情報を持ち出す
+	 * 単一の貸与情報を取り出す
 	 *
 	 * @param int
 	 * @return Rental
@@ -77,18 +77,18 @@ public class RentalService {
 	}
 
 	/**
-	 *メインページに見せるコードの詳細情報を持ち出す
+	 *メインページに見せるコードの詳細情報を取り出す
 	 *
 
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCodeDetail() {
-		String codeMasterId = AppConstant.MASTER_DETAIL;
+		int codeMasterId = AppConstant.MASTER_DETAIL;
 		return rentalMapper.selectCodeDetail(codeMasterId);
 	}
 
 	/**
-	 *メインページに見せるステータスコードの詳細情報を持ち出す
+	 *メインページに見せる資産コードの詳細情報を取り出す
 	 *
 	 * @param
 	 * @return List<CodeDetail>
@@ -99,30 +99,29 @@ public class RentalService {
 	}
 
 	/**
-	 *メインページに見せる詳細情報を持ち出す
+	 *メインページに見せるHW,SWなどの情報を取り出す
 	 *
 	 * @param
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCode() {
-		String codeMasterId = AppConstant.MASTER_CLASS;
+		int codeMasterId = AppConstant.MASTER_CLASS;
 		return rentalMapper.selectCode(codeMasterId);
 	}
 
 	/**
-	 *最後に選択してもらった資産情報を持ち出す
+	 *最後に選択してもらった資産情報を取り出す
 	 *
 	 * @param String
 	 * @return Asset
 	 */
 	public Asset selectAsset(String number) {
 
-		return rentalMapper
-				.selectAsset(new Rental(number, AppConstant.STATE_STORAGE, (String) session.getAttribute("id")));
+		return rentalMapper.selectAsset(new Rental(number, AppConstant.STATE_STORAGE, (String) session.getAttribute("id")));
 	}
 
 	/**
-	 *選択してもらったコードを基にして該当する資産の情報を持ち出す
+	 *選択してもらったコードを基にして該当する資産の情報を取り出す
 	 *
 	 * @param String
 	 * @return List<Asset>
@@ -135,7 +134,7 @@ public class RentalService {
 	}
 
 	/**
-	 *リスト上にあるデータを持ち込んで貸与データテーブルに書き込む
+	 *リスト上にあるデータを取り込んで貸与データテーブルに書き込む
 	 *
 	 * @param  List<Rental>
 	 * @return int
@@ -158,7 +157,7 @@ public class RentalService {
 	}
 
 	/**
-	 *リスト上にあるデータを持ち込んで資産データテーブルのステータスを変える
+	 *リスト上にあるデータを取り込んで資産データテーブルのステータスを変える
 	 *
 	 * @param  List<Rental>
 	 * @return int
@@ -171,7 +170,7 @@ public class RentalService {
 	}
 
 	/**
-	 *返却する為の情報を持ち込んで貸与データテーブルと資産データテーブルの情報を変える
+	 *返却する為の情報を取り込んで貸与データテーブルと資産データテーブルの情報を変える
 	 *
 	 * @param Rental
 	 * @param String
@@ -216,8 +215,7 @@ public class RentalService {
 	@Transactional
 	public int changeAssetStatus(String assetNumber) {
 
-		return rentalMapper.changeAssetStatus(
-				new Rental(assetNumber, AppConstant.STATE_RENTAL, (String) session.getAttribute("id")));
+		return rentalMapper.changeAssetStatus(new Rental(assetNumber, AppConstant.STATE_RENTAL, (String) session.getAttribute("id")));
 	}
 
 	/**

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.Asset;
 import jp.co.info.ais.ams.domain.Rental;
@@ -28,7 +29,10 @@ public class RentalController {
 	//エラーを表すための宣言
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
+	@Autowired
+	ExValidation exValidation;
 	//ログイン情報を得るための宣言
+
 	@Autowired
 	HttpSession session;
 
@@ -221,6 +225,10 @@ public class RentalController {
 	@ResponseBody
 	private int updateAsset(Model model, @RequestBody Rental rental) {
 		int successNum = 0;
+
+		if(!exValidation.validate(rental.getSpeciality())) {
+			logger.debug("`matakimasita");
+		}
 		try {
 
 			successNum = rentalService.updateRental(rental, (String) session.getAttribute("id"));
