@@ -79,12 +79,12 @@
 					<div class="col-md-2">
 						<span class="pull-left" style="font-size: 18px;">貸与番号</span>
 					</div>
-					<div class="col-md-2">
-						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸与番号">
+					<div class="col-md-2 ">
+						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸与番号" maxlength="15">
 					</div>
 					<!--END 貸与番号検索 -->
 					<!--START 返却予定日検索 -->
-					<div class="col-md-2">
+					<div class="col-md-2 col-md-offset-1">
 						<span class="pull-left" style="font-size: 18px;">返却予定日</span>
 					</div>
 					<div class="col-md-2">
@@ -110,11 +110,11 @@
 						<span class="pull-left" style="font-size: 18px;">管理番号</span>
 					</div>
 					<div class="col-md-2">
-						<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search">
+						<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 					</div>
 					<!--END 管理番号検索 -->
 					<!--START 貸与登録ボタン -->
-					<div class="col-md-2 pull-right">
+					<div class="col-md-2 col-md-offset-5">
 						<button type="button" id="deleteButton" class="btn btn-success pull-right" onclick="modalInsert()">
 							<i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</button>
 					</div>
@@ -244,7 +244,7 @@
 																<!--START 特記事項の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">特記事項</label>
-																	<div class="col-md-10">
+																	<div class="col-md-9">
 																		<textarea id="speciality_view" name="speciality" class="form-control col-md-9"></textarea>
 																	</div>
 																</div>
@@ -463,6 +463,16 @@
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
+		//特殊文字を削除するメソッド
+    	function specialCharRemove(obj) {
+
+			var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi;
+
+			if(pattern.test(obj)){
+				obj = obj.replace(pattern,"");
+			}
+			return obj;
+		}
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
@@ -490,27 +500,27 @@
     		statusCode.forEach(function( value ) {
     		statusCodeMap.set(value.codeDetailId, value.codeDetailName);
     		});
-    /*登録を取り消したら作動するメソッド  */
-	function cancelInsert(){
-    	//貸与目録をリセットする
-		$('#selectedAsset > tbody').empty();
-    	//登録フォームのテキストをリセットする
-        $('#insertForm').find('input[type="text"], textarea').val('');
-     	//登録フォームのセレクトをリセットする
-		$('select').find('option:first').attr('selected', 'selected');
-     	//START登録フォームのデートをリセットする
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		if(dd<10) {
-			 dd='0'+dd
-		}
-		$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
-		//END登録フォームのデートをリセットする
-		$('#modal3d2').modal("hide");
-    }
-    //START ONLOADのメソッド
+	    /*登録を取り消したら作動するメソッド  */
+		function cancelInsert(){
+	    	//貸与目録をリセットする
+			$('#selectedAsset > tbody').empty();
+	    	//登録フォームのテキストをリセットする
+	        $('#insertForm').find('input[type="text"], textarea').val('');
+	     	//登録フォームのセレクトをリセットする
+			$('select').find('option:first').attr('selected', 'selected');
+	     	//START登録フォームのデートをリセットする
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			if(dd<10) {
+				 dd='0'+dd
+			}
+			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
+			//END登録フォームのデートをリセットする
+			$('#modal3d2').modal("hide");
+	    }
+   		 //START ONLOADのメソッド
         $(function(){
         	//登録フォームの貸与日のカーレンダー
        	 	$('#rentalsDay_search').datetimepicker({
@@ -743,24 +753,21 @@
 	         /*END 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
 			/* 有効性を通過したら下のメソッドを行う */
          	if (form.valid()) {
-	     		/*変更してもらったデータにもし-の文字があればなくすメソッド  */
-	        	 String.prototype.replaceAll = function(org, dest) {
-	        		    return this.split(org).join(dest);
-	        }
+	     		/*変更してもらったデータにもし-の文字があればなくすメソッド
      		/* 変更する情報をオブジェクト化する  */
         	var rental = new Object();
-        	rental.rentalNo=$('#rentalNo_view').val();
-        	rental.assetNumber=$('#assetNumber_view').val();
-        	rental.codeDetailName=$('#codeDetailName_view').val();
-        	rental.purpose=$('#purpose_view').val();
-        	rental.storageLocation=$('#storageLocation_view').val();
-        	rental.rentalDay=$('#rentalDay_view').val().replaceAll("-","");
-        	rental.speciality=$('#speciality_view').val();
-        	rental.returnPeriod=$('#returnPeriod_view').val().replaceAll("-","");
-        	rental.rentalUserId=$('#rentalUserId_view').val();
-        	rental.bpName=$('#bpName_view').val();
-        	rental.applicantId=$('#applicantId_view').val();
-        	rental.assetSeq=$('#assetSeq_hidden').val();
+        	rental.rentalNo=specialCharRemove($('#rentalNo_view').val());
+        	rental.assetNumber=specialCharRemove($('#assetNumber_view').val());
+        	rental.codeDetailName=specialCharRemove($('#codeDetailName_view').val());
+        	rental.purpose=specialCharRemove($('#purpose_view').val());
+        	rental.storageLocation=specialCharRemove($('#storageLocation_view').val());
+        	rental.rentalDay=specialCharRemove($('#rentalDay_view').val());
+        	rental.speciality=specialCharRemove($('#speciality_view').val());
+        	rental.returnPeriod=specialCharRemove($('#returnPeriod_view').val());
+        	rental.rentalUserId=specialCharRemove($('#rentalUserId_view').val());
+        	rental.bpName=specialCharRemove($('#bpName_view').val());
+        	rental.applicantId=specialCharRemove($('#applicantId_view').val());
+        	rental.assetSeq=specialCharRemove($('#assetSeq_hidden').val());
             		$.ajax({
          			   type  : "POST",
          			   url : "/rental/updateRental",
@@ -897,10 +904,7 @@ function researchRental(assetSeq){
 		var row = btn.parentNode.parentNode;
 		row.parentNode.removeChild(row);
 	}
-//全ての文字を一気に変えるためのメソッド
-String.prototype.replaceAll = function(org, dest) {
-	return this.split(org).join(dest);
-}
+
 
  function rentalItem() {
 	 /* もし 一行もなければ警告する一行以上だったらページをリロードする*/
@@ -912,16 +916,16 @@ String.prototype.replaceAll = function(org, dest) {
 			$('#selectedAsset tbody tr').each(function() {
 				var rental =new Object();
 				var cellText = $(this);
-				rental.rentalUserId =cellText.find("#rentalUserId_i").text();
-				rental.assetNumber =cellText.find("#assetNumber_i").text();
-				rental.purpose  =cellText.find("#purpose_i").text();
-				rental.storageLocation =cellText.find("#storageLocation_i").text();
-				rental.speciality =cellText.find("#speciality_i").text();
-				rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
-				rental.assetSeq=cellText.find("#assetSeq_i").text();
-				rental.applicantId =cellText.find("#applicantId_i").text();
-				rental.rentalDay=cellText.find('#rentalDay_i').text().replaceAll("-","");
-				rental.bpName=cellText.find("#bpName_i").text();
+				rental.rentalUserId =specialCharRemove(cellText.find("#rentalUserId_i").text());
+				rental.assetNumber =specialCharRemove(cellText.find("#assetNumber_i").text());
+				rental.purpose  =specialCharRemove(cellText.find("#purpose_i").text());
+				rental.storageLocation =specialCharRemove(cellText.find("#storageLocation_i").text());
+				rental.speciality =specialCharRemove(cellText.find("#speciality_i").text());
+				rental.returnPeriod =specialCharRemove(cellText.find("#returnPeriod_i").text());
+				rental.assetSeq=specialCharRemove(cellText.find("#assetSeq_i").text());
+				rental.applicantId =specialCharRemove(cellText.find("#applicantId_i").text());
+				rental.rentalDay=specialCharRemove(cellText.find('#rentalDay_i').text());
+				rental.bpName=specialCharRemove(cellText.find("#bpName_i").text());
 				rental.insertId = /*[[${session.id}]]*/ 'user';
 				rental.updateId = /*[[${session.id}]]*/ 'user';
 				tdArr.push(rental);
@@ -956,7 +960,6 @@ String.prototype.replaceAll = function(org, dest) {
             var endDateArr = endDate.split('-');
             var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
             var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);
-
             if(startDateCompare.getTime() > endDateCompare.getTime()) {
                 alert("貸与日と返却予定日を確認してください。");
                 return false;
@@ -973,7 +976,6 @@ String.prototype.replaceAll = function(org, dest) {
                  		maxlength : 15
                 	},
                  	speciality : {
-
                  		maxlength : 200
                 	},
                 	storageLocation : {
@@ -1039,28 +1041,17 @@ String.prototype.replaceAll = function(org, dest) {
     			   			"contentType": "application/JSON",
     			   		 	"success" : function(data){
     			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td id="rentalUserId_i">'
-    			   					+$('#rentalUserId').val()+
-    			   					'</td><td id="applicantId_i">'
-    			   					+$("#applicantId").val()+
-    			   					'</td><td>'
-    			   					+$("#sub_singleSelect option:selected").text()+
-    			   					'</td><td id="assetNumber_i">'
-    			   					+number+
-    			   					'</td><td id="purpose_i">'
-    			   					+$("#purpose").val()+
-    			   					'</td><td id="storageLocation_i">'
-    			   					+$("#storageLocation").val()+
-    			   					'</td><td id="speciality_i">'
-    			   					+$("#speciality").val()+
-    			   					'</td><td id="bpName_i">'
-    			   					+$("#bpName").val()+
-    			   					'</td><td id="assetSeq_i" style="display:none;"> '
-    				   				+data.assetSeq+
-    				   				'</td><td id="returnPeriod_i">'
-    				   				+$("#returnPeriod").val()+
-    				   				'</td><td id="rentalDay_i">'
-    				   				+$("#todayDate").val()+
-    			   					'</td><td><button value="'+data.assetSeq+'" class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
+    			   					+specialCharRemove($('#rentalUserId').val())+'</td><td id="applicantId_i">'
+    			   					+specialCharRemove($("#applicantId").val())+'</td><td>'
+    			   					+specialCharRemove($("#sub_singleSelect option:selected").text())+'</td><td id="assetNumber_i">'
+    			   					+number+'</td><td id="purpose_i">'
+    			   					+specialCharRemove($("#purpose").val())+'</td><td id="storageLocation_i">'
+    			   					+specialCharRemove($("#storageLocation").val())+'</td><td id="speciality_i">'
+    			   					+specialCharRemove($("#speciality").val())+'</td><td id="bpName_i">'
+    			   					+specialCharRemove($("#bpName").val())+'</td><td id="assetSeq_i" style="display:none;"> '
+    				   				+data.assetSeq+'</td><td id="returnPeriod_i">'
+    				   				+specialCharRemove($("#returnPeriod").val())+'</td><td id="rentalDay_i">'
+    				   				+$("#todayDate").val()+'</td><td><button value="'+data.assetSeq+'"class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
     			   		 			assetKey.set(data.assetSeq,data.assetNumber);
     			   					$(function(){  $('select').find('option:first').attr('selected', 'selected');})
     			   	 		},

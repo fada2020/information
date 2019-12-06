@@ -81,41 +81,30 @@
 			<!-- sidebar -->
 			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
 			<!-- sidebar -->
-
 			<!-- top navigation -->
 			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								<i class="fa fa-list-alt"></i> 資産支給履歴
-							</h3>
+							<h3><i class="fa fa-list-alt"></i> 資産支給履歴</h3>
 						</div>
 					</div>
-
 					<div class="clearfix"></div>
-
 					<div class="row">
 						<div class="col">
-
 							<!-- searching condition -S -->
 							<!-- 1st line -->
 							<div class="row">
-
 								<div class="col-md-1">
 									<span class="pull-right" style="margin-left: -10%;">管理番号</span>
 								</div>
 								<div class="col-md-2">
-									<input type="text" class="form-control" placeholder="管理番号"
-										id="assetNumber_search" maxlength="15">
+									<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 								</div>
-
-
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right" style="margin-left: -10%;">貸与期間</span>
 								</div>
 								<div class="col-md-2">
@@ -123,25 +112,21 @@
 										<div class="control-group ">
 											<div class="controls">
 												<div class="input-prepend input-group">
-													<span class="add-on input-group-addon"><i
-														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
-														type="text" style="width: 200px" name="rental_search"
-														id="rental_search" class="form-control">
+													<input type="text" style="width: 200px" name="rental_search" id="rental_search" class="form-control">
+													<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
 												</div>
 											</div>
 										</div>
 									</fieldset>
 								</div>
 
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right">状態</span>
 								</div>
 								<div class="col-md-2">
-									<select class="form-control" id="status_search"
-										style="width: 120px;">
+									<select class="form-control" id="status_search" style="width: 120px;">
 										<option value="00">全体</option>
-										<option th:each="code : ${stateCode}"
-											th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+										<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 									</select>
 								</div>
 							</div>
@@ -149,17 +134,13 @@
 
 							<!-- 2nd line -->
 							<div class="row" style="height: 50px;">
-
 								<div class="col-md-1">
 									<span class="pull-right">貸出者</span>
 								</div>
 								<div class="col-md-2">
-									<input type="text" class="form-control" placeholder="貸出者"
-										id="applicant_search" maxlength="15">
+									<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
 								</div>
-
-
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right">返却期間</span>
 								</div>
 								<div class="col-md-2">
@@ -167,37 +148,25 @@
 										<div class="control-group ">
 											<div class="controls">
 												<div class="input-prepend input-group">
-													<span class="add-on input-group-addon"><i
-														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
-														type="text" style="width: 200px" name="return_search"
-														id="return_search" class="form-control">
+													<input type="text" style="width: 200px" name="return_search" id="return_search" class="form-control">
+													<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
 												</div>
 											</div>
 										</div>
 									</fieldset>
 								</div>
-
-						
-
 							</div>
 							<!-- 2nd line -->
 
 							<!-- searching condition -E -->
-
-
 							<div class="x_panel">
-								<button id=exportExcel class="btn btn-success pull-right"
-									title="履歴データをエクセルファイルでダウンロード">Excel</button>
+								<button id="exportExcel" class="btn btn-success pull-right" title="履歴データをエクセルファイルでダウンロード">Excel</button>
 								<br>
 								<br>
 								<br>
 								<div class="x_title"></div>
-
 								<div class="x_content">
-
-									<table
-										class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer"
-										id="table1" style="width: 100%;">
+									<table class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer" id="table1" style="width: 100%;">
 										<thead class="thead-light">
 											<tr class="headings">
 												<th colspan="3">装置</th>
@@ -207,7 +176,6 @@
 												<th>管理番号</th>
 												<th>Maker</th>
 												<th>Model</th>
-
 												<th>状態</th>
 												<th>貸与番号</th>
 												<th>用途</th>
@@ -218,9 +186,7 @@
 												<th>貸与日</th>
 												<th>返却日</th>
 												<th style="width: 40px;">
-													<button id="deleteHistory" class="btn btn-danger"
-														title="チェックした履歴情報を削除"
-														style="font-size: 12px; font-weight: bolder;">削除</button>
+													<button id="deleteHistory" class="btn btn-danger" title="チェックした履歴情報を削除" style="font-size: 12px; font-weight: bolder;">削除</button>
 												</th>
 											</tr>
 										</thead>
@@ -266,10 +232,8 @@
 	<script th:inline="javascript">
 
     /*<![CDATA[*/
-
         var modalesectiondata = null;
         var deleteList="";
-
         //状態コード作成
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
@@ -285,10 +249,8 @@
         		deleteList = deleteList.replace(target.value,"");
         	}
         }
-
     	//オンロード
         $(function(){
-
         	//貸与のデートピッカー
         	$('#rental_search').daterangepicker({
 			 locale: {
@@ -297,7 +259,6 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			}).val('');
-
 			//返却日のデートピッカー
 			$('#return_search').daterangepicker({
 				startDate: moment().add(-1, "months"),
@@ -478,7 +439,6 @@
                     }}
                     ]
             });
-
             /*assetNumberを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
             	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
@@ -503,8 +463,6 @@
                 .search( this.value )
                 .draw();
             } );
-
-
             $("#rental_search").change(function () {
                 var date = $("#rental_search").val();
                 modalesectiontable
@@ -530,11 +488,8 @@
           	//history delete -S
           	$('#deleteHistory').on('click',function(){
           		var a = deleteList.split("/");
-
           		if(a.length>1){
-
           			var confirmation = confirm(a.length-1 + " 項目の履歴データを削除します。");
-
           			if(confirmation){
     					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
     				       	{
@@ -543,16 +498,13 @@
     							contentType: 'application/JSON',
     							data : JSON.stringify(a)
     						}
-    					)
-    					.done(function(data) {
-
+    					).done(function(data) {
     						if(data>0){
     							alert(data+"項目の削除完了");
     							location.reload(true);
     						}else{
     							alert("削除の作業でエラーが発生しました。");
     						}
-
     					});
     				}
           		}else{
