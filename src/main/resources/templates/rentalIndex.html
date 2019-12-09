@@ -456,6 +456,8 @@
 	<script src="../vendors/iCheck/icheck.min.js"></script>
 	<!-- bootstrap-datetimepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/moment/locale/ja.js"></script>
+
 	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	<!-- Custom Theme Scripts -->
@@ -464,6 +466,7 @@
 	<script th:inline="javascript">
     /*<![CDATA[*/
 		//特殊文字を削除するメソッド
+		
     	function specialCharRemove(obj) {
 
 			var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi;
@@ -540,10 +543,14 @@
             });
             /*二つ一つの日付を選べるカーレンダーのフォーマットを決める  */
         	$('#rental_search').daterangepicker({
+        		todayBtn: "linked",
+       	    	clearBtn: true,
 				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 			 locale: {
-			       format: 'YYYY/MM/DD'
+			         applyLabel: '選択',
+			         cancelLabel: '今日',
+			         format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }

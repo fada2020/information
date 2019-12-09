@@ -29,5 +29,4 @@ public class ExValidation {
 		matcher = pattern.matcher(target);
 		return matcher.matches();
 	}
-
 }
