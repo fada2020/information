@@ -214,7 +214,8 @@
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></scri
+	pt>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
 	<!-- FastClick -->
 	<script src="../vendors/fastclick/lib/fastclick.js"></script>
@@ -224,6 +225,7 @@
 	<script src="../vendors/iCheck/icheck.min.js"></script>
 	<!-- bootstrap-daterangepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/moment/locale/ja.js"></script>
 	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="../build/js/custom.min.js"></script>
@@ -254,6 +256,8 @@
         	//貸与のデートピッカー
         	$('#rental_search').daterangepicker({
 			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: '今日',
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -264,6 +268,8 @@
 				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: '今日',
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -299,15 +305,15 @@
             //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
-            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
-            		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
+            		"info":           " _START_ ~ _END_ の _TOTAL_ 件",
+            		"infoEmpty":      " 0 ~ 0 の 0 件",
             	    "infoFiltered":   "",
             	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
-            	        "next":       "次へ",
-            	        "previous":   "前の"
+            	        "next":       "次",
+            	        "previous":   "前"
             	    }
                 },
             	"fixedHeader": true,

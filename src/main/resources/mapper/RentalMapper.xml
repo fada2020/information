@@ -4,37 +4,37 @@
 	<!--START 検索した情報及び全体リストを貸与のメイン画面に取り込む  -->
 	<select id="selectAll" resultType="jp.co.info.ais.ams.domain.Rental">
 		SELECT
-		a.asset_seq,
-		a.asset_number,
-		r.rental_seq,
-		r.rental_day,
-		r.rental_user_id,
-		r.purpose,
-		r.speciality,
-		r.applicant_id,
-		r.return_day,
-		r.return_user_id,
-		r.return_period,
-		a.status_code,
-		r.storage_Location,
-		r.bp_Name,
-		r.rental_no,
-		a.kubun_code
-		FROM rental r
-		join asset a on
-		r.asset_seq = a.asset_seq
-		WHERE
-		1 = 1
-		<if test="rentalNo != null and !rentalNo.equals('')">
-			AND r.rental_no LIKE '%${rentalNo}%'
-		</if>
-		<if test="assetNumber != null and !assetNumber.equals('')">
-			AND a.asset_number LIKE '%${assetNumber}%'
-		</if>
-		<if test="rentalDayS != null and rentalDayE !=null">
-			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
-		</if>
-		AND r.return_day is null
+			a.asset_seq,
+			a.asset_number,
+			r.rental_seq,
+			r.rental_day,
+			r.rental_user_id,
+			r.purpose,
+			r.speciality,
+			r.applicant_id,
+			r.return_day,
+			r.return_user_id,
+			r.return_period,
+			a.status_code,
+			r.storage_Location,
+			r.bp_Name,
+			r.rental_no,
+			a.kubun_code
+			FROM rental r
+			join asset a on
+			r.asset_seq = a.asset_seq
+			WHERE
+				1 = 1
+				<if test="rentalNo != null and !rentalNo.equals('')">
+					AND r.rental_no LIKE '%${rentalNo}%'
+				</if>
+				<if test="assetNumber != null and !assetNumber.equals('')">
+					AND a.asset_number LIKE '%${assetNumber}%'
+				</if>
+				<if test="rentalDayS != null and rentalDayE !=null">
+					AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+				</if>
+				AND r.return_day is null
 		ORDER BY
 		r.rental_no desc
 		LIMIT #{length}
@@ -68,10 +68,8 @@
 		SELECT
 		code_detail_id,
 		code_detail_name
-
 		FROM code_detail where
 		item1=${codeDetailName}
-
 	</select>
 	<!--END データコードをセレクト  -->
 
@@ -99,7 +97,6 @@
 		r.asset_seq = a.asset_seq
 		WHERE a.asset_seq=#{assetSeq}
 		AND return_day IS NULL
-
 	</select>
 	<!--END 単一の貸与情報を取り出す  -->
 
