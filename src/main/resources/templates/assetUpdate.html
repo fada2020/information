@@ -1,53 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>IT資産管理</title>
-
-    <!-- favicons -->
-	<link rel="icon" href="../images/aisRogo.png">
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
-    <!-- bootstrap-datetimepicker -->
-    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-
-    <style>
-    	#am_table1, #am_table2, thead, th {text-align: center;}
-		.my-custom-scrollbar {
-			position: relative;
-			height: 200px;
-			overflow: auto;
-		}
-		.table-wrapper-scroll-y {
-			display: block;
-		}
-		.error {
-	      color: red;
-	      background-color: lavender;
-		}
-	</style>
-
-  </head>
-  <body class="nav-md" style="width: 100%;">
     <div class="container body">
       <div class="main_container">
-
-
         <!-- page content -->
         <div class="" role="main">
           <div class="">
@@ -345,7 +297,7 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 
 						<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
 							<thead>
@@ -397,7 +349,7 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 									<table class="table table-striped jambo_table bulk_action" id="am_table2">
 										<thead>
 											<tr class="headings">
@@ -438,8 +390,9 @@
 				<!-- /保守履歴テーブル -->
 					<div class="col-md-12 text-left">
 						<br>
-		  				<button type="button" class="btn btn-secondary pull-right" onclick = "location.href ='/asset'">戻る</button>
+						<button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">戻る</button>
 		  				<button type="button" id="sisanupdate" class="btn btn-primary btn-warning">変更</button>
+
 		  			</div>
 
 		  	</div>
@@ -453,32 +406,6 @@
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- jquery-ui -->
-	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
-    <!-- jquery-val
-ation-1.19.1 -->
-    <script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
-
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-datetimepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
 
     <!-- page script -->
     <script th:inline="javascript">
@@ -539,6 +466,7 @@ ation-1.19.1 -->
         			mhupdate(), mhinsert();
         		}
         		assupdate();
+        		location.href = '/asset';
         	});//click event sisanupdate end
 
         	// 資産変更プロセス
@@ -933,5 +861,3 @@ ation-1.19.1 -->
     /*]]>*/
     </script>
 
-</body>
-</html>

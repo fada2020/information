@@ -44,6 +44,11 @@
 			height: 130px;
 			overflow: auto;
 		}
+		.my-custom-scrollbar-update {
+			position: relative;
+			height: 250px;
+			overflow: auto;
+		}
 		.table-wrapper-scroll-y {
 			display: block;
 		}
@@ -51,6 +56,7 @@
 	      color: red;
 	      background-color: lavender;
 		}
+		#am_table1, #am_table2, thead, th {text-align: center;}
 	</style>
 
   </head>
@@ -459,7 +465,7 @@
 							  	<div class="row">
 							  		<div class="row well">
 						            	<div class="row">
-								  			<div class="col-md-6">
+								  		<div class="col-md-6">
 								  				<div class="row">
 										  			<div class="col-md-2">
 										  				<span>区分</span>
@@ -732,11 +738,6 @@
 
 					<div class="modal fade" id="assetUpdateModal" >
 
-							<div class="modal-dialog">
-            <div class="modal-content" style="width:170%; left:-30%">
-                <!-- Content will be loaded here from "remote.php" file -->
-            </div>
-        </div>
 
 					</div>
 
@@ -787,7 +788,27 @@
     <!-- page script -->
     <script th:inline="javascript">
     /*<![CDATA[*/
-
+   	 function assetUpdateF(assetSeq){
+    	console.log(assetSeq);
+        	var requestAssetSeq = assetSeq;
+        	$.ajax(/*[[@{/asset/updateSequence}]]*/ 'asset/updateSequence',
+			       	{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(requestAssetSeq)
+					}
+				)
+				.done(function(data) {
+					console.log(data);
+					console.log("/asset/up"+requestAssetSeq);
+					$("#assetUpdateModal").load("/asset/up"+requestAssetSeq);
+				})
+        		.error(function(){
+        			alert("error");
+        		});
+        	alert(assetSeq);
+        }
     	// 区分コードMap
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
@@ -928,8 +949,7 @@
                     	targets: 7,
                     	data: null,
                         render: function ( data, type, row, meta ) {
-                        var html = '<button href =\'' +
-                        	'/asset/' + row.assetSeq + '\'"  class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" >変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
+                        var html = '<button class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" onClick="assetUpdateF('+ row.assetSeq +')">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
                         		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';
