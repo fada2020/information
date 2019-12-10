@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.Accessories;
 import jp.co.info.ais.ams.domain.Asset;
@@ -26,8 +25,7 @@ import jp.co.info.ais.ams.service.AssetService;
 @RequestMapping("/asset")
 public class AssetController {
 	private static final Logger logger = LogManager.getLogger(AssetController.class);
-	@Autowired
-	ExValidation exValidation;
+
 	@Autowired
 	private AssetService assetService;
 
@@ -52,6 +50,42 @@ public class AssetController {
     		logger.error(e.getMessage());
 		}
         return "asset";
+    }
+    /**
+     * 資産変更ページ
+     * @param assetSeq
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/up"+"{assetSeq}", method = RequestMethod.GET)
+    public String loadUpdateGET(@PathVariable("assetSeq") int assetSeq, Model model) {
+    	try {
+        	// 資産情報照会
+    		model.addAttribute("asset", assetService.selectAsset(assetSeq));
+        	// コード値セッティング
+    		model.addAttribute("productCode", assetService.selectProductCode());
+    		model.addAttribute("stateCode", assetService.selectStateCode());
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return "assetUpdate";
+    }
+    /**
+     * 資産変更
+     * @param model
+     * @param assetSeq
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateSequence", method = RequestMethod.POST)
+    public Asset loadUpdatePOST(Model model,@RequestBody int assetSeq) {
+    	try {
+    		// 資産情報照会
+    		return assetService.selectAsset(assetSeq);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+    		return null;
+		}
     }
 
 	/**
@@ -190,16 +224,17 @@ public class AssetController {
 	 */
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
     public String assetUpdateInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
+
     	try {
         	// 資産情報照会
-        	model.addAttribute("asset", assetService.selectAsset(assetSeq));
+    		model.addAttribute("asset", assetService.selectAsset(assetSeq));
         	// コード値セッティング
-        	model.addAttribute("productCode", assetService.selectProductCode());
-        	model.addAttribute("stateCode", assetService.selectStateCode());
+    		model.addAttribute("productCode", assetService.selectProductCode());
+    		model.addAttribute("stateCode", assetService.selectStateCode());
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-        return "assetUpdate";
+        return "assetUpdate" ;
     }
 
 	/**
@@ -277,7 +312,6 @@ public class AssetController {
     @RequestMapping(value = "/deleteAccessories", method = RequestMethod.POST)
     @ResponseBody
     public int deleteAccessories(@RequestBody Accessories accessories) {
-    	logger.debug(":::::::::::::::::{}", accessories);
     	int result = 0;
     	try {
 	    	// 付属品削除
