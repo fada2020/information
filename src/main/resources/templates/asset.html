@@ -789,7 +789,6 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
    	 function assetUpdateF(assetSeq){
-    	console.log(assetSeq);
         	var requestAssetSeq = assetSeq;
         	$.ajax(/*[[@{/asset/updateSequence}]]*/ 'asset/updateSequence',
 			       	{
@@ -1301,6 +1300,8 @@
             });
 
         })
+
+
 /*]]>*/
     </script>
 
