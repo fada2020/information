@@ -53,6 +53,42 @@ public class AssetController {
 		}
         return "asset";
     }
+    /**
+     * 資産変更ページ
+     * @param assetSeq
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/up"+"{assetSeq}", method = RequestMethod.GET)
+    public String loadUpdateGET(@PathVariable("assetSeq") int assetSeq, Model model) {
+    	try {
+        	// 資産情報照会
+    		model.addAttribute("asset", assetService.selectAsset(assetSeq));
+        	// コード値セッティング
+    		model.addAttribute("productCode", assetService.selectProductCode());
+    		model.addAttribute("stateCode", assetService.selectStateCode());
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return "assetUpdate";
+    }
+    /**
+     * 資産変更
+     * @param model
+     * @param assetSeq
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateSequence", method = RequestMethod.POST)
+    public Asset loadUpdatePOST(Model model,@RequestBody int assetSeq) {
+    	try {
+    		// 資産情報照会
+    		return assetService.selectAsset(assetSeq);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+    		return null;
+		}
+    }
 
 	/**
 	 * 検索条件に応じた資産リスト出力
@@ -190,16 +226,17 @@ public class AssetController {
 	 */
     @RequestMapping(value = "/{assetSeq}", method = RequestMethod.GET)
     public String assetUpdateInfo(@PathVariable("assetSeq") int assetSeq, Model model) {
+
     	try {
         	// 資産情報照会
-        	model.addAttribute("asset", assetService.selectAsset(assetSeq));
+    		model.addAttribute("asset", assetService.selectAsset(assetSeq));
         	// コード値セッティング
-        	model.addAttribute("productCode", assetService.selectProductCode());
-        	model.addAttribute("stateCode", assetService.selectStateCode());
+    		model.addAttribute("productCode", assetService.selectProductCode());
+    		model.addAttribute("stateCode", assetService.selectStateCode());
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-        return "assetUpdate";
+        return "assetUpdate" ;
     }
 
 	/**
