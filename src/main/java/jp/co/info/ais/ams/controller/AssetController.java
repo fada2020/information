@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.Accessories;
 import jp.co.info.ais.ams.domain.Asset;
@@ -26,8 +25,7 @@ import jp.co.info.ais.ams.service.AssetService;
 @RequestMapping("/asset")
 public class AssetController {
 	private static final Logger logger = LogManager.getLogger(AssetController.class);
-	@Autowired
-	ExValidation exValidation;
+
 	@Autowired
 	private AssetService assetService;
 
@@ -314,7 +312,6 @@ public class AssetController {
     @RequestMapping(value = "/deleteAccessories", method = RequestMethod.POST)
     @ResponseBody
     public int deleteAccessories(@RequestBody Accessories accessories) {
-    	logger.debug(":::::::::::::::::{}", accessories);
     	int result = 0;
     	try {
 	    	// 付属品削除
