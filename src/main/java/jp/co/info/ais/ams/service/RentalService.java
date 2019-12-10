@@ -40,6 +40,7 @@ public class RentalService {
 	 */
 	public List<Rental> selectAll(Rental rental) {
 
+
 		return rentalMapper.selectAll(rental);
 	}
 
@@ -50,7 +51,7 @@ public class RentalService {
 	 * @return int
 	 */
 	public int selectCount(Rental rental) {
-
+	
 		return rentalMapper.selectCount(rental);
 	}
 
@@ -83,7 +84,7 @@ public class RentalService {
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCodeDetail() {
-		int codeMasterId = AppConstant.MASTER_DETAIL;
+		String codeMasterId = AppConstant.MASTER_DETAIL;
 		return rentalMapper.selectCodeDetail(codeMasterId);
 	}
 
@@ -105,7 +106,7 @@ public class RentalService {
 	 * @return List<CodeDetail>
 	 */
 	public List<CodeDetail> selectCode() {
-		int codeMasterId = AppConstant.MASTER_CLASS;
+		String codeMasterId = AppConstant.MASTER_CLASS;
 		return rentalMapper.selectCode(codeMasterId);
 	}
 

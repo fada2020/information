@@ -21,11 +21,11 @@ public interface RentalMapper {
 	//単一の貸与情報を取り出す
 	public Rental researchRental(int assetSeq);
 	//メインページに見せるコードの詳細情報を取り出す
-	public List<CodeDetail> selectCodeDetail(int codeMasterId);
+	public List<CodeDetail> selectCodeDetail(String codeMasterId);
 	//メインページに見せる資産コードの詳細情報を取り出す
 	public List<CodeDetail> selectStatusCode();
 	//メインページに見せるHW,SWなどの情報を取り出す
-	public List<CodeDetail> selectCode(int codeMasterId);
+	public List<CodeDetail> selectCode(String codeMasterId);
 	//最後に選択してもらった資産情報を取り出す
 	public Asset selectAsset(Rental rental );
 	//選択してもらったコードを基にして該当する資産の情報を取り出す
