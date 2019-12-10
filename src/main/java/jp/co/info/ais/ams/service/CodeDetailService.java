@@ -42,7 +42,7 @@ public class CodeDetailService {
 	 * @return int condition
 	 */
 	public int selectCount(CodeDetail condition) {
-		
+
 		return codeDetailMapper.selectCount(condition);
 	}
 
@@ -120,7 +120,7 @@ public class CodeDetailService {
 				asset.setKubunCode(codeDetail.getCodeDetailId());
 				num=assetMapper.selectCount(asset);
 			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)){
-				asset.setStatusCode(codeDetail.getUseFlag());
+				asset.setStatusCode(codeDetail.getCodeDetailId());
 				num=assetMapper.selectCount(asset);
 			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_STATE)) {
 				codeDetail.setUseFlag(appConstant.USE_CODE);
