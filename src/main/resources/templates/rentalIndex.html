@@ -50,7 +50,13 @@
 	}
 	.control-label {
 		text-align: center;
+
 	}
+.daterangepicker {
+      width:40%; font-size: 11px;
+     right: -100px;
+
+}
 </style>
 </head>
 <body class="nav-md">
@@ -77,27 +83,27 @@
 				<div class="row">
 					<!--START 貸与番号検索 -->
 					<div class="col-md-2">
-						<span class="pull-left" style="font-size: 18px;">貸与番号</span>
+						<span class="pull-right" style="font-size: 18px;">貸与番号</span>
 					</div>
 					<div class="col-md-2 ">
 						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸与番号" maxlength="15">
 					</div>
 					<!--END 貸与番号検索 -->
 					<!--START 返却予定日検索 -->
-					<div class="col-md-2 col-md-offset-1">
-						<span class="pull-left" style="font-size: 18px;">返却予定日</span>
+					<div class="col-md-2">
+						<span class="pull-right" style="font-size: 18px;">返却予定日</span>
 					</div>
 					<div class="col-md-2">
-						<fieldset>
-							<div class="control-group">
+
+							<div class="control-group pull-left">
 								<div class="controls">
-									<div class="input-prepend input-group">
-										<input type="text" style="width: 200px;" name="rental_search"id="rental_search" class="form-control">
-										<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<div class="input-prepend input-group pull-left">
+										<span class="add-on input-group-addon "><i class="glyphicon glyphicon-calendar fa fa-calendar "></i></span>
+										<input type="text" style="width: 180px;" name="rental_search"id="rental_search" class="form-control ">
 									</div>
 								</div>
 							</div>
-						</fieldset>
+
 					</div>
 					<!--END 返却予定日検索  -->
 				</div>
@@ -107,20 +113,33 @@
 				<div class="row">
 					<!--START 検索の二行目  -->
 					<div class="col-md-2">
-						<span class="pull-left" style="font-size: 18px;">管理番号</span>
+						<span class="pull-right" style="font-size: 18px;">管理番号</span>
 					</div>
 					<div class="col-md-2">
 						<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 					</div>
 					<!--END 管理番号検索 -->
-					<!--START 貸与登録ボタン -->
-					<div class="col-md-2 col-md-offset-5">
-						<button type="button" id="deleteButton" class="btn btn-success pull-right" onclick="modalInsert()">
-							<i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</button>
+					<!--START 検索の二行目  -->
+						<div class="col-md-2">
+						<span class="pull-right" style="font-size: 18px;">品目</span>
 					</div>
+					<div class="col-md-2">
+						<input type="text" class="form-control" placeholder="品目" id="asset_search" maxlength="15">
+					</div>
+					<!--END 管理番号検索 -->
 				</div>
 				<!--END 検索の二行目 -->
 				<div class="clearfix"></div>
+				<!--START 検索の三行目  -->
+				<div class="row">
+					<!--START 貸与登録ボタン -->
+					<div class="col-md-2 pull-right">
+						<button type="button" id="deleteButton" class="btn btn-success pull-right" onclick="modalInsert()"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</button>
+					</div>
+				</div>
+				<!--END 貸与登録ボタン -->
+				<!--END 検索の三行目 -->
+						<div class="clearfix"></div>
 				<!--START 貸与リスト -->
 				<div class="row">
 					<div class="x_panel">
@@ -128,8 +147,8 @@
 							<table class="table table-bordered jambo_table bulk_action" id="table1" style="width: 100%; text-align: center;">
 								<thead class="thead-light">
 									<tr class="headings">
-										<th class="col-md-2">貸与番号</th>
-										<th class="col-md-2">管理番号</th>
+										<th class="col-md-1">貸与番号</th>
+										<th class="col-md-1">管理番号</th>
 										<th class="col-md-1">品目</th>
 										<th class="col-md-1">場所</th>
 										<th class="col-md-1">使用者</th>
@@ -168,19 +187,15 @@
 																	<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-3">
 																		<div class="input-group date" id="rentalDay_search">
+																			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																			<input type="text" class="form-control date_check" name="rentalDay" id="rentalDay_view">
-																			<span class="input-group-addon">
-																				<span class="glyphicon glyphicon-calendar"></span>
-																			</span>
 																		</div>
 																	</div>
 																	<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-3">
 																		<div class="input-group date" id="returnPeriod_search" name="myDatepicker">
+																		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																			<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod_view">
-																			<span class="input-group-addon">
-																				<span class="glyphicon glyphicon-calendar"></span>
-																			</span>
 																		</div>
 																	</div>
 																</div>
@@ -292,19 +307,15 @@
 															<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3">
 																<div class="input-group date" id="rentalsDay_search" name="rentalsDay_search">
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="rentalDay" id="todayDate" th:value="${#dates.format(date,'yyyy-MM-dd')}">
-																	<span class="input-group-addon">
-																		<span class="glyphicon glyphicon-calendar"></span>
-																	</span>
 																</div>
 															</div>
 															<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
 															<div class="col-md-3">
 																<div class="input-group date" id="myDatepicker" name="myDatepicker" style="float: left">
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod" />
-																	<span class="input-group-addon">
-																		<span class="glyphicon glyphicon-calendar"></span>
-																	</span>
 																</div>
 															</div>
 														</div>
@@ -466,7 +477,7 @@
 	<script th:inline="javascript">
     /*<![CDATA[*/
 		//特殊文字を削除するメソッド
-		
+
     	function specialCharRemove(obj) {
 
 			var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi;
@@ -523,6 +534,9 @@
 			//END登録フォームのデートをリセットする
 			$('#modal3d2').modal("hide");
 	    }
+
+
+
    		 //START ONLOADのメソッド
         $(function(){
         	//登録フォームの貸与日のカーレンダー
@@ -603,6 +617,7 @@
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                    		d.columns[1].search.value = $('#rental_search').val();
                    		d.columns[2].search.value = $('#rentalNo_search').val();
+                   		d.columns[3].search.value = $('#asset_search').val();
                         return JSON.stringify(d);
                     }
                 },
@@ -664,6 +679,11 @@
             	$('#rentalNo_search').val(this.value.replace(new RegExp("'", 'g'), ''));
                 modalesectiontable .column(2).search(this.value).draw();
             });
+            /*資産を貰ってメイン画面のデータを変える*/
+            $('#asset_search').on( 'keyup', function () {
+            	$('#asset_search').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable.column(3).search( this.value ).draw();
+            } );
         })
     //END ONLOADのメソッド
     /*]]>*/

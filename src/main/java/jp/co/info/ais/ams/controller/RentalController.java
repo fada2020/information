@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.Asset;
@@ -28,7 +29,8 @@ public class RentalController {
 
 	//エラーを表すための宣言
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
-
+	@Autowired
+	AppConstant appConstant;
 	@Autowired
 	ExValidation exValidation;
 	//ログイン情報を得るための宣言
@@ -165,6 +167,11 @@ public class RentalController {
 			if (null != rentalNo && !rentalNo.equals("")) {
 				rental.setRentalNo(rentalNo);
 			}
+			String codeDetailName = page.getColumns().get(3).getSearch().getValue();
+			if (null != codeDetailName && !codeDetailName.equals("")) {
+				rental.setCodeDetailName(codeDetailName);
+			}
+			rental.setCodeMasterId(appConstant.MASTER_DETAIL);
 			//貸与情報に該当するリストを取り出すメソッド
 			List<Rental> list = rentalService.selectAll(rental);
 			//ページの
