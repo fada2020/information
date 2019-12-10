@@ -37,10 +37,10 @@ public interface CodeDetailMapper {
 	List<CodeDetail> selectMasterCodeId();
 
 	//マスターコードIDで選択 (code_masterテーブルから)-
-	List<CodeDetail> selectCode();
+	List<CodeDetail> selectCode(String useCode);
 
 	//詳細ーコード削除
-	int deleteDetailCode(String codeMDetail);
+	int deleteDetailCode(CodeDetail codeDetail);
 
 
 

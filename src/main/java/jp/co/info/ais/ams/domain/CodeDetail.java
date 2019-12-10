@@ -14,7 +14,6 @@ public class CodeDetail {
 	private String codeDetailId;
 	//詳細コードネーム
 	private String codeDetailName;
-
 	private String item1;
 	private String item2;
 	private String item3;
