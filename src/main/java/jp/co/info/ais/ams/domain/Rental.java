@@ -62,6 +62,8 @@ public class Rental {
 	private String assetNumber;
 	//コード詳細ID
 	private String codeDetailId;
+	//コードマスターID
+	private String codeMasterId;
 	//コード詳細名
 	private String codeDetailName;
 	//IT資産の区分コード
