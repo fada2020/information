@@ -259,8 +259,8 @@
 																<!--START 特記事項の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">特記事項</label>
-																	<div class="col-md-9">
-																		<textarea id="speciality_view" name="speciality" class="form-control col-md-9"></textarea>
+																	<div class="col-md-9 table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+																		<textarea id="speciality_view" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
 																	</div>
 																</div>
 																<!--END 特記事項の変更 -->
@@ -381,8 +381,8 @@
 														<!--START 特記事項の入力 -->
 														<div class="form-group row">
 															<label class="control-label col-md-2  ">特記事項</label>
-															<div class="col-md-9 input-group ">
-																<textarea id="speciality" name="speciality" class="form-control col-md-9"></textarea>
+															<div class="col-md-9 input-group table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+																<textarea id="speciality" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
 															</div>
 														</div>
 														<!--END 特記事項の入力 -->
@@ -414,7 +414,7 @@
 																<th class="col-md-1" id="assetNumber_insert">管理番号</th>
 																<th class="col-md-1" id="purpose_insert">用途</th>
 																<th class="col-md-1" id="storageLocation_insert">場所</th>
-																<th class="col-md-1" id="speciality_insert">特記事項</th>
+																<!-- <th class="col-md-1" id="speciality_insert">特記事項</th> -->
 																<th class="col-md-1" id="bpName_insert">BP社名</th>
 																<th class="col-md-1" id="rentalDay_insert">貸与日</th>
 																<th class="col-md-1" id="returnPeriod_insert">返却予定日</th>
@@ -480,13 +480,18 @@
 
     	function specialCharRemove(obj) {
 
-			var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi;
-
-			if(pattern.test(obj)){
-				obj = obj.replace(pattern,"");
+			/* var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi; */
+			//タグ削除
+			var re = /[<][^>]*[>]/gi;
+			if(re.test(obj)){
+				obj = obj.replace(re,"");
 			}
 			return obj;
 		}
+    	//全ての文字を一気に変えるためのメソッド
+    	String.prototype.replaceAll = function(org, dest) {
+    	    return this.split(org).join(dest);
+    	}
 			/*validationの重なるエラーメッセージ  */
     		$.validator.messages.number = '有効な数字を入力';
     		$.validator.messages.maxlength = '{0} 文字以下を入力';
@@ -532,6 +537,8 @@
 			}
 			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
 			//END登録フォームのデートをリセットする
+			   $('#storageLocation').val('自社');
+			   $('#purpose').val('勤務');
 			$('#modal3d2').modal("hide");
 	    }
 
@@ -788,9 +795,9 @@
         	rental.codeDetailName=specialCharRemove($('#codeDetailName_view').val());
         	rental.purpose=specialCharRemove($('#purpose_view').val());
         	rental.storageLocation=specialCharRemove($('#storageLocation_view').val());
-        	rental.rentalDay=specialCharRemove($('#rentalDay_view').val());
+        	rental.rentalDay=$('#rentalDay_view').val().replaceAll("-","");
         	rental.speciality=specialCharRemove($('#speciality_view').val());
-        	rental.returnPeriod=specialCharRemove($('#returnPeriod_view').val());
+        	rental.returnPeriod=$('#returnPeriod_view').val().replaceAll("-","");
         	rental.rentalUserId=specialCharRemove($('#rentalUserId_view').val());
         	rental.bpName=specialCharRemove($('#bpName_view').val());
         	rental.applicantId=specialCharRemove($('#applicantId_view').val());
@@ -948,10 +955,10 @@ function researchRental(assetSeq){
 				rental.purpose  =specialCharRemove(cellText.find("#purpose_i").text());
 				rental.storageLocation =specialCharRemove(cellText.find("#storageLocation_i").text());
 				rental.speciality =specialCharRemove(cellText.find("#speciality_i").text());
-				rental.returnPeriod =specialCharRemove(cellText.find("#returnPeriod_i").text());
+				rental.returnPeriod =cellText.find("#returnPeriod_i").text().replaceAll("-","");
 				rental.assetSeq=specialCharRemove(cellText.find("#assetSeq_i").text());
 				rental.applicantId =specialCharRemove(cellText.find("#applicantId_i").text());
-				rental.rentalDay=specialCharRemove(cellText.find('#rentalDay_i').text());
+				rental.rentalDay=cellText.find('#rentalDay_i').text().replaceAll("-","");
 				rental.bpName=specialCharRemove(cellText.find("#bpName_i").text());
 				rental.insertId = /*[[${session.id}]]*/ 'user';
 				rental.updateId = /*[[${session.id}]]*/ 'user';
@@ -1067,18 +1074,18 @@ function researchRental(assetSeq){
     			   			"data" : number,
     			   			"contentType": "application/JSON",
     			   		 	"success" : function(data){
-    			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;"><td id="rentalUserId_i">'
+    			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;" title="特記事項： '+specialCharRemove($("#speciality").val())+'"><td id="rentalUserId_i">'
     			   					+specialCharRemove($('#rentalUserId').val())+'</td><td id="applicantId_i">'
     			   					+specialCharRemove($("#applicantId").val())+'</td><td>'
     			   					+specialCharRemove($("#sub_singleSelect option:selected").text())+'</td><td id="assetNumber_i">'
     			   					+number+'</td><td id="purpose_i">'
     			   					+specialCharRemove($("#purpose").val())+'</td><td id="storageLocation_i">'
-    			   					+specialCharRemove($("#storageLocation").val())+'</td><td id="speciality_i">'
+    			   					+specialCharRemove($("#storageLocation").val())+'</td><td id="speciality_i" style="display:none;">'
     			   					+specialCharRemove($("#speciality").val())+'</td><td id="bpName_i">'
     			   					+specialCharRemove($("#bpName").val())+'</td><td id="assetSeq_i" style="display:none;"> '
-    				   				+data.assetSeq+'</td><td id="returnPeriod_i">'
-    				   				+specialCharRemove($("#returnPeriod").val())+'</td><td id="rentalDay_i">'
-    				   				+$("#todayDate").val()+'</td><td><button value="'+data.assetSeq+'"class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
+    				   				+data.assetSeq+'</td><td id="rentalDay_i">'
+    				   				+$("#todayDate").val()+'</td><td id="returnPeriod_i">'
+    				   				+$("#returnPeriod").val()+'</td><td><button value="'+data.assetSeq+'"class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
     			   		 			assetKey.set(data.assetSeq,data.assetNumber);
     			   					$(function(){  $('select').find('option:first').attr('selected', 'selected');})
     			   	 		},
@@ -1087,6 +1094,8 @@ function researchRental(assetSeq){
     						}
     			});
             }
+
+
             /*END 有効性を通過したら下のメソッドを行う */
 	}
 		/*]]>*/
