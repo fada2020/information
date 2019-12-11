@@ -15,7 +15,7 @@ public interface HistoryMapper{
 
 	int selectCount(History History);
 
-	List<CodeDetail> selectStateCode();
+	List<CodeDetail> selectStateCode(CodeDetail codeDetail);
 
 	List<History> exportXlsx();
 

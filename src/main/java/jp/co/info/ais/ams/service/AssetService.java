@@ -90,7 +90,8 @@ public class AssetService {
 	 * @return List<CodeDetail> 区分コード情報リスト
 	 */
 	public List<CodeDetail> selectProductCode() {
-		return assetMapper.selectProductCode();
+
+		return assetMapper.selectProductCode(new CodeDetail(appConstant.MASTER_DETAIL,null,null, appConstant.USE_CODE));
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class AssetService {
 	 * @return List<CodeDetail> 状態コード情報リスト
 	 */
 	public List<CodeDetail> selectStateCode() {
-		return assetMapper.selectStateCode();
+		return assetMapper.selectStateCode(new CodeDetail(appConstant.MASTER_STATE,null,null, appConstant.USE_CODE));
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class AssetService {
 			asset.setOther(other);
 		}
 		// 製品コード照会
-		List<CodeDetail> pdCodeList = assetMapper.selectProductCode();
+		List<CodeDetail> pdCodeList = assetMapper.selectProductCode(new CodeDetail(appConstant.MASTER_DETAIL,null,null, appConstant.USE_CODE));
 		// マッピングのためのmap生成
 		Map<String, String> pdCodeMap = new HashMap<String, String>();
 		for(CodeDetail pdCode : pdCodeList) {

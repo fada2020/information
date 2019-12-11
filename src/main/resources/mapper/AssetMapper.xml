@@ -190,22 +190,24 @@
 		</if>
     </select>
 
-    <select id="selectStateCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    <select id="selectStateCode"  parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
     	SELECT
     		code_detail_id,
     		code_detail_name
     	FROM code_detail
-		WHERE code_master_id = '001'
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
     </select>
 
-    <select id="selectProductCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    <select id="selectProductCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
     	SELECT
     		code_detail_id,
     		code_detail_name,
     		item1,
     		item2
     	FROM code_detail
-		WHERE code_master_id = '002'
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
     </select>
 
     <update id="updateAsset">

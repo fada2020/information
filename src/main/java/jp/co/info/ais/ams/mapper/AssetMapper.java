@@ -17,9 +17,9 @@ public interface AssetMapper {
 
 	int selectCount(Asset asset);
 
-	List<CodeDetail> selectProductCode();
+	List<CodeDetail> selectProductCode(CodeDetail codeDetail);
 
-	List<CodeDetail> selectStateCode();
+	List<CodeDetail> selectStateCode(CodeDetail codeDetail);
 
 	int updateAsset(Asset asset);
 

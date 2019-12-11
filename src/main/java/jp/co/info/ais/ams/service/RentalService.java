@@ -51,7 +51,7 @@ public class RentalService {
 	 * @return int
 	 */
 	public int selectCount(Rental rental) {
-	
+
 		return rentalMapper.selectCount(rental);
 	}
 
@@ -85,7 +85,8 @@ public class RentalService {
 	 */
 	public List<CodeDetail> selectCodeDetail() {
 		String codeMasterId = AppConstant.MASTER_DETAIL;
-		return rentalMapper.selectCodeDetail(codeMasterId);
+
+		return rentalMapper.selectCodeDetail(new CodeDetail(codeMasterId,null,null, appConstant.USE_CODE));
 	}
 
 	/**
@@ -96,7 +97,7 @@ public class RentalService {
 	 */
 	public List<CodeDetail> selectStatusCode() {
 
-		return rentalMapper.selectStatusCode();
+		return rentalMapper.selectStatusCode(new CodeDetail(appConstant.MASTER_STATE,null,null, appConstant.USE_CODE));
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class RentalService {
 	 */
 	public List<CodeDetail> selectCode() {
 		String codeMasterId = AppConstant.MASTER_CLASS;
-		return rentalMapper.selectCode(codeMasterId);
+		return rentalMapper.selectCode(new CodeDetail(codeMasterId,null,null, appConstant.USE_CODE));
 	}
 
 	/**
