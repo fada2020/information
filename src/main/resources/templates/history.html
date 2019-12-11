@@ -62,11 +62,11 @@
 	width: 18px;
 	height: 18px;
 	border: 2px solid #bcbcbc;
-	
+
 	cursor: pointer;
 }
 
-.pull-right {
+.insert-_history{
 	font-size: 18px;
 }
 
@@ -99,15 +99,17 @@
 						<div class="col">
 							<!-- searching condition -S -->
 							<!-- 1st line -->
+
 							<div class="row">
+
 								<div class="col-md-1">
-									<span class="pull-right" style="margin-left: -10%;">管理番号</span>
+									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">管理番号</span></p>
 								</div>
 								<div class="col-md-2">
 									<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 								</div>
 								<div class="col-md-2">
-									<span class="pull-right" style="margin-left: -10%;">貸与期間</span>
+									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">貸与期間</span></p>
 								</div>
 								<div class="col-md-2">
 									<fieldset>
@@ -123,7 +125,7 @@
 								</div>
 
 								<div class="col-md-2">
-									<span class="pull-right">状態</span>
+									<p class ="insert-_history"><span class="pull-right">状態</span></p>
 								</div>
 								<div class="col-md-2">
 									<select class="form-control" id="status_search" style="width: 120px;">
@@ -132,18 +134,19 @@
 									</select>
 								</div>
 							</div>
+
 							<!-- 1st line -->
 
 							<!-- 2nd line -->
 							<div class="row" style="height: 50px;">
 								<div class="col-md-1">
-									<span class="pull-right">貸出者</span>
+									<p class ="insert-_history"><span class="pull-right">貸出者</span></p>
 								</div>
 								<div class="col-md-2">
 									<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
 								</div>
 								<div class="col-md-2">
-									<span class="pull-right">返却期間</span>
+									<p class ="insert-_history"><span class="pull-right">返却期間</span></p>
 								</div>
 								<div class="col-md-2">
 									<fieldset>
@@ -158,6 +161,7 @@
 									</fieldset>
 								</div>
 							</div>
+
 							<!-- 2nd line -->
 
 							<!-- searching condition -E -->
@@ -203,11 +207,12 @@
 			</div>
 			<!-- /page content -->
 
+
+		</div>
+	</div>
 			<!-- footer content -->
 			<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
 			<!-- /footer content -->
-		</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="../vendors/jquery/dist/jquery.min.js"></script>

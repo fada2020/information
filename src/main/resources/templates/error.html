@@ -21,9 +21,24 @@
 <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
 <!-- iCheck -->
 <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
+<!-- bootstrap-daterangepicker -->
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
+<!-- Style -->
+<style>
+    	.errorpage {
+    		padding-top : 120px;
+    		text-align: center;
+			vertical-align: middle;
+    	}
+		#errorpage {
+			vertical-align:middle;
+		}
+		#errorpage {
+			vertical-align:middle;
+		}
+</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -38,40 +53,42 @@
 
 			<!-- page content -->
 			<div class="right_col" role="main">
-				<div class="col-md-12">
-					<div class="col-md-12">
+					<div class="page-title">
+						<div class="title_left">
+							<h3><i class="fa fa-cogs"></i> エラーページ </h3>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="col-md-12" >
+						<div class = "errorpage">
+							<div style = "width : 1000px; height : 100px; ">
 
-						<h1>開発本部の宣鍾珉さんにお問い合わせください</h1>
+								<h1>エラーが発生しました。</h1>
+								<br>
+								<h3>エラーの内容</h3>
+									error code : <span th:text="${code}"></span> <br>
+									error msg :<span th:text="${msg}"></span> <br>
+									timestamp :<span th:text="${timestamp}"></span>
+								<h6>大変申し訳ございません。</h6>
 
-						<h1>メール：sunjm@ais-info.co.jp</h1>
-						<hr>
-						<h1>エラーの内容</h1>
-						error code : <span th:text="${code}"></span> <br>error msg :
-						<span th:text="${msg}"></span> <br>timestamp : <span
-							th:text="${timestamp}"></span>
+								<button type="button" style="cursor: pointer;" class="btn btn-success" id = "btn" onclick="history.back();">前に戻る</button>
 
-						<p>
-							大変申し訳ございません。全てが私の責任です。 <a style="cursor: pointer;"
-								onclick="history.back();">元のページに戻る</a>
-						</p>
+							</div>
 
+						</div>	<!-- /.errorpage -->
 
 					</div>
+					<div class="clearfix"></div>
+
+					<!-- /page content -->
+
+
 				</div>
-
+				</div>
 			</div>
-
-
-
-
-
-			<!-- /page content -->
-
 			<!-- footer content -->
-			<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+				<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
 			<!-- /footer content -->
-		</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="../vendors/jquery/dist/jquery.min.js"></script>
