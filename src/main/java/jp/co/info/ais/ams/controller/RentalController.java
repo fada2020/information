@@ -233,9 +233,7 @@ public class RentalController {
 	private int updateAsset(Model model, @RequestBody Rental rental) {
 		int successNum = 0;
 
-		if(!exValidation.validate(rental.getSpeciality())) {
-			logger.debug("`matakimasita");
-		}
+
 		try {
 
 			successNum = rentalService.updateRental(rental, (String) session.getAttribute("id"));

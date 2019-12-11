@@ -155,7 +155,7 @@
                   <div class="x_content">
 
 					<!-- 資産情報 dataTable -->
-					<div class="table-responsive">
+					<div class="table">
                     <table class="table table-bordered table-hover jambo_table dataTable table-lg text-center" style="width:100%;" id="table1">
                       <thead class="thead-light">
                         <tr>
@@ -501,7 +501,7 @@
 									                	<select name="statusCode" class="form-control" id="sNumber_search">
 									                		<option value="01">保管</option>
 														</select>
-								  					</div>
+													</div>
 								  					<div class="col-md-2">
 								  						<span>購入先</span>
 								  					</div>
@@ -790,7 +790,6 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
    	 function assetUpdateF(assetSeq){
-
     		var requestAssetSeq = assetSeq;
         	$.ajax(/*[[@{/asset/updateSequence}]]*/ 'asset/updateSequence',
 			       	{
@@ -1296,6 +1295,8 @@
             });
 
         })
+
+
 /*]]>*/
     </script>
 
