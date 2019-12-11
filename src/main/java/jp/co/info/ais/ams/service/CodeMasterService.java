@@ -7,7 +7,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.ams.common.AppConstant;
+import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
+import jp.co.info.ais.ams.mapper.CodeDetailMapper;
 import jp.co.info.ais.ams.mapper.CodeMasterMapper;
 
 @Service
@@ -16,6 +19,9 @@ public class CodeMasterService {
 
 	@Autowired
 	private CodeMasterMapper codeMasterMapper;
+
+	@Autowired
+	private CodeDetailMapper codeDetailMapper;
 	/**
 	 *マスターコードと名前をInsert
 	 * @param codeMasterId
@@ -88,7 +94,27 @@ public class CodeMasterService {
 	 * @return int codeMasterId
 	 */
 	public int deleteMasterCode(String codeMasterId) {
-		return codeMasterMapper.deleteMasterCode(codeMasterId);
+		int result=0;
+
+		try {
+
+			CodeDetail codeDetail = new CodeDetail();
+			codeDetail.setCodeMasterId(codeMasterId);
+			codeDetail.setUseFlag(AppConstant.USE_CODE);
+			
+		result=codeDetailMapper.selectCount(codeDetail);
+
+		if(result==0) {
+			CodeMaster codeMaster = new CodeMaster();
+			codeMaster.setCodeMasterId(codeMasterId);
+			codeMaster.setUseFlag(AppConstant.UNUSE_CODE);
+		codeMasterMapper.deleteMasterCode(codeMaster);
+		}
+
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		return result;
 
 	}
 

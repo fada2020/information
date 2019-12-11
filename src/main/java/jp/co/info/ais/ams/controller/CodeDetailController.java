@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.CodeDetail;
+import jp.co.info.ais.ams.domain.CodeMaster;
 import jp.co.info.ais.ams.service.CodeDetailService;
+import jp.co.info.ais.ams.service.CodeMasterService;
 
 @Controller
 @RequestMapping("/codedetail")
@@ -26,17 +29,24 @@ public class CodeDetailController {
 	@Autowired
 	private CodeDetailService codeDetailService;
 	@Autowired
+	private CodeMasterService codeMasterService;
+	@Autowired
 	ExValidation exValidation;
 	@Autowired
 	HttpSession session;
-
+	@Autowired
+	AppConstant appconstant;
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String assetList(Model model) {
 		try {
 			// コード値セッティング
 			model.addAttribute("selectmasterid", codeDetailService.selectMasterCodeId());
-
-			model.addAttribute("masterid", codeDetailService.selectCode());
+			CodeMaster codemaster = new CodeMaster();
+			codemaster.setUseFlag(appconstant.USE_CODE);
+			CodeDetail codeDetail=	new CodeDetail();
+			codeDetail.setUseFlag(appconstant.USE_CODE);
+			model.addAttribute("masterid",codeDetailService.codeMasterList(codemaster));
+			model.addAttribute("countId",codeDetailService.selectCount(codeDetail));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -68,6 +78,7 @@ public class CodeDetailController {
 						if (null != codeDetailName && !codeDetailName.equals("")) {
 							condition.setCodeDetailName(codeDetailName);
 						}
+						condition.setUseFlag(appconstant.USE_CODE);
 			// リスト照会
 			List<CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);
 
@@ -127,12 +138,17 @@ public class CodeDetailController {
 	 */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public int assetDelete(@RequestBody String codeMDetail) {
+    public int detailtDelete(@RequestBody String codeMDetail) {
     	int result = 0;
     	logger.debug("code:{}",codeMDetail);
     	try {
+    		String[] array=codeMDetail.split(",");
+    		CodeDetail codeDetail = new CodeDetail();
+    		codeDetail.setCodeMasterId(array[0]);
+    		codeDetail.setCodeDetailId(array[1]);
+    		logger.debug(array[0]+","+array[1]);
     		//結果が正しい場合削除メソッド実行してresultに含める
-	    	result = codeDetailService.deleteDetailCode(codeMDetail);
+	    	result = codeDetailService.deleteDetailCode(codeDetail);
 
     	}catch (Exception e) {
     		logger.error(e.getMessage());
@@ -147,6 +163,25 @@ public class CodeDetailController {
 		try {
 			///結果が正しい場合チェックメソッド実行してnumに含める
 			num = codeDetailService.codeDetailListCheck(codeMDetail);
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+
+		return num;
+	}
+
+	@RequestMapping(value = "/checkNumber", method = RequestMethod.POST)
+	@ResponseBody
+	public int checkNumber(@RequestBody String codeMDetail) {
+		int num =0;
+
+		CodeDetail codeDetail = new CodeDetail();
+		codeDetail.setCodeMasterId(codeMDetail);
+		try {
+			///結果が正しい場合チェックメソッド実行してnumに含める
+			num = codeDetailService.selectCount(codeDetail);
+			logger.debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++"+(num/10));
 
 		} catch (Exception e) {
 			logger.debug(e.getMessage());

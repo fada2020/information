@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.CodeMaster;
@@ -30,6 +31,8 @@ public class CodeMasterController {
 	ExValidation exValidation;
 	@Autowired
 	HttpSession session;
+	@Autowired
+	AppConstant appConstant;
 	/**
 	 *IDと名前存在チェック
 	 *コード値セッティング
@@ -38,38 +41,23 @@ public class CodeMasterController {
 	 * @return　String code.html
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String masterIdNameInsert(Model model, CodeMaster codemaster) {
+	public String masterIdNameInsert(Model model) {
 		try {
-			//idとnameの値を持ってくる
-			String id = (String) session.getAttribute("codeMasterId");
-			String name = (String) session.getAttribute("codeMasterName");
-			int radio = (int) session.getAttribute("useFlag");
-
-
-			//入力されたidとnameが存在したらErrorMessageを送る。
-			if (id.equals(codemaster.getCodeMasterId()) && name.equals(codemaster.getCodeMasterName())) {
-				logger.info("すでに存在しています。。");
-				model.addAttribute("errorMessage", "すでに存在しています。");
-				session.setAttribute("errorMessage", "すでに存在しています。");
-				return "redirect/:";
-
-			} else {
-			//入力されたidとnameが存在しない場合登録
-
-				codemaster.setCodeMasterId(id);
-				codemaster.setCodeMasterName(name);
-				codemaster.setUseFlag(radio);
-
-				codeMasterService.insertMasterId(codemaster);
-				codeMasterService.insertMasterName(codemaster);
-
-				session.setAttribute("codemaster", codemaster);
-}
+			String result="";
+			int num=codeMasterService.selectCount(new CodeMaster())+1;
+			if(num<10) {
+				result="00"+num;
+			}else if(num<100) {
+				result="0"+num;
+			}else {
+				result=""+num;
+			}
+			model.addAttribute("countId",result);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 
-		return "code.html";
+		return "code";
 	}
 
 		/**
@@ -98,7 +86,7 @@ public class CodeMasterController {
 			if (null != codeMasterName && !codeMasterName.equals("")) {
 				condition.setCodeMasterName(codeMasterName);
 			}
-
+			condition.setUseFlag(appConstant.USE_CODE);
 			// リスト照会
 			List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
 
@@ -154,6 +142,7 @@ public class CodeMasterController {
 				 num = codeMasterService.updateCodeMaster(masterCode);
 			} catch (Exception e) {
 				logger.debug(e.getMessage());
+
 			}
 
 			return num;
@@ -166,9 +155,10 @@ public class CodeMasterController {
 		 */
 	    @RequestMapping(value = "/delete", method = RequestMethod.POST)
 	    @ResponseBody
-	    public int assetDelete(@RequestBody String codeMasterId) {
+	    public int codeMasterDelete(@RequestBody String codeMasterId) {
 	    	int result = 0;
 	    	try {
+	    		logger.debug(codeMasterId);
 	    		//結果が正しい場合削除メソッド実行してresultに含める
 		    	result = codeMasterService.deleteMasterCode(codeMasterId);
 	    	}catch (Exception e) {

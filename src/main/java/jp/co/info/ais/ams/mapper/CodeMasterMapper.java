@@ -30,7 +30,8 @@ public interface CodeMasterMapper {
 
 	int updateCodeMaster(CodeMaster codeMasterId);
 
-	int deleteMasterCode(String codeMasterId);
-
+	int deleteMasterCode(CodeMaster codeMaster);
+	
+	List<CodeMaster> codeMasterList(CodeMaster condition);
 
 }
