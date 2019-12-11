@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.CodeMaster;
 import jp.co.info.ais.ams.service.CodeMasterService;
@@ -25,7 +26,8 @@ public class CodeMasterController {
 	private static final Logger logger = LogManager.getLogger(CodeMasterController.class);
 	@Autowired
 	private CodeMasterService codeMasterService;
-
+	@Autowired
+	ExValidation exValidation;
 	@Autowired
 	HttpSession session;
 	/**
@@ -120,7 +122,13 @@ public class CodeMasterController {
 		@ResponseBody
 		public int CodeListCheck(@RequestBody CodeMaster masterCode) {
 			int num = 0;
+
+				if(exValidation.validate(masterCode.getCodeMasterName())) {
+			/*					masterCode.setCodeMasterName(masterCode.getCodeMasterName().replaceAll((String)exValidation.getPattern(),"");*/
+				}
+
 			logger.debug(masterCode);
+
 			try {
 				///結果が正しい場合チェックメソッド実行してnumに含める
 				num = codeMasterService.CodeMasterListCheck(masterCode);

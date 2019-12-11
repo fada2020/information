@@ -62,6 +62,7 @@
 	width: 18px;
 	height: 18px;
 	border: 2px solid #bcbcbc;
+	
 	cursor: pointer;
 }
 
@@ -72,6 +73,7 @@
 #deleteHistory {
 	margin: -5px;
 }
+
 </style>
 
 </head>
@@ -81,41 +83,30 @@
 			<!-- sidebar -->
 			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
 			<!-- sidebar -->
-
 			<!-- top navigation -->
 			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								<i class="fa fa-list-alt"></i> 資産支給履歴
-							</h3>
+							<h3><i class="fa fa-list-alt"></i> 資産支給履歴</h3>
 						</div>
 					</div>
-
 					<div class="clearfix"></div>
-
 					<div class="row">
 						<div class="col">
-
 							<!-- searching condition -S -->
 							<!-- 1st line -->
 							<div class="row">
-
 								<div class="col-md-1">
 									<span class="pull-right" style="margin-left: -10%;">管理番号</span>
 								</div>
 								<div class="col-md-2">
-									<input type="text" class="form-control" placeholder="管理番号"
-										id="assetNumber_search" maxlength="15">
+									<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 								</div>
-
-
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right" style="margin-left: -10%;">貸与期間</span>
 								</div>
 								<div class="col-md-2">
@@ -123,25 +114,21 @@
 										<div class="control-group ">
 											<div class="controls">
 												<div class="input-prepend input-group">
-													<span class="add-on input-group-addon"><i
-														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
-														type="text" style="width: 200px" name="rental_search"
-														id="rental_search" class="form-control">
+												<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+													<input type="text" style="width: 200px" name="rental_search" id="rental_search" class="form-control">
 												</div>
 											</div>
 										</div>
 									</fieldset>
 								</div>
 
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right">状態</span>
 								</div>
 								<div class="col-md-2">
-									<select class="form-control" id="status_search"
-										style="width: 120px;">
+									<select class="form-control" id="status_search" style="width: 120px;">
 										<option value="00">全体</option>
-										<option th:each="code : ${stateCode}"
-											th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+										<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 									</select>
 								</div>
 							</div>
@@ -149,17 +136,13 @@
 
 							<!-- 2nd line -->
 							<div class="row" style="height: 50px;">
-
 								<div class="col-md-1">
 									<span class="pull-right">貸出者</span>
 								</div>
 								<div class="col-md-2">
-									<input type="text" class="form-control" placeholder="貸出者"
-										id="applicant_search" maxlength="15">
+									<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
 								</div>
-
-
-								<div class="col-md-1">
+								<div class="col-md-2">
 									<span class="pull-right">返却期間</span>
 								</div>
 								<div class="col-md-2">
@@ -167,37 +150,25 @@
 										<div class="control-group ">
 											<div class="controls">
 												<div class="input-prepend input-group">
-													<span class="add-on input-group-addon"><i
-														class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> <input
-														type="text" style="width: 200px" name="return_search"
-														id="return_search" class="form-control">
+												<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+													<input type="text" style="width: 200px" name="return_search" id="return_search" class="form-control">
 												</div>
 											</div>
 										</div>
 									</fieldset>
 								</div>
-
-						
-
 							</div>
 							<!-- 2nd line -->
 
 							<!-- searching condition -E -->
-
-
 							<div class="x_panel">
-								<button id=exportExcel class="btn btn-success pull-right"
-									title="履歴データをエクセルファイルでダウンロード">Excel</button>
+								<button id="exportExcel" class="btn btn-success pull-right" title="履歴データをエクセルファイルでダウンロード">Excel</button>
 								<br>
 								<br>
 								<br>
 								<div class="x_title"></div>
-
 								<div class="x_content">
-
-									<table
-										class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer"
-										id="table1" style="width: 100%;">
+									<table class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer" id="table1" style="width: 100%;">
 										<thead class="thead-light">
 											<tr class="headings">
 												<th colspan="3">装置</th>
@@ -207,7 +178,6 @@
 												<th>管理番号</th>
 												<th>Maker</th>
 												<th>Model</th>
-
 												<th>状態</th>
 												<th>貸与番号</th>
 												<th>用途</th>
@@ -218,9 +188,7 @@
 												<th>貸与日</th>
 												<th>返却日</th>
 												<th style="width: 40px;">
-													<button id="deleteHistory" class="btn btn-danger"
-														title="チェックした履歴情報を削除"
-														style="font-size: 12px; font-weight: bolder;">削除</button>
+													<button id="deleteHistory" class="btn btn-danger" title="チェックした履歴情報を削除" style="font-size: 12px; font-weight: bolder;">削除</button>
 												</th>
 											</tr>
 										</thead>
@@ -248,7 +216,8 @@
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></scri
+	pt>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
 	<!-- FastClick -->
 	<script src="../vendors/fastclick/lib/fastclick.js"></script>
@@ -258,6 +227,7 @@
 	<script src="../vendors/iCheck/icheck.min.js"></script>
 	<!-- bootstrap-daterangepicker -->
 	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/moment/locale/ja.js"></script>
 	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="../build/js/custom.min.js"></script>
@@ -266,10 +236,8 @@
 	<script th:inline="javascript">
 
     /*<![CDATA[*/
-
         var modalesectiondata = null;
         var deleteList="";
-
         //状態コード作成
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
@@ -285,24 +253,25 @@
         		deleteList = deleteList.replace(target.value,"");
         	}
         }
-
     	//オンロード
         $(function(){
-
         	//貸与のデートピッカー
         	$('#rental_search').daterangepicker({
 			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: '今日',
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			}).val('');
-
 			//返却日のデートピッカー
 			$('#return_search').daterangepicker({
 				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: '今日',
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -338,15 +307,15 @@
             //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
-            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
-            		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
+            		"info":           " _START_ ~ _END_ の _TOTAL_ 件",
+            		"infoEmpty":      " 0 ~ 0 の 0 件",
             	    "infoFiltered":   "",
             	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
-            	        "next":       "次へ",
-            	        "previous":   "前の"
+            	        "next":       "次",
+            	        "previous":   "前"
             	    }
                 },
             	"fixedHeader": true,
@@ -478,7 +447,6 @@
                     }}
                     ]
             });
-
             /*assetNumberを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
             	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
@@ -503,8 +471,6 @@
                 .search( this.value )
                 .draw();
             } );
-
-
             $("#rental_search").change(function () {
                 var date = $("#rental_search").val();
                 modalesectiontable
@@ -530,11 +496,8 @@
           	//history delete -S
           	$('#deleteHistory').on('click',function(){
           		var a = deleteList.split("/");
-
           		if(a.length>1){
-
           			var confirmation = confirm(a.length-1 + " 項目の履歴データを削除します。");
-
           			if(confirmation){
     					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
     				       	{
@@ -543,16 +506,13 @@
     							contentType: 'application/JSON',
     							data : JSON.stringify(a)
     						}
-    					)
-    					.done(function(data) {
-
+    					).done(function(data) {
     						if(data>0){
     							alert(data+"項目の削除完了");
     							location.reload(true);
     						}else{
     							alert("削除の作業でエラーが発生しました。");
     						}
-
     					});
     				}
           		}else{

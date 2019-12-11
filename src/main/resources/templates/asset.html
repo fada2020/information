@@ -789,7 +789,7 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
    	 function assetUpdateF(assetSeq){
-        	var requestAssetSeq = assetSeq;
+    		var requestAssetSeq = assetSeq;
         	$.ajax(/*[[@{/asset/updateSequence}]]*/ 'asset/updateSequence',
 			       	{
 						type: "POST",
@@ -799,14 +799,11 @@
 					}
 				)
 				.done(function(data) {
-					console.log(data);
-					console.log("/asset/up"+requestAssetSeq);
 					$("#assetUpdateModal").load("/asset/up"+requestAssetSeq);
 				})
-        		.error(function(){
-        			alert("error");
-        		});
-        	alert(assetSeq);
+				.error(function(){
+					alert("想定外のエラーが発生しました。管理者にお問い合わせください。")
+				})
         }
     	// 区分コードMap
     	var productCodeMap = new Map();
@@ -876,15 +873,15 @@
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
-            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+            		"info":           "_START_ ~ _END_ の _TOTAL_ 件",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
             	    "infoFiltered":   "",
             	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
-            	        "next":       "次へ",
-            	        "previous":   "前の"
+            	        "next":       "次",
+            	        "previous":   "前"
             	    }
                 },
             	"fixedHeader": true,

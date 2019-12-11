@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.service.CodeDetailService;
@@ -24,7 +25,8 @@ public class CodeDetailController {
 	private static final Logger logger = LogManager.getLogger(CodeMasterController.class);
 	@Autowired
 	private CodeDetailService codeDetailService;
-
+	@Autowired
+	ExValidation exValidation;
 	@Autowired
 	HttpSession session;
 

@@ -28,9 +28,7 @@ public interface CodeMasterMapper {
 
 	void CodeMasterInsert(CodeMaster codeMasterId);
 
-
 	int updateCodeMaster(CodeMaster codeMasterId);
-
 
 	int deleteMasterCode(String codeMasterId);
 
