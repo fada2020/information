@@ -34,7 +34,7 @@
 }
 
 #datatable1 tbody tr {
-	cursor: pointer;
+	cursor: default;
 }
 
 #datatable1 th {
@@ -62,7 +62,7 @@
 			<!-- page content -->
 			<!-- ここからコンテンツ作成 -->
 			<div class="right_col" role="main">
-				<div class="">
+				<div>
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
@@ -75,49 +75,46 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
+								<div>
 									<div class="well" style="overflow: auto">
 
 										<div class="row">
 											<div class="col-md-10">
 												<div class="col-md-4">
-													<label class="col-form-label col-md-7 label-align"
-														for="search_master_id" style="font-size: 18px;">
-														マスターコード</label>
-													<div class="col-md-5 ">
-														<input type="text" id="search_master_id"
+													<span class=" col-md-6"
+														for="search_master_id" style="font-size: 16px;">
+														マスターコード</span>
+													<div class="col-md-6 ">
+														<input type="text" id="search_master_id" placeholder="マスター"
 															class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<span class="col-form-label col-md-6 label-align"
-														for="search_detail_id" style="font-size: 18px;">
+													<span class=" col-md-6"
+														for="search_detail_id" style="font-size: 16px;">
 														詳細コードID</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_id"
-															class="form-control" style="font-size: 18px;">
+														<input type="text" id="search_detail_id" placeholder="詳細ID"
+															class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<span class="col-form-label col-md-6 label-align"
-														for="search_detail_name" style="font-size: 18px;">
+													<span class="col-md-6"
+														for="search_detail_name" style="font-size: 16px;">
 														詳細コード名</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_name"
+														<input type="text" id="search_detail_name" placeholder="詳細名"
 															class="form-control ">
 													</div>
 												</div>
 
 											</div>
 											<div class="col-md-2">
-
 												<!-- 登録 ボタン -->
-												<div class="col-md-6">
-													<button type="button" class="btn btn-success pull-right"
-														data-toggle="modal" data-target="#modalCodedetail">
-														<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
-													</button>
-												</div>
+												<button type="button" class="btn btn-success pull-right"
+													data-toggle="modal" data-target="#modalCodedetail">
+													<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
+												</button>
 											</div>
 										</div>
 
@@ -127,8 +124,7 @@
 									<!-- /.x_title -->
 
 									<div class="x_content">
-										<div
-											class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+										<div>
 											<table id="datatable1"
 												class="table table-bordered jambo_table bulk_action text-center"
 												style="width: 100%">
@@ -137,7 +133,7 @@
 														<!--  <th class="column-title txt_center">No.</th> -->
 
 														<th class="column-title txt_center">マスターコード</th>
-														<th class="column-title txt_center">コード詳細ID</th>
+														<th class="column-title txt_center">詳細コードID</th>
 														<th class="column-title txt_center">詳細コード名</th>
 														<th class="column-title txt_center">アイテム1</th>
 														<th class="column-title txt_center">アイテム2</th>
@@ -179,7 +175,7 @@
 		</div>
 
 		<!-- Modal Part コード登録 -->
-		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog">
+		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -199,7 +195,7 @@
 									<!--  -->
 									<label class="col-sm-3 control-label"> マスターコード<span
 										style="color: red; font-size: 18px;">*</span></label>
-									<div class="col-md-9 input-group "
+									<div class="col-md-9  "
 										th:if="${masterid} != null">
 										<select class="form-control" id="codeMasterId"
 											name="codeMasterId" onchange="">
@@ -317,8 +313,7 @@
 	<!-- /.Modal Part :: Register End -->
 
 	<!-- Modal Part 詳細コード変更 -->
-	<div id="modalCodeDetail_update" class="modal" tabindex="-1"
-		role="dialog">
+	<div id="modalCodeDetail_update" class="modal" tabindex="-1" data-backdrop="static" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -335,39 +330,28 @@
 						<form id="updateform" class="form-horizontal calender" role="form"
 							method="GET" name="frm">
 							<div class="form-group">
-								<!--  -->
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> マスターコード</label>
-								<div class="col-md-9 input-group "
-									th:if="${masterid} != null">
-									<select class="form-control" id="codeMasterId_update"
-										name="codeMasterId_update" onchange="">
-										<option value="">選択</option>
-										<option th:each="CodeMaster : ${masterid}"
-											th:value="${CodeMaster.codeMasterId}"
-											th:text="${CodeMaster.codeMasterName}"></option>
-									</select>
-
+								<label class="col-sm-3 control-label">マスターコード
+								<span style="color: red; font-size: 18px;">*</span></label>
+								<div class="col-md-9 ">
+									<input type="text" class="form-control form-control-sm"
+											id="codeMasterId_update" name="codeMasterId_update" disabled/>
 								</div>
-
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px; font-size: 18px;">*</span>
-									コード詳細ID</label>
+								<label class="col-sm-3 control-label">詳細コードID
+								<span style="color: red; font-size: 18px; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"
-											id="codeDetailId_update" name="codeDetailId_update"
-										 onKeyup="this.value = this.value.replace(/[^0-9]/g,'');" required />
+											id="codeDetailId_update" name="codeDetailId_update" disabled/>
 									</fieldset>
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><span
-									style="color: red; font-size: 18px;">*</span> コード詳細名</label>
+								<label class="col-sm-3 control-label">詳細コード名
+								<span style="color: red; font-size: 18px;">*</span></label>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm"

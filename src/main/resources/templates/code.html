@@ -28,13 +28,17 @@
 
 <!-- Style -->
 <style>
-    	#datatable-list thead, th {text-align: center;
-    	vertical-align: middle;}
-		#datatable-list th{
-			vertical-align:middle;
-		}
-		#datatable-list td{
-			vertical-align:middle;
+    	#datatable-list thead, th {
+    		text-align: center;
+    		vertical-align: middle;
+    		font-size:14px;
+    	}
+    	#datatable-list td{
+			vertical-align: middle;
+    		font-size:15px;
+    	}
+		.pull-right{
+			font-size:18px;
 		}
 </style>
 
@@ -68,18 +72,25 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
+								<!-- searching header -->
+								<div>
 									<div class="well" style="overflow: auto">
-										<div class="col-md-4">
-											<span class=" col-md-6 col-sm-6 "for="search_id"style="font-size: 18px;">コードID</span>
-											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="search_id" class="form-control ">
+										<div class="col-md-8">
+											<div class="col-md-6">
+												<div class="col-sm-6 ">
+													<span class="pull-right" for="search_id">コードID</span>
+												</div>
+												<div class="col-sm-6 ">
+													<input type="text" id="search_id" class="form-control ">
+												</div>
 											</div>
-										</div>
-										<div class="col-md-4">
-											<span class=" col-md-6 col-sm-6 "for="search_name" style="font-size: 18px;">コード名</span>
-											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="search_name" class="form-control ">
+											<div class="col-md-6">
+												<div class="col-sm-6">
+													<span class="pull-right" for="search_name">コード名</span>
+												</div>
+												<div class="col-sm-6 ">
+													<input type="text" id="search_name" class="form-control ">
+												</div>
 											</div>
 										</div>
 										<div class="col-md-4 text-right">
@@ -90,7 +101,7 @@
 								</div>
 									<!-- /.well -->
 								</div>
-								<!-- /.x_title -->
+									<!-- searching header -->
 								<div class="x_content">
 									<div class=" table">
 										<table id="datatable-list"class="table table-bordered jambo_table bulk_action text-center"style="width: 100%">
@@ -190,7 +201,7 @@
 	<!-- /.Modal Part :: Register End -->
 
 	<!-- Modal Part コードマスタ変更 -->
-	<div id="modalCodeMaster_update" class="modal" tabindex="-1"role="dialog">
+	<div id="modalCodeMaster_update" class="modal" tabindex="-1"role="dialog" data-backdrop="static">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -203,7 +214,7 @@
 					<div style="padding: 5px 20px;">
 						<form id="updateform" class="form-horizontal calender" role="form" method="GET" name="frm">
 							<div class="form-group">
-								<label class="col-sm-3 control-label"> コードID<span style="color: red; font-size: 18px;font-size: 18px;">*</span></label>
+								<span class="col-sm-3"> コードID<span style="color: red; font-size: 18px;">*</span></span>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm" id="codeMasterId_update" name="codeMasterId_update" readonly />
@@ -212,7 +223,7 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"> コード名称<span style="color: red; font-size: 18px;">*</span></label>
+								<span class="col-sm-3"> コード名<span style="color: red; font-size: 18px;">*</span></span>
 								<div class="col-sm-9">
 									<fieldset>
 										<input type="text" class="form-control form-control-sm" id="codeMasterName_update" name="codeMasterName_update" placeholder="コード名称" required />
@@ -221,7 +232,7 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">詳細</label>
+								<label class="col-sm-3">詳細</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control form-control-sm" id="remarks_update" name="remarks_update">
 								</div>

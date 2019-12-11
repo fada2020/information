@@ -776,6 +776,7 @@
     <script src="../vendors/iCheck/icheck.min.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/moment/locale/ja.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
@@ -824,11 +825,6 @@
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
 
-    	function closeUpdate(){
-    		$("#assetUpdateDiv").remove();
-    		alert("lmk");
-    	}
-
     	// オンロード
         $(function(){
 			// datetimepickerセッティング
@@ -840,6 +836,8 @@
 				startDate: moment().add(-1, "months"),
 				endDate: moment(),
 				locale: {
+				   applyLabel: '選択',
+			       cancelLabel: 'クリア',
 			       format: 'YYYY/MM/DD'
 			   }, function(start, end, label) {
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
