@@ -42,7 +42,7 @@
 
 
 	<!-- ページング -->
-	<select id="selectCount" resultType="int">
+	<select id="selectCount" resultType="int" parameterType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT COUNT(1)
 		FROM code_detail
 		WHERE 1 = 1
@@ -57,6 +57,9 @@
 		</if>
 		<if test="useFlag != null and !useFlag.equals('')">
 			AND use_flag =#{useFlag}
+		</if>
+		<if test="item1 != null and !item1.equals('')">
+			AND item1 = #{item1}
 		</if>
 	</select>
 
@@ -119,7 +122,7 @@
 		,item3
 		,item4
 		,item5
-		,use_flag)
+		)
 		VALUES (
 		#{codeMasterId}
 		, #{codeDetailId}
@@ -129,7 +132,7 @@
 		, #{item3}
 		, #{item4}
 		, #{item5}
-		, #{useFlag}
+
 		)
 	</insert>
 

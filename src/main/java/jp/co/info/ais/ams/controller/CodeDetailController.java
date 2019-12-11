@@ -146,6 +146,7 @@ public class CodeDetailController {
     		CodeDetail codeDetail = new CodeDetail();
     		codeDetail.setCodeMasterId(array[0]);
     		codeDetail.setCodeDetailId(array[1]);
+    		logger.debug(array[0]+","+array[1]);
     		//結果が正しい場合削除メソッド実行してresultに含める
 	    	result = codeDetailService.deleteDetailCode(codeDetail);
 
