@@ -29,4 +29,16 @@ public class CodeDetail {
 	private int start;
 	private String codeMasterIdOld;
 	private String codeDetailIdOld;
+	
+
+	public CodeDetail() {}
+
+	public CodeDetail(String codeMasterId, String codeDetailId, String item1, String useFlag) {
+		super();
+		this.codeMasterId = codeMasterId;
+		this.codeDetailId = codeDetailId;
+		this.item1 = item1;
+		this.useFlag = useFlag;
+	}
+	
 }

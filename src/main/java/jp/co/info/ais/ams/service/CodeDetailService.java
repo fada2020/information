@@ -54,6 +54,9 @@ public class CodeDetailService {
 	public int CodeDetailListCheck(CodeDetail codedetail) {
 		int num = 0;
 		num = codeDetailMapper.codeDetailListCheck(codedetail);
+		if(num==0) {
+			codeDetailMapper.codeDetailInsert(codedetail);
+		}
 		return num;
 
 	}
@@ -116,19 +119,17 @@ public class CodeDetailService {
 	int num=0;
 		try {
 			Asset asset =new Asset();
-			if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_CLASS)) {
-				asset.setKubunCode(codeDetail.getCodeDetailId());
-				num=assetMapper.selectCount(asset);
-			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)){
+			if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_STATE)) {
 				asset.setStatusCode(codeDetail.getCodeDetailId());
 				num=assetMapper.selectCount(asset);
-			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_STATE)) {
-				codeDetail.setUseFlag(appConstant.USE_CODE);
-				num=codeDetailMapper.selectCount(codeDetail);
+			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)){
+				asset.setKubunCode(codeDetail.getCodeDetailId());
+				num=assetMapper.selectCount(asset);
+			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_CLASS)) {
+				num=codeDetailMapper.selectCount(new CodeDetail(appConstant.MASTER_DETAIL,null,codeDetail.getCodeDetailId(),appConstant.USE_CODE));	
 			}else {
 				num=0;
 			}
-
 		if(num==0) {
 			codeDetail.setUseFlag(appConstant.UNUSE_CODE);
 			codeDetailMapper.deleteDetailCode(codeDetail);
