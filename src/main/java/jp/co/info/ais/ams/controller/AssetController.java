@@ -76,16 +76,12 @@ public class AssetController {
      * @param assetSeq
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/updateSequence", method = RequestMethod.POST)
-    public String loadUpdatePOST(Model model,@RequestBody int assetSeq) {
+    public Asset loadUpdatePOST(Model model,@RequestBody int assetSeq) {
     	try {
-
     		// 資産情報照会
-    		model.addAttribute("asset", assetService.selectAsset(assetSeq));
-        	// コード値セッティング
-    		model.addAttribute("productCode", assetService.selectProductCode());
-    		model.addAttribute("stateCode", assetService.selectStateCode());
-    		return "assetUpdate";
+    		return assetService.selectAsset(assetSeq);
     	}catch (Exception e) {
     		logger.error(e.getMessage());
     		return null;
