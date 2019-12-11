@@ -1,490 +1,495 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>IT資産管理</title>
+<div class="mmodal">
 
-    <!-- favicons -->
-	<link rel="icon" href="../images/aisRogo.png">
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<div class="modal-dialog modal-xl" style="width: 70%;" role="document">
 
-    <!-- bootstrap-datetimepicker -->
-    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-
-    <style>
-    	#am_table1, #am_table2, thead, th {text-align: center;}
-		.my-custom-scrollbar {
-			position: relative;
-			height: 200px;
-			overflow: auto;
-		}
-		.table-wrapper-scroll-y {
-			display: block;
-		}
-		.error {
-	      color: red;
-	      background-color: lavender;
-		}
-	</style>
-
-  </head>
-  <body class="nav-md" style="width: 100%;">
-    <div class="container body">
-      <div class="main_container">
-
-
-        <!-- page content -->
-        <div class="" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>&nbsp;IT資産情報変更</h3>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row" style="width:100%; margin-left:0%">
-
-            <!-- 資産情報変更フォーム -->
-            <form action="/asset/update" id="am_updateForm" method="POST" role="form" class="form-horizontal">
-            <div class="x_panel">
-            	<div class="x_content" style="display: block;">
-	            	<div class="row well">
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-			  						<span>管理番号</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
-					  				<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}" disabled >
-					  			</div>
-					  			<div class="col-md-2">
-					  				<span>区分</span>
-					  			</div>
-					  			<div class="col-md-4">
-				                	<select name="kubunCode" class="form-control" id="am_psNum_search">
-				                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}"
-				                		th:inline="text">[[${code.codeDetailName}]]</option>
-									</select>
-					  			</div>
-			  				</div>
-			  			</div>
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-				  					<span>購入日</span>
-				  				</div>
-				  				<div class="col-md-4">
-									<div class="input-group date" id="am_myDatepicker">
-										<input type="text" class="form-control" name="purchaseDate" th:value="${asset.purchaseDate}">
-										<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									 </span>
-									</div>
-				  				</div>
-			  					<div class="col-md-2">
-			  						<span>状態</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}">
-				                	<select name="statusCode" class="form-control" id="am_sNumber_search">
-				                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}"
-				                		th:inline="text">[[${code.codeDetailName}]]</option>
-									</select>
-			  					</div>
-			  				</div>
-			  			</div>
-
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-			  						<span>購入先</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="buyTo" th:value="${asset.buyTo}">
-			  					</div>
-			  					<div class="col-md-2">
-			  						<span>購入金額</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
-			  					</div>
-			  				</div>
-			  			</div>
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-			  						<span>保管位置</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
-			  					</div>
-				  				<div class="col-md-2">
-				  					<span>保証期間</span>
-				  				</div>
-				  				<div class="col-md-4">
-				  					<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
-				  				</div>
-			  				</div>
-			  			</div>
-
-			  			<div class="col-md-12"><br></div>
-
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-			  						<span>Maker</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="makerName" th:value="${asset.makerName}">
-			  					</div>
-			  					<div class="col-md-2">
-			  						<span>Model</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="modelName" th:value="${asset.modelName}">
-			  					</div>
-			  				</div>
-			  			</div>
-			  			<div class="col-md-6">
-			  				<div class="row">
-			  					<div class="col-md-2">
-			  						<span>S/N</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="serialNum" th:value="${asset.serialNum}">
-			  					</div>
-			  					<div class="col-md-2">
-			  						<span>I/F</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control" name="interFaceCol" th:value="${asset.interFaceCol}">
-			  					</div>
-			  				</div>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  				<span>その他</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<textarea  class="form-control" name="other" th:text="${asset.other}"></textarea>
-			  			</div>
-					</div>
-					<div class="row well">
-			  			<div class="col-md-12">
-			  				<span>OS</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  			</div>
-			  			<div class="col-md-2">
-			  				<span>名(Edition)</span>
-			  			</div>
-			  			<div class="col-md-4">
-			  				<input type="text" class="form-control" name="osName" th:value="${asset.osName}">
-			  			</div>
-			  			<div class="col-md-2">
-			  				<span>Product Key</span>
-			  			</div>
-			  			<div class="col-md-4">
-			  				<input type="text" class="form-control" name="osProductKey" th:value="${asset.osProductKey}">
-			  			</div>
-					</div>
-					<div class="row well">
-			  			<div class="col-md-12">
-			  				<span>CPU</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  			</div>
-			  			<div class="col-md-2">
-			  				<span>Processor</span>
-			  			</div>
-			  			<div class="col-md-4">
-			  				<input type="text" class="form-control" name="cpuProcessor" th:value="${asset.cpuProcessor}">
-			  			</div>
-			  			<div class="col-md-2">
-			  				<span>動作周波数</span>
-			  			</div>
-			  			<div class="col-md-4">
-			  				<input type="text" class="form-control numVal" name="operatingFrequency" th:value="${asset.operatingFrequency}">
-			  			</div>
-		  			</div>
-		  			<div class="row well">
-			  			<div class="col-md-6">
-			  				<div class="row well">
-			  					<div class="col-md-12">
-			  						<span>Memory</span>
-			  					</div>
-					  			<div class="col-md-12">
-					  				<br>
-					  			</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control numVal" name="memory" th:value="${asset.memory}">
-			  					</div>
-			  					<div class="col-md-4">
-			  						<span>Upgarde</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control numVal" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
-			  					</div>
-			  				</div>
-			  			</div>
-			  			<div class="col-md-6">
-			  				<div class="row well">
-			  					<div class="col-md-12">
-			  						<span>HDD</span>
-			  					</div>
-					  			<div class="col-md-12">
-					  				<br>
-					  			</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control numVal" name="hdd" th:value="${asset.hdd}">
-			  					</div>
-			  					<div class="col-md-4">
-			  						<span>Upgarde</span>
-			  					</div>
-			  					<div class="col-md-4">
-			  						<input type="text" class="form-control numVal" name="hddUpgarde" th:value="${asset.hddUpgarde}">
-			  					</div>
-			  				</div>
-			  			</div>
-		  			</div>
-					<div class="row well">
-			  			<div class="col-md-12">
-			  				<span>MAC</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>LAN</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="macLan" th:value="${asset.macLan}">
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>Wireless</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="macWireless" th:value="${asset.macWireless}">
-			  			</div>
-					</div>
-		  			<div class="row well">
-			  			<div class="col-md-12">
-			  				<span>Security</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>BIOS</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="securityBios" th:value="${asset.securityBios}">
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>HDD</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="securityHdd" th:value="${asset.securityHdd}">
-			  			</div>
-					</div>
-					<div class="row well">
-			  			<div class="col-md-12">
-			  				<span>Admin.Account</span>
-			  			</div>
-			  			<div class="col-md-12">
-			  				<br>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>ID</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="adminAccountId" th:value="${asset.adminAccountId}">
-			  			</div>
-			  			<div class="col-md-3">
-			  				<span>PW</span>
-			  			</div>
-			  			<div class="col-md-3">
-			  				<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
-			  			</div>
-		  			</div>
-
-		  			<div class="col-md-12">
-		  				<br>
-		  			</div>
-		  		</div>
-	  		</div>
-	  		</form>
-	  		<!-- /資産情報変更フォーム -->
-
-				<!-- 付属品テーブル -->
-				<div class="row">
-			  		<div class="col-md-12">
-			  			<div class="x_panel">
-							<div class="x_title">
-								<h2>付属品</h2>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-
-						<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
-							<thead>
-								<tr class="headings">
-									<th class="col-md-1">No </th>
-									<th class="col-md-2">品名 </th>
-									<th class="col-md-2">仕樣 </th>
-									<th class="col-md-1">数量 </th>
-									<th class="col-md-6">備考 </th>
-									<th colspan="2"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<!-- 付属品10個項目 -->
-								<!-- 既存 付属品 -->
-								<tr id="accupdate1" th:each="accessories,accnum : ${asset.accessoriesList}">
-									<input type="hidden" th:id="${#ids.seq('am_key')}" th:value="${accessories.accessoriesSeq}">
-									<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${accnum.index+1}"></td>
-									<td><input type="text" maxlength="25" class="form-control" th:id="${#ids.seq('am_itemName')}" th:value="${accessories.itemName}"></td>
-									<td><input type="text" maxlength="25" class="form-control"  th:id="${#ids.seq('am_itemSpec')}" th:value="${accessories.itemSpec}"></td>
-									<td><input type="text" maxlength="11" class="form-control"  th:id="${#ids.seq('am_itemQuantity')}" th:value="${accessories.itemQuantity}"></td>
-									<td><input type="text" maxlength="100" class="form-control"  th:id="${#ids.seq('am_remarks')}" th:value="${accessories.remarks}"></td>
-								</tr>
-								<!-- 付属品を追加ため空欄 -->
-								<tr id="accupdate2" th:if="${#lists.size(asset.accessoriesList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
-									<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${index+#lists.size(asset.accessoriesList)}"></td>
-									<td><input type="text" maxlength="8" class="form-control" th:id="${#ids.seq('am_itemName')}" ></td>
-									<td><input type="text" maxlength="100" class="form-control"  th:id="${#ids.seq('am_itemSpec')}"></td>
-									<td><input type="text" maxlength="10" class="form-control" th:id="${#ids.seq('am_itemQuantity')}"></td>
-									<td><input type="text" maxlength="10" class="form-control" th:id="${#ids.seq('am_remarks')}"></td>
-								</tr>
-							</tbody>
-						</table>
-
-					</div>
-					<div class="col-md-12 text-left">
-						<br>
-		  				<button type="button" class="btn btn-secondary pull-right" onclick = "location.href ='/asset'">戻る</button>
-		  				<button type="button" id="sisanupdate" class="btn btn-primary btn-warning">変更</button>
-		  			</div>
+		<div class="modal-content" role="main">
+			<div class="">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h3 class="modal-title">IT資産情報変更</h3>
 				</div>
-			</div>
-  		</div>
- 		</div>
-				<!-- /付属品テーブル -->
 
-				<!-- 保守履歴テーブル -->
-				<div class="row">
-			  		<div class="col-md-12">
-			  			<div class="x_panel">
-							<div class="x_title">
-								<h2>保守履歴</h2>
-								<div class="clearfix"></div>
-							</div>
+
+				<div class="clearfix"></div>
+
+				<div class="row" style="width: 100%; margin-left: 0%">
+
+					<!-- 資産情報変更フォーム -->
+					<form action="/asset/update" id="am_updateForm" method="POST"
+						role="form" class="form-horizontal">
+						<div class="x_panel">
 							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-									<table class="table table-striped jambo_table bulk_action" id="am_table2">
-										<thead>
-											<tr class="headings">
-												<th class="col-md-1">No </th>
-												<th class="col-md-2">実施日 </th>
-												<th class="col-md-5">実施内容 </th>
-												<th class="col-md-2">担当 </th>
-												<th class="col-md-2">承認 </th>
-												<th colspan="2"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr class="even pointer">
-												<td></td>
-												<td><input id="am_implementationDate" maxlength="8" type="text" class="form-control"></td>
-												<td><input id="am_implementationDetail" maxlength="100" type="text" class="form-control"></td>
-												<td><input id="am_repId" maxlength="10" type="text" class="form-control"></td>
-												<td><input id="am_approverId" maxlength="10" type="text" class="form-control"></td>
-												<td colspan="2" class="a-center">
-													<a id="am_addMaintenanceHistory" class="btn btn-info btn-xs"><i class="fa fa-plus-square"></i></a>
-												</td>
-											</tr>
-											<tr th:each="maintenance : ${asset.maintenanceHistoryList}">
-												<td id="am_historySeq" th:text="${maintenance.historySeq}"></td>
-												<td><input type="text" maxlength="8" class="form-control" id="am_implementationDate" th:value="${maintenance.implementationDate}"></td>
-												<td><input type="text" maxlength="100" class="form-control" id="am_implementationDetail" th:value="${maintenance.implementationDetail}"></td>
-												<td><input type="text" maxlength="10" class="form-control" id=am_repId th:value="${maintenance.repId}"></td>
-												<td><input type="text" maxlength="10" class="form-control" id="am_approverId" th:value="${maintenance.approverId}"></td>
-												<td class="a-center"><a id="am_updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>
-												<td class="a-center"><a id="am_deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
-											</tr>
-										</tbody>
-									</table>
+								<div class="row well">
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>管理番号</span>
+											</div>
+											<div class="col-md-4">
+												<input type="hidden" class="form-control" name="assetSeq"
+													th:value="${asset.assetSeq}"> <input type="text"
+													class="form-control" name="assetNumber"
+													th:value="${asset.assetNumber}" disabled>
+											</div>
+											<div class="col-md-2">
+												<span>区分</span>
+											</div>
+											<div class="col-md-4">
+												<select name="kubunCode" class="form-control"
+													id="am_psNum_search">
+													<option th:each="code : ${productCode}"
+														th:value="${code.codeDetailId}"
+														th:selected="${code.codeDetailId == asset.kubunCode}"
+														th:inline="text">[[${code.codeDetailName}]]</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>購入日</span>
+											</div>
+											<div class="col-md-4">
+												<div class="input-group date" id="am_myDatepicker">
+													<input type="text" class="form-control input-group-addon" name="purchaseDate"
+														th:value="${asset.purchaseDate}">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<span>状態</span>
+											</div>
+											<div class="col-md-4">
+												<input type="hidden" class="form-control"
+													name="preStatusCode" th:value="${asset.statusCode}">
+												<select name="statusCode" class="form-control"
+													id="am_sNumber_search">
+													<option th:each="code : ${stateCode}"
+														th:value="${code.codeDetailId}"
+														th:selected="${code.codeDetailId == asset.statusCode}"
+														th:inline="text">[[${code.codeDetailName}]]</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>購入先</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" name="buyTo"
+													th:value="${asset.buyTo}">
+											</div>
+											<div class="col-md-2">
+												<span>購入金額</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal"
+													name="purchasePrice" th:value="${asset.purchasePrice}">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>保管位置</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control"
+													name="storageLocation" th:value="${asset.storageLocation}">
+											</div>
+											<div class="col-md-2">
+												<span>保証期間</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal"
+													name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<br>
+									</div>
+
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>Maker</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" name="makerName"
+													th:value="${asset.makerName}">
+											</div>
+											<div class="col-md-2">
+												<span>Model</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" name="modelName"
+													th:value="${asset.modelName}">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-2">
+												<span>S/N</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" name="serialNum"
+													th:value="${asset.serialNum}">
+											</div>
+											<div class="col-md-2">
+												<span>I/F</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" name="interFaceCol"
+													th:value="${asset.interFaceCol}">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<br> <span>その他</span>
+									</div>
+									<div class="col-md-12">
+										<textarea class="form-control" name="other"
+											th:text="${asset.other}"></textarea>
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-12">
+										<span>OS</span>
+									</div>
+									<div class="col-md-12">
+										<br>
+									</div>
+									<div class="col-md-2">
+										<span>名(Edition)</span>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control" name="osName"
+											th:value="${asset.osName}">
+									</div>
+									<div class="col-md-2">
+										<span>Product Key</span>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control" name="osProductKey"
+											th:value="${asset.osProductKey}">
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-12">
+										<span>CPU</span>
+									</div>
+									<div class="col-md-12">
+										<br>
+									</div>
+									<div class="col-md-2">
+										<span>Processor</span>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control" name="cpuProcessor"
+											th:value="${asset.cpuProcessor}">
+									</div>
+									<div class="col-md-2">
+										<span>動作周波数</span>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control numVal"
+											name="operatingFrequency"
+											th:value="${asset.operatingFrequency}">
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-6">
+										<div class="row well">
+											<div class="col-md-12">
+												<span>Memory</span>
+											</div>
+											<div class="col-md-12">
+												<br>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal" name="memory"
+													th:value="${asset.memory}">
+											</div>
+											<div class="col-md-4">
+												<span>Upgarde</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal"
+													name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="row well">
+											<div class="col-md-12">
+												<span>HDD</span>
+											</div>
+											<div class="col-md-12">
+												<br>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal" name="hdd"
+													th:value="${asset.hdd}">
+											</div>
+											<div class="col-md-4">
+												<span>Upgarde</span>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control numVal"
+													name="hddUpgarde" th:value="${asset.hddUpgarde}">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-12">
+										<span>MAC</span>
+									</div>
+									<div class="col-md-12">
+										<br>
+									</div>
+									<div class="col-md-3">
+										<span>LAN</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="macLan"
+											th:value="${asset.macLan}">
+									</div>
+									<div class="col-md-3">
+										<span>Wireless</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="macWireless"
+											th:value="${asset.macWireless}">
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-12">
+										<span>Security</span>
+									</div>
+									<div class="col-md-12">
+										<br>
+									</div>
+									<div class="col-md-3">
+										<span>BIOS</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="securityBios"
+											th:value="${asset.securityBios}">
+									</div>
+									<div class="col-md-3">
+										<span>HDD</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="securityHdd"
+											th:value="${asset.securityHdd}">
+									</div>
+								</div>
+								<div class="row well">
+									<div class="col-md-12">
+										<span>Admin.Account</span>
+									</div>
+									<div class="col-md-12">
+										<br>
+									</div>
+									<div class="col-md-3">
+										<span>ID</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="adminAccountId"
+											th:value="${asset.adminAccountId}">
+									</div>
+									<div class="col-md-3">
+										<span>PW</span>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" name="adminAccountPwd"
+											th:value="${asset.adminAccountPwd}">
+									</div>
+								</div>
+
+								<div class="col-md-12">
+									<br>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- /資産情報変更フォーム -->
+
+					<!-- 付属品テーブル -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>付属品</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content" style="display: block;">
+									<div
+										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+
+										<table
+											class="table table-striped jambo_table bulk_action text-center"
+											id="am_table1">
+											<thead>
+												<tr class="headings">
+													<th class="col-md-1">No</th>
+													<th class="col-md-2">品名</th>
+													<th class="col-md-2">仕樣</th>
+													<th class="col-md-1">数量</th>
+													<th class="col-md-6">備考</th>
+													<th colspan="2"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 付属品10個項目 -->
+												<!-- 既存 付属品 -->
+												<tr id="accupdate1"
+													th:each="accessories,accnum : ${asset.accessoriesList}">
+													<input type="hidden" th:id="${#ids.seq('am_acckey')}"
+														th:value="${accessories.accessoriesSeq}">
+													<td th:id="${#ids.seq('am_accessoriesSeq')}"
+														th:text="${accnum.index+1}"></td>
+													<td><input type="text" maxlength="25"
+														class="form-control" th:id="${#ids.seq('am_itemName')}"
+														th:value="${accessories.itemName}"></td>
+													<td><input type="text" maxlength="25"
+														class="form-control" th:id="${#ids.seq('am_itemSpec')}"
+														th:value="${accessories.itemSpec}"></td>
+													<td><input type="text" maxlength="11"
+														class="form-control"
+														th:id="${#ids.seq('am_itemQuantity')}"
+														th:value="${accessories.itemQuantity}"></td>
+													<td><input type="text" maxlength="100"
+														class="form-control" th:id="${#ids.seq('am_remarks')}"
+														th:value="${accessories.remarks}"></td>
+												</tr>
+												<!-- 付属品を追加ため空欄 -->
+												<tr id="accupdate2"
+													th:if="${#lists.size(asset.accessoriesList) < 10}"
+													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
+													<td th:id="${#ids.seq('am_accessoriesSeq')}"
+														th:text="${index+#lists.size(asset.accessoriesList)}"></td>
+													<td><input type="text" maxlength="8"
+														class="form-control" th:id="${#ids.seq('am_itemName')}"></td>
+													<td><input type="text" maxlength="100"
+														class="form-control" th:id="${#ids.seq('am_itemSpec')}"></td>
+													<td><input type="text" maxlength="10"
+														class="form-control"
+														th:id="${#ids.seq('am_itemQuantity')}"></td>
+													<td><input type="text" maxlength="10"
+														class="form-control" th:id="${#ids.seq('am_remarks')}"></td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
 
 								</div>
 							</div>
 						</div>
-			  		</div>
+					</div>
+					<!-- /付属品テーブル -->
 
-		  		</div>
-				<!-- /保守履歴テーブル -->
+					<!-- 保守履歴テーブル -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>保守履歴</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content" style="display: block;">
+									<div
+										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+										<table class="table table-striped jambo_table bulk_action"
+											id="am_table2">
+											<thead>
+												<tr class="headings">
+													<th class="col-md-1">No</th>
+													<th class="col-md-2">実施日</th>
+													<th class="col-md-5">実施内容</th>
+													<th class="col-md-2">担当</th>
+													<th class="col-md-2">承認</th>
+													<th colspan="2"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 保守履歴10個項目 -->
+												<!-- 既存 保守履歴 -->
+												<tr id="mhupdate1"
+													th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
+													<input type="hidden" th:id="${#ids.seq('am_mhkey')}"
+														th:value="${maintenance.historySeq}">
+													<td th:id="${#ids.seq('am_historySeq')}"
+														th:text="${mhnum.index+1}"></td>
+													<td><input type="text" maxlength="25"
+														class="form-control"
+														th:id="${#ids.seq('am_implementationDate')}"
+														th:value="${maintenance.implementationDate}"></td>
+													<td><input type="text" maxlength="25"
+														class="form-control"
+														th:id="${#ids.seq('am_implementationDetail')}"
+														th:value="${maintenance.implementationDetail}"></td>
+													<td><input type="text" maxlength="11"
+														class="form-control" th:id="${#ids.seq('am_repId')}"
+														th:value="${maintenance.repId}"></td>
+													<td><input type="text" maxlength="100"
+														class="form-control" th:id="${#ids.seq('am_approverId')}"
+														th:value="${maintenance.approverId}"></td>
+												</tr>
+												<!-- 保守履歴を追加ため空欄 -->
+												<tr id="mhupdate2"
+													th:if="${#lists.size(asset.maintenanceHistoryList) < 10}"
+													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
+													<td th:id="${#ids.seq('am_historySeq')}"
+														th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
+													<td><input type="text" maxlength="8"
+														class="form-control"
+														th:id="${#ids.seq('am_implementationDate')}"></td>
+													<td><input type="text" maxlength="100"
+														class="form-control"
+														th:id="${#ids.seq('am_implementationDetail')}"></td>
+													<td><input type="text" maxlength="10"
+														class="form-control" th:id="${#ids.seq('am_repId')}"></td>
+													<td><input type="text" maxlength="10"
+														class="form-control" th:id="${#ids.seq('am_approverId')}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /保守履歴テーブル -->
+					<div class="col-md-12 text-left">
+						<br>
+						<button type="button" class="btn btn-secondary pull-right"
+							data-dismiss="modal">戻る</button>
+						<button type="button" id="sisanupdate"
+							class="btn btn-primary btn-warning">変更</button>
 
+					</div>
 
-		  	</div>
-          </div>
-        </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <div th:insert="fragments/footer :: footer" th:remove="tag"></div>
-        <!-- /footer content -->
-      </div>
-    </div>
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- jquery-ui -->
-	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
-    <!-- jquery-val
-ation-1.19.1 -->
-    <script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
-
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-datetimepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
-
-    <!-- page script -->
-    <script th:inline="javascript">
+				</div>
+			</div>
+		</div>
+		<!-- /page content -->
+	</div>
+</div>
+<!-- page script -->
+<script th:inline="javascript">
     /*<![CDATA[*/
 
     	// datetimepickerセッティング
@@ -529,10 +534,23 @@ ation-1.19.1 -->
 
         	// sisanupdate button
         	$('#sisanupdate').click(function(){
-        		assupdate(), accinsert(),accupdate()
+        		var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+        		var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+        		if(acclength < 1){
+        			accinsert()
+        		} else{
+        			accupdate(),accinsert();
+        		}
+        		if(mhlength < 1){
+        			mhinsert()
+        		} else{
+        			mhupdate(), mhinsert();
+        		}
+        		assupdate();
+        		location.href = '/asset';
         	});//click event sisanupdate end
 
-        		// 資産変更プロセス
+        	// 資産変更プロセス
             function assupdate() {
                 var form = $('#am_updateForm');
 
@@ -675,36 +693,35 @@ ation-1.19.1 -->
                 };
 
             }
-
+		//付属品変更・削除プロセス
 			function accupdate() {
 				var selectTr1 = $(accupdate1);
 				var acclength = Object.keys([[${asset.accessoriesList}]]).length;
  				//accessories update
 				for(var i = 1; i < acclength + 1 ; i++){
-					var am_accessoriesSeq = '#am_accessoriesSeq'+i;
 					var am_itemName = '#am_itemName'+i;
 					var am_itemSpec = '#am_itemSpec'+i;
 					var am_itemQuantity = '#am_itemQuantity'+i;
 					var am_remarks = '#am_remarks'+i;
-					var am_key = '#am_key'+i;
+					var am_acckey = '#am_acckey'+i;
 
 					var accessories ={
 	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	            			"accessoriesSeq" : selectTr1.find(am_key).val(),
+	            			"accessoriesSeq" : selectTr1.find(am_acckey).val(),
 	            			"itemName" : selectTr1.find(am_itemName).val(),
 	            			"itemSpec" : selectTr1.find(am_itemSpec).val(),
 	            			"itemQuantity" : selectTr1.find(am_itemQuantity).val(),
 	            			"remarks" : selectTr1.find(am_remarks).val(),
 	            	};
-					if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""){
 					// 付属品削除プロセス
-						if(!confirm(i+'行目の項目を本当に削除しますか？')){
+					if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""){
+						if(!confirm('付属品の'+i+'行目の項目を本当に削除しますか？')){
 		                    /* キャンセルの時の処理 */
 		                    return false;
 		                }else{
 		                	var accessories ={
 		                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-		                			"accessoriesSeq" :  selectTr1.find(am_key).val()
+		                			"accessoriesSeq" :  selectTr1.find(am_acckey).val()
 		                	};
 
 		                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
@@ -727,6 +744,7 @@ ation-1.19.1 -->
 		                    });
 		                }
 					}//削除if
+					//付属品変更プロセス
 					else{
 						$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
 		    					{
@@ -738,7 +756,7 @@ ation-1.19.1 -->
 		                	)
 		    				.success(function(result) {
 		    					if(result == 0) {
-		    						alert('エラーが発生しました。update');
+		    						alert('エラーが発生しました。');
 		    					} else {
 
 		    					}
@@ -748,7 +766,7 @@ ation-1.19.1 -->
 	           		}//変更else
 	            };//for end
 			}//function accupdate
-
+			//付属品登録プロセス
 			function accinsert() {
 	            var selectTr2 = $(accupdate2);
 	        	var acclength = Object.keys([[${asset.accessoriesList}]]).length;
@@ -770,10 +788,10 @@ ation-1.19.1 -->
 	            			"remarks" : selectTr2.find(am_remarks).val()
 	            	};
 					if(selectTr2.find(am_itemName).val() == ""){
-						alert(i+'行目の品名が空きます。');
+						alert('付属品の'+i+'行目の品名が空きます。');
 						break;
 					} else if ( selectTr2.find(am_itemSpec).val() == ""){
-						alert(i+'行目の仕樣が空きます。');
+						alert('付属品の'+i+'行目の仕樣が空きます。');
 						break;
 					} else {
 						$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
@@ -797,126 +815,130 @@ ation-1.19.1 -->
 	            };//for end
 
 			}//function accinsert
+			//保守履歴変更・削除
+			function mhupdate() {
+				var selectTr1 = $(mhupdate1);
+				var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+ 				//mh update
+				for(var i = 1; i < mhlength + 1 ; i++){
+					var am_implementationDate = '#am_implementationDate'+i;
+					var am_implementationDetail = '#am_implementationDetail'+i;
+					var am_repId = '#am_repId'+i;
+					var am_approverId = '#am_approverId'+i;
+					var am_mhkey = '#am_mhkey'+i;
 
+					var maintenanceHistory ={
+	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+	            			"historySeq" : selectTr1.find(am_mhkey).val(),
+	            			"implementationDate" : selectTr1.find(am_implementationDate).val(),
+	            			"implementationDetail" : selectTr1.find(am_implementationDetail).val(),
+	            			"repId" : selectTr1.find(am_repId).val(),
+	            			"approverId" : selectTr1.find(am_approverId).val(),
+	            	};
+					// 保守削除プロセス
+					if(selectTr1.find(am_implementationDate).val() == "" && selectTr1.find(am_implementationDetail).val() == ""){
+						if(!confirm('保守履歴の'+i+'行目の項目を本当に削除しますか？')){
+		                    /* キャンセルの時の処理 */
+		                    return false;
+		                }else{
+		                	var  maintenanceHistory ={
+		                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+		                			"historySeq" :  selectTr1.find(am_mhkey).val()
+		                	};
 
+		                	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(maintenanceHistory)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。');
+		    					} else {
+		    						selectTr.remove();
+		    						alert('削除しました');
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });
+		                }
+					}//削除if
+					else{
+						$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(maintenanceHistory)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。');
+		    					} else {
 
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });//ajax end
+	           		}//変更else
+	            };//for end
+			}//function mhupdate
 
-			// 保守履歴登録プロセス
-            $('#am_addMaintenanceHistory').on('click', function () {
-            	var selectTr = $(this).closest("tr");
+			function mhinsert() {
+	            var selectTr2 = $(mhupdate2);
+	        	var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
 
-            	var maintenanceHistory ={
-            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"implementationDate" : selectTr.find("#am_implementationDate").val(),
-            			"implementationDetail" : selectTr.find("#am_implementationDetail").val(),
-            			"repId" : selectTr.find("#am_repId").val(),
-            			"approverId" : selectTr.find("#am_approverId").val()
-            	};
+	          //maintainenthistory insert
+				for(var i = mhlength+1; i < 11 ; i++){
+					var am_historySeq = '#am_historySeq'+i;
+					var am_implementationDate = '#am_implementationDate'+i;
+					var am_implementationDetail = '#am_implementationDetail'+i;
+					var am_repId = '#am_repId'+i;
+					var am_approverId = '#am_approverId'+i;
 
-            	$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(maintenanceHistory)
-					}
-				)
-				.success(function(data) {
-					if(data.historySeq == 0){
-						alert('エラーが発生しました。');
-					}else {
-						 $('#am_table2 tbody').append(
-								 '<tr>'
-								 +'<td id="am_historySeq">'+data.historySeq+'</td>'
-								 +'<td><input type="text" maxlength="8" class="form-control" id="am_implementationDate" value="'+data.implementationDate+'"></td>'
-								 +'<td><input type="text" maxlength="100" class="form-control" id="am_implementationDetail" value="'+data.implementationDetail+'"></td>'
-								 +'<td><input type="text" maxlength="10" class="form-control" id="am_repId" value="'+data.repId+'"></td>'
-								 +'<td><input type="text" maxlength="10" class="form-control" id="am_approverId" value="'+data.approverId+'"></td>'
-								 +'<td class="a-center"><a id="am_updateMaintenanceHistory" class="btn btn-warning btn-xs"><i class="fa fa-cog"></i></a></td>'
-								 +'<td class="a-center"><a id="am_deleteMaintenanceHistory" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>'
-								 +'</tr>'
-						 );
-						 alert('追加されました。');
-					}
-				}).error(function(xhr, textStatus, error) {
-                	alert('通信失敗');
-                });
-
-            });
-
-			// 保守履歴変更プロセス
-            $('#am_table2 tbody').on("click","#am_updateMaintenanceHistory", function() {
-            	var selectTr = $(this).closest("tr");
-
-            	var maintenanceHistory ={
-            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-            			"historySeq" : selectTr.find("#am_historySeq").text(),
-            			"implementationDate" : selectTr.find("#am_implementationDate").val(),
-            			"implementationDetail" : selectTr.find("#am_implementationDetail").val(),
-            			"repId" : selectTr.find("#am_repId").val(),
-            			"approverId" : selectTr.find("#am_approverId").val()
-            	};
-
-            	$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(maintenanceHistory)
-					}
-            	)
-				.success(function(result) {
-					if(result == 0) {
-						alert('エラーが発生しました。');
+					var  maintenanceHistory ={
+	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+	            			"historySeq" : selectTr2.find(am_historySeq).text(),
+	            			"implementationDate" : selectTr2.find(am_implementationDate).val(),
+	            			"implementationDetail" : selectTr2.find(am_implementationDetail).val(),
+	            			"repId" : selectTr2.find(am_repId).val(),
+	            			"approverId" : selectTr2.find(am_approverId).val()
+	            	};
+					if(selectTr2.find(am_implementationDate).val() == ""){
+						alert('保守履歴の'+i+'行目の実施日が空きます。');
+						break;
+					} else if ( selectTr2.find(am_implementationDetail).val() == ""){
+						alert('保守履歴の'+i+'行目の実施内容が空きます。');
+						break;
 					} else {
-						alert('変更されました。');
-					}
-				}).error(function(xhr, textStatus, error) {
-                	alert('通信失敗');
-                });
+						$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
+		    					{
+		    						type: "POST",
+		    						dataType: "json",
+		    						contentType: 'application/JSON',
+		    						data : JSON.stringify(maintenanceHistory)
+		    					}
+		                	)
+		    				.success(function(result) {
+		    					if(result == 0) {
+		    						alert('エラーが発生しました。'+i);
+		    					} else {
 
-            });
+		    					}
+		    				}).error(function(xhr, textStatus, error) {
+		                    	alert('通信失敗');
+		                    });//ajax end
+					}//end else
+	            };//for end
 
-			// 保守履歴削除プロセス
-            $('#am_table2 tbody').on("click","#am_deleteMaintenanceHistory", function() {
-
-            	if(!confirm('本当に削除しますか？')){
-                    /* キャンセルの時の処理 */
-                    return false;
-                }else{
-                	var selectTr = $(this).closest("tr");
-
-                	var maintenanceHistory ={
-                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-                			"historySeq" : selectTr.find("#am_historySeq").text()
-                	};
-
-                	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
-    					{
-    						type: "POST",
-    						dataType: "json",
-    						contentType: 'application/JSON',
-    						data : JSON.stringify(maintenanceHistory)
-    					}
-                	)
-    				.success(function(result) {
-    					if(result == 0) {
-    						alert('エラーが発生しました。');
-    					} else {
-    						selectTr.remove();
-    					}
-    				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗');
-                    });
-                }
-
-            });
-
+			}//function mhinsert
 
 
         })
     /*]]>*/
     </script>
 
-</body>
-</html>

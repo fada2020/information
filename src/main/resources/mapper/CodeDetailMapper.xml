@@ -34,6 +34,9 @@
 		<if test="codeDetailName != null and !codeDetailName.equals('')">
 			AND code_detail_name like '%${codeDetailName}%'
 		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
@@ -52,6 +55,9 @@
 		<if test="codeDetailName != null and !codeDetailName.equals('')">
 			AND code_detail_name like '%${codeDetailName}%'
 		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
 	</select>
 
 	<!-- マスターコードIDで選択 (code_detailテーブルから)-->
@@ -67,8 +73,12 @@
 	<select id="selectCode"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
-		code_master_id
-		FROM code_master
+		d.code_master_id,
+		m.code_master_name
+		FROM code_master m
+		join code_detail d on
+		d.code_master_id=m.code_master_id
+		where d.use_flag=#{useFlag}
 	</select>
 
 	<!--変更Update  -->
@@ -90,10 +100,11 @@
 	</update>
 
 	<!-- 詳細ーコード削除 -->
-	<delete id="deleteDetailCode">
-		DELETE FROM code_detail
-		WHERE (SELECT CONCAT(code_master_id, code_detail_id)) = #{codeMDetail}
-	</delete>
+	<update id="deleteDetailCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		update code_detail set
+		use_flag=#{useFlag}
+		WHERE code_detail_id = #{codeDetailId} and code_Master_Id=#{codeMasterId}
+	</update>
 
 
 	<!-- 詳細新規登録 -->

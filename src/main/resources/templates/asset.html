@@ -44,6 +44,11 @@
 			height: 130px;
 			overflow: auto;
 		}
+		.my-custom-scrollbar-update {
+			position: relative;
+			height: 250px;
+			overflow: auto;
+		}
 		.table-wrapper-scroll-y {
 			display: block;
 		}
@@ -51,6 +56,7 @@
 	      color: red;
 	      background-color: lavender;
 		}
+		#am_table1, #am_table2, thead, th {text-align: center;}
 	</style>
 
   </head>
@@ -459,7 +465,7 @@
 							  	<div class="row">
 							  		<div class="row well">
 						            	<div class="row">
-								  			<div class="col-md-6">
+								  		<div class="col-md-6">
 								  				<div class="row">
 										  			<div class="col-md-2">
 										  				<span>区分</span>
@@ -729,16 +735,9 @@
 					<!-- /登録 modal -->
 
 					<!-- /資産情報変更 modal -->
-					<a href="asset/105" class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal">
-						LMKing</a>
 
 					<div class="modal fade" id="assetUpdateModal" >
 
-							<div class="modal-dialog">
-            <div class="modal-content" style="width:170%; left:-30%">
-                <!-- Content will be loaded here from "remote.php" file -->
-            </div>
-        </div>
 
 					</div>
 
@@ -789,7 +788,24 @@
     <!-- page script -->
     <script th:inline="javascript">
     /*<![CDATA[*/
+   	 function assetUpdateF(assetSeq){
 
+    		var requestAssetSeq = assetSeq;
+        	$.ajax(/*[[@{/asset/updateSequence}]]*/ 'asset/updateSequence',
+			       	{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(requestAssetSeq)
+					}
+				)
+				.done(function(data) {
+					$("#assetUpdateModal").load("/asset/up"+requestAssetSeq);
+				})
+				.error(function(){
+					alert("想定外のエラーが発生しました。管理者にお問い合わせください。")
+				})
+        }
     	// 区分コードMap
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
@@ -807,6 +823,11 @@
     	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
+    	function closeUpdate(){
+    		$("#assetUpdateDiv").remove();
+    		alert("lmk");
+    	}
 
     	// オンロード
         $(function(){
@@ -853,15 +874,15 @@
             // datatableの設定を変更
             var modalesectiontable = $("#table1").DataTable({
             	"language": {
-            		"info":           "表示 _START_ ~ _END_ の _TOTAL_ エントリ",
+            		"info":           "_START_ ~ _END_ の _TOTAL_ 件",
             		"infoEmpty":      "表示 0 ~ 0 の 0 エントリ",
             	    "infoFiltered":   "",
             	    "emptyTable": "表にデータがない",
             	    "paginate": {
             	        "first":      "最初",
             	        "last":       "最後",
-            	        "next":       "次へ",
-            	        "previous":   "前の"
+            	        "next":       "次",
+            	        "previous":   "前"
             	    }
                 },
             	"fixedHeader": true,
@@ -894,9 +915,11 @@
                     	return productCodeMap.get(d.kubunCode);
                     }},
                     { targets: 2, data: function ( d ) {
-
-                    		return changeNull(d.modelName);
-
+                    	if(d.modelName == '') {
+                    		return '-';
+                    	} else {
+                    		return d.modelName;
+                    	}
                     }},
                     { targets: 3, data: function ( d ) {
                     	if(d.makerName == '') {
@@ -923,8 +946,7 @@
                     	targets: 7,
                     	data: null,
                         render: function ( data, type, row, meta ) {
-                        var html = '<button href =\'' +
-                        	'/asset/' + row.assetSeq + '\'"  class="btn btn-primary" data-toggle="modal" data-target="#assetUpdateModal" >変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
+                        var html = '<button class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" onClick="assetUpdateF('+ row.assetSeq +')">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
                         		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';
@@ -990,13 +1012,10 @@
             });
 
             function changeNull(value){
-
-            	value= value.replace(/<br>\/>/ig,"\n");
-            	value=value.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig,"");
-             	if(value == null || value == "") {
+            	if(value == null || value == "") {
             		return "-";
             	} else {
-            	return value;
+            		return value;
             	}
             }
 

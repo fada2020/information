@@ -19,9 +19,8 @@ public class CodeMaster {
 		private String remarks;
 
 		//使用未使用
-		private int useFlag;
-		//コードID
-		private String codeMasterIdOld;
+		private String useFlag;
+
 		//長さ
 		int length;
 		int start;

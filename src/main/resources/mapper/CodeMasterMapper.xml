@@ -36,16 +36,14 @@
 	</insert>
 
 	<!-- Select All CodeMaster -->
-	<select id="selectCodeMasterList" resultType="CodeMaster">
-		SELECT A.* FROM(
+	<select id="selectCodeMasterList" resultType="jp.co.info.ais.ams.domain.CodeMaster">
+
 		SELECT
 		code_master_id
 		,code_master_name
 		,remarks
 		,use_flag
 		FROM code_master
-		ORDER BY code_master_id ASC
-		) A
 		WHERE 1 = 1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
@@ -53,9 +51,24 @@
 		<if test="codeMasterName != null and !codeMasterName.equals('')">
 			AND code_master_name like '%${codeMasterName}%'
 		</if>
+			<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
+		ORDER BY code_master_id ASC
 		LIMIT #{length} OFFSET #{start}
-	</select>
 
+	</select>
+<select id="codeMasterList" resultType="jp.co.info.ais.ams.domain.CodeMaster">
+
+		SELECT
+		code_master_id
+		,code_master_name
+		,remarks
+		,use_flag
+		FROM code_master
+		WHERE  use_flag =#{useFlag}
+
+	</select>
 	<!-- 総数 -->
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(1)
@@ -66,6 +79,9 @@
 		</if>
 		<if test="codeMasterName != null and !codeMasterName.equals('')">
 			AND code_master_name like '%${codeMasterName}%'
+		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
 		</if>
 	</select>
 	<select id="CodeMasterListCheck"
@@ -84,13 +100,13 @@
 		code_master_id
 		,code_master_name
 		,remarks
-		,use_flag)
+		)
 		VALUES (
 		#{codeMasterId}
 		, #{codeMasterName}
 		,
 		#{remarks}
-		, #{useFlag}
+	
 		)
 	</insert>
 	<!-- 変更 -->
@@ -106,8 +122,10 @@
 	</update>
 
 	<!-- 削除 -->
-	<delete id="deleteMasterCode">
-		DELETE FROM code_master WHERE code_master_id = #{codeMasterId}
-	</delete>
+	<update id="deleteMasterCode" parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		update code_master set
+		use_flag=#{useFlag}
+		 WHERE code_master_id = #{codeMasterId}
+	</update>
 
 </mapper>
