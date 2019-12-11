@@ -360,17 +360,17 @@
 														th:value="${accessories.accessoriesSeq}">
 													<td th:id="${#ids.seq('am_accessoriesSeq')}"
 														th:text="${accnum.index+1}"></td>
-													<td><input type="text" maxlength="25"
-														class="form-control" name="accName" th:id="${#ids.seq('am_itemName')}"
+													<td><input type="text"
+														class="form-control" maxlength="25" th:name="${#ids.seq('accName')}" th:id="${#ids.seq('am_itemName')}"
 														th:value="${accessories.itemName}"></td>
-													<td><input type="text" maxlength="25" name="accSpec"
+													<td><input type="text" maxlength="25" th:name="${#ids.seq('accSpec')}"
 														class="form-control" th:id="${#ids.seq('am_itemSpec')}"
 														th:value="${accessories.itemSpec}"></td>
-													<td><input type="text" maxlength="11"
+													<td><input type="text" maxlength="11" th:name="${#ids.seq('accQuantity')}"
 														class="form-control"
 														th:id="${#ids.seq('am_itemQuantity')}"
 														th:value="${accessories.itemQuantity}"></td>
-													<td><input type="text" maxlength="100"
+													<td><input type="text" maxlength="100" th:name="${#ids.seq('accRemarks')}"
 														class="form-control" th:id="${#ids.seq('am_remarks')}"
 														th:value="${accessories.remarks}"></td>
 												</tr>
@@ -381,14 +381,14 @@
 													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
 													<td th:id="${#ids.seq('am_accessoriesSeq')}"
 														th:text="${index+#lists.size(asset.accessoriesList)}"></td>
-													<td><input type="text" maxlength="8"
-														class="form-control"  name="accName" th:id="${#ids.seq('am_itemName')}"></td>
-													<td><input type="text" maxlength="100" name="accSpec"
+													<td><input type="text"
+														class="form-control" maxlength="25" th:name="${#ids.seq('accName')}" th:id="${#ids.seq('am_itemName')}"></td>
+													<td><input type="text" maxlength="25" th:name="${#ids.seq('accSpec')}"
 														class="form-control" th:id="${#ids.seq('am_itemSpec')}"></td>
-													<td><input type="text" maxlength="10"
-														class="form-control"
+													<td><input type="text"
+														class="form-control" maxlength="11" th:name="${#ids.seq('accQuantity')}"
 														th:id="${#ids.seq('am_itemQuantity')}"></td>
-													<td><input type="text" maxlength="10"
+													<td><input type="text" maxlength="100" th:name="${#ids.seq('accRemarks')}"
 														class="form-control" th:id="${#ids.seq('am_remarks')}"></td>
 												</tr>
 
@@ -436,18 +436,18 @@
 														th:value="${maintenance.historySeq}">
 													<td th:id="${#ids.seq('am_historySeq')}"
 														th:text="${mhnum.index+1}"></td>
-													<td><input type="text" maxlength="25"
-														class="form-control" name="mhDate"
+													<td><input type="text"
+														class="form-control" maxlength="8" name="mhDate"
 														th:id="${#ids.seq('am_implementationDate')}"
 														th:value="${maintenance.implementationDate}"></td>
-													<td><input type="text" maxlength="25"
-														class="form-control" name="mhDetail"
+													<td><input type="text"
+														class="form-control" maxlength="100" name="mhDetail"
 														th:id="${#ids.seq('am_implementationDetail')}"
 														th:value="${maintenance.implementationDetail}"></td>
-													<td><input type="text" maxlength="11"
+													<td><input type="text" maxlength="10" name="mhrepId"
 														class="form-control" th:id="${#ids.seq('am_repId')}"
 														th:value="${maintenance.repId}"></td>
-													<td><input type="text" maxlength="100"
+													<td><input type="text" maxlength="10" name="mhapproverId"
 														class="form-control" th:id="${#ids.seq('am_approverId')}"
 														th:value="${maintenance.approverId}"></td>
 												</tr>
@@ -457,15 +457,15 @@
 													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 													<td th:id="${#ids.seq('am_historySeq')}"
 														th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
-													<td><input type="text" maxlength="8"
-														class="form-control"
+													<td><input type="text"
+														class="form-control"maxlength="8" name="mhDate"
 														th:id="${#ids.seq('am_implementationDate')}"></td>
-													<td><input type="text" maxlength="100"
-														class="form-control"
+													<td><input type="text"
+														class="form-control" maxlength="100" name="mhDetail"
 														th:id="${#ids.seq('am_implementationDetail')}"></td>
-													<td><input type="text" maxlength="10"
+													<td><input type="text" maxlength="10" name="mhrepId"
 														class="form-control" th:id="${#ids.seq('am_repId')}"></td>
-													<td><input type="text" maxlength="10"
+													<td><input type="text" maxlength="10" name="mhapproverId"
 														class="form-control" th:id="${#ids.seq('am_approverId')}"></td>
 												</tr>
 											</tbody>
@@ -648,46 +648,42 @@
                        }
                    });
    				// 付属品の有効性検証
-                   accform.validate({
-           			rules: {
-           				accName : {
-                           	required : true
-                            	},
-   	                    accSpec : {
-   	                       	required : true
-   	                       	}
-                           },
-                           messages: {
-                           	accName : {
-                              		required : "accName"
-                              	},
-     	                    	accSpec : {
-   	                       		required : "accSpec"
-   	                       	}
-                             }
-           		 		 });
-                // 保守履歴の有効性検証
-          			mhform.validate({
-          			  rules: {
-          				  mhDate : {
-                           		required : true
-                           	},
-                         mhDetail : {
-                          		required : true
-                          	}
-                          },
-                          messages: {
-                          	mhDate : {
-                             		required : "mhDate"
-                             	},
-    	                    	mhDetail : {
-                          		required : "mhDetail"
-                          	}
-                            }
-          		 		 });
-
+				 accform.validate({
+          			rules: {
+  	                    accQuantity1 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity2 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity3 : {
+   	                    	number: true
+    	                       	},
+   	                    accQuantity4 : {
+   	                    	number: true
+   	                       	},
+   	                    accQuantity5 : {
+   	                    	number: true
+   	                       	},
+   	                    accQuantity6 : {
+   	                    	number: true
+   	                       	},
+   	                    accQuantity7 : {
+    	                    number: true
+     	                       	},
+   	                    accQuantity8 : {
+   	                    	number: true
+   	                       	},
+   	                    accQuantity9 : {
+   	                    	number: true
+   	                       	},
+ 	          	        accQuantity10 : {
+  	                    	number: true
+                      	}
+                      }
+          		 	});
    				// 有効性検査成功時
-                if (assform.valid() && accform.valid() && mhform.valid()) {
+                if (assform.valid() && accform.valid()) {
                    	// number基本値セッティング
                        assform.find('.numVal').each(function( ) {
                        	if($(this).val() == '') {
@@ -827,12 +823,10 @@
 	            			"itemQuantity" : selectTr2.find(am_itemQuantity).val(),
 	            			"remarks" : selectTr2.find(am_remarks).val()
 	            	};
-
-
-					if(selectTr2.find(am_itemName).val() == "" || selectTr2.find(am_itemSpec).val() == ""){
-
-
-					} else {
+					if(selectTr2.find(am_itemName).val() == "" && selectTr2.find(am_itemSpec).val() == ""
+						&& selectTr2.find(am_itemQuantity).val() == "" && selectTr2.find(am_remarks).val() == ""){
+						continue;
+					} else{
 						$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
 		    					{
 		    						type: "POST",
@@ -845,12 +839,12 @@
 		    					if(result == 0) {
 		    						alert('エラーが発生しました。');
 		    					} else {
-		    						console.log('付属品登録行目：'+ i-1 +'行目');
+
 		    					}
 		    				}).error(function(xhr, textStatus, error) {
 		                    	alert('通信失敗accinsert');
 		                    });//ajax end
-					}//end else
+					}//else
 	            };//for end
 
 			}//function accinsert
@@ -913,7 +907,7 @@
 		    					if(result == 0) {
 		    						alert('エラーが発生しました。');
 		    					} else {
-		    						console.log('保守履歴変更行目：'+ i-1 +'行目');
+
 		    					}
 		    				}).error(function(xhr, textStatus, error) {
 		                    	alert('通信失敗mhupdate');
@@ -955,7 +949,7 @@
 		    					if(result == 0) {
 		    						alert('エラーが発生しました。'+i);
 		    					} else {
-		    						console.log('保守履歴登録行目：'+ i-1 +'行目');
+
 		    					}
 		    				}).error(function(xhr, textStatus, error) {
 		                    	alert('通信失敗mhinsert');
