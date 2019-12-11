@@ -8,7 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>IT資産管理</title>
-
+<!-- image src -->
+<link rel="icon" href="../images/Thinking.png">
 <!-- favicons -->
 <link rel="icon" href="../images/aisRogo.png">
 <!-- Bootstrap -->
@@ -28,12 +29,24 @@
 <!-- Style -->
 <style>
     	.errorpage {
-    		padding-top : 120px;
-    		text-align: center;
-			vertical-align: middle;
+
+    		position: absolute; top: 90px; right: 50px; left: 30px;
+
+
+    	}
+    	.img{
+    	 	z-index: 2;
+    	 	float: right;
+    	 	position: relative;
+    	 	width: 300px;
+    		height: 420px;
+			padding-top : -135px;
+    		padding-left: -100px;
+
     	}
 		#errorpage {
 			vertical-align:middle;
+
 		}
 		#errorpage {
 			vertical-align:middle;
@@ -55,21 +68,27 @@
 			<div class="right_col" role="main">
 					<div class="page-title">
 						<div class="title_left">
-							<h3><i class="fa fa-cogs"></i> エラーページ </h3>
+							<h3> </h3>
 						</div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="col-md-12" >
+					<br><br>
+					 <h1 style ="text-align: center;"><i class="fa fa-exclamation-triangle"></i> エラーが発生しました。</h1>
 						<div class = "errorpage">
-							<div style = "width : 1000px; height : 100px; ">
 
-								<h1>エラーが発生しました。</h1>
-								<br>
+							<div style = "width : 800px; height : 300px; text-align: right; ">
+
+
+								<img class="img"  src = "../images/Thinking.png">
+
+								<br><br><br>
 								<h3>エラーの内容</h3>
 									error code : <span th:text="${code}"></span> <br>
 									error msg :<span th:text="${msg}"></span> <br>
 									timestamp :<span th:text="${timestamp}"></span>
 								<h6>大変申し訳ございません。</h6>
+
 
 								<button type="button" style="cursor: pointer;" class="btn btn-success" id = "btn" onclick="history.back();">前に戻る</button>
 

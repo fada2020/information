@@ -31,7 +31,7 @@ public class SuppliesApplication {
 		public FilterRegistrationBean<UserFilter> UserFilter() {
 			FilterRegistrationBean<UserFilter> bean = new FilterRegistrationBean<>();
 			bean.setFilter(new UserFilter());
-			bean.setUrlPatterns(Arrays.asList("/dashboard","/rental","/history","/asset","/codemaster","/codedetail"));
+			bean.setUrlPatterns(Arrays.asList("/dashboard","/rental","/history","/asset","/codemaster","/codedetail","/error","/loginprocess"));
 			return bean;
 		}
 
