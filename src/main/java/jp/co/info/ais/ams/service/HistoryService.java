@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.History;
 import jp.co.info.ais.ams.mapper.HistoryMapper;
@@ -15,7 +16,8 @@ public class HistoryService{
 
 	@Autowired
 	HistoryMapper HistoryMapper;
-
+	@Autowired
+	AppConstant appConstant;
 	/**
 	 * 検索及び画面表示情報の作成
 	 *
@@ -32,7 +34,8 @@ public class HistoryService{
 	 * @return List<CodeDetail>　状態コード情報リスト
 	 */
 	public List<CodeDetail> selectStateCode() {
-		return HistoryMapper.selectStateCode();
+
+		return HistoryMapper.selectStateCode(new CodeDetail(appConstant.MASTER_STATE,null,null, appConstant.USE_CODE));
 	}
 
 	/**

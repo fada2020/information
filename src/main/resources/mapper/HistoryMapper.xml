@@ -63,12 +63,13 @@
 		LIMIT #{length} OFFSET #{start}
 	</select>
 
-    <select id="selectStateCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    <select id="selectStateCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
     	SELECT
     		code_detail_id,
     		code_detail_name
     	FROM code_detail
-		WHERE code_master_id = '001'
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
     </select>
 
     <select id="selectCount" resultType="int">

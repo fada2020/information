@@ -114,17 +114,18 @@
 	<!--END 単一の貸与情報を取り出す  -->
 
 	<!--START メインページに見せる資産コードの詳細情報を取り出す  -->
-	<select id="selectStatusCode" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectStatusCode"  parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
 		FROM code_detail where
-		code_master_id='001'
+		code_master_id=#{codeMasterId}
+		and use_flag=#{useFlag}
 	</select>
 	<!--END メインページに見せる資産コードの詳細情報を取り出す  -->
 
 	<!--START メインページに見せるコードの詳細情報を取り出す  -->
-	<select id="selectCodeDetail" parameterType="String" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectCodeDetail" parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_master_id,
 		code_detail_id,
@@ -132,16 +133,18 @@
 		item1,
 		item2
 		FROM code_detail where code_master_id=#{codeMasterId}
+		and use_flag=#{useFlag}
 	</select>
 	<!--END メインページに見せるコードの詳細情報を取り出す  -->
 
 	<!--START メインページに見せるHW,SWなどの情報を取り出す  -->
-	<select id="selectCode" parameterType="String" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+	<select id="selectCode"  parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
 		SELECT
 		code_detail_id,
 		code_detail_name
 		FROM code_detail where
 		code_master_id=#{codeMasterId}
+		and use_flag=#{useFlag}
 	</select>
 	<!--END メインページに見せるHW,SWなどの情報を取り出す  -->
 
