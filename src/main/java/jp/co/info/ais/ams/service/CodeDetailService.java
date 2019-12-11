@@ -7,9 +7,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.info.ais.ams.common.AppConstant;
+import jp.co.info.ais.ams.domain.Asset;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
+import jp.co.info.ais.ams.mapper.AssetMapper;
 import jp.co.info.ais.ams.mapper.CodeDetailMapper;
+import jp.co.info.ais.ams.mapper.CodeMasterMapper;
 
 @Service
 public class CodeDetailService {
@@ -17,7 +21,12 @@ public class CodeDetailService {
 
 	@Autowired
 	private CodeDetailMapper codeDetailMapper;
-
+	@Autowired
+	private AppConstant appConstant;
+	@Autowired
+	private CodeMasterMapper codeMasterMapper;
+	@Autowired
+	private AssetMapper assetMapper;
 	/**
 	 *　Listで転送
 	 * @param condition
@@ -33,6 +42,7 @@ public class CodeDetailService {
 	 * @return int condition
 	 */
 	public int selectCount(CodeDetail condition) {
+
 		return codeDetailMapper.selectCount(condition);
 	}
 
@@ -44,6 +54,9 @@ public class CodeDetailService {
 	public int CodeDetailListCheck(CodeDetail codedetail) {
 		int num = 0;
 		num = codeDetailMapper.codeDetailListCheck(codedetail);
+		if(num==0) {
+			codeDetailMapper.codeDetailInsert(codedetail);
+		}
 		return num;
 
 	}
@@ -62,7 +75,7 @@ public class CodeDetailService {
 
 	public List<CodeDetail> selectCode() {
 
-		return codeDetailMapper.selectCode();
+		return codeDetailMapper.selectCode(appConstant.USE_CODE);
 	}
 	/**
 	 *修正Update
@@ -102,8 +115,29 @@ public class CodeDetailService {
 		 return num;
 	}
 
-	public int deleteDetailCode(String codeMDetail) {
-		return codeDetailMapper.deleteDetailCode(codeMDetail);
+	public int deleteDetailCode(CodeDetail codeDetail) {
+	int num=0;
+		try {
+			Asset asset =new Asset();
+			if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_STATE)) {
+				asset.setStatusCode(codeDetail.getCodeDetailId());
+				num=assetMapper.selectCount(asset);
+			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)){
+				asset.setKubunCode(codeDetail.getCodeDetailId());
+				num=assetMapper.selectCount(asset);
+			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_CLASS)) {
+				num=codeDetailMapper.selectCount(new CodeDetail(appConstant.MASTER_DETAIL,null,codeDetail.getCodeDetailId(),appConstant.USE_CODE));	
+			}else {
+				num=0;
+			}
+		if(num==0) {
+			codeDetail.setUseFlag(appConstant.UNUSE_CODE);
+			codeDetailMapper.deleteDetailCode(codeDetail);
+		}
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		return num;
 	}
 
 	public int codeDetailListCheck(CodeDetail codeMDetail) {
@@ -119,5 +153,11 @@ public class CodeDetailService {
 
 		return num;
 
+	}
+
+	public List<CodeMaster> codeMasterList(CodeMaster codemaster) {
+
+
+		return codeMasterMapper.codeMasterList(codemaster);
 	}
 }
