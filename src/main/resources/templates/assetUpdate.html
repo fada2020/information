@@ -436,10 +436,13 @@
 														th:value="${maintenance.historySeq}">
 													<td th:id="${#ids.seq('am_historySeq')}"
 														th:text="${mhnum.index+1}"></td>
-													<td><input type="text"
-														class="form-control" maxlength="8" name="mhDate"
-														th:id="${#ids.seq('am_implementationDate')}"
-														th:value="${maintenance.implementationDate}"></td>
+													<td>
+														<div class="input-group date mhDatepicker">
+															<input type="text" class="form-control" maxlength="10" name="mhDate"
+															th:id="${#ids.seq('am_implementationDate')}"
+															th:value="${maintenance.implementationDate}">
+														</div>
+													</td>
 													<td><input type="text"
 														class="form-control" maxlength="100" name="mhDetail"
 														th:id="${#ids.seq('am_implementationDetail')}"
@@ -457,9 +460,12 @@
 													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 													<td th:id="${#ids.seq('am_historySeq')}"
 														th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
-													<td><input type="text"
-														class="form-control"maxlength="8" name="mhDate"
-														th:id="${#ids.seq('am_implementationDate')}"></td>
+													<td>
+														<div class="input-group date mhDatepicker">
+															<input type="text" class="form-control"maxlength="10" name="mhDate"
+																th:id="${#ids.seq('am_implementationDate')}">
+														</div>
+													</td>
 													<td><input type="text"
 														class="form-control" maxlength="100" name="mhDetail"
 														th:id="${#ids.seq('am_implementationDetail')}"></td>
@@ -499,7 +505,6 @@
         $('#am_myDatepicker').datetimepicker({
             format: 'YYYY-MM-DD'
         });
-
 		// 区分コードMap
     	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
@@ -512,10 +517,14 @@
     	stateCode.forEach(function( value ) {
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
-
     	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
+		//保守履歴の実施日
+   		$('.mhDatepicker').datetimepicker({
+               format: 'YYYY-MM-DD'
+           });
+
 
         $(function(){
         	// 数量文字入力制限
@@ -713,7 +722,6 @@
         	});//資産変更モーダルの変更バトンEND
 
         	function assupdate() {
-
         		// 送信
                 $.ajax({
                     url: assform.attr('action'),

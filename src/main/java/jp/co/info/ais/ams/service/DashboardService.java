@@ -46,7 +46,11 @@ public class DashboardService {
 	}
 
 	public int kosyouItem() {
-		int kosyouItem = dashboardMapper.kosyouItem();
-		return kosyouItem;
+		try {
+			int kosyouItem = dashboardMapper.kosyouItem();
+			return kosyouItem;
+		} catch(NullPointerException e) {
+			return 0;
+		}
 	}
 }
