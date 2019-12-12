@@ -88,18 +88,15 @@
 	<update id="updateCodeDetail"
 		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
 		update code_detail set
-		code_master_id=#{codeMasterId}
-		,code_detail_id=#{codeDetailId}
-		,code_detail_name=#{codeDetailName}
+		code_detail_name=#{codeDetailName}
 		,item1=#{item1}
 		,item2=#{item2}
 		,item3=#{item3}
 		,item4=#{item4}
 		,item5=#{item5}
-		,use_flag=#{useFlag}
 		where
-		code_master_id=#{codeMasterIdOld} and
-		code_detail_id=#{codeDetailIdOld}
+		code_master_id=#{codeMasterId} and
+		code_detail_id=#{codeDetailId}
 	</update>
 
 	<!-- 詳細ーコード削除 -->
@@ -132,7 +129,6 @@
 		, #{item3}
 		, #{item4}
 		, #{item5}
-
 		)
 	</insert>
 
