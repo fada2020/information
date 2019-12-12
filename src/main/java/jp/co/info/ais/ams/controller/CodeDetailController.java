@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.ams.common.AppConstant;
-import jp.co.info.ais.ams.common.ExValidation;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
@@ -30,8 +29,7 @@ public class CodeDetailController {
 	private CodeDetailService codeDetailService;
 	@Autowired
 	private CodeMasterService codeMasterService;
-	@Autowired
-	ExValidation exValidation;
+
 	@Autowired
 	HttpSession session;
 	@Autowired
