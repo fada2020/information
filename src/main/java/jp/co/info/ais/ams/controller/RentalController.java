@@ -165,6 +165,7 @@ public class RentalController {
 			if (null != rentalNo && !rentalNo.equals("")) {
 				rental.setRentalNo(rentalNo);
 			}
+			//もし貸与品目を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String codeDetailName = page.getColumns().get(3).getSearch().getValue();
 			if (null != codeDetailName && !codeDetailName.equals("")) {
 				rental.setCodeDetailName(codeDetailName);
@@ -172,7 +173,7 @@ public class RentalController {
 			rental.setCodeMasterId(appConstant.MASTER_DETAIL);
 			//貸与情報に該当するリストを取り出すメソッド
 			List<Rental> list = rentalService.selectAll(rental);
-			//ページの
+			//ページのセッティング
 			page.setData(list);
 
 			int totalCount = rentalService.selectCount(rental);

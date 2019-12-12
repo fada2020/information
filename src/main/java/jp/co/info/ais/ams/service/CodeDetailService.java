@@ -126,7 +126,7 @@ public class CodeDetailService {
 				asset.setKubunCode(codeDetail.getCodeDetailId());
 				num=assetMapper.selectCount(asset);
 			}else if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_CLASS)) {
-				num=codeDetailMapper.selectCount(new CodeDetail(appConstant.MASTER_DETAIL,null,codeDetail.getCodeDetailId(),appConstant.USE_CODE));	
+				num=codeDetailMapper.selectCount(new CodeDetail(appConstant.MASTER_DETAIL,null,codeDetail.getCodeDetailId(),appConstant.USE_CODE));
 			}else {
 				num=0;
 			}
@@ -145,6 +145,10 @@ public class CodeDetailService {
 		try {
 		num = codeDetailMapper.codeDetailListCheck(codeMDetail);
 		if (num == 0) {
+			if(codeMDetail.getCodeMasterId().equals("002")&&codeMDetail.getItem1()!=null) {
+						codeMDetail.setItem1("01");
+
+					}
 			codeDetailMapper.codeDetailInsert(codeMDetail);
 		}
 		} catch (Exception e) {
