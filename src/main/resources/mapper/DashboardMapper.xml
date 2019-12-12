@@ -23,13 +23,9 @@
 	<!-- 故障状態の装置数 -->
 	<select id="kosyouItem" resultType="int">
 	SELECT COUNT(asset_seq) AS kosyouCnt
-			, status_code statusCode
-			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =
-									"001" AND code_detail_id = asset.status_code) statusName
 		FROM asset
 		JOIN code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
 		WHERE status_code = "03"
-		GROUP BY status_code
 	</select>
 
 	<!-- 今月購入した装置数量 -->
