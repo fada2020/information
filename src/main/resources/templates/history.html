@@ -1,600 +1,532 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela!</title>
+<title>IT資産管理</title>
 
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-	<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-datetimepicker -->
-    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- bootstrap-daterangepicker -->
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
 
-    <style>
-    	#table1 thead th{
-		    text-align:center;
-    	}
+<style>
+#table1 thead th {
+	text-align: center;
+	vertical-align: middle;
+}
 
-		#table1 tbody tr{
-		    cursor:pointer;
-		}
-	</style>
+#table1 tbody tr {
+	cursor: default;
+}
 
-  </head>
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-      	<!-- sidebar -->
-		<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
-        <!-- sidebar -->
+#table1 tbody td {
+	font-size: 12px;
+	vertical-align: middle;
+}
 
-        <!-- top navigation -->
-        <div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
-        <!-- /top navigation -->
+#exportExcel {
+	margin-top: 10px;
+	float: right;
+}
 
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>資産支給履歴</h3>
-              </div>
-            </div>
+.col-md-1 {
+	margin-left: 5%;
+}
 
-            <div class="clearfix"></div>
+#exportExcel, #searchButton {
+	width: 80px;
+	font-size: 14px;
+	font-weight: bolder;
+}
 
-            <div class="row">
-              <div class="col">
+.flat {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #bcbcbc;
 
-                <div class="col-md-1" style="width:9%;">
-                    <span class="pull-right" style="margin-left:-1%; font-size: 18px;">管理番号</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" style="margin-left:-1%">
-                </div>
+	cursor: pointer;
+}
 
-                <div class="col-md-1" style="margin-left:-2%;">
-                    <span class="pull-right" style="font-size: 18px;">貸出者</span>
-                </div>
-                <div class="col-md-2">
-                	<input type="text" class="form-control" placeholder="貸出者" id="renter" style="margin-left:-1%">
-                </div>
+.insert-_history{
+	font-size: 18px;
+}
 
-                <div class="col-md-1" style="margin-left:-3%;">
-                    <span class="pull-right" style="font-size: 18px;">状態</span>
-                </div>
-                <div class="col-md-2">
-                	<select class="form-control" id="status_search" style="margin-left:-1%">
-						<option value="-1">状態</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.sNumber}"
-                		th:inline="text">[[${code.state}]]</option>
-					</select>
-                </div>
+#deleteHistory {
+	margin: -5px;
+}
 
-                <div class="col-md-1" style="margin-left:-2%;">
-                    <span class="pull-right" style="font-size: 18px;">貸与日</span>
-                </div>
-                <div class="col-md-2">
-					<div class="input-group date" id="myDatepicker">
-						<input type="text" class="form-control" id="date_search" style="margin-left:-1%">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					 </span>
+</style>
+
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
+			<!-- top navigation -->
+			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3><i class="fa fa-list-alt"></i> 資産支給履歴</h3>
+						</div>
 					</div>
-                </div>
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="col">
+							<!-- searching condition -S -->
+							<!-- 1st line -->
 
-                <div class="col-md-1" style="width:5%; margin-left:-1%;">
-                	<button id="serchButton" class="btn btn-primary">検索</button>
-                </div>
+							<div class="row">
 
-                <div class="x_panel">
-                  <div class="x_title">
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
+								<div class="col-md-1">
+									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">管理番号</span></p>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
+								</div>
+								<div class="col-md-2">
+									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">貸与期間</span></p>
+								</div>
+								<div class="col-md-2">
+									<fieldset>
+										<div class="control-group ">
+											<div class="controls">
+												<div class="input-prepend input-group">
+												<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+													<input type="text" style="width: 200px" name="rental_search" id="rental_search" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
 
-                    <table class="table table-bordered table-hover table-lg" id="table1" style="width:100%;">
-                      <thead class="thead-light">
-                      	<tr>
-                      		<th colspan="3">装置</th>
-                      		<th colspan="9">使用現況</th>
-                      	</tr>
-                        <tr>
-                          <th>管理番号</th>
-                          <th>Maker</th>
-                          <th>Model</th>
+								<div class="col-md-2">
+									<p class ="insert-_history"><span class="pull-right">状態</span></p>
+								</div>
+								<div class="col-md-2">
+									<select class="form-control" id="status_search" style="width: 120px;">
+										<option value="00">全体</option>
+										<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+									</select>
+								</div>
+							</div>
 
-                          <th>状態</th>
-                          <th>貸与番号</th>
-                          <th>用途</th>
-                          <th>場所(Site名)</th>
-                          <th>貸出者</th>
-                          <th>使用者</th>
-                          <th>BP社名</th>
-                          <th>貸与日</th>
-                          <th>返却日</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
+							<!-- 1st line -->
 
-					<!-- modal -->
-					<div class="modal" id="modal3d" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">×</span>
-					        </button>
-					        <h3 class="modal-title">照会</h3>
-					      </div>
-					      <div class="modal-body">
-					      	<div class="container-fluid">
-							  	<div class="row">
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>管理番号</span>
-						  					</div>
-						  					<div class="col-md-3">
-								  				<span id="assetNumber_view"></span>
-								  			</div>
-								  			<div class="col-md-3">
-								  				<span>区分</span>
-								  			</div>
-								  			<div class="col-md-3">
-								  				<span id="psNum_view"></span>
-								  			</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-							  					<span>購入日</span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span id="purchaseDate_view"></span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span>保証期間</span>
-							  				</div>
-							  				<div class="col-md-3">
-							  					<span id="warrantyPeriod_view"></span>
-							  				</div>
-						  				</div>
-						  			</div>
+							<!-- 2nd line -->
+							<div class="row" style="height: 50px;">
+								<div class="col-md-1">
+									<p class ="insert-_history"><span class="pull-right">貸出者</span></p>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control" placeholder="貸出者" id="applicant_search" maxlength="15">
+								</div>
+								<div class="col-md-2">
+									<p class ="insert-_history"><span class="pull-right">返却期間</span></p>
+								</div>
+								<div class="col-md-2">
+									<fieldset>
+										<div class="control-group ">
+											<div class="controls">
+												<div class="input-prepend input-group">
+												<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+													<input type="text" style="width: 200px" name="return_search" id="return_search" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
 
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>購入先</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="buyTo_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>購入金額</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="purchasePrice_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>保管位置</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="storageLocation_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>状態</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="sNumber_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
+							<!-- 2nd line -->
 
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>Maker</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="maker_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>Model</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="model_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<div class="row">
-						  					<div class="col-md-3">
-						  						<span>S/N</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="serialNum_view"></span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span>I/F</span>
-						  					</div>
-						  					<div class="col-md-3">
-						  						<span id="interFaceCol_view"></span>
-						  					</div>
-						  				</div>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>OS</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>名(Edition)</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="OSName_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Product Key</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="OSProductKey_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>CPU</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Processor</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="CPUProcessor_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>動作周波数</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="operatingFrequency_view"></span>
-						  			</div>
-
-						  			<div class="col-md-6">
-						  				<span>Memory</span>
-						  			</div>
-						  			<div class="col-md-6">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="memory_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="memoryUpgarde_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="HDD_view"></span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span>Upgarde</span>
-						  			</div>
-						  			<div class="col-md-2">
-						  				<span id="HDDUpgarde_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>MAC</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>LAN</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="MACLAN_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>Wireless</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="MACWireless_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>その他</span>
-						  			</div>
-						  			<div class="col-md-12">
-						  				<span id="other_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>Security</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>BIOS</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="securityBIOS_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>HDD</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="securityHDD_view"></span>
-						  			</div>
-
-						  			<div class="col-md-12">
-						  				<span>Admin.Account</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>ID</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="adminAccountID_view"></span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span>PW</span>
-						  			</div>
-						  			<div class="col-md-3">
-						  				<span id="adminAccountPW_view"></span>
-						  			</div>
-
-
-							  	</div>
-						  	</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
+							<!-- searching condition -E -->
+							<div class="x_panel">
+								<button id="exportExcel" class="btn btn-success pull-right" title="履歴データをエクセルファイルでダウンロード">Excel</button>
+								<br>
+								<br>
+								<br>
+								<div class="x_title"></div>
+								<div class="x_content">
+									<table class="table table-bordered table-hover jambo_table table-lg text-center dataTable no-footer" id="table1" style="width: 100%;">
+										<thead class="thead-light">
+											<tr class="headings">
+												<th colspan="3">装置</th>
+												<th colspan="10">使用現況</th>
+											</tr>
+											<tr class="headings">
+												<th>管理番号</th>
+												<th>Maker</th>
+												<th>Model</th>
+												<th>状態</th>
+												<th>貸与番号</th>
+												<th>用途</th>
+												<th>場所(Site名)</th>
+												<th>貸出者</th>
+												<th>使用者</th>
+												<th>BP社名</th>
+												<th>貸与日</th>
+												<th>返却日</th>
+												<th style="width: 40px;">
+													<button id="deleteHistory" class="btn btn-danger" title="チェックした履歴情報を削除" style="font-size: 12px; font-weight: bolder;">削除</button>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
-					<!-- /modal -->
+				</div>
+			</div>
+			<!-- /page content -->
 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /page content -->
 
-        <!-- footer content -->
-        <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
-        <!-- /footer content -->
-      </div>
-    </div>
+		</div>
+	</div>
+			<!-- footer content -->
+			<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+			<!-- /footer content -->
 
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- jquery-ui -->
 	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 	<!-- DataTable -->
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/moment/locale/ja.js"></script>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
 
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-datetimepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
-
-    <!-- page script -->
-    <script th:inline="javascript">
-
- 		//new Search
-        var searching = function(){
-          	alert("ff");
-        }
-
-        $(`#serchButton`).up(function(){
-        	alert("sagsdg");
-        });
+	<!-- page script -->
+	<script th:inline="javascript">
 
     /*<![CDATA[*/
-        $('#myDatepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
-
         var modalesectiondata = null;
-
-    	var productCodeMap = new Map();
-		var productCode = /*[[${productCode}]]*/;
-    	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.psNum, value.pname);
-    	});
+        var deleteList="";
+        //状態コード作成
     	var stateCodeMap = new Map();
     	var stateCode = /*[[${stateCode}]]*/;
     	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.snumber, value.state);
+    		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
 
+    	//履歴削除項目作成
+    	function deleteAct(target){
+        	if(target.checked == true){
+          		deleteList += target.value;
+        	} else{
+        		deleteList = deleteList.replace(target.value,"");
+        	}
+        }
+    	//オンロード
         $(function(){
+        	//貸与のデートピッカー
+        	$('#rental_search').daterangepicker({
+			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: 'クリア',
+			       format: 'YYYY/MM/DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			}).val('');
+			//返却日のデートピッカー
+			$('#return_search').daterangepicker({
+				startDate: moment().add(-1, "months"),
+				endDate: moment(),
+			 locale: {
+			      applyLabel: '選択',
+			         cancelLabel: 'クリア',
+			       format: 'YYYY/MM/DD'
+			   }, function(start, end, label) {
+			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			   }
+			}).val('');
+			$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#rental_search').val('');
+				    var date = $("#rental_search").val();
+				    modalesectiontable
+				    .column(3)
+				    .search(date)
+				    .draw();
+			});
 
-            // datatableの設定を変更
+			$('#return_search').on('cancel.daterangepicker', function(ev, picker) {
+				  //do something, like clearing an input
+					$('#return_search').val('');
+				    var date = $("#return_search").val();
+				    modalesectiontable
+				    .column(4)
+				    .search(date)
+				    .draw();
+			});
+			$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
+					$('#rental_search').val('');
+			});
+
+			$('#return_search').on('cancel.daterangepicker', function(ev, picker) {
+					$('#return_search').val('');
+			});
+
+            //テーブル作成
             var modalesectiontable = $("#table1").DataTable({
-            	fixedHeader: true,
+            	"language": {
+            		"info":           " _START_ ~ _END_ の _TOTAL_ 件",
+            		"infoEmpty":      " 0 ~ 0 の 0 件",
+            	    "infoFiltered":   "",
+            	    "emptyTable": "表にデータがない",
+            	    "paginate": {
+            	        "first":      "最初",
+            	        "last":       "最後",
+            	        "next":       "次",
+            	        "previous":   "前"
+            	    }
+                },
+            	"fixedHeader": true,
             	"processing": true,
             	"serverSide": true,
-            	"start": 0,
-                "length": 10,
                 "searching": false,
+                "pageLength":10,
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
+                //検索条件取得
                 "ajax": {
-                	url: /*[[@{/ITAsset/getITAssetlist}]]*/ 'ITAsset/getITAssetlist',
+                	url: /*[[@{/history/getHistorylist}]]*/ 'History/getHistorylist',
                 	type: "POST",
                 	dataType: "json",
                 	contentType: 'application/JSON',
                 	data: function ( d ) {
                 		d.columns[0].search.value = $('#assetNumber_search').val();
-                		d.columns[1].search.value = $('#psNum_search').val();
+                		d.columns[1].search.value = $('#applicant_search').val();
                 		d.columns[2].search.value = $('#status_search').val();
-                		d.columns[3].search.value = $('#maker_search').val();
-                		d.columns[4].search.value = $('#model_search').val();
-                		d.columns[5].search.value = $('#date_search').val();
+                		d.columns[3].search.value = $('#rental_search').val();
+                		d.columns[4].search.value = $('#return_search').val();
+
                         return JSON.stringify(d);
                     }
                 },
+                //表のデータ構成
                 "columnDefs": [
-                    { targets: 0, data: "assetNumber"},
-                    { targets: 1, data: function ( d ) {
-                    	return productCodeMap.get(d.psNum);
+                    //資産番号
+                	{ targets: 0, data: "assetNumber"},
+                    //メーカー
+                    { targets: 1, data: function(d){
+                    	if(d.makerName == ''){
+                    		return '-';
+                    	} else{
+                    		return d.makerName;
+                    	}
                     }},
-                    { targets: 2, data: "model"},
-                    { targets: 3, data: "maker"},
-                    { targets: 4, data: function ( d ) {
-                    	var purchaseDate = new Date(d.purchaseDate);
-                		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-                		var dd = purchaseDate.getDate();
-                    	return yyyy + "/" + mm + "/" + dd;
+                    //モデル
+                    { targets: 2, data: function(d){
+                    	if(d.modelName == ''){
+                    		return '-';
+                    	} else{
+                    		return d.modelName;
+                    	}
                     }},
-                    { targets: 5, data: "storageLocation"},
-                    { targets: 6, data: function ( d ) {
-                    	return stateCodeMap.get(d.snumber);
+                    //状態
+                    { targets: 3, data: function ( d ) {
+                    	return stateCodeMap.get(d.statusCode);
                     }},
-                    {
-                    	targets: 7,
-                    	data: "description",
-                        render: function ( data, type, row, meta ) {
-                          return '<button type="button" class="btn btn-primary" onclick = "location.href =\'' +
-                          'ITAsset/' + row.assetNumber + '\'">更新/削除</button>';
-                        }
-                    }
-                ]
-            });
+                    //貸与番号
+                    { targets: 4, data: function(d){
+                    	if(d.rentalNo == '999999999999'){
+                    		return '-';
+                    	} else{
+                    		return d.rentalNo;
+                    	}
+                    }},
+                    //用途
+                    { targets: 5, data: function(d){
+                    	if(d.purpose == '' || d.purpose == null){
+                    		return '-';
+                    	} else{
+                    		return d.purpose;
+                    	}
+                    }},
+                    //場所
+                    { targets: 6, data: function(d){
+                    	if(d.storageLocation == '' || d.storageLocation == null){
+                    		return '-';
+                    	} else{
+                    		return d.storageLocation;
+                    	}
+                    }},
+                    //貸出者
+                    { targets: 7, data: function(d){
+                    	if(d.applicantId == '' || d.applicantId == null){
+                    		return '-';
+                    	} else{
+                    		return d.applicantId;
+                    	}
+                    }},
+                    //使用者
+                    { targets: 8, data: function(d){
+                    	if(d.rentalUserId == '' || d.rentalUserId == null){
+                    		return '-';
+                    	} else{
+                    		return d.rentalUserId;
+                    	}
+                    }},
+                    //BP社名
+                    { targets: 9, data: function(d){
+                    	if(d.bpName == '' || d.bpName == null){
+                    		return '-';
+                    	} else{
+                    		return d.bpName;
+                    	}
+                    }},
+                    //貸与日
+                    { targets: 10, data: function ( d ) {
+                    	if( d.rentalDayS =='' || d.rentalDayS == null){
+                    		return '-';
+                    	}else{
+                    		var str = d.rentalDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
 
-            // old Search
+                    }},
+                    //返却日
+                    { targets: 11, data: function ( d ) {
+                    	if( d.returnDayS =='' || d.returnDayS == null){
+                    		return '-';
+                    	}else{
+                    		var str = d.returnDayS;
+                        	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	}
+
+                    }},
+					//削除チェックボックス
+                    {targets: 12,
+                    	render: function( data, type, row, meta ){
+
+                    		if(row.returnDayS=="" || row.returnDayS == null){//貸与状態の場合
+                    			return '<input type="checkbox" class="flat" disabled="disabled" title="保管の項目は履歴を削除できません。">';
+                    		} else{//その他の場合
+                    			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
+                    		}
+
+                    }}
+                    ]
+            });
+            /*assetNumberを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
+            	$('#assetNumber_search').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
                 .column(0)
                 .search( this.value )
                 .draw();
             } );
 
-            $('#psNum_search').change(function() {
+            $('#applicant_search').on( 'keyup', function () {
+            	$('#applicant_search').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
                 .column(1)
                 .search( this.value )
                 .draw();
-            });
+            } );
 
-            $('#status_search').change(function() {
+            $('#status_search').change(function () {
+            	$('#status_search').val(this.value);
             	modalesectiontable
                 .column(2)
                 .search( this.value )
                 .draw();
-            });
-
-            $('#maker_search').on( 'keyup', function () {
-            	modalesectiontable
-                .column(3)
-                .search( this.value )
-                .draw();
-            });
-
-            $('#model_search').on( 'keyup', function () {
-            	modalesectiontable
-                .column(4)
-                .search( this.value )
-                .draw();
-            });
-
-            $("#myDatepicker").on("dp.change", function(e) {
-                var d = new Date(e.date);
-                var mm = d.getMonth() + 1;
-                var dd = d.getDate();
-                var yyyy = d.getFullYear();
-            	modalesectiontable
-                .column(5)
-                .search( yyyy + "/" + mm + "/" + dd )
-                .draw();
-            });
-
-            $('#table1 tbody').on( 'click', 'tr td', function () {
-            	var rowData = modalesectiontable.row( this ).data();
-            	if(this._DT_CellIndex.column != 7) {
-            		$('#modal3d').modal();
-
-            		var purchaseDate = new Date(rowData.purchaseDate);
-            		var yyyy = purchaseDate.getFullYear(); var mm = purchaseDate.getMonth()+1;
-            		var dd = purchaseDate.getDate();
-
-            		$('#assetNumber_view').text(rowData.assetNumber);
-            		$('#psNum_view').text(productCodeMap.get(rowData.psNum));
-            		$('#purchaseDate_view').text(yyyy + "/" + mm + "/" + dd);
-            		$('#warrantyPeriod_view').text(rowData.warrantyPeriod + "年");
-
-            		$('#buyTo_view').text(rowData.buyTo);
-            		$('#purchasePrice_view').text(rowData.purchasePrice);
-            		$('#storageLocation_view').text(rowData.storageLocation);
-            		$('#sNumber_view').text(stateCodeMap.get(rowData.snumber));
-
-            		$('#maker_view').text(rowData.maker);
-            		$('#model_view').text(rowData.model);
-            		$('#serialNum_view').text(rowData.serialNum);
-            		$('#interFaceCol_view').text(rowData.interFaceCol);
-
-            		$('#OSName_view').text(rowData.osname);
-            		$('#OSProductKey_view').text(rowData.osproductKey);
-            		$('#CPUProcessor_view').text(rowData.cpuprocessor);
-            		$('#operatingFrequency_view').text(rowData.operatingFrequency);
-
-            		$('#memory_view').text(rowData.memory + "GB");
-            		$('#memoryUpgarde_view').text(rowData.memoryUpgarde + "GB");
-            		$('#HDD_view').text(rowData.hdd + "GB");
-            		$('#HDDUpgarde_view').text(rowData.hddupgarde + "GB");
-
-            		$('#MACLAN_view').text(rowData.maclan);
-            		$('#MACWireless_view').text(rowData.macwireless);
-
-            		$('#other_view').text(rowData.other);
-
-            		$('#securityBIOS_view').text(rowData.securityBIOS);
-            		$('#securityHDD_view').text(rowData.securityHDD);
-
-            		$('#adminAccountID_view').text(rowData.adminAccountID);
-            		$('#adminAccountPW_view').text(rowData.adminAccountPW);
-
-            	} else {
-            		//alert(JSON.stringify(rowData));
-            	}
             } );
+            $("#rental_search").change(function () {
+                var date = $("#rental_search").val();
+                modalesectiontable
+                .column(3)
+                .search(date)
+                .draw();
+            });
+            $("#return_search").change(function () {
+                var date = $("#return_search").val();
+                modalesectiontable
+                .column(4)
+                .search(date)
+                .draw();
+            });
+          	//table Exportion -S
+
+          	$('#exportExcel').on('click',function(){
+          		location.href = 'history/rentalHsitory.xlsx';
+          	})
+
+        	//table Exportion -E
+
+          	//history delete -S
+          	$('#deleteHistory').on('click',function(){
+          		var a = deleteList.split("/");
+          		if(a.length>1){
+          			var confirmation = confirm(a.length-1 + " 項目の履歴データを削除します。");
+          			if(confirmation){
+    					$.ajax(/*[[@{/history/deleteHistory}]]*/ 'history/deleteHistory',
+    				       	{
+    							type: "POST",
+    							dataType: "json",
+    							contentType: 'application/JSON',
+    							data : JSON.stringify(a)
+    						}
+    					).done(function(data) {
+    						if(data>0){
+    							alert(data+"項目の削除完了");
+    							location.reload(true);
+    						}else{
+    							alert("削除の作業でエラーが発生しました。");
+    						}
+    					});
+    				}
+          		}else{
+          			alert("削除項目を選択してください。");
+          		}
+          	})
+			//history delete -E
 
         })
-    /*]]>*/
+
     </script>
 
 </body>

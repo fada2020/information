@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.ams.mapper.DashboardMapper">
+
+	<!-- 資産タイプ別保有現況 -->
+
+	<!-- 総ハードウェア、総ソフトウェア、今月購入した装置 -->
+	<select id="possession" resultType="jp.co.info.ais.ams.domain.Dashboard">
+		SELECT COUNT(asset_seq) AS typeCnt
+			, kubun_code
+			, code_detail_name AS kubunName
+			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =
+			"003" AND code_detail_id = cdl.item1) AS typeName
+		FROM asset JOIN
+		code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
+		WHERE code_master_id = "002" AND status_code != "04"
+		GROUP BY kubun_code
+		ORDER BY typeName, typeCnt DESC
+	</select>
+
+	<!-- 故障状態の装置数 -->
+	<select id="kosyouItem" resultType="int">
+	SELECT COUNT(asset_seq) AS kosyouCnt
+			, status_code statusCode
+			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =
+									"001" AND code_detail_id = asset.status_code) statusName
+		FROM asset
+		JOIN code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
+		WHERE status_code = "03"
+		GROUP BY status_code
+	</select>
+
+	<!-- 今月購入した装置数量 -->
+	<select id="newItem" resultType="int">
+		SELECT COUNT(asset_number) AS newItem
+		FROM asset
+		WHERE DATE_FORMAT(STR_TO_DATE(purchase_date,'%Y%m%d'),'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+	</select>
+
+	<!-- 資産種別貸与現況 -->
+	<select id="rslist" resultType="jp.co.info.ais.ams.domain.Dashboard">
+		SELECT COUNT(asset_seq) AS typeCnt
+			, kubun_code AS kubunCode
+			, code_detail_name kubunName
+			, status_code statusCode
+			, (SELECT code_detail_name FROM code_detail WHERE code_master_id =
+									"001" AND code_detail_id = asset.status_code) statusName
+		FROM asset
+		JOIN code_detail cdl ON code_master_id = "002" AND kubun_code = code_detail_id
+		WHERE kubun_code BETWEEN "02" AND "08"
+		AND status_code BETWEEN "01" AND "02"
+		GROUP BY kubun_code, status_code
+		ORDER BY kubun_code
+	</select>
+</mapper>

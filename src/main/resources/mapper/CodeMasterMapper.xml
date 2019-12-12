@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.info.ais.ams.mapper.CodeMasterMapper">
+
+
+	<!--Insert MasterID NAME  -->
+	<insert id="insertMasterIdName"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id
+		,code_master_name)
+		VALUES (
+		#{code_master_id}
+		,#{code_master_name}
+		)
+	</insert>
+
+	<!--Insert MasterID  -->
+	<insert id="insertMasterId"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id)
+		VALUES (
+		#{code_master_id})
+	</insert>
+
+	<!--Insert MasterNAME  -->
+	<insert id="insertMasterName"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_name)
+		VALUES (
+		#{code_master_name}
+		)
+	</insert>
+
+	<!-- Select All CodeMaster -->
+	<select id="selectCodeMasterList" resultType="jp.co.info.ais.ams.domain.CodeMaster">
+
+		SELECT
+		code_master_id
+		,code_master_name
+		,remarks
+		,use_flag
+		FROM code_master
+		WHERE 1 = 1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+			AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeMasterName != null and !codeMasterName.equals('')">
+			AND code_master_name like '%${codeMasterName}%'
+		</if>
+			<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
+		ORDER BY code_master_id ASC
+		LIMIT #{length} OFFSET #{start}
+
+	</select>
+<select id="codeMasterList" resultType="jp.co.info.ais.ams.domain.CodeMaster">
+
+		SELECT
+		code_master_id
+		,code_master_name
+		,remarks
+		,use_flag
+		FROM code_master
+		WHERE  use_flag =#{useFlag}
+
+	</select>
+	<!-- 総数 -->
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(1)
+		FROM code_master
+		WHERE 1 = 1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+			AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeMasterName != null and !codeMasterName.equals('')">
+			AND code_master_name like '%${codeMasterName}%'
+		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
+	</select>
+	<select id="CodeMasterListCheck"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster" resultType="int">
+		SELECT
+		count(*)
+		FROM code_master
+		where code_master_id=${codeMasterId}
+	</select>
+
+
+	<!--新規登録  -->
+	<insert id="CodeMasterInsert"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		INSERT INTO code_master(
+		code_master_id
+		,code_master_name
+		,remarks
+		)
+		VALUES (
+		#{codeMasterId}
+		, #{codeMasterName}
+		,
+		#{remarks}
+	
+		)
+	</insert>
+	<!-- 変更 -->
+	<update id="updateCodeMaster"
+		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		UPDATE code_master SET
+		code_master_id = #{codeMasterId},
+		code_master_name=#{codeMasterName},
+		remarks=#{remarks},
+		use_Flag=#{useFlag}
+		WHERE code_master_id = #{codeMasterIdOld}
+
+	</update>
+
+	<!-- 削除 -->
+	<update id="deleteMasterCode" parameterType="jp.co.info.ais.ams.domain.CodeMaster">
+		update code_master set
+		use_flag=#{useFlag}
+		 WHERE code_master_id = #{codeMasterId}
+	</update>
+
+</mapper>

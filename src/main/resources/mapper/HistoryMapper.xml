@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.ams.mapper.HistoryMapper">
+
+	<select id="selectHistory" resultType="jp.co.info.ais.ams.domain.History">
+		SELECT * FROM(
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND status_code = #{statusCode}
+				</if>
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+			)Result
+	    WHERE 1 = 1
+			<if test="assetNumber != null and !assetNumber.equals('')">
+			AND asset_number LIKE '%${assetNumber}%'
+			</if>
+			<if test="applicantId != null and !applicantId.equals('')">
+			AND applicant_id LIKE '%${applicantId}%'
+			</if>
+			<if test="statusCode != null and !statusCode.equals('00')">
+			AND status_code = #{statusCode}
+			</if>
+			<if test="rentalDayS != null and rentalDayE !=null">
+			AND rentalDayS BETWEEN #{rentalDayS} AND #{rentalDayE}
+			</if>
+			<if test="returnDayS != null and returnDayE !=null">
+			AND returnDayS BETWEEN #{returnDayS} AND #{returnDayE}
+			</if>
+		ORDER BY asset_number,rental_no
+		LIMIT #{length} OFFSET #{start}
+	</select>
+
+    <select id="selectStateCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name
+    	FROM code_detail
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
+    </select>
+
+    <select id="selectCount" resultType="int">
+    			SELECT COUNT(1) FROM(
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND status_code = #{statusCode}
+				</if>
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+			)Result
+		    WHERE 1 = 1
+				<if test="assetNumber != null and !assetNumber.equals('')">
+				AND asset_number LIKE '%${assetNumber}%'
+				</if>
+				<if test="applicantId != null and !applicantId.equals('')">
+				AND applicant_id LIKE '%${applicantId}%'
+				</if>
+				<if test="statusCode != null and !statusCode.equals('00')">
+				AND status_code = #{statusCode}
+				</if>
+				<if test="rentalDayS != null and rentalDayE !=null">
+				AND rentalDayS BETWEEN #{rentalDayS} AND #{rentalDayE}
+				</if>
+				<if test="returnDayS != null and returnDayE !=null">
+				AND returnDayS BETWEEN #{returnDayS} AND #{returnDayE}
+				</if>
+    </select>
+
+    <select id="exportXlsx" resultType="jp.co.info.ais.ams.domain.History">
+		SELECT * FROM (
+			SELECT
+				asset_number,
+				maker_name,
+				model_name,
+				status_code,
+				999999999999 rental_no,
+				null purpose,
+				null storage_location,
+				null applicant_id,
+				null rental_user_id,
+				null bp_name,
+				null rentalDayS,
+				null returnDayS,
+				null rental_seq
+			FROM asset
+			WHERE status_code in('01','03','04')
+		UNION
+			SELECT
+				ast.asset_number,
+				ast.maker_name,
+				ast.model_name,
+				IFNULL(rt.status_code,ast.status_code) AS status_code,
+				rt.rental_no,
+				rt.purpose,
+				rt.storage_location,
+				rt.applicant_id,
+				rt.rental_user_id,
+				rt.bp_name,
+				rt.rental_day rentalDayS,
+				rt.return_day returnDayS,
+				rt.rental_seq
+			FROM asset ast
+			JOIN rental rt ON ast.asset_seq = rt.asset_seq
+		)Result
+		ORDER BY asset_number,rental_no
+    </select>
+
+    <delete id="deleteHistory" parameterType="List">
+    	DELETE FROM rental
+    	WHERE
+    		rental_seq IN
+    	<foreach collection="list" item="tem" open="(" close=")" separator=",">
+            #{tem}
+        </foreach>
+    </delete>
+
+</mapper>

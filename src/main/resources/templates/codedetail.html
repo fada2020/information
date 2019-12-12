@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<!-- コード詳細 -->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>IT資産管理</title>
+
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
+
+
+<style>
+#datatable1 thead, th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#datatable1 tbody tr {
+	cursor: default;
+}
+
+#datatable1 th {
+	vertical-align: middle;
+}
+
+#datatable1 td {
+	vertical-align: middle;
+}
+</style>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
+
+			<!-- top navigation -->
+			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
+
+			<!-- page content -->
+
+			<!-- page content -->
+			<!-- ここからコンテンツ作成 -->
+			<div class="right_col" role="main">
+				<div>
+					<div class="page-title">
+						<div class="title_left">
+							<h3>
+								<i class="fa fa-cogs"></i> 詳細コードリスト
+							</h3>
+						</div>
+					</div>
+					<!-- /.page-title -->
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div>
+									<div class="well" style="overflow: auto">
+
+										<div class="row">
+											<div class="col-md-10">
+												<div class="col-md-4">
+													<span class=" col-md-6"
+														for="search_master_id" style="font-size: 16px;">
+														マスターコード</span>
+													<div class="col-md-6 ">
+														<input type="text" id="search_master_id" placeholder="マスター"
+															class="form-control">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<span class=" col-md-6"
+														for="search_detail_id" style="font-size: 16px;">
+														詳細コードID</span>
+													<div class="col-md-6">
+														<input type="text" id="search_detail_id" placeholder="詳細ID"
+															class="form-control">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<span class="col-md-6"
+														for="search_detail_name" style="font-size: 16px;">
+														詳細コード名</span>
+													<div class="col-md-6">
+														<input type="text" id="search_detail_name" placeholder="詳細名"
+															class="form-control ">
+													</div>
+												</div>
+
+											</div>
+											<div class="col-md-2">
+												<!-- 登録 ボタン -->
+												<button type="button" class="btn btn-success pull-right"
+													data-toggle="modal" data-target="#modalCodedetail">
+													<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
+												</button>
+											</div>
+										</div>
+
+										<!-- /.well -->
+
+									</div>
+									<!-- /.x_title -->
+
+									<div class="x_content">
+										<div>
+											<table id="datatable1"
+												class="table table-bordered jambo_table bulk_action text-center"
+												style="width: 100%">
+												<thead>
+													<tr class="headings">
+														<!--  <th class="column-title txt_center">No.</th> -->
+
+														<th class="column-title txt_center">マスターコード</th>
+														<th class="column-title txt_center">詳細コードID</th>
+														<th class="column-title txt_center">詳細コード名</th>
+														<th class="column-title txt_center">アイテム1</th>
+														<th class="column-title txt_center">アイテム2</th>
+														<th class="column-title txt_center">アイテム3</th>
+														<th class="column-title txt_center">アイテム4</th>
+														<th class="column-title txt_center">アイテム5</th>
+
+														<th class="column-title txt_center"></th>
+													</tr>
+												</thead>
+												<!-- List 出力 -->
+
+												<tbody>
+												</tbody>
+
+												<!--/. List 出力 -->
+
+											</table>
+
+										</div>
+										<!-- /.table-responsive -->
+									</div>
+									<!-- /.x_content -->
+								</div>
+								<!-- /.x_panel -->
+							</div>
+						</div>
+						<!-- /.row -->
+
+					</div>
+				</div>
+				<!-- /.right_co -->
+				<!-- ここまでのコンテンツ作成 -->
+				<!-- /page content -->
+				<!-- footer content -->
+				<div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
+				<!-- /footer content -->
+			</div>
+		</div>
+
+		<!-- Modal Part コード登録 -->
+		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h3 class="modal-title">
+							<i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード登録
+						</h3>
+					</div>
+					<div class="modal-body">
+						<div style="padding: 5px 20px;">
+							<form id="antoform" class="form-horizontal calender" role="form"
+								method="GET" name="frm">
+								<div class="form-group">
+									<!--  -->
+									<label class="col-sm-3 control-label"> マスターコード<span
+										style="color: red; font-size: 18px;">*</span></label>
+									<div class="col-md-9  "
+										th:if="${masterid} != null">
+										<select class="form-control" id="codeMasterId"
+											name="codeMasterId" onchange="">
+											<option value="">選択</option>
+											<option th:each="CodeMaster : ${masterid}"
+											th:value="${CodeMaster.codeMasterId}"
+											th:text="${CodeMaster.codeMasterName}"></option>
+										</select>
+
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">詳細コードID<span
+										style="color: red; font-size: 18px;">*</span></label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="codeDetailId" name="codeDetailId" placeholder="コードID"
+											readonly/>
+										</fieldset>
+									</div>
+								</div>
+
+								<div class="clearfix"></div>
+								<div class="form-group">
+								<label class="col-sm-3 control-label">詳細コード名<span style="color: red; font-size: 18px;">*</span></label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"id="codeDetailName" name="codeDetailName" placeholder="コード名"required />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム1</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm" id="item1" name="item1" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム2</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm" id="item2" name="item2" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム3</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item3" name="item3" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム4</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item4" name="item4" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" style="">アイテム5</label>
+									<div class="col-sm-9">
+										<fieldset>
+											<input type="text" class="form-control form-control-sm"
+												id="item5" name="item5" />
+										</fieldset>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+
+
+							</form>
+							<div class="clearfix"></div>
+						</div>
+
+
+						<div class="modal-footer">
+
+							<button type="button" class="btn btn-success" onclick="codeInsert();">
+								 登録
+							</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								戻る
+							</button>
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- /.Modal Part :: Register End -->
+
+	<!-- Modal Part 詳細コード変更 -->
+	<div id="modalCodeDetail_update" class="modal" tabindex="-1" data-backdrop="static" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード変更</h3>
+				</div>
+				<div class="modal-body">
+					<div style="padding: 5px 20px;">
+						<form id="updateform" class="form-horizontal calender" role="form"method="GET" name="frm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">マスターコード<span style="color: red; font-size: 18px;">*</span></label>
+								<div class="col-md-9 ">
+									<input type="text" class="form-control form-control-sm"id="codeMasterId_update" name="codeMasterId_update" disabled/>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">詳細コードID<span style="color: red; font-size: 18px; font-size: 18px;">*</span></label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="codeDetailId_update" name="codeDetailId_update" disabled/>
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">詳細コード名<span style="color: red; font-size: 18px;">*</span></label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="codeDetailName_update" name="codeDetailName_update"required />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="">アイテム1</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="item1_update" name="item1_update" />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="">アイテム2</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="item2_update" name="item2_update" />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="">アイテム3</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="item3_update" name="item3_update" />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="">アイテム4</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="item4_update" name="item4_update" />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="">アイテム5</label>
+								<div class="col-sm-9">
+									<fieldset>
+										<input type="text" class="form-control form-control-sm"id="item5_update" name="item5_update" />
+									</fieldset>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+							<input type="hidden" id="codeMasterId_hidden" name="codeMasterId_hidden">
+							<input type="hidden" id="codeDetailId_hidden" name="codeDetailId_hidden">
+								</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary btn-warning"onclick="codeUpdate();">変更</button>
+								<button type="button" class="btn btn-secondary"data-dismiss="modal">戻る</button>
+							</div>
+						</form>
+					</div>
+
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- /.Modal Part :: Register End -->
+
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+
+	<!-- jquery-validation-1.19.1 -->
+	<script
+		src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
+
+
+	<!-- page script -->
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+  		$.validator.messages.number = '有効な数字を入力';
+    		$.validator.messages.maxlength = '{0} 文字以下を入力';
+
+		$(function() {
+			<!--datatableの設定を変更-->
+			var modalesectiontable = $("#datatable1").DataTable(
+							{
+								<!--ページング-->
+								"language" : {
+									"info" : " _START_ ~ _END_ の _TOTAL_ 件",
+									"infoEmpty" : " 0 ~ 0 の 0 件",
+									"infoFiltered" : "",
+									"emptyTable" : "表にデータがない",
+									"paginate" : {
+										"first" : "最初",
+										"last" : "最後",
+										"next" : "次",
+										"previous" : "前"
+									}
+								},//
+
+								<!--検索機能 -->
+								fixedHeader : true,
+								"processing" : true,
+								"serverSide" : true,
+								"start" : 0,
+								"length" : 10,
+								"searching" : false,
+								"paging" : true,
+								"lengthChange" : false,
+								"ordering" : false,
+								"ajax" : {
+									url : /*[[@{/codedetail/codedetailList}]]*/'codedetail/codedetaileList',
+									type : "POST",
+									dataType : "json",
+									contentType : 'application/JSON',
+									data : function(d) {
+										d.columns[0].search.value = $(
+												'#search_master_id').val();
+										d.columns[1].search.value = $(
+												'#search_detail_id').val();
+										d.columns[2].search.value = $(
+												'#search_detail_name').val();
+										return JSON.stringify(d);
+									}
+								},//
+								"columnDefs" : [
+										{
+											targets : 0,
+											data : "codeMasterId"
+										},
+										{
+											targets : 1,
+											data : "codeDetailId"
+										},
+										{
+											targets : 2,
+											data : "codeDetailName"
+										},
+										{
+											targets : 3,
+											data: function(d){
+						                    	if(d.item1 == ''|| d.item1 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item1;
+						                    	}
+						                    }
+
+										},
+										{
+											targets : 4,
+											data: function(d){
+						                    	if(d.item2 == ''|| d.item2 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item2;
+						                    	}
+						                    }
+										},
+										{
+											targets : 5,
+											data: function(d){
+						                    	if(d.item3 == ''|| d.item3 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item3;
+						                    	}
+						                    }
+										},
+										{
+											targets : 6,
+											data: function(d){
+						                    	if(d.item4 == ''|| d.item4 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item4;
+						                    	}
+						                    }
+										},
+										{
+											targets : 7,
+											data: function(d){
+						                    	if(d.item5 == ''|| d.item5 == null){
+						                    		return '-';
+						                    	} else{
+						                    		return d.item5;
+						                    	}
+						                    }
+										},
+
+										{
+											targets : 8,
+											data : null,
+											render : function(data, type, row, meta) {
+												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
+												'"><button type="button" class="btn btn-danger deleteBtn"' +
+												'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '">削除</button>';
+
+										}
+										}
+										 ]
+							});
+
+
+		    $('#search_master_id').on( 'keyup', function () {
+            	$('#search_master_id').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable
+                .column(0)
+                .search( this.value )
+                .draw();
+            } );
+		    $('#search_detail_id').on( 'keyup', function () {
+            	$('#search_detail_id').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable
+                .column(1)
+                .search( this.value )
+                .draw();
+            } );
+		    $('#search_detail_name').on( 'keyup', function () {
+            	$('#search_detail_name').val(this.value.replace(new RegExp("'", 'g'), ''));
+            	modalesectiontable
+                .column(2)
+                .search( this.value )
+                .draw();
+            } );
+
+		    $('#codeMasterId').on( 'change', function () {
+		    	$.ajax(
+						/*[[@{/codedetail/checkNumber}]]*/'codedetail/checkNumber', {
+							type : "POST",
+							dataType : "json",
+							contentType : 'application/JSON',
+							data :  $('#codeMasterId').val()
+						}).success(function(result) {
+							if(result<10){
+								$('#codeDetailId').val("0"+(result+1));
+							}else{
+							$('#codeDetailId').val(result+1);}
+						}).error(function(xhr, textStatus, error) {
+							alert('通信失敗');
+						});
+
+			});
+
+		});
+
+
+		 function deleteButton(button) {
+				<!--削除機能-->
+				if (!confirm('本当に削除しますか？')) {
+					<!-- キャンセルの時の処理 -->
+					return false;
+				} else {
+					<!-- OKの時の処理-->/
+					$.ajax(
+					/*[[@{/codedetail/delete}]]*/'codedetail/delete', {
+						type : "POST",
+						dataType : "json",
+						contentType : 'application/JSON',
+						data : button.id
+					}).success(function(result) {
+						if(result>0){
+							alert("削除が出来ません");
+						}else{
+						location.href = '/codedetail';}
+					}).error(function(xhr, textStatus, error) {
+						alert('通信失敗');
+					});
+				}
+			}
+function update(button) {
+			<!--変更ボタンを押すと修正機能実行-->
+
+ 				var selectTr = $(button).closest("tr");
+ 				$('#codeMasterId_update').val(selectTr.find('td').eq(0).text());
+ 				$('#codeDetailId_update').val(selectTr.find('td').eq(1).text());
+				$('#codeDetailName_update').val(selectTr.find('td').eq(2).text());
+				$('#item1_update').val(selectTr.find('td').eq(3).text().replace("-",""));
+				$('#item2_update').val(selectTr.find('td').eq(4).text().replace("-",""));
+				$('#item3_update').val(selectTr.find('td').eq(5).text().replace("-",""));
+				$('#item4_update').val(selectTr.find('td').eq(6).text().replace("-",""));
+				$('#item5_update').val(selectTr.find('td').eq(7).text().replace("-",""));
+				$('#codeMasterId_hidden').val(selectTr.find('td').eq(0).text());
+ 				$('#codeDetailId_hidden').val(selectTr.find('td').eq(1).text());
+
+				$('#modalCodeDetail_update').modal();
+			}
+
+			function codeUpdate() {
+				var form = $('#updateform');
+
+				form.validate({
+					<!--有効性チェック -->
+					rules : {
+						codeMasterId_update : {
+							required : true
+						},
+						codeDetailId_update : {
+							required : true,
+							rangelength : [2, 2 ],
+							number : true
+						},
+						codeDetailName_update : {
+							required : true
+						},
+						item1_update : {
+							maxlength : 15
+						},
+						item2_update : {
+							maxlength : 15
+						},
+						item3_update : {
+							maxlength : 15
+						},
+						item4_update : {
+							maxlength : 15
+						},
+						item5_update : {
+							maxlength : 15
+						}
+
+					},
+					messages : {
+						codeMasterId_update : {
+							required : "コードを選択してください",
+
+
+						},
+						codeDetailId_update : {
+							required : "コードを入力してください",
+							rangelength : "桁数は2文字です",
+							number : "数字で入力してください"
+
+						},
+						codeMasterName_update : {
+							required : "コード名称を入力してください"
+						}
+
+					}
+
+				});
+				if (form.valid()) {
+
+					var detailCode = new Object();
+					detailCode.codeMasterId = $('#codeMasterId_update').val();
+					detailCode.codeDetailId = $('#codeDetailId_update').val();
+					detailCode.codeDetailName = $('#codeDetailName_update').val();
+					detailCode.item1 = $('#item1_update').val();
+					detailCode.item2 = $('#item2_update').val();
+					detailCode.item3 = $('#item3_update').val();
+					detailCode.item4 = $('#item4_update').val();
+					detailCode.item5 = $('#item5_update').val();
+					$.ajax({
+						"url" : "/codedetail/updateCodeDetail",
+						"type" : "post",
+						"dataType" : "json",
+						"data" : JSON.stringify(detailCode),
+						"contentType" : "application/JSON",
+						"success" : function(data) {
+							if (data > 0) {
+								<!--更新成功 -->
+								location.reload(true);
+							} else {
+								<!--更新失敗 -->
+								alert('更新失敗');
+							}
+						}
+					});
+				}
+			}
+
+			function codeInsert() {
+				var form = $('#antoform');
+
+				<!--入力有効性チェック -->
+				form.validate({
+					rules : {
+						codeMasterId : {
+							required : true
+						},
+						codeDetailId : {
+							required : true,
+							rangelength : [2, 2 ],
+							number : true
+						},
+						codeDetailName : {
+							required : true
+						},
+						item1 : {
+							maxlength : 15
+						},
+						item2 : {
+							maxlength : 15
+						},
+						item3 : {
+							maxlength : 15
+						},
+						item4 : {
+							maxlength : 15
+						},
+						item5 : {
+							maxlength : 15
+						}
+
+					},
+					messages : {
+						codeMasterId : {
+							required : "マスターコードを選択してください",
+
+						},
+						codeDetailId : {
+							required : "詳細コードを入力してください",
+
+						},
+						codeDetailName : {
+							required : "詳細コード名称を入力してください"
+						}
+					}
+				});
+				<!--マスターコードとマスターコードネームの有効性チェック -->
+				if (form.valid()) {
+					var detailCode = new Object();
+					detailCode.codeMasterId = $('#codeMasterId').val();
+					detailCode.codeDetailId = $('#codeDetailId').val();
+					detailCode.codeDetailName = $('#codeDetailName').val();
+					detailCode.item1 = $('#item1').val();
+					detailCode.item2 = $('#item2').val();
+					detailCode.item3 = $('#item3').val();
+					detailCode.item4 = $('#item4').val();
+					detailCode.item5 = $('#item5').val();
+
+
+					$.ajax({
+						"url" : "/codedetail/codeListCheck",
+						"type" : "post",
+						"dataType" : "json",
+						"data" : JSON.stringify(detailCode),
+						"contentType" : "application/JSON",
+						"success" : function(data) {
+							if (data > 0) {
+								alert("すでにあります");
+
+							} else {
+						location.reload(true);
+							}
+
+						}
+					});
+				}
+			}
+
+		/*]]>*/
+	</script>
+
+</body>
+</html>

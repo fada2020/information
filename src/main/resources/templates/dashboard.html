@@ -1,711 +1,338 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>DashBoard</title>
+<title>IT資産管理</title>
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- bootstrap-progressbar -->
+<link
+	href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+	rel="stylesheet">
+<!-- JQVMap -->
+<link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+<!-- bootstrap-daterangepicker -->
+<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
 
-    <!-- bootstrap-progressbar -->
-    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
+</head>
 
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<!-- sidebar -->
+			<div th:insert="fragments/sidebar :: sidebar" th:remove="tag"></div>
+			<!-- sidebar -->
 
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+			<!-- top navigation -->
+			<div th:insert="fragments/top_nav :: top_nav" th:remove="tag"></div>
+			<!-- /top navigation -->
 
-<script type="text/javascript">
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<!-- top tiles -->
+				<div class="row tile_count" style="margin-bottom: -10px;">
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3><b>ハードウェア</b></h3>
+							<div class="count">
+								<i class="fa fa-desktop"></i>[[${hwCnt}]] 個
+							</div>
+						</div>
+					</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3><b>ソフトウェア</b></h3>
+							<div class="count">
+							<i class="fa fa-tasks"></i> [[${swCnt}]] 個
+							</div>
+						</div>
+					</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3><b>故障した装置</b>
+							</h3>
+							<div class="count">
+								<i class="fa fa-cubes"></i>[[${kosyouCnt}]] 個
+							</div>
+						</div>
+						</div>
+					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style="padding: 10px 0px 0px;">
+						<div class="text-center">
+							<h3><b>今月購入した装置</b></h3>
+							<div class="count">
+								<i class="fa fa-plus"></i> [[${newItem}]] 個
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /top tiles -->
+				<br />
+				<!-- Graph  -->
+				<div class="col-md-12 col-sm-8 col-xs-12">
+					<div class="row">
+						<!-- ハードウェア保有現況  -->
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel tile fixed_height_320 overflow_hidden">
+								<div class="x_title">
+									<h2><b>ハードウェア保有現況</b></h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div th:if="${ hw > 0 }">
+										<table class="" style="width: 100%">
+											<tr>
+												<th style="width: 37%;">
+													<h4>&nbsp;&nbsp;<b>トップ５</b></h4>
+												</th>
+												<th>
+													<table class="tile_info">
+														<tr>
+															<th>
+																<h4><b>ハードウェア種別</b></h4>
+															</th>
+															<th>
+																<h4><b>保有量</b></h4>
+															</th>
+														</tr>
+													</table>
+												</th>
+											</tr>
+											<tr>
+												<td>
+													<canvas class="canvasDoughnut1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+												</td>
+												<td style="vertical-align: top; padding: 15px;">
+													<table class="tile_info" th:if="${ hw > 5 }">
+														<tr th:each="index:${#numbers.sequence(0,4)}" th:if="${#strings.equals(toplist[index].typeName,'HW')}">
+															<td>
+																<p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>[[${toplist[index].kubunName}]]</p>
+															</td>
+															<td>[[${toplist[index].typeCnt}]] 個</td>
+														</tr>
+														<tr>
+															<td><p>
+																	<i class="fa fa-square" style="color : gray;"></i>
+																		その他
+																</p>
+															</td>
+															<td>[[${hwsonotaCnt}]] 個</td>
+														</tr>
+													</table>
+													<table class="tile_info" th:if="${ hw < 6 && hw > 0}">
+														<tr th:each="index:${#numbers.sequence(0, #lists.size(toplist)-sw-1)}" th:if="${#strings.equals(toplist[index].typeName,'HW')}">
+															<td>
+																<p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>[[${toplist[index].kubunName}]]</p>
+															</td>
+															<td>
+																[[${toplist[index].typeCnt}]] 個
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div th:if="${ hw <= 0 }" align="center" style="margin-top: 40px;">
+										<div style="font-size: 2.5em;">
+											<i class="fa fa-exclamation-triangle fa-2x" style="color: Tomato;"></i>
+											<p>データなし</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /ハードウェア保有現況 -->
+						<!-- ソフトウェア保有現況  -->
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel tile fixed_height_320 overflow_hidden">
+								<div class="x_title">
+									<h2><b>ソフトウェア保有現況</b></h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div th:if="${ sw > 0 }">
+										<table style="width: 100%">
+											<tr>
+												<th style="width: 37%;">
+													<h4>&nbsp;&nbsp;<b>トップ５</b></h4>
+												</th>
+												<th>
+													<table class="tile_info">
+														<tr>
+															<th>
+																<h4><b>ソフトウェア種別</b></h4>
+															</th>
+															<th>
+																<h4><b>保有量</b></h4>
+															</th>
+														</tr>
+													</table>
+												</th>
+											</tr>
+											<tr>
+												<td>
+													<canvas class="canvasDoughnut2" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+												</td>
+												<td style="vertical-align: top; padding: 15px;">
+													<table class="tile_info" th:if="${ sw > 5 }">
+														<tr th:each="index:${#numbers.sequence(0,4)}" th:if="${#strings.equals(toplist[index].typeName,'SW')}">
+															<td>
+																<p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>[[${toplist[index+hw].kubunName}]]</p>
+															</td>
+															<td>
+																[[${toplist[index+hw].typeCnt}]] 個
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<p><i class="fa fa-square" style="color : gray;"></i>その他</p>
+															</td>
+															<td>
+																[[${swsonotaCnt}]] 個
+															</td>
+														</tr>
+													</table>
+													<table class="tile_info" th:if="${ sw < 6 && sw > 0 }">
+														<tr th:each="index:${#numbers.sequence(0,#lists.size(toplist)-hw-1)}" th:if="${#strings.equals(toplist[index+hw].typeName,'SW')}">
+															<td>
+																<p><i class="fa fa-square" th:style="|color: ${colorTop[index]}|"></i>[[${toplist[index+hw].kubunName}]]</p>
+															</td>
+															<td>
+																[[${toplist[index+hw].typeCnt}]] 個
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div th:if="${ sw <= 0 }" align="center" style="margin-top: 40px;">
+										<div style="font-size: 2.5em;">
+											<i class="fa fa-exclamation-triangle fa-2x" style="color: Tomato;"></i><p>データなし</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /ソフトウェア保有現況 -->
+					<!-- 資産貸与現況 -->
+					<div class="row">
+						<!-- bar charts group -->
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2><b>資産貸与現況</b></h2>
+									<div class="clearfix"></div>
+								</div>
+								<!-- データあり -->
+								<div class="x_content2" th:if="${ rsize > 0 }">
+									<div id="bargraph" style="width: 100%; height: 300px;"></div>
+								</div>
+								<div th:if="${ rsize > 0 }" style="margin: 15px; padding-left: 10px;">
+									<table>
+										<tr>
+											<td width="200px">
+												<p style="font-size: 15px;"><i class="fa fa-square" style="color: #3498DB;"></i>保管</p>
+											</td>
+											<td width="200px">
+												<p style="font-size: 15px;"><i class="fa fa-square" style="color: #E74C3C;"></i>貸与</p>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<!-- /データあり -->
+								<!-- データなし -->
+								<div th:if="${ rsize <= 0 }" class="x_content2" align="center" style="padding: 15px; margin: 30px 0px;">
+									<div style="font-size: 2.5em;">
+										<i class="fa fa-exclamation-triangle fa-2x" style="color: Tomato;"></i>
+										<div style="word-spacing: 1px;">データなし</div>
+									</div>
+									<b> [[${rentlist.fixed_rent_list01}]] ,
+										[[${rentlist.fixed_rent_list02}]] ,
+										[[${rentlist.fixed_rent_list03}]] ,
+										[[${rentlist.fixed_rent_list04}]] ,
+										[[${rentlist.fixed_rent_list05}]] ,
+										[[${rentlist.fixed_rent_list06}]] ,
+										[[${rentlist.fixed_rent_list07}]]のデータなし </b>
+								</div>
+								<!-- /データなし -->
+							</div>
+						</div>
+						<!-- /bar charts group -->
+					</div>
+					<!-- /資産貸与現況 -->
+				</div>
+				<!--/Graph  -->
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<div th:insert="fragments/footer :: footer" th:remove="tag"></div>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+
+
+	<script type="text/javascript">
+
 $(document).ready(function() {
-	init_skycons(),init_chart_doughnut(), init_gauge(), init_JQVmap(), init_daterangepicker(),
-	init_daterangepicker_right(), init_daterangepicker_single_call(), init_daterangepicker_reservation(),
-	init_charts(), init_morris_charts(), init_DataTables(), init_compose(), init_CustomNotification()
-	,init_chart_doughnut1()
+	init_chart_doughnut1(), init_chart_doughnut2(), init_morris_charts_dashboard()
 	});
 
-	function init_charts() {
-	    if (console.log("run_charts  typeof [" + typeof Chart + "]"), "undefined" != typeof Chart) {
-	        if (console.log("init_charts"), Chart.defaults.global.legend = {
-	                enabled: !1
-	            }, $("#canvas_line").length) {
-	            new Chart(document.getElementById("canvas_line"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line1").length) {
-	            new Chart(document.getElementById("canvas_line1"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line2").length) {
-	            new Chart(document.getElementById("canvas_line2"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line3").length) {
-	            new Chart(document.getElementById("canvas_line3"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#canvas_line4").length) {
-	            new Chart(document.getElementById("canvas_line4"), {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#lineChart").length) {
-	            var f = document.getElementById("lineChart");
-	            new Chart(f, {
-	                type: "line",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.31)",
-	                        borderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBorderColor: "rgba(38, 185, 154, 0.7)",
-	                        pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        pointBorderWidth: 1,
-	                        data: [31, 74, 6, 39, 20, 85, 7]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.3)",
-	                        borderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(151,187,205,1)",
-	                        pointBorderWidth: 1,
-	                        data: [82, 23, 66, 9, 99, 4, 2]
-	                    }]
-	                }
-	            })
-	        }
-	        if ($("#mybarChart").length) {
-	            var f = document.getElementById("mybarChart");
-	            new Chart(f, {
-	                type: "bar",
-	                data: {
-	                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-	                    datasets: [{
-	                        label: "# of Votes",
-	                        backgroundColor: "#26B99A",
-	                        data: [51, 30, 40, 28, 92, 50, 45]
-	                    }, {
-	                        label: "# of Votes",
-	                        backgroundColor: "#03586A",
-	                        data: [41, 56, 25, 48, 72, 34, 12]
-	                    }]
-	                },
-	                options: {
-	                    scales: {
-	                        yAxes: [{
-	                            ticks: {
-	                                beginAtZero: !0
-	                            }
-	                        }]
-	                    }
-	                }
-	            })
-	        }
-	        if ($("#canvasDoughnut").length) {
-	            var f = document.getElementById("canvasDoughnut"),
-	                i = {
-	                    labels: ["Dark Grey", "Purple Color", "Gray Color", "Green Color", "Blue Color"],
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        hoverBackgroundColor: ["#34495E", "#B370CF", "#CFD4D8", "#36CAAB", "#49A9EA"]
-	                    }]
-	                };
-	            new Chart(f, {
-	                type: "doughnut",
-	                tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-	                data: i
-	            })
-	        }
-	        if ($("#canvasRadar").length) {
-	            var f = document.getElementById("canvasRadar"),
-	                i = {
-	                    labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-	                    datasets: [{
-	                        label: "My First dataset",
-	                        backgroundColor: "rgba(3, 88, 106, 0.2)",
-	                        borderColor: "rgba(3, 88, 106, 0.80)",
-	                        pointBorderColor: "rgba(3, 88, 106, 0.80)",
-	                        pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
-	                        pointHoverBackgroundColor: "#fff",
-	                        pointHoverBorderColor: "rgba(220,220,220,1)",
-	                        data: [65, 59, 90, 81, 56, 55, 40]
-	                    }, {
-	                        label: "My Second dataset",
-	                        backgroundColor: "rgba(38, 185, 154, 0.2)",
-	                        borderColor: "rgba(38, 185, 154, 0.85)",
-	                        pointColor: "rgba(38, 185, 154, 0.85)",
-	                        pointStrokeColor: "#fff",
-	                        pointHighlightFill: "#fff",
-	                        pointHighlightStroke: "rgba(151,187,205,1)",
-	                        data: [28, 48, 40, 19, 96, 27, 100]
-	                    }]
-	                };
-	            new Chart(f, {
-	                type: "radar",
-	                data: i
-	            })
-	        }
-	        if ($("#pieChart").length) {
-	            var f = document.getElementById("pieChart"),
-	                i = {
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        label: "My dataset"
-	                    }],
-	                    labels: ["Dark Gray", "Purple", "Gray", "Green", "Blue"]
-	                };
-	            new Chart(f, {
-	                data: i,
-	                type: "pie",
-	                otpions: {
-	                    legend: !1
-	                }
-	            })
-	        }
-	        if ($("#polarArea").length) {
-	            var f = document.getElementById("polarArea"),
-	                i = {
-	                    datasets: [{
-	                        data: [120, 50, 140, 180, 100],
-	                        backgroundColor: ["#455C73", "#9B59B6", "#BDC3C7", "#26B99A", "#3498DB"],
-	                        label: "My dataset"
-	                    }],
-	                    labels: ["Dark Gray", "Purple", "Gray", "Green", "Blue"]
-	                };
-	            new Chart(f, {
-	                data: i,
-	                type: "polarArea",
-	                options: {
-	                    scale: {
-	                        ticks: {
-	                            beginAtZero: !0
-	                        }
-	                    }
-	                }
-	            })
-	        }
-	    }
-	}
-
-
-	function init_morris_charts() {
-	    "undefined" != typeof Morris && (console.log("init_morris_charts"), $("#graphx").length && Morris.Bar({
-	        element: "graphx",
-	        data: [{
-	            x: "DeskTop",
-	            y: 5,
-	            z: 7
-	        }, {
-	            x: "NoteBook",
-	            y: 5,
-	            z: 3
-	        }, {
-	            x: "Tablet",
-	            y: 7,
-	            z: 5
-	        },{
-	            x: "Mobile",
-	            y: 7,
-	            z: 5
-	        }, {
-	            x: "Monitor",
-	            y: 2,
-	            z: 6,
-	        }, {
-	            x: "Keyboard",
-	            y: 4,
-	            z: 6
-	        }, {
-	            x: "Mouse",
-	            y: 7,
-	            z: 6
-	        }],
-	        xkey: "x",
-	        ykeys: ["y", "z"],
-	        barColors: ["blue", "red", "#ACADAC", "#3498DB"],
-	        hideHover: "auto",
-	        labels: ["保管", "貸与"],
-	        resize: !0
-	    }).on("click", function(a, b) {
-	        console.log(a, b)
-	    })
-	)
-	}
-
-	function init_DataTables() {
-	    if (console.log("run_datatables"), "undefined" != typeof $.fn.DataTable) {
-	        console.log("init_DataTables");
-	        var a = function() {
-	            $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
-	                dom: "Blfrtip",
-	                buttons: [{
-	                    extend: "copy",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "csv",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "excel",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "pdfHtml5",
-	                    className: "btn-sm"
-	                }, {
-	                    extend: "print",
-	                    className: "btn-sm"
-	                }],
-	                responsive: !0
-	            })
-	        };
-	        TableManageButtons = function() {
-	            "use strict";
-	            return {
-	                init: function() {
-	                    a()
-	                }
-	            }
-	        }(), $("#datatable").dataTable(), $("#datatable-keytable").DataTable({
-	            keys: !0
-	        }), $("#datatable-responsive").DataTable(), $("#datatable-scroller").DataTable({
-	            ajax: "js/datatables/json/scroller-demo.json",
-	            deferRender: !0,
-	            scrollY: 380,
-	            scrollCollapse: !0,
-	            scroller: !0
-	        }), $("#datatable-fixed-header").DataTable({
-	            fixedHeader: !0
-	        });
-	        var b = $("#datatable-checkbox");
-	        b.dataTable({
-	            order: [
-	                [1, "asc"]
-	            ],
-	            columnDefs: [{
-	                orderable: !1,
-	                targets: [0]
-	            }]
-	        }), b.on("draw.dt", function() {
-	            $("checkbox input").iCheck({
-	                checkboxClass: "icheckbox_flat-green"
-	            })
-	        }), TableManageButtons.init()
-	    }
-	}
-
-	function init_compose() {
-	    "undefined" != typeof $.fn.slideToggle && (console.log("init_compose"), $("#compose, .compose-close").click(function() {
-	        $(".compose").slideToggle()
-	    }))
-	}
-
-
-	function init_CustomNotification() {
-	    if (console.log("run_customtabs"), "undefined" != typeof CustomTabs) {
-	        console.log("init_CustomTabs");
-	        var a = 10;
-	        TabbedNotification = function(b) {
-	            var c = "<div id='ntf" + a + "' class='text alert-" + b.type + "' style='display:none'><h2><i class='fa fa-bell'></i> " + b.title + "</h2><div class='close'><a href='javascript:;' class='notification_close'><i class='fa fa-close'></i></a></div><p>" + b.text + "</p></div>";
-	            document.getElementById("custom_notifications") ? ($("#custom_notifications ul.notifications").append("<li><a id='ntlink" + a + "' class='alert-" + b.type + "' href='#ntf" + a + "'><i class='fa fa-bell animated shake'></i></a></li>"), $("#custom_notifications #notif-group").append(c), a++, CustomTabs(b)) : alert("doesnt exists")
-	        }, CustomTabs = function(a) {
-	            $(".tabbed_notifications > div").hide(), $(".tabbed_notifications > div:first-of-type").show(), $("#custom_notifications").removeClass("dsp_none"), $(".notifications a").click(function(a) {
-	                a.preventDefault();
-	                var b = $(this),
-	                    c = "#" + b.parents(".notifications").data("tabbed_notifications"),
-	                    d = b.closest("li").siblings().children("a"),
-	                    e = b.attr("href");
-	                d.removeClass("active"), b.addClass("active"), $(c).children("div").hide(), $(e).show()
-	            })
-	        }, CustomTabs();
-	        var b = idname = "";
-	        $(document).on("click", ".notification_close", function(a) {
-	            idname = $(this).parent().parent().attr("id"), b = idname.substr(-2), $("#ntf" + b).remove(), $("#ntlink" + b).parent().remove(), $(".notifications a").first().addClass("active"), $("#notif-group div").first().css("display", "block")
-	        })
-	    }
-	}
-/* doughnut */
-function init_JQVmap() {
-    "undefined" != typeof jQuery.fn.vectorMap && (console.log("init_JQVmap"), $("#world-map-gdp").length && $("#world-map-gdp").vectorMap({
-        map: "world_en",
-        backgroundColor: null,
-        color: "#ffffff",
-        hoverOpacity: .7,
-        selectedColor: "#666666",
-        enableZoom: !0,
-        showTooltip: !0,
-        values: sample_data,
-        scaleColors: ["#E6F2F0", "#149B7E"],
-        normalizeFunction: "polynomial"
-    }), $("#usa_map").length && $("#usa_map").vectorMap({
-        map: "usa_en",
-        backgroundColor: null,
-        color: "#ffffff",
-        hoverOpacity: .7,
-        selectedColor: "#666666",
-        enableZoom: !0,
-        showTooltip: !0,
-        values: sample_data,
-        scaleColors: ["#E6F2F0", "#149B7E"],
-        normalizeFunction: "polynomial"
-    }))
-}
-
-
-function init_daterangepicker() {
-    if ("undefined" != typeof $.fn.daterangepicker) {
-        console.log("init_daterangepicker");
-        var a = function(a, b, c) {
-                console.log(a.toISOString(), b.toISOString(), c), $("#reportrange span").html(a.format("MMMM D, YYYY") + " - " + b.format("MMMM D, YYYY"))
-            },
-            b = {
-                startDate: moment().subtract(29, "days"),
-                endDate: moment(),
-                minDate: "01/01/2012",
-                maxDate: "12/31/2015",
-                dateLimit: {
-                    days: 60
-                },
-                showDropdowns: !0,
-                showWeekNumbers: !0,
-                timePicker: !1,
-                timePickerIncrement: 1,
-                timePicker12Hour: !0,
-                ranges: {
-                    Today: [moment(), moment()],
-                    Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                    "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                    "Last 30 Days": [moment().subtract(29, "days"), moment()],
-                    "This Month": [moment().startOf("month"), moment().endOf("month")],
-                    "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-                },
-                opens: "left",
-                buttonClasses: ["btn btn-default"],
-                applyClass: "btn-small btn-primary",
-                cancelClass: "btn-small",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                locale: {
-                    applyLabel: "Submit",
-                    cancelLabel: "Clear",
-                    fromLabel: "From",
-                    toLabel: "To",
-                    customRangeLabel: "Custom",
-                    daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                    firstDay: 1
-                }
-            };
-        $("#reportrange span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), $("#reportrange").daterangepicker(b, a), $("#reportrange").on("show.daterangepicker", function() {
-            console.log("show event fired")
-        }), $("#reportrange").on("hide.daterangepicker", function() {
-            console.log("hide event fired")
-        }), $("#reportrange").on("apply.daterangepicker", function(a, b) {
-            console.log("apply event fired, start/end dates are " + b.startDate.format("MMMM D, YYYY") + " to " + b.endDate.format("MMMM D, YYYY"))
-        }), $("#reportrange").on("cancel.daterangepicker", function(a, b) {
-            console.log("cancel event fired")
-        }), $("#options1").click(function() {
-            $("#reportrange").data("daterangepicker").setOptions(b, a)
-        }), $("#options2").click(function() {
-            $("#reportrange").data("daterangepicker").setOptions(optionSet2, a)
-        }), $("#destroy").click(function() {
-            $("#reportrange").data("daterangepicker").remove()
-        })
-    }
-}
-
-
-function init_daterangepicker_right() {
-    if ("undefined" != typeof $.fn.daterangepicker) {
-        console.log("init_daterangepicker_right");
-        var a = function(a, b, c) {
-                console.log(a.toISOString(), b.toISOString(), c), $("#reportrange_right span").html(a.format("MMMM D, YYYY") + " - " + b.format("MMMM D, YYYY"))
-            },
-            b = {
-                startDate: moment().subtract(29, "days"),
-                endDate: moment(),
-                minDate: "01/01/2012",
-                maxDate: "12/31/2020",
-                dateLimit: {
-                    days: 60
-                },
-                showDropdowns: !0,
-                showWeekNumbers: !0,
-                timePicker: !1,
-                timePickerIncrement: 1,
-                timePicker12Hour: !0,
-                ranges: {
-                    Today: [moment(), moment()],
-                    Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                    "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                    "Last 30 Days": [moment().subtract(29, "days"), moment()],
-                    "This Month": [moment().startOf("month"), moment().endOf("month")],
-                    "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-                },
-                opens: "right",
-                buttonClasses: ["btn btn-default"],
-                applyClass: "btn-small btn-primary",
-                cancelClass: "btn-small",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                locale: {
-                    applyLabel: "Submit",
-                    cancelLabel: "Clear",
-                    fromLabel: "From",
-                    toLabel: "To",
-                    customRangeLabel: "Custom",
-                    daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                    firstDay: 1
-                }
-            };
-        $("#reportrange_right span").html(moment().subtract(29, "days").format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), $("#reportrange_right").daterangepicker(b, a), $("#reportrange_right").on("show.daterangepicker", function() {
-            console.log("show event fired")
-        }), $("#reportrange_right").on("hide.daterangepicker", function() {
-            console.log("hide event fired")
-        }), $("#reportrange_right").on("apply.daterangepicker", function(a, b) {
-            console.log("apply event fired, start/end dates are " + b.startDate.format("MMMM D, YYYY") + " to " + b.endDate.format("MMMM D, YYYY"))
-        }), $("#reportrange_right").on("cancel.daterangepicker", function(a, b) {
-            console.log("cancel event fired")
-        }), $("#options1").click(function() {
-            $("#reportrange_right").data("daterangepicker").setOptions(b, a)
-        }), $("#options2").click(function() {
-            $("#reportrange_right").data("daterangepicker").setOptions(optionSet2, a)
-        }), $("#destroy").click(function() {
-            $("#reportrange_right").data("daterangepicker").remove()
-        })
-    }
-}
-
-function init_daterangepicker_single_call() {
-    "undefined" != typeof $.fn.daterangepicker && (console.log("init_daterangepicker_single_call"), $("#single_cal1").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_1"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal2").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_2"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal3").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_3"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#single_cal4").daterangepicker({
-        singleDatePicker: !0,
-        singleClasses: "picker_4"
-    }, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }))
-}
-
-function init_daterangepicker_reservation() {
-    "undefined" != typeof $.fn.daterangepicker && (console.log("init_daterangepicker_reservation"), $("#reservation").daterangepicker(null, function(a, b, c) {
-        console.log(a.toISOString(), b.toISOString(), c)
-    }), $("#reservation-time").daterangepicker({
-        timePicker: !0,
-        timePickerIncrement: 30,
-        locale: {
-            format: "MM/DD/YYYY h:mm A"
-        }
-    }))
-}
-
-function init_skycons() {
-    if ("undefined" != typeof Skycons) {
-        console.log("init_skycons");
-        var c, a = new Skycons({
-                color: "#73879C"
-            }),
-            b = ["clear-day", "clear-night", "partly-cloudy-day", "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind", "fog"];
-        for (c = b.length; c--;) a.set(b[c], b[c]);
-        a.play()
-    }
-}
-
-function init_chart_doughnut() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut"), $(".canvasDoughnut").length)) {
-        var a = {
-            type: "doughnut",
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: {
-                labels: ["Notebook", "Server", "Other", "mobile", "Desktop"],
-                datasets: [{
-                    data: [15, 15, 10, 20, 40],
-                    backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
-                    hoverBackgroundColor: ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"]
-                }]
-            },
-            options: {
-                legend: !1,
-                responsive: !1
-            }
-        };
-        $(".canvasDoughnut").each(function() {
-            var b = $(this);
-            new Chart(b, a)
-        })
-    }
-}
-
+// 保有現況グラフ：ハードウェア
 function init_chart_doughnut1() {
-    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut"), $(".canvasDoughnut1").length)) {
+	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
+
         var a = {
             type: "doughnut",
             tooltipFillColor: "rgba(51, 51, 51, 0.55)",
             data: {
-                labels: ["Symbian", "Blackberry", "Other", "Android", "IOS"],
+                labels: ["[[${hardTop[0]}]]","[[${hardTop[1]}]]","[[${hardTop[2]}]]","[[${hardTop[3]}]]","[[${hardTop[4]}]]","その他"],
                 datasets: [{
-                    data: [20, 20, 15, 25, 30],
-                    backgroundColor: ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"],
-                    hoverBackgroundColor: ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"]
+                    data: ["[[${hardCnt[0]}]]","[[${hardCnt[1]}]]","[[${hardCnt[2]}]]","[[${hardCnt[3]}]]","[[${hardCnt[4]}]]","[[${hwsonotaCnt}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7","#808080"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8","#b7b7b7"]
                 }]
             },
             options: {
@@ -720,303 +347,110 @@ function init_chart_doughnut1() {
     }
 }
 
-function init_gauge() {
-    if ("undefined" != typeof Gauge) {
-        console.log("init_gauge [" + $(".gauge-chart").length + "]"), console.log("init_gauge");
+// 保有現況グラフ：ソフトウェア
+function init_chart_doughnut2() {
+    if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
         var a = {
-            lines: 12,
-            angle: 0,
-            lineWidth: .4,
-            pointer: {
-                length: .75,
-                strokeWidth: .042,
-                color: "#1D212A"
+            type: "doughnut",
+            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            data: {
+                labels: ["[[${softTop[0]}]]","[[${softTop[1]}]]","[[${softTop[2]}]]","[[${softTop[3]}]]","[[${softTop[4]}]]","その他"],
+                datasets: [{
+                    data: ["[[${softCnt[0]}]]","[[${softCnt[1]}]]","[[${softCnt[2]}]]","[[${softCnt[3]}]]","[[${softCnt[4]}]]","[[${swsonotaCnt}]]"],
+                    backgroundColor: ["#3498DB", "#9B59B6", "#E74C3C", "#26B99A", "#BDC3C7","#808080"],
+                    hoverBackgroundColor: ["#49A9EA", "#B370CF", "#E95E4F", "#36CAAB", "#CFD4D8","#b7b7b7"]
+                }]
             },
-            limitMax: "false",
-            colorStart: "#1ABC9C",
-            colorStop: "#1ABC9C",
-            strokeColor: "#F0F3F3",
-            generateGradient: !0
+            options: {
+                legend: !1,
+                responsive: !1
+            }
         };
-        if ($("#chart_gauge_01").length) var b = document.getElementById("chart_gauge_01"),
-            c = new Gauge(b).setOptions(a);
-        if ($("#gauge-text").length && (c.maxValue = 6e3, c.animationSpeed = 32, c.set(3200), c.setTextField(document.getElementById("gauge-text"))), $("#chart_gauge_02").length) var d = document.getElementById("chart_gauge_02"),
-            e = new Gauge(d).setOptions(a);
-        $("#gauge-text2").length && (e.maxValue = 9e3, e.animationSpeed = 32, e.set(2400), e.setTextField(document.getElementById("gauge-text2")))
+        $(".canvasDoughnut2").each(function() {
+            var b = $(this);
+            new Chart(b, a)
+        })
     }
 }
 
+//貸与現況グラフ
+	function init_morris_charts_dashboard() {
+	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
+	        element: "bargraph",
+	        data: [{
+	            x: "[[${rentlist.fixed_rent_list01}]]",
+	            y:"[[${DT001}]]",
+	            z: "[[${DT002}]]"
+	        },{
+	            x: "[[${rentlist.fixed_rent_list02}]]",
+	            y: "[[${NB001}]]",
+	            z: "[[${NB002}]]"
+	        }, {
+	            x:  "[[${rentlist.fixed_rent_list03}]]",
+	            y: "[[${TBL001}]]",
+	            z: "[[${TBL002}]]"
+	        },{
+	            x:  "[[${rentlist.fixed_rent_list04}]]",
+	            y: "[[${MD001}]]",
+	            z: "[[${MD002}]]"
+	        }, {
+	            x:  "[[${rentlist.fixed_rent_list05}]]",
+	            y: "[[${DP001}]]",
+	            z: "[[${DP002}]]"
+	        }, {
+	            x:  "[[${rentlist.fixed_rent_list06}]]",
+	            y: "[[${KBD001}]]",
+	            z: "[[${KBD002}]]"
+	        }, {
+	            x:  "[[${rentlist.fixed_rent_list07}]]",
+	            y: "[[${MS001}]]",
+	            z: "[[${MS002}]]"
+	        }],
+	        xkey: "x",
+	        ykeys: ["y", "z"],
+	        barColors: ["#3498DB", "#E74C3C"],
+	        hideHover: "auto",
+	        labels: ["保管", "貸与"],
+	        resize: !0
+	    }).on("click", function(a, b) {
+	        console.log(a, b)
+	    })
+	)
+	}
 
 </script>
 
+	<!-- Chart.js -->
+	<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+	<!-- gauge.js -->
+	<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- Skycons -->
+	<script src="../vendors/skycons/skycons.js"></script>
+	<!-- Flot -->
+	<script src="../vendors/Flot/jquery.flot.js"></script>
+	<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+	<script src="../vendors/Flot/jquery.flot.time.js"></script>
+	<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+	<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+	<!-- Flot plugins -->
+	<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+	<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+	<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+	<!-- DateJS -->
+	<script src="../vendors/DateJS/build/date.js"></script>
+	<!-- JQVMap -->
+	<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+	<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+	<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- morris.js -->
+	<script src="../vendors/raphael/raphael.min.js"></script>
+	<script src="../vendors/morris.js/morris.min.js"></script>
 
-  </head>
-
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-      	<!-- sidebar -->
-		<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
-        <!-- sidebar -->
-
-        <!-- top navigation -->
-        <div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
-        <!-- /top navigation -->
-
-        <!-- page content -->
-        <div class="right_col" role="main">
-
-          <!-- top tiles -->
-          <div class="row tile_count" style="margin-bottom: -10px;">
-
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" ><div class="text-center">
-              <h3><b>総ハードウェア</b></h3>
-              <div class="count">352台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-              <h3><b>総ソフトウェア</b></h3>
-              <div class="count">175台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-             <h3><b> 総資産装置</b></h3>
-              <div class="count">527台</div></div>
-            </div>
-            <div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count"><div class="text-center">
-              <h3><b>新しい装置</b></h3>
-              <div class="count">51台</div></div>
-            </div>
-          </div>
-
-          <!-- /top tiles -->
-
-
-          <br />
-<!-- Graph  -->
- <div class="col-md-12 col-sm-8 col-xs-12">
-          <div class="row">
-		<!-- Hardware Top5  -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2><b>ハードウェア</b></h2>
-
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">PERCENT</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>Desktop </p>
-                            </td>
-                            <td>40%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Mobile </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Server </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Notebook </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-        <!-- Hardware Top5 -->
-		<!-- Software Top5  -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2><b>ソフトウェア</b></h2>
-
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">PERCENT</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>OS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>会計Package </p>
-                            </td>
-                            <td>25%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Office </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Virus Program </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-</div>
- <!-- /Software Top5 -->
-	<div class="row">
-	 <div class="">
-	    <div class="row">
-  <!-- bar charts group -->
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2><b>資産貸与現況</b><small></small></h2>
-
-                    <div class="clearfix"></div>
-                  </div>
-     <!-- init_morris_chart()：custom.min.js -->
-                  <div class="x_content2">
-                    <div id="graphx" style="width:100%; height:300px;" ></div>
-                  </div>
-     <!-- init_morris_chart()：custom.min.js -->
-                </div>
-              </div>
-              <!-- /bar charts group -->
-			</div>
-		</div>
-	</div>
- </div>
-	 <!--/Graph  -->
-
-
-        </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <div th:insert="/fragments/footer :: footer" th:remove="tag"></div>
-        <!-- /footer content -->
-      </div>
-    </div>
-
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- jquery-ui -->
-	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-	<!-- DataTable -->
-	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
-
-    <!-- Chart.js -->
-    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- Skycons -->
-    <script src="../vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="../vendors/Flot/jquery.flot.js"></script>
-    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="../vendors/Flot/jquery.flot.time.js"></script>
-    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="../vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-
-    <!-- morris.js -->
-    <script src="../vendors/raphael/raphael.min.js"></script>
-    <script src="../vendors/morris.js/morris.min.js"></script>
-
-  </body>
+</body>
 </html>

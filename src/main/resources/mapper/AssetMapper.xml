@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.info.ais.ams.mapper.AssetMapper">
+
+	<resultMap id="assetResult" type="Asset">
+	  <id property="assetSeq" column="asset_seq" />
+	  <result property="assetNumber" column="asset_number"/>
+	  <result property="kubunCode" column="kubun_code"/>
+	  <result property="purchaseDate" column="purchase_date"/>
+	  <result property="warrantyPeriod" column="warranty_period"/>
+	  <result property="buyTo" column="buy_to"/>
+	  <result property="purchasePrice" column="purchase_price"/>
+	  <result property="statusCode" column="status_code"/>
+	  <result property="makerName" column="maker_name"/>
+	  <result property="modelName" column="model_name"/>
+	  <result property="serialNum" column="serial_num"/>
+	  <result property="interFaceCol" column="interface_col"/>
+	  <result property="osName" column="os_name"/>
+	  <result property="osProductKey" column="os_product_key"/>
+	  <result property="cpuProcessor" column="cpu_processor"/>
+	  <result property="operatingFrequency" column="operating_frequency"/>
+	  <result property="memory" column="memory"/>
+	  <result property="memoryUpgarde" column="memory_upgarde"/>
+	  <result property="hdd" column="hdd"/>
+	  <result property="hddUpgarde" column="hdd_upgarde"/>
+	  <result property="macLan" column="mac_lan"/>
+	  <result property="macWireless" column="mac_wireless"/>
+	  <result property="other" column="other"/>
+	  <result property="securityBios" column="security_bios"/>
+	  <result property="securityHdd" column="security_hdd"/>
+	  <result property="adminAccountId" column="admin_account_id"/>
+	  <result property="adminAccountPwd" column="admin_account_pwd"/>
+	  <result property="storageLocation" column="storage_location"/>
+
+	  <collection property="accessoriesList" ofType="Accessories">
+	    <id property="accessoriesSeq" column="acc_accessories_seq"/>
+	    <id property="assetSeq" column="acc_asset_seq"/>
+	    <result property="itemName" column="acc_item_name"/>
+	    <result property="itemSpec" column="acc_item_spec"/>
+	    <result property="itemQuantity" column="acc_item_quantity"/>
+	    <result property="remarks" column="acc_remarks"/>
+	  </collection>
+
+	  <collection property="maintenanceHistoryList" ofType="MaintenanceHistory">
+	    <id property="historySeq" column="mt_history_seq"/>
+	    <id property="assetSeq" column="mt_asset_seq"/>
+	    <result property="implementationDate" column="mt_implementation_date"/>
+	    <result property="implementationDetail" column="mt_implementation_detail"/>
+	    <result property="repId" column="mt_rep_id"/>
+	    <result property="approverId" column="mt_approver_id"/>
+	  </collection>
+	</resultMap>
+
+    <select id="selectAsset" resultMap="assetResult">
+       SELECT
+		a.asset_seq
+		,asset_number
+		,kubun_code
+		,purchase_date
+		,warranty_period
+		,buy_to
+		,purchase_price
+		,status_code
+		,maker_name
+		,model_name
+		,serial_num
+		,interface_col
+		,os_name
+		,os_product_key
+		,cpu_processor
+		,operating_frequency
+		,memory
+		,memory_upgarde
+		,hdd
+		,hdd_upgarde
+		,mac_lan
+		,mac_wireless
+		,other
+		,security_bios
+		,security_hdd
+		,admin_account_id
+		,admin_account_pwd
+		,storage_location
+		,b.accessories_seq acc_accessories_seq
+		,b.asset_seq acc_asset_seq
+		,b.item_name acc_item_name
+		,b.item_spec acc_item_spec
+		,b.item_quantity acc_item_quantity
+		,b.remarks acc_remarks
+		,c.history_seq mt_history_seq
+		,c.asset_seq mt_asset_seq
+		,c.implementation_date mt_implementation_date
+		,c.implementation_detail mt_implementation_detail
+		,c.rep_id mt_rep_id
+		,c.approver_id mt_approver_id
+	FROM asset a
+	LEFT JOIN accessories b
+	ON a.asset_seq = b.asset_seq
+	LEFT JOIN maintenance_history c
+	ON a.asset_seq = c.asset_seq
+	WHERE a.asset_seq = #{assetSeq}
+	ORDER BY asset_seq DESC, acc_accessories_seq ASC, history_seq ASC
+    </select>
+
+    <select id="selectAssetList" resultType="Asset">
+    SELECT A.* FROM(
+        SELECT
+			asset_seq
+			,asset_number
+			,kubun_code
+			,purchase_date
+			,warranty_period
+			,buy_to
+			,purchase_price
+			,status_code
+			,maker_name
+			,model_name
+			,serial_num
+			,interface_col
+			,os_name
+			,os_product_key
+			,cpu_processor
+			,operating_frequency
+			,memory
+			,memory_upgarde
+			,hdd
+			,hdd_upgarde
+			,mac_lan
+			,mac_wireless
+			,other
+			,security_bios
+			,security_hdd
+			,admin_account_id
+			,admin_account_pwd
+			,storage_location
+		FROM asset
+		ORDER BY asset_seq DESC
+	) A
+	WHERE 1 = 1
+		<if test="assetSeq > 0">
+		AND asset_seq = #{assetSeq}
+		</if>
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND asset_number like '%${assetNumber}%'
+		</if>
+		<if test="kubunCode != null and !kubunCode.equals('00')">
+		AND kubun_code = #{kubunCode}
+		</if>
+		<if test="statusCode != null and !statusCode.equals('00')">
+		AND status_code = #{statusCode}
+		</if>
+		<if test="makerName != null and !makerName.equals('')">
+		AND maker_name like '%${makerName}%'
+		</if>
+		<if test="modelName != null and !modelName.equals('')">
+		AND model_name like '%${modelName}%'
+		</if>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND purchase_date BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
+		</if>
+	LIMIT #{length} OFFSET #{start}
+    </select>
+
+    <select id="selectCount" resultType="int">
+    SELECT COUNT(1)
+    FROM asset
+	WHERE 1 = 1
+		<if test="assetSeq > 0">
+		AND asset_seq = #{assetSeq}
+		</if>
+		<if test="assetNumber != null and !assetNumber.equals('')">
+		AND asset_number like '%${assetNumber}%'
+		</if>
+		<if test="kubunCode != null and !kubunCode.equals('00')">
+		AND kubun_code = #{kubunCode}
+		</if>
+		<if test="statusCode != null and !statusCode.equals('00')">
+		AND status_code = #{statusCode}
+		</if>
+		<if test="makerName != null and !makerName.equals('')">
+		AND maker_name like '%${makerName}%'
+		</if>
+		<if test="modelName != null and !modelName.equals('')">
+		AND model_name like '%${modelName}%'
+		</if>
+		<if test="startPurchaseDate != null and endPurchaseDate != null">
+		AND purchase_date BETWEEN #{startPurchaseDate} and #{endPurchaseDate}
+		</if>
+    </select>
+
+    <select id="selectStateCode"  parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name
+    	FROM code_detail
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
+    </select>
+
+    <select id="selectProductCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="jp.co.info.ais.ams.domain.CodeDetail">
+    	SELECT
+    		code_detail_id,
+    		code_detail_name,
+    		item1,
+    		item2
+    	FROM code_detail
+		WHERE code_master_id = #{codeMasterId}
+		and use_flag=#{useFlag}
+    </select>
+
+    <update id="updateAsset">
+		UPDATE asset SET
+			kubun_code = #{kubunCode}
+			,purchase_date = #{purchaseDate}
+			,warranty_period = #{warrantyPeriod}
+			,buy_to = #{buyTo}
+			,purchase_price = #{purchasePrice}
+			,status_code = #{statusCode}
+			,maker_name = #{makerName}
+			,model_name = #{modelName}
+			,serial_num = #{serialNum}
+			,interface_col = #{interFaceCol}
+			,os_name = #{osName}
+			,os_product_key = #{osProductKey}
+			,cpu_processor = #{cpuProcessor}
+			,operating_frequency = #{operatingFrequency}
+			,memory = #{memory}
+			,memory_upgarde = #{memoryUpgarde}
+			,hdd = #{hdd}
+			,hdd_upgarde = #{hddUpgarde}
+			,mac_lan = #{macLan}
+			,mac_wireless = #{macWireless}
+			,other = #{other}
+			,security_bios = #{securityBios}
+			,security_hdd = #{securityHdd}
+			,admin_account_id = #{adminAccountId}
+			,admin_account_pwd = #{adminAccountPwd}
+			,storage_location = #{storageLocation}
+			,update_id = #{updateId}
+		WHERE asset_seq = #{assetSeq}
+    </update>
+
+    <insert id="insertAccessories" useGeneratedKeys="true" keyProperty="accessoriesSeq">
+        INSERT INTO accessories(
+        accessories_seq, asset_seq, item_name, item_spec, item_quantity, remarks,
+        insert_id, update_id
+        )
+        VALUES (
+        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
+        #{assetSeq}, #{itemName}, #{itemSpec}, #{itemQuantity}, #{remarks},
+        #{insertId}, #{updateId})
+    </insert>
+
+    <update id="updateAccessories">
+		UPDATE accessories SET
+			item_name = #{itemName},
+			item_spec = #{itemSpec},
+			item_quantity = #{itemQuantity},
+			remarks = #{remarks},
+			update_id = #{updateId}
+		WHERE accessories_seq = #{accessoriesSeq}
+		AND asset_seq = #{assetSeq}
+    </update>
+
+    <delete id="deleteAccessories">
+        DELETE FROM accessories
+		WHERE accessories_seq = #{accessoriesSeq}
+		AND asset_seq = #{assetSeq}
+    </delete>
+
+    <insert id="insertMaintenanceHistory" useGeneratedKeys="true" keyProperty="historySeq">
+        INSERT INTO maintenance_history(
+        history_seq, asset_seq, implementation_date, implementation_detail, rep_id, approver_id,
+        insert_id, update_id
+        )
+        VALUES (
+        (SELECT IFNULL(MAX(history_seq) + 1, 1) FROM maintenance_history b WHERE asset_seq = #{assetSeq}),
+        #{assetSeq}, #{implementationDate}, #{implementationDetail}, #{repId}, #{approverId},
+        #{insertId}, #{updateId})
+    </insert>
+
+    <update id="updateMaintenanceHistory">
+		UPDATE maintenance_history SET
+			implementation_date = #{implementationDate},
+			implementation_detail = #{implementationDetail},
+			rep_id = #{repId},
+			approver_id = #{approverId},
+			update_id = #{updateId}
+		WHERE history_seq = #{historySeq}
+		AND asset_seq = #{assetSeq}
+    </update>
+
+    <delete id="deleteMaintenanceHistory">
+        DELETE FROM maintenance_history
+		WHERE history_seq = #{historySeq}
+		AND asset_seq = #{assetSeq}
+    </delete>
+
+    <update id="updateAssetSeq">
+		UPDATE code_detail SET
+			item3 = item3 + 1
+		WHERE code_master_id = '002'
+		AND code_detail_id = #{kubunCode}
+    </update>
+
+    <select id="selectAssetNumber" resultType="String">
+		SELECT
+
+		CONCAT(#{companyCode}, '-', LPAD(item2, 3 , 'aaa'),'-', LPAD(item3, 3 , '0') )
+
+		FROM code_detail
+		WHERE code_master_id = '002'
+		AND code_detail_id = #{kubunCode}
+    </select>
+
+    <insert id="insertAsset" useGeneratedKeys="true" keyProperty="assetSeq">
+        INSERT INTO asset(
+        asset_number, kubun_code, purchase_date, warranty_period, buy_to, purchase_price, storage_location,
+        status_code, maker_name, model_name, serial_num, interface_col, os_name, os_product_key,
+        cpu_processor, operating_frequency, memory, memory_upgarde, hdd, hdd_upgarde, mac_lan,
+        mac_wireless, other, security_bios, security_hdd, admin_account_id, admin_account_pwd, insert_id, update_id
+        )
+        VALUES (
+        #{assetNumber}, #{kubunCode}, #{purchaseDate}, #{warrantyPeriod}, #{buyTo}, #{purchasePrice}, #{storageLocation},
+        #{statusCode}, #{makerName}, #{modelName}, #{serialNum}, #{interFaceCol}, #{osName}, #{osProductKey},
+        #{cpuProcessor}, #{operatingFrequency}, #{memory}, #{memoryUpgarde}, #{hdd}, #{hddUpgarde}, #{macLan},
+        #{macWireless}, #{other}, #{securityBios}, #{securityHdd}, #{adminAccountId}, #{adminAccountPwd}, #{insertId}, #{updateId}
+        )
+    </insert>
+
+    <delete id="deleteAsset">
+        DELETE FROM rental WHERE asset_seq = #{assetSeq};
+        DELETE FROM accessories WHERE asset_seq = #{assetSeq};
+        DELETE FROM maintenance_history WHERE asset_seq = #{assetSeq};
+        DELETE FROM asset WHERE asset_seq = #{assetSeq};
+    </delete>
+
+
+</mapper>

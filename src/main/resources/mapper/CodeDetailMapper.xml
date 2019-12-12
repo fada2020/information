@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.info.ais.ams.mapper.CodeDetailMapper">
+
+
+
+	<!-- リスト照会 -->
+	<select id="selectCodeDetailList"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT A.* FROM(
+		SELECT
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		,use_flag
+		FROM code_detail
+		ORDER BY
+		code_master_id ASC
+		)A
+		where 1=1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+			AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeDetailId != null and !codeDetailId.equals('')">
+			AND code_detail_id like '%${codeDetailId}%'
+		</if>
+		<if test="codeDetailName != null and !codeDetailName.equals('')">
+			AND code_detail_name like '%${codeDetailName}%'
+		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
+		LIMIT #{length} OFFSET #{start}
+	</select>
+
+
+	<!-- ページング -->
+	<select id="selectCount" resultType="int" parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT COUNT(1)
+		FROM code_detail
+		WHERE 1 = 1
+		<if test="codeMasterId != null and !codeMasterId.equals('')">
+			AND code_master_id like '%${codeMasterId}%'
+		</if>
+		<if test="codeDetailId != null and !codeDetailId.equals('')">
+			AND code_detail_id like '%${codeDetailId}%'
+		</if>
+		<if test="codeDetailName != null and !codeDetailName.equals('')">
+			AND code_detail_name like '%${codeDetailName}%'
+		</if>
+		<if test="useFlag != null and !useFlag.equals('')">
+			AND use_flag =#{useFlag}
+		</if>
+		<if test="item1 != null and !item1.equals('')">
+			AND item1 = #{item1}
+		</if>
+	</select>
+
+	<!-- マスターコードIDで選択 (code_detailテーブルから)-->
+	<select id="selectMasterCodeId"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		code_master_id
+		FROM code_detail
+	</select>
+
+
+	<!-- マスターコードIDで選択 (code_masterテーブルから)-->
+	<select id="selectCode"
+		resultType="jp.co.info.ais.ams.domain.CodeDetail">
+		SELECT
+		d.code_master_id,
+		m.code_master_name
+		FROM code_master m
+		join code_detail d on
+		d.code_master_id=m.code_master_id
+		where d.use_flag=#{useFlag}
+	</select>
+
+	<!--変更Update  -->
+	<update id="updateCodeDetail"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		update code_detail set
+		code_detail_name=#{codeDetailName}
+		,item1=#{item1}
+		,item2=#{item2}
+		,item3=#{item3}
+		,item4=#{item4}
+		,item5=#{item5}
+		where
+		code_master_id=#{codeMasterId} and
+		code_detail_id=#{codeDetailId}
+	</update>
+
+	<!-- 詳細ーコード削除 -->
+	<update id="deleteDetailCode" parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		update code_detail set
+		use_flag=#{useFlag}
+		WHERE code_detail_id = #{codeDetailId} and code_Master_Id=#{codeMasterId}
+	</update>
+
+
+	<!-- 詳細新規登録 -->
+	<insert id="codeDetailInsert"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
+		INSERT INTO code_detail(
+		code_master_id
+		,code_detail_id
+		,code_detail_name
+		,item1
+		,item2
+		,item3
+		,item4
+		,item5
+		)
+		VALUES (
+		#{codeMasterId}
+		, #{codeDetailId}
+		, #{codeDetailName}
+		, #{item1}
+		, #{item2}
+		, #{item3}
+		, #{item4}
+		, #{item5}
+		)
+	</insert>
+
+
+	<!-- Listを確認してINTタイプで送る -->
+	<select id="codeDetailListCheck"
+		parameterType="jp.co.info.ais.ams.domain.CodeDetail" resultType="int">
+		SELECT
+		count(1)
+		FROM code_detail
+		where code_master_id=#{codeMasterId} and code_detail_id=#{codeDetailId}
+	</select>
+</mapper>
