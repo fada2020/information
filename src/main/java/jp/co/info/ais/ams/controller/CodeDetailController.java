@@ -179,7 +179,7 @@ public class CodeDetailController {
 		try {
 			///結果が正しい場合チェックメソッド実行してnumに含める
 			num = codeDetailService.selectCount(codeDetail);
-			logger.debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++"+(num/10));
+
 
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
