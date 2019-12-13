@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.Page;
+import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
 import jp.co.info.ais.ams.service.CodeMasterService;
 
@@ -87,7 +88,9 @@ public class CodeMasterController {
 			condition.setUseFlag(appConstant.USE_CODE);
 			// リスト照会
 			List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
-
+			for(CodeMaster code :CodeList ) {
+				code.setCheckId(codeMasterService.deleteCodeBefore(new CodeDetail(code.getCodeMasterId(), null, null,appConstant.USE_CODE)));
+			}
 			// データをページオブジェクトにセット
 			page.setData(CodeList);
 
@@ -109,7 +112,7 @@ public class CodeMasterController {
 		public int CodeListCheck(@RequestBody CodeMaster masterCode) {
 			int num = 0;
 
-		
+
 
 			logger.debug(masterCode);
 
@@ -156,7 +159,8 @@ public class CodeMasterController {
 	    	try {
 	    		logger.debug(codeMasterId);
 	    		//結果が正しい場合削除メソッド実行してresultに含める
-		    	result = codeMasterService.deleteMasterCode(codeMasterId);
+
+		    	result = codeMasterService.deleteMasterCode(new CodeDetail(codeMasterId, null, null,appConstant.USE_CODE) );
 	    	}catch (Exception e) {
 	    		logger.error(e.getMessage());
 			}

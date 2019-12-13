@@ -29,7 +29,7 @@ public class CodeDetail {
 	private int start;
 	private String codeMasterIdOld;
 	private String codeDetailIdOld;
-	
+	private int checkId;
 
 	public CodeDetail() {}
 
@@ -40,5 +40,5 @@ public class CodeDetail {
 		this.item1 = item1;
 		this.useFlag = useFlag;
 	}
-	
+
 }
