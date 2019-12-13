@@ -20,7 +20,7 @@ public class CodeMaster {
 
 		//使用未使用
 		private String useFlag;
-
+		private int checkId;
 		//長さ
 		int length;
 		int start;

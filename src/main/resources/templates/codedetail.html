@@ -77,19 +77,19 @@
 												<div class="col-md-4">
 													<span class=" col-md-6"for="search_master_id" style="font-size: 16px;">マスターコード</span>
 													<div class="col-md-6 ">
-														<input type="text" id="search_master_id" placeholder="マスター"class="form-control">
+														<input type="text" id="search_master_id" placeholder="マスター"class="form-control" maxlength="20">
 													</div>
 												</div>
 												<div class="col-md-4">
 													<span class=" col-md-6"for="search_detail_id" style="font-size: 16px;">詳細コードID</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_id" placeholder="詳細ID"class="form-control">
+														<input type="text" id="search_detail_id" placeholder="詳細ID"class="form-control"maxlength="20">
 													</div>
 												</div>
 												<div class="col-md-4">
 													<span class="col-md-6"for="search_detail_name" style="font-size: 16px;">詳細コード名</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_name" placeholder="詳細名"class="form-control ">
+														<input type="text" id="search_detail_name" placeholder="詳細名"class="form-control "maxlength="20">
 													</div>
 												</div>
 											</div>
@@ -486,10 +486,15 @@
 											targets : 8,
 											data : null,
 											render : function(data, type, row, meta) {
-												return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
-												'"><button type="button" class="btn btn-danger deleteBtn"' +
-												'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '">削除</button>';
-
+												if(row.checkId!=0){
+													return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
+													'"><button type="button" class="btn btn-danger deleteBtn"' +
+													'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '"title="IT資産で使用中なので削除できません" disabled>削除</button>';
+												}else{
+													return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
+													'"><button type="button" class="btn btn-danger deleteBtn"' +
+													'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '">削除</button>';
+												}
 										    }
 									    }
 								 ]
@@ -529,7 +534,11 @@
 							contentType : 'application/JSON',
 							data :  $('#codeMasterId').val()
 						}).success(function(result) {
-
+							var selecctedItem = $('#codeMasterId option:selected').val();
+							if(selecctedItem=="002"){
+							$('#item3').val('0');
+							$('#item3').attr('readonly', true);
+							}
 							if(result<9){
 								$('#codeDetailId').val("0"+(result+1));
 							}else{
@@ -564,16 +573,22 @@
 					});
 				}
 			}
-function update(button) {
+			function update(button) {
 			<!--変更ボタンを押すと修正機能実行-->
 
  				var selectTr = $(button).closest("tr");
- 				$('#codeMasterId_update').val(selectTr.find('td').eq(0).text());
+ 				var codeMasterIn = selectTr.find('td').eq(0).text();
+				$('#codeMasterId_update').val(selectTr.find('td').eq(0).text());
  				$('#codeDetailId_update').val(selectTr.find('td').eq(1).text());
 				$('#codeDetailName_update').val(selectTr.find('td').eq(2).text());
 				$('#item1_update').val(selectTr.find('td').eq(3).text().replace("-",""));
 				$('#item2_update').val(selectTr.find('td').eq(4).text().replace("-",""));
 				$('#item3_update').val(selectTr.find('td').eq(5).text().replace("-",""));
+				if(codeMasterIn=="002"){
+					$('#item3_update').attr('readonly', true);
+ 				}else{
+ 					$('#item3_update').attr('readonly', false);
+ 				}
 				$('#item4_update').val(selectTr.find('td').eq(6).text().replace("-",""));
 				$('#item5_update').val(selectTr.find('td').eq(7).text().replace("-",""));
 				$('#modalCodeDetail_update').modal();
@@ -597,9 +612,9 @@ function update(button) {
 						alert("アイテム２は三桁以下の文字を入力してください");
 						return false;
 					}
-					if(!RegExp.test($('#item3_update').val())|$('#item3_update').val().length>1){
-						$('#item3').val('0');
-
+					if($('#item1_update').val().length!=2){
+						alert("アイテム１を「HW：01,SW：02」を入力してください");
+						return false;
 					}
 				}
 				form.validate({
@@ -698,10 +713,11 @@ function update(button) {
 						alert("アイテム２は三桁以下の文字を入力してください");
 						return false;
 					}
-					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){
-						$('#item3').val('0');
 
-					}
+
+
+
+
 				}
 
 				var form = $('#antoform');

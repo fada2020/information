@@ -79,7 +79,9 @@ public class CodeDetailController {
 						condition.setUseFlag(appconstant.USE_CODE);
 			// リスト照会
 			List<CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);
-
+			for(CodeDetail code :CodeDetailList ) {
+				code.setCheckId(codeDetailService.deleteBefore(code));
+			}
 			page.setData(CodeDetailList);
 
 			int totalCount = codeDetailService.selectCount(condition);

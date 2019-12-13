@@ -88,27 +88,36 @@ public class CodeMasterService {
 		 return codeMasterMapper.updateCodeMaster(masterCode);
 
 	}
+
+	public int deleteCodeBefore(CodeDetail codeDetail) {
+		int result=0;
+
+		try {
+
+			result=codeDetailMapper.selectCount(codeDetail);
+
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		return result;
+	}
 	/**
 	 *マスターコード削除
 	 * @param codeMasterId
 	 * @return int codeMasterId
 	 */
-	public int deleteMasterCode(String codeMasterId) {
+	public int deleteMasterCode(CodeDetail codeDetail) {
 		int result=0;
 
 		try {
 
-			CodeDetail codeDetail = new CodeDetail();
-			codeDetail.setCodeMasterId(codeMasterId);
-			codeDetail.setUseFlag(AppConstant.USE_CODE);
-			
-		result=codeDetailMapper.selectCount(codeDetail);
+			result=deleteCodeBefore(codeDetail);
 
-		if(result==0) {
-			CodeMaster codeMaster = new CodeMaster();
-			codeMaster.setCodeMasterId(codeMasterId);
-			codeMaster.setUseFlag(AppConstant.UNUSE_CODE);
-		codeMasterMapper.deleteMasterCode(codeMaster);
+			if(result==0) {
+				CodeMaster codeMaster = new CodeMaster();
+				codeMaster.setCodeMasterId(codeDetail.getCodeMasterId());
+				codeMaster.setUseFlag(AppConstant.UNUSE_CODE);
+			codeMasterMapper.deleteMasterCode(codeMaster);
 		}
 
 		}catch(Exception e) {
