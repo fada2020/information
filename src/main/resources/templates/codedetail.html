@@ -489,7 +489,7 @@
 												if(row.checkId!=0){
 													return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
 													'"><button type="button" class="btn btn-danger deleteBtn"' +
-													'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '"title="IT資産で使っています" disabled>削除</button>';
+													'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '"title="IT資産で使用中なので削除できません" disabled>削除</button>';
 												}else{
 													return '<button type="button" onclick="update(this)" class="btn btn-warning">変更</button><input type="hidden" id="useFlag" value="'+row.useFlag+
 													'"><button type="button" class="btn btn-danger deleteBtn"' +
