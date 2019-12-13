@@ -154,7 +154,7 @@ public class CodeDetailService {
 		try {
 		num = codeDetailMapper.codeDetailListCheck(codeMDetail);
 		if (num == 0) {
-			if(codeMDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)&&codeMDetail.getItem1()!=null) {
+			if(codeMDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)&&codeMDetail.getItem1()==null) {
 						codeMDetail.setItem1(appConstant.STATE_STORAGE);
 
 					}

@@ -45,6 +45,9 @@ public class CodeDetailController {
 			codeDetail.setUseFlag(appconstant.USE_CODE);
 			model.addAttribute("masterid",codeDetailService.codeMasterList(codemaster));
 			model.addAttribute("countId",codeDetailService.selectCount(codeDetail));
+			codeDetail.setCodeMasterId(appconstant.MASTER_CLASS);
+			logger.debug(codeDetailService.selectCodeDetailList(codeDetail));
+			model.addAttribute("HWSWCode",codeDetailService.selectCodeDetailList(codeDetail));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

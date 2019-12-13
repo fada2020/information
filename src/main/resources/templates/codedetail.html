@@ -368,7 +368,11 @@
 		/*<![CDATA[*/
   		$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
-
+     	var HWSWCodeMap = new Map();
+		var HWSWCode = /*[[${HWSWCode}]]*/;
+		HWSWCode.forEach(function( value ) {
+			HWSWCodeMap.set(value.codeDetailId,value.codeMasterId );
+    	});
     	function resetButton(){
 
     	      $('#antoform')[0].reset();
@@ -701,6 +705,13 @@
 
 
 				if(selecctedItem=='002'){
+
+
+		            if(HWSWCodeMap.get($('#item1').val())!="003"){
+		                 alert("マスターコード「003」の詳細コードを入力してください");
+		                 return false;
+		            }
+
 					if(!RegExp.test($('#item1').val())){
 						alert("アイテム１を「HW：01,SW：02」を入力してください");
 						return false;
@@ -733,7 +744,7 @@
 
 							},
 							item2 : {
-								maxlength : 10
+								maxlength : 15
 
 							},
 							item3 : {
