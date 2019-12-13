@@ -74,18 +74,18 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
+          <!--START ページ名 -->
             <div class="page-title">
               <div class="title_left">
                 <h3><i class="fa fa-laptop"></i> IT資産管理</h3>
               </div>
             </div>
-
+          <!-- END ページ名 -->
             <div class="clearfix"></div>
-
             <div class="row">
               <div class="col">
               	<div class="col-md-12"><br></div>
-              	<!-- 検索条件 -->
+              <!--START 検索条件  -->
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">管理番号</span>
                 </div>
@@ -144,17 +144,17 @@
 						</div>
 					</fieldset>
                 </div>
-                <!-- /検索条件 -->
-
+            <!-- END 検索条件 -->
+			<!--START 登録ボタン -->
                 <div class="col-md-3">
                     <button type="button" class="btn btn-success pull-right" id="insertBtn">
                     	<i class="fa fa-pencil-square" aria-hidden="true"></i> 資産登録
                     </button>
                 </div>
+			<!-- END 登録ボタン -->
                 <div class="x_panel">
                   <div class="x_content">
-
-					<!-- 資産情報 dataTable -->
+					<!-- START 資産情報リスト -->
 					<div class="table">
                     <table class="table table-bordered table-hover jambo_table dataTable table-lg text-center" style="width:100%;" id="table1">
                       <thead class="thead-light">
@@ -173,9 +173,8 @@
                       </tbody>
                     </table>
 					</div>
-					<!-- /資産情報 dataTable -->
-
-					<!-- 照会 modal -->
+					<!-- END 資産情報リスト -->
+					<!-- START 照会モーダル -->
 					<div class="modal" id="modal3d" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true" data-backdrop="static">
 					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
 					    <div class="modal-content">
@@ -444,10 +443,9 @@
 					    </div>
 					  </div>
 					</div>
-					<!-- /照会 modal -->
+					<!-- END 照会モーダル -->
 
-					<!-- 登録 modal -->
-
+					<!-- START 登録モーダル -->
 					<div class="modal" id="insertModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true" data-backdrop="static">
 					  <div class="modal-dialog modal-xl" style="width:70%;" role="document">
 					    <div class="modal-content">
@@ -733,17 +731,10 @@
 					    </div>
 					  </div>
 					</div>
-					<!-- /登録 modal -->
-
-					<!-- /資産情報変更 modal -->
-
-					<div class="modal fade" id="assetUpdateModal" >
-
-
-					</div>
-
-					<!-- /資産情報変更 modal -->
-
+					<!-- END 登録モーダル -->
+					<!-- START 資産情報変更 modal -->
+					<div class="modal fade" id="assetUpdateModal" ></div>
+					<!-- END 資産情報変更 modal -->
                   </div>
                 </div>
               </div>
@@ -813,6 +804,7 @@
     	productCode.forEach(function( value ) {
     		productCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
+    	// /区分コードMap
 
     	// 状態コードMap
     	var stateCodeMap = new Map();
@@ -820,10 +812,12 @@
     	stateCode.forEach(function( value ) {
     		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
     	});
+    	// /状態コードMap
 
     	// Jquery validator メッセージセッティング
     	$.validator.messages.number = '有効な数字を入力';
     	$.validator.messages.maxlength = '{0} 文字以下を入力';
+    	// /Jquery validator メッセージセッティング
 
     	// オンロード
         $(function(){
@@ -1295,9 +1289,8 @@
 
             });
 
-        })
-
-
+        });
+     // /オンロード
 /*]]>*/
     </script>
 
