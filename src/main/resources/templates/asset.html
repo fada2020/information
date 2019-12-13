@@ -946,7 +946,7 @@
                         var html = '<button class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" onClick="assetUpdateF('+ row.assetSeq +')">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
-                        		html += '" disabled title="貸与の項目は履歴を削除できません。">削除</button>';
+                        		html += '" disabled title="貸与の項目は削除できません。">削除</button>';
                         	} else {
                         		html += '">削除</button>';
                         	}
