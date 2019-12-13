@@ -307,9 +307,7 @@
 
     <select id="selectAssetNumber" resultType="String">
 		SELECT
-
-		CONCAT(#{companyCode}, '-', LPAD(item2, 3 , 'aaa'),'-', LPAD(item3, 3 , '0') )
-
+			CONCAT(#{companyCode}, '-', IFNULL(item2, 'AAA'),'-', LPAD(item3, 3 , '0') )
 		FROM code_detail
 		WHERE code_master_id = '002'
 		AND code_detail_id = #{kubunCode}

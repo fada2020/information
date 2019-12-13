@@ -589,11 +589,15 @@ function update(button) {
 						alert("アイテム１を「HW：01,SW：02」を入力してください");
 						return false;
 					}
-					if($('#item2').val()==''|$('#item2').val().length>3){
+					if($('#item2_update').val()==''){
 						alert("アイテム２を入れてください");
 						return false;
 					}
-					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){
+					if($('#item2_update').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
+						return false;
+					}
+					if(!RegExp.test($('#item3_update').val())|$('#item3_update').val().length>1){
 						$('#item3').val('0');
 
 					}
@@ -686,8 +690,12 @@ function update(button) {
 						alert("アイテム１を「HW：01,SW：02」を入力してください");
 						return false;
 					}
-					if($('#item2').val()==''|$('#item2').val().length>3){
+					if($('#item2').val()==''){
 						alert("アイテム２を入れてください");
+						return false;
+					}
+					if($('#item2').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
 						return false;
 					}
 					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){

@@ -359,7 +359,7 @@
 
 												<tr id="accupdate1"
 													th:each="accessories, accnum : ${asset.accessoriesList}">
-													<input type="hidden" th:id="${#ids.seq('am_acckey')}"
+												<input type="hidden" th:id="${#ids.seq('am_acckey')}"
 														th:value="${accessories.accessoriesSeq}">
 													<td th:id="${#ids.seq('am_accessoriesSeq')}"
 														th:text="${accnum.index+1}"></td>
