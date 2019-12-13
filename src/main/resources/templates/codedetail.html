@@ -52,22 +52,17 @@
 			<!-- sidebar -->
 			<div th:insert="/fragments/sidebar :: sidebar" th:remove="tag"></div>
 			<!-- sidebar -->
-
 			<!-- top navigation -->
 			<div th:insert="/fragments/top_nav :: top_nav" th:remove="tag"></div>
 			<!-- /top navigation -->
-
 			<!-- page content -->
-
 			<!-- page content -->
 			<!-- ここからコンテンツ作成 -->
 			<div class="right_col" role="main">
 				<div>
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								<i class="fa fa-cogs"></i> 詳細コードリスト
-							</h3>
+							<h3><i class="fa fa-cogs"></i> 詳細コード管理</h3>
 						</div>
 					</div>
 					<!-- /.page-title -->
@@ -77,61 +72,40 @@
 							<div class="x_panel">
 								<div>
 									<div class="well" style="overflow: auto">
-
 										<div class="row">
 											<div class="col-md-10">
 												<div class="col-md-4">
-													<span class=" col-md-6"
-														for="search_master_id" style="font-size: 16px;">
-														マスターコード</span>
+													<span class=" col-md-6"for="search_master_id" style="font-size: 16px;">マスターコード</span>
 													<div class="col-md-6 ">
-														<input type="text" id="search_master_id" placeholder="マスター"
-															class="form-control">
+														<input type="text" id="search_master_id" placeholder="マスター"class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<span class=" col-md-6"
-														for="search_detail_id" style="font-size: 16px;">
-														詳細コードID</span>
+													<span class=" col-md-6"for="search_detail_id" style="font-size: 16px;">詳細コードID</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_id" placeholder="詳細ID"
-															class="form-control">
+														<input type="text" id="search_detail_id" placeholder="詳細ID"class="form-control">
 													</div>
 												</div>
 												<div class="col-md-4">
-													<span class="col-md-6"
-														for="search_detail_name" style="font-size: 16px;">
-														詳細コード名</span>
+													<span class="col-md-6"for="search_detail_name" style="font-size: 16px;">詳細コード名</span>
 													<div class="col-md-6">
-														<input type="text" id="search_detail_name" placeholder="詳細名"
-															class="form-control ">
+														<input type="text" id="search_detail_name" placeholder="詳細名"class="form-control ">
 													</div>
 												</div>
-
 											</div>
 											<div class="col-md-2">
 												<!-- 登録 ボタン -->
-												<button type="button" class="btn btn-success pull-right"
-													data-toggle="modal" data-target="#modalCodedetail">
-													<i class="fa fa-pencil-square" aria-hidden="true"></i> 登録
-												</button>
+												<button type="button" class="btn btn-success pull-right"data-toggle="modal" data-target="#modalCodedetail"><i class="fa fa-pencil-square" aria-hidden="true"></i> 登録</button>
 											</div>
 										</div>
-
 										<!-- /.well -->
-
 									</div>
 									<!-- /.x_title -->
-
 									<div class="x_content">
 										<div>
-											<table id="datatable1"
-												class="table table-bordered jambo_table bulk_action text-center"
-												style="width: 100%">
+											<table id="datatable1"class="table table-bordered jambo_table bulk_action text-center"style="width: 100%">
 												<thead>
 													<tr class="headings">
-														<!--  <th class="column-title txt_center">No.</th> -->
-
 														<th class="column-title txt_center">マスターコード</th>
 														<th class="column-title txt_center">詳細コードID</th>
 														<th class="column-title txt_center">詳細コード名</th>
@@ -140,19 +114,14 @@
 														<th class="column-title txt_center">アイテム3</th>
 														<th class="column-title txt_center">アイテム4</th>
 														<th class="column-title txt_center">アイテム5</th>
-
 														<th class="column-title txt_center"></th>
 													</tr>
 												</thead>
 												<!-- List 出力 -->
-
 												<tbody>
 												</tbody>
-
 												<!--/. List 出力 -->
-
 											</table>
-
 										</div>
 										<!-- /.table-responsive -->
 									</div>
@@ -162,7 +131,6 @@
 							</div>
 						</div>
 						<!-- /.row -->
-
 					</div>
 				</div>
 				<!-- /.right_co -->
@@ -173,53 +141,38 @@
 				<!-- /footer content -->
 			</div>
 		</div>
-
 		<!-- Modal Part コード登録 -->
 		<div id="modalCodedetail" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h3 class="modal-title">
-							<i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード登録
-						</h3>
+						<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 詳細コード登録</h3>
 					</div>
 					<div class="modal-body">
 						<div style="padding: 5px 20px;">
-							<form id="antoform" class="form-horizontal calender" role="form"
-								method="GET" name="frm">
+							<form id="antoform" class="form-horizontal calender" role="form"method="GET" name="frm">
 								<div class="form-group">
 									<!--  -->
-									<label class="col-sm-3 control-label"> マスターコード<span
-										style="color: red; font-size: 18px;">*</span></label>
-									<div class="col-md-9  "
-										th:if="${masterid} != null">
-										<select class="form-control" id="codeMasterId"
-											name="codeMasterId" onchange="">
+									<label class="col-sm-3 control-label"> マスターコード<span style="color: red; font-size: 18px;">*</span></label>
+									<div class="col-md-9 "th:if="${masterid} != null">
+										<select class="form-control" id="codeMasterId"name="codeMasterId" onchange="">
 											<option value="">選択</option>
-											<option th:each="CodeMaster : ${masterid}"
-											th:value="${CodeMaster.codeMasterId}"
-											th:text="${CodeMaster.codeMasterName}"></option>
+											<option th:each="CodeMaster : ${masterid}"th:value="${CodeMaster.codeMasterId}"th:text="${CodeMaster.codeMasterName}"></option>
 										</select>
-
 									</div>
 								</div>
 								<div class="clearfix"></div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">詳細コードID<span
-										style="color: red; font-size: 18px;">*</span></label>
+									<label class="col-sm-3 control-label">詳細コードID<span style="color: red; font-size: 18px;">*</span></label>
 									<div class="col-sm-9">
 										<fieldset>
-											<input type="text" class="form-control form-control-sm"
-												id="codeDetailId" name="codeDetailId" placeholder="コードID"
-											readonly/>
+											<input type="text" class="form-control form-control-sm" id="codeDetailId" name="codeDetailId" placeholder="コードID" readonly/>
 										</fieldset>
 									</div>
 								</div>
-
 								<div class="clearfix"></div>
 								<div class="form-group">
 								<label class="col-sm-3 control-label">詳細コード名<span style="color: red; font-size: 18px;">*</span></label>
@@ -252,8 +205,7 @@
 									<label class="col-sm-3 control-label" style="">アイテム3</label>
 									<div class="col-sm-9">
 										<fieldset>
-											<input type="text" class="form-control form-control-sm"
-												id="item3" name="item3" />
+										<input type="text" class="form-control form-control-sm" id="item3" name="item3" />
 										</fieldset>
 									</div>
 								</div>
@@ -262,8 +214,7 @@
 									<label class="col-sm-3 control-label" style="">アイテム4</label>
 									<div class="col-sm-9">
 										<fieldset>
-											<input type="text" class="form-control form-control-sm"
-												id="item4" name="item4" />
+											<input type="text" class="form-control form-control-sm" id="item4" name="item4" />
 										</fieldset>
 									</div>
 								</div>
@@ -272,35 +223,20 @@
 									<label class="col-sm-3 control-label" style="">アイテム5</label>
 									<div class="col-sm-9">
 										<fieldset>
-											<input type="text" class="form-control form-control-sm"
-												id="item5" name="item5" />
+											<input type="text" class="form-control form-control-sm" id="item5" name="item5" />
 										</fieldset>
 									</div>
 								</div>
 								<div class="clearfix"></div>
-
-
 							</form>
 							<div class="clearfix"></div>
 						</div>
-
-
 						<div class="modal-footer">
-
-							<button type="button" class="btn btn-success" onclick="codeInsert();">
-								 登録
-							</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
-								戻る
-							</button>
+							<button type="button" class="btn btn-success" onclick="codeInsert();">登録</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="resetButton();  return false;">戻る</button>
 						</div>
-
 					</div>
-
-
 				</div>
-
-
 			</div>
 		</div>
 	</div>
@@ -355,7 +291,8 @@
 								<label class="col-sm-3 control-label" style="">アイテム2</label>
 								<div class="col-sm-9">
 									<fieldset>
-										<input type="text" class="form-control form-control-sm"id="item2_update" name="item2_update" />
+									<input type="text" class="form-control form-control-sm"id="item2_update" name="item2_update"/>
+
 									</fieldset>
 								</div>
 							</div>
@@ -387,13 +324,10 @@
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							<div class="form-group">
-							<input type="hidden" id="codeMasterId_hidden" name="codeMasterId_hidden">
-							<input type="hidden" id="codeDetailId_hidden" name="codeDetailId_hidden">
-								</div>
+
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary btn-warning"onclick="codeUpdate();">変更</button>
-								<button type="button" class="btn btn-secondary"data-dismiss="modal">戻る</button>
+								<button type="button" class="btn btn-primary btn-warning" onclick="codeUpdate();">変更</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
 							</div>
 						</form>
 					</div>
@@ -418,8 +352,6 @@
 	<!-- DataTable -->
 	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-
-
 	<!-- FastClick -->
 	<script src="../vendors/fastclick/lib/fastclick.js"></script>
 	<!-- NProgress -->
@@ -428,18 +360,19 @@
 	<script src="../vendors/iCheck/icheck.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="../build/js/custom.min.js"></script>
-
 	<!-- jquery-validation-1.19.1 -->
 	<script
 		src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
-
-
 	<!-- page script -->
-
 	<script th:inline="javascript">
 		/*<![CDATA[*/
   		$.validator.messages.number = '有効な数字を入力';
-    		$.validator.messages.maxlength = '{0} 文字以下を入力';
+    	$.validator.messages.maxlength = '{0} 文字以下を入力';
+
+    	function resetButton(){
+
+    	      $('#antoform')[0].reset();
+    	}
 
 		$(function() {
 			<!--datatableの設定を変更-->
@@ -557,9 +490,9 @@
 												'"><button type="button" class="btn btn-danger deleteBtn"' +
 												'onclick="deleteButton(this)" id="' + row.codeMasterId+","+row.codeDetailId + '">削除</button>';
 
-										}
-										}
-										 ]
+										    }
+									    }
+								 ]
 							});
 
 
@@ -586,6 +519,9 @@
             } );
 
 		    $('#codeMasterId').on( 'change', function () {
+		    	 $('#antoform').find('label').detach(".error");
+				 $('#antoform').find('input').val('');
+
 		    	$.ajax(
 						/*[[@{/codedetail/checkNumber}]]*/'codedetail/checkNumber', {
 							type : "POST",
@@ -593,7 +529,8 @@
 							contentType : 'application/JSON',
 							data :  $('#codeMasterId').val()
 						}).success(function(result) {
-							if(result<10){
+
+							if(result<9){
 								$('#codeDetailId').val("0"+(result+1));
 							}else{
 							$('#codeDetailId').val(result+1);}
@@ -604,8 +541,6 @@
 			});
 
 		});
-
-
 		 function deleteButton(button) {
 				<!--削除機能-->
 				if (!confirm('本当に削除しますか？')) {
@@ -641,15 +576,32 @@ function update(button) {
 				$('#item3_update').val(selectTr.find('td').eq(5).text().replace("-",""));
 				$('#item4_update').val(selectTr.find('td').eq(6).text().replace("-",""));
 				$('#item5_update').val(selectTr.find('td').eq(7).text().replace("-",""));
-				$('#codeMasterId_hidden').val(selectTr.find('td').eq(0).text());
- 				$('#codeDetailId_hidden').val(selectTr.find('td').eq(1).text());
-
 				$('#modalCodeDetail_update').modal();
 			}
 
 			function codeUpdate() {
 				var form = $('#updateform');
+				var selecctedItem = $('#codeMasterId_update').val();
+				var RegExp = /^[0-9]/gi;
 
+				if(selecctedItem=='002'){
+					if(!RegExp.test($('#item1_update').val())|$('#item1_update').val()==''){
+						alert("アイテム１を「HW：01,SW：02」を入力してください");
+						return false;
+					}
+					if($('#item2_update').val()==''){
+						alert("アイテム２を入れてください");
+						return false;
+					}
+					if($('#item2_update').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
+						return false;
+					}
+					if(!RegExp.test($('#item3_update').val())|$('#item3_update').val().length>1){
+						$('#item3').val('0');
+
+					}
+				}
 				form.validate({
 					<!--有効性チェック -->
 					rules : {
@@ -683,9 +635,7 @@ function update(button) {
 					},
 					messages : {
 						codeMasterId_update : {
-							required : "コードを選択してください",
-
-
+							required : "コードを選択してください"
 						},
 						codeDetailId_update : {
 							required : "コードを入力してください",
@@ -694,11 +644,9 @@ function update(button) {
 
 						},
 						codeMasterName_update : {
-							required : "コード名称を入力してください"
+							required : "コード名を入力してください"
 						}
-
 					}
-
 				});
 				if (form.valid()) {
 
@@ -711,6 +659,7 @@ function update(button) {
 					detailCode.item3 = $('#item3_update').val();
 					detailCode.item4 = $('#item4_update').val();
 					detailCode.item5 = $('#item5_update').val();
+
 					$.ajax({
 						"url" : "/codedetail/updateCodeDetail",
 						"type" : "post",
@@ -723,6 +672,7 @@ function update(button) {
 								location.reload(true);
 							} else {
 								<!--更新失敗 -->
+
 								alert('更新失敗');
 							}
 						}
@@ -731,53 +681,63 @@ function update(button) {
 			}
 
 			function codeInsert() {
+				var selecctedItem = $('#codeMasterId option:selected').val();
+				var RegExp = /^[0-9]/gi;
+
+
+				if(selecctedItem=='002'){
+					if(!RegExp.test($('#item1').val())){
+						alert("アイテム１を「HW：01,SW：02」を入力してください");
+						return false;
+					}
+					if($('#item2').val()==''){
+						alert("アイテム２を入れてください");
+						return false;
+					}
+					if($('#item2').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
+						return false;
+					}
+					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){
+						$('#item3').val('0');
+
+					}
+				}
+
 				var form = $('#antoform');
 
-				<!--入力有効性チェック -->
-				form.validate({
-					rules : {
-						codeMasterId : {
-							required : true
+					form.validate({
+						rules : {
+							codeDetailName : {
+								maxlength : 10,
+								required : true
+							},
+							item1 : {
+								maxlength : 15
+
+							},
+							item2 : {
+								maxlength : 10
+
+							},
+							item3 : {
+								maxlength : 15
+
+							},
+							item4 : {
+								maxlength : 15
+							},
+							item5 : {
+								maxlength : 15
+							}
 						},
-						codeDetailId : {
-							required : true,
-							rangelength : [2, 2 ],
-							number : true
-						},
-						codeDetailName : {
-							required : true
-						},
-						item1 : {
-							maxlength : 15
-						},
-						item2 : {
-							maxlength : 15
-						},
-						item3 : {
-							maxlength : 15
-						},
-						item4 : {
-							maxlength : 15
-						},
-						item5 : {
-							maxlength : 15
+						messages : {
+							codeDetailName : {
+								required : "詳細コード名を入力してください"
+							}
 						}
+					});
 
-					},
-					messages : {
-						codeMasterId : {
-							required : "マスターコードを選択してください",
-
-						},
-						codeDetailId : {
-							required : "詳細コードを入力してください",
-
-						},
-						codeDetailName : {
-							required : "詳細コード名称を入力してください"
-						}
-					}
-				});
 				<!--マスターコードとマスターコードネームの有効性チェック -->
 				if (form.valid()) {
 					var detailCode = new Object();
@@ -789,8 +749,6 @@ function update(button) {
 					detailCode.item3 = $('#item3').val();
 					detailCode.item4 = $('#item4').val();
 					detailCode.item5 = $('#item5').val();
-
-
 					$.ajax({
 						"url" : "/codedetail/codeListCheck",
 						"type" : "post",
@@ -800,7 +758,6 @@ function update(button) {
 						"success" : function(data) {
 							if (data > 0) {
 								alert("すでにあります");
-
 							} else {
 						location.reload(true);
 							}
@@ -809,7 +766,6 @@ function update(button) {
 					});
 				}
 			}
-
 		/*]]>*/
 	</script>
 
