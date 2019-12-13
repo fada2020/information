@@ -529,7 +529,7 @@
 							contentType : 'application/JSON',
 							data :  $('#codeMasterId').val()
 						}).success(function(result) {
-					
+
 							if(result<9){
 								$('#codeDetailId').val("0"+(result+1));
 							}else{
@@ -589,13 +589,17 @@ function update(button) {
 						alert("アイテム１を「HW：01,SW：02」を入力してください");
 						return false;
 					}
-					if($('#item2').val()==''|$('#item2').val().length>3){
+					if($('#item2_update').val()==''){
 						alert("アイテム２を入れてください");
 						return false;
 					}
-					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){
+					if($('#item2_update').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
+						return false;
+					}
+					if(!RegExp.test($('#item3_update').val())|$('#item3_update').val().length>1){
 						$('#item3').val('0');
-						
+
 					}
 				}
 				form.validate({
@@ -668,7 +672,7 @@ function update(button) {
 								location.reload(true);
 							} else {
 								<!--更新失敗 -->
-								
+
 								alert('更新失敗');
 							}
 						}
@@ -679,25 +683,29 @@ function update(button) {
 			function codeInsert() {
 				var selecctedItem = $('#codeMasterId option:selected').val();
 				var RegExp = /^[0-9]/gi;
-	
-				
+
+
 				if(selecctedItem=='002'){
 					if(!RegExp.test($('#item1').val())){
 						alert("アイテム１を「HW：01,SW：02」を入力してください");
 						return false;
 					}
-					if($('#item2').val()==''|$('#item2').val().length>3){
+					if($('#item2').val()==''){
 						alert("アイテム２を入れてください");
+						return false;
+					}
+					if($('#item2').val().length>3){
+						alert("アイテム２は三桁以下の文字を入力してください");
 						return false;
 					}
 					if(!RegExp.test($('#item3').val())|$('#item3').val().length>1){
 						$('#item3').val('0');
-						
+
 					}
 				}
-	
+
 				var form = $('#antoform');
-			
+
 					form.validate({
 						rules : {
 							codeDetailName : {
@@ -706,7 +714,7 @@ function update(button) {
 							},
 							item1 : {
 								maxlength : 15
-				
+
 							},
 							item2 : {
 								maxlength : 10
