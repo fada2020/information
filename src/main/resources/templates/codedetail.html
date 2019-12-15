@@ -530,7 +530,7 @@
 		    $('#codeMasterId').on( 'change', function () {
 		    	 $('#antoform').find('label').detach(".error");
 				 $('#antoform').find('input').val('');
-
+					$('#item3').attr('readonly', false);
 		    	$.ajax(
 						/*[[@{/codedetail/checkNumber}]]*/'codedetail/checkNumber', {
 							type : "POST",

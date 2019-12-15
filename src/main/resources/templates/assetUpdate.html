@@ -1,23 +1,21 @@
 <div class="mmodal">
 	<div class="modal-dialog modal-xl" style="width: 70%;" role="document">
 		<div class="modal-content" role="main">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true" ></i> IT資産情報変更</h3>
-				</div>
-
-
-
-		<div class="row" style="width: 100%; margin-left: 0%">
-			<div class="modal-body">
-					<!-- 資産情報変更フォーム -->
-				<div class="x_panel">
-					<form action="/asset/update" id="am_updateForm" method="POST"
-						role="form" class="form-horizontal">
+		<!--START modal-header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true" ></i> IT資産情報変更</h3>
+			</div>
+		<!--END modal-header -->
+			<div class="row" style="width: 100%; margin-left: 0%">
+			<!-- START modal-body -->
+				<div class="modal-body">
+					<div class="x_panel">
+					<!-- START資産情報変更フォーム -->
+						<form action="/asset/update" id="am_updateForm" method="POST"
+							role="form" class="form-horizontal">
 							<div class="x_content" style="display: block;">
 								<div class="row well">
 									<div class="col-md-6">
@@ -83,7 +81,7 @@
 													th:value="${asset.buyTo}">
 											</div>
 											<div class="col-md-2">
-												<span>購入金額</span>
+												<span>購入金額(円)</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control numVal"
@@ -94,14 +92,14 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="col-md-2">
-												<span>保管位置</span>
+												<span>保管場所</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control"
 													name="storageLocation" th:value="${asset.storageLocation}">
 											</div>
 											<div class="col-md-2">
-												<span>保証期間</span>
+												<span>保証期間(年)</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control numVal"
@@ -117,14 +115,14 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="col-md-2">
-												<span>Maker</span>
+												<span>メーカー</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control" name="makerName"
 													th:value="${asset.makerName}">
 											</div>
 											<div class="col-md-2">
-												<span>Model</span>
+												<span>モデル</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control" name="modelName"
@@ -206,7 +204,7 @@
 													th:value="${asset.cpuProcessor}">
 											</div>
 											<div class="col-md-2">
-												<span>動作周波数</span>
+												<span>動作周波数(㎓)</span>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control numVal"
@@ -327,171 +325,180 @@
 									</div>
 								</div>
 							</div>
-					</form>
-					<!-- /資産情報変更フォーム -->
-
-					<!-- 付属品テーブル -->
-					<div class="x_content" style="display: block;">
-						<div class="col-md-12">
-							<div class="x_title">
-								<h2>付属品</h2>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
-									<form id="accForm">
-										<table
-											class="table table-striped jambo_table bulk_action text-center"
-											id="am_table1">
-											<thead>
-												<tr class="headings">
-													<th class="col-md-1">No</th>
-													<th class="col-md-2">品名</th>
-													<th class="col-md-2">仕樣</th>
-													<th class="col-md-1">数量</th>
-													<th class="col-md-6">備考</th>
-													<th colspan="2"></th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- 付属品10個項目 -->
-												<!-- 既存 付属品 -->
-
-												<tr id="accupdate1"
-													th:each="accessories, accnum : ${asset.accessoriesList}">
-												<input type="hidden" th:id="${#ids.seq('am_acckey')}"
-														th:value="${accessories.accessoriesSeq}">
-													<td th:id="${#ids.seq('am_accessoriesSeq')}"
-														th:text="${accnum.index+1}"></td>
-													<td><input type="text" class="form-control"
-														maxlength="25" th:name="${#ids.seq('accName')}"
-														th:id="${#ids.seq('am_itemName')}"
-														th:value="${accessories.itemName}"></td>
-													<td><input type="text" maxlength="25"
-														th:name="${#ids.seq('accSpec')}" class="form-control"
-														th:id="${#ids.seq('am_itemSpec')}"
-														th:value="${accessories.itemSpec}"></td>
-													<td><input type="text" maxlength="11"
-														th:name="${#ids.seq('accQuantity')}" class="form-control"
-														th:id="${#ids.seq('am_itemQuantity')}"
-														th:value="${accessories.itemQuantity}"></td>
-													<td><input type="text" maxlength="100"
-														th:name="${#ids.seq('accRemarks')}" class="form-control"
-														th:id="${#ids.seq('am_remarks')}"
-														th:value="${accessories.remarks}"></td>
-												</tr>
-												<!-- 付属品を追加ため空欄 -->
-												<tr id="accupdate2"
-													th:if="${#lists.size(asset.accessoriesList) < 10}"
-													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
-													<td th:id="${#ids.seq('am_accessoriesSeq')}"
-														th:text="${index+#lists.size(asset.accessoriesList)}"></td>
-													<td><input type="text" class="form-control"
-														maxlength="25" th:name="${#ids.seq('accName')}"
-														th:id="${#ids.seq('am_itemName')}"></td>
-													<td><input type="text" maxlength="25"
-														th:name="${#ids.seq('accSpec')}" class="form-control"
-														th:id="${#ids.seq('am_itemSpec')}"></td>
-													<td><input type="text" class="form-control"
-														maxlength="11" th:name="${#ids.seq('accQuantity')}"
-														th:id="${#ids.seq('am_itemQuantity')}"></td>
-													<td><input type="text" maxlength="100"
-														th:name="${#ids.seq('accRemarks')}" class="form-control"
-														th:id="${#ids.seq('am_remarks')}"></td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
+						</form>
+					<!-- END資産情報変更フォーム -->
+						<div class="x_content" style="display: block;">
+							<div class="col-md-12">
+								<div class="x_title">
+									<h2>付属品</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content" style="display: block;">
+									<div
+										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+									<!-- START付属品変更フォーム -->
+										<form id="accForm">
+											<table
+												class="table table-striped jambo_table bulk_action text-center"
+												id="am_table1">
+												<thead>
+													<tr class="headings">
+														<th class="col-md-1">No</th>
+														<th class="col-md-2">品名</th>
+														<th class="col-md-2">仕樣</th>
+														<th class="col-md-1">数量</th>
+														<th class="col-md-6">備考</th>
+														<th colspan="2"></th>
+													</tr>
+												</thead>
+												<tbody>
+												<!-- START付属品10個項目 -->
+													<!-- START既存 付属品 -->
+													<tr id="accupdate1"
+														th:each="accessories, accnum : ${asset.accessoriesList}">
+														<input type="hidden" th:id="${#ids.seq('am_acckey')}"
+															th:value="${accessories.accessoriesSeq}">
+														<td th:id="${#ids.seq('am_accessoriesSeq')}"
+															th:text="${accnum.index+1}"></td>
+														<td><input type="text" class="form-control"
+															maxlength="25" th:name="${#ids.seq('accName')}"
+															th:id="${#ids.seq('am_itemName')}"
+															th:value="${accessories.itemName}"></td>
+														<td><input type="text" maxlength="25"
+															th:name="${#ids.seq('accSpec')}" class="form-control"
+															th:id="${#ids.seq('am_itemSpec')}"
+															th:value="${accessories.itemSpec}"></td>
+														<td><input type="text" maxlength="11"
+															th:name="${#ids.seq('accQuantity')}" class="form-control"
+															th:id="${#ids.seq('am_itemQuantity')}"
+															th:value="${accessories.itemQuantity}"></td>
+														<td><input type="text" maxlength="100"
+															th:name="${#ids.seq('accRemarks')}" class="form-control"
+															th:id="${#ids.seq('am_remarks')}"
+															th:value="${accessories.remarks}"></td>
+													</tr>
+													<!-- END既存 付属品 -->
+													<!-- STATRT付属品を追加ため空欄 -->
+													<tr id="accupdate2"
+														th:if="${#lists.size(asset.accessoriesList) < 10}"
+														th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
+														<td th:id="${#ids.seq('am_accessoriesSeq')}"
+															th:text="${index+#lists.size(asset.accessoriesList)}"></td>
+														<td><input type="text" class="form-control"
+															maxlength="25" th:name="${#ids.seq('accName')}"
+															th:id="${#ids.seq('am_itemName')}"></td>
+														<td><input type="text" maxlength="25"
+															th:name="${#ids.seq('accSpec')}" class="form-control"
+															th:id="${#ids.seq('am_itemSpec')}"></td>
+														<td><input type="text" class="form-control"
+															maxlength="11" th:name="${#ids.seq('accQuantity')}"
+															th:id="${#ids.seq('am_itemQuantity')}"></td>
+														<td><input type="text" maxlength="100"
+															th:name="${#ids.seq('accRemarks')}" class="form-control"
+															th:id="${#ids.seq('am_remarks')}"></td>
+													</tr>
+													<!-- END付属品を追加ため空欄 -->
+												<!-- END付属品10個項目 -->
+												</tbody>
+											</table>
+										</form>
+										<!-- END付属品変更フォーム -->
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- /付属品テーブル -->
+						<!-- END付属品テーブル -->
 
-					<!-- 保守履歴テーブル -->
-					<div class="x_content" style="display: block;">
-						<div class="col-md-12">
-							<div class="x_title">
-								<h2>保守履歴</h2>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content" style="display: block;">
-								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
-									<form id="mhForm">
-										<table class="table table-striped jambo_table bulk_action"
-											id="am_table2">
-											<thead>
-												<tr class="headings">
-													<th class="col-md-1">No</th>
-													<th class="col-md-2">実施日</th>
-													<th class="col-md-5">実施内容</th>
-													<th class="col-md-2">担当</th>
-													<th class="col-md-2">承認</th>
-													<th colspan="2"></th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- 保守履歴10個項目 -->
-												<!-- 既存 保守履歴 -->
-												<tr id="mhupdate1"
-													th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
-													<input type="hidden" th:id="${#ids.seq('am_mhkey')}"
-														th:value="${maintenance.historySeq}">
-													<td th:id="${#ids.seq('am_historySeq')}"
-														th:text="${mhnum.index+1}"></td>
-													<td>
-														<div class="input-group date mhDatepicker">
-															<input type="text" class="form-control" maxlength="10"
-																name="mhDate"
-																th:id="${#ids.seq('am_implementationDate')}"
-																th:value="${maintenance.implementationDate}">
-														</div>
-													</td>
-													<td><input type="text" class="form-control"
-														maxlength="100" name="mhDetail"
-														th:id="${#ids.seq('am_implementationDetail')}"
-														th:value="${maintenance.implementationDetail}"></td>
-													<td><input type="text" maxlength="10" name="mhrepId"
-														class="form-control" th:id="${#ids.seq('am_repId')}"
-														th:value="${maintenance.repId}"></td>
-													<td><input type="text" maxlength="10"
-														name="mhapproverId" class="form-control"
-														th:id="${#ids.seq('am_approverId')}"
-														th:value="${maintenance.approverId}"></td>
-												</tr>
-												<!-- 保守履歴を追加ため空欄 -->
-												<tr id="mhupdate2"
-													th:if="${#lists.size(asset.maintenanceHistoryList) < 10}"
-													th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
-													<td th:id="${#ids.seq('am_historySeq')}"
-														th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
-													<td>
-														<div class="input-group date mhDatepicker">
-															<input type="text" class="form-control" maxlength="10"
-																name="mhDate"
-																th:id="${#ids.seq('am_implementationDate')}">
-														</div>
-													</td>
-													<td><input type="text" class="form-control"
-														maxlength="100" name="mhDetail"
-														th:id="${#ids.seq('am_implementationDetail')}"></td>
-													<td><input type="text" maxlength="10" name="mhrepId"
-														class="form-control" th:id="${#ids.seq('am_repId')}"></td>
-													<td><input type="text" maxlength="10"
-														name="mhapproverId" class="form-control"
-														th:id="${#ids.seq('am_approverId')}"></td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
+						<div class="x_content" style="display: block;">
+							<div class="col-md-12">
+								<div class="x_title">
+									<h2>故障・廃棄履歴</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content" style="display: block;">
+									<div
+										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+									<!-- START故障・廃棄履歴変更フォーム -->
+										<form id="mhForm">
+											<table class="table table-striped jambo_table bulk_action"
+												id="am_table2">
+												<thead>
+													<tr class="headings">
+														<th class="col-md-1">No</th>
+														<th class="col-md-2">実施日</th>
+														<th class="col-md-5">実施内容</th>
+														<th class="col-md-2">担当</th>
+														<th class="col-md-2">承認</th>
+														<th colspan="2"></th>
+													</tr>
+												</thead>
+												<tbody>
+												<!-- START故障・廃棄履歴10個項目 -->
+													<!-- START既存 故障・廃棄履歴 -->
+													<tr id="mhupdate1"
+														th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
+														<input type="hidden" th:id="${#ids.seq('am_mhkey')}"
+															th:value="${maintenance.historySeq}">
+														<td th:id="${#ids.seq('am_historySeq')}"
+															th:text="${mhnum.index+1}"></td>
+														<td>
+															<div class="input-group date mhDatepicker">
+																<input type="text" class="form-control" maxlength="10"
+																	name="mhDate"
+																	th:id="${#ids.seq('am_implementationDate')}"
+																	th:value="${maintenance.implementationDate}">
+															</div>
+														</td>
+														<td><input type="text" class="form-control"
+															maxlength="100" name="mhDetail"
+															th:id="${#ids.seq('am_implementationDetail')}"
+															th:value="${maintenance.implementationDetail}"></td>
+														<td><input type="text" maxlength="10" name="mhrepId"
+															class="form-control" th:id="${#ids.seq('am_repId')}"
+															th:value="${maintenance.repId}"></td>
+														<td><input type="text" maxlength="10"
+															name="mhapproverId" class="form-control"
+															th:id="${#ids.seq('am_approverId')}"
+															th:value="${maintenance.approverId}"></td>
+													</tr>
+													<!-- END既存 故障・廃棄履歴 -->
+													<!-- START故障・廃棄履歴を追加ため空欄 -->
+													<tr id="mhupdate2"
+														th:if="${#lists.size(asset.maintenanceHistoryList) < 10}"
+														th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
+														<td th:id="${#ids.seq('am_historySeq')}"
+															th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
+														<td>
+															<div class="input-group date mhDatepicker">
+																<input type="text" class="form-control" maxlength="10"
+																	name="mhDate"
+																	th:id="${#ids.seq('am_implementationDate')}">
+															</div>
+														</td>
+														<td><input type="text" class="form-control"
+															maxlength="100" name="mhDetail"
+															th:id="${#ids.seq('am_implementationDetail')}"></td>
+														<td><input type="text" maxlength="10" name="mhrepId"
+															class="form-control" th:id="${#ids.seq('am_repId')}"></td>
+														<td><input type="text" maxlength="10"
+															name="mhapproverId" class="form-control"
+															th:id="${#ids.seq('am_approverId')}"></td>
+													</tr>
+													<!-- END故障・廃棄履歴を追加ため空欄 -->
+												<!-- END故障・廃棄履歴10個項目 -->
+												</tbody>
+											</table>
+										</form>
+									<!-- END故障・廃棄履歴変更フォーム -->
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-					<!-- /保守履歴テーブル -->
-		 	     <div class="modal-footer">
+			<!-- END modal-body -->
+			<!-- START modal-footer -->
+				<div class="modal-footer">
 					<div class="col-md-12 text-left">
 						<button type="button" class="btn btn-secondary pull-right"
 							data-dismiss="modal">戻る</button>
@@ -499,307 +506,342 @@
 							class="btn btn-primary btn-warning">変更</button>
 					</div>
 				</div>
-				</div>
-
+			<!-- END modal-footer -->
+			</div>
 		</div>
 	</div>
 </div>
-<!-- page script -->
-<script th:inline="javascript">
+	<!-- page script -->
+	<script th:inline="javascript">
     /*<![CDATA[*/
-    $('.collapse-link-update').on('click', function() {
-        var $BOX_PANEL = $(this).closest('.x_panel'),
-            $ICON = $(this).find('i'),
-            $BOX_CONTENT = $BOX_PANEL.find('.x_content');
+		// collapse-link event
+	    $('.collapse-link-update').on('click', function() {
+	        var $BOX_PANEL = $(this).closest('.x_panel'),
+	            $ICON = $(this).find('i'),
+	            $BOX_CONTENT = $BOX_PANEL.find('.x_content');
 
-        // fix for some div with hardcoded fix class
-        if ($BOX_PANEL.attr('style')) {
-            $BOX_CONTENT.slideToggle(200, function(){
-                $BOX_PANEL.removeAttr('style');
-            });
-        } else {
-            $BOX_CONTENT.slideToggle(200);
-            $BOX_PANEL.css('height', 'auto');
-        }
+	        // fix for some div with hardcoded fix class
+	        if ($BOX_PANEL.attr('style')) {
+	            $BOX_CONTENT.slideToggle(200, function(){
+	                $BOX_PANEL.removeAttr('style');
+	            });
+	        } else {
+	            $BOX_CONTENT.slideToggle(200);
+	            $BOX_PANEL.css('height', 'auto');
+	        }
 
-        $ICON.toggleClass('fa-chevron-up fa-chevron-down');
-    });
+	        $ICON.toggleClass('fa-chevron-up fa-chevron-down');
+	    });
+	    $('.close-link').click(function () {
+	        var $BOX_PANEL = $(this).closest('.x_panel');
+	        $BOX_PANEL.remove();
+	    });
+		// /collapse-link event
 
-    $('.close-link').click(function () {
-        var $BOX_PANEL = $(this).closest('.x_panel');
-        $BOX_PANEL.remove();
-    });
+  	 	// datetimepicker format
+   		$('#am_myDatepicker').datetimepicker({
+   			format: 'YYYY-MM-DD'
+		});	// 購入日
 
-	// /Panel toolbox
-    	// datetimepickerセッティング
-        $('#am_myDatepicker').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
-		// 区分コードMap
-    	var productCodeMap = new Map();
+  		$('.mhDatepicker').datetimepicker({
+			format: 'YYYY-MM-DD'
+		});	// 故障・廃棄履歴の実施日
+  		// /datetimepicker format
+
+  		// 区分コードMap
+	   	var productCodeMap = new Map();
 		var productCode = /*[[${productCode}]]*/;
-    	productCode.forEach(function( value ) {
-    		productCodeMap.set(value.codeDetailId, value.codeDetailName);
-    	});
-    	// 状態コードMap
-    	var stateCodeMap = new Map();
-    	var stateCode = /*[[${stateCode}]]*/;
-    	stateCode.forEach(function( value ) {
-    		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
-    	});
-    	// Jquery validator メッセージセッティング
-    	$.validator.messages.number = '有効な数字を入力';
-    	$.validator.messages.maxlength = '{0} 文字以下を入力';
-		//保守履歴の実施日
-   		$('.mhDatepicker').datetimepicker({
-               format: 'YYYY-MM-DD'
-           });
+	   	productCode.forEach(function( value ) {
+	   		productCodeMap.set(value.codeDetailId, value.codeDetailName);
+	   	});
+		// /区分コードMap
 
+		// 状態コードMap
+	   	var stateCodeMap = new Map();
+	   	var stateCode = /*[[${stateCode}]]*/;
+	   	stateCode.forEach(function( value ) {
+	   		stateCodeMap.set(value.codeDetailId, value.codeDetailName);
+	   	});
+		// /状態コードMap
 
-        $(function(){
-        	// 数量文字入力制限
-        	$('#am_table1 tbody').on('keyup','#am_itemQuantity', function() {
-        	    if (/\D/.test(this.value)) {
-        	        this.value = this.value.replace(/\D/g, '')
-        	        alert('半角数字のみ入力');
-        	    }
-        	});
+		// Jquery validator メッセージセッティング
+	   	$.validator.messages.number = '数字入力';
+	   	$.validator.messages.maxlength = '{0} 文字以下を入力';
+		// /Jquery validator メッセージセッティング
 
-        	// 実施日文字入力制限
-        	$('#am_table2 tbody').on('keyup','#am_implementationDate', function() {
-        	    if (/\D/.test(this.value)) {
-        	        this.value = this.value.replace(/\D/g, '')
-        	        alert('半角数字のみ入力');
-        	    }
-        	});
-			// 有効性検証
-    		var assform = $('#am_updateForm');
-    		var accform = $('#accForm');
-			var mhform = $('#mhForm');
-        	// 資産変更モーダルの変更バトン
-        	$('#sisanupdate').click(function(){
-   				// 主要な資産の有効性検証
-                   assform.validate({
-                       rules: {
-                       	kubunCode : {
-                       		required : true
-                       	},
-                       	purchaseDate: {
-                               required: true
-                           },
-                           statusCode: {
-                           	required: true
-                           },
-                           warrantyPeriod: {
-                           	number: true,
-                           	maxlength: 2
-                           },
-                           buyTo: {
-                           	maxlength: 15
-                           },
-                           storageLocation: {
-                           	maxlength: 15
-                           },
-                           makerName: {
-                           	maxlength: 25
-                           },
-                           modelName: {
-                           	maxlength: 25
-                           },
-                           serialNum: {
-                           	maxlength: 100
-                           },
-                           interFaceCol: {
-                           	maxlength: 25
-                           },
-                           osName: {
-                           	maxlength: 50
-                           },
-                           osProductKey: {
-                           	maxlength: 50
-                           },
-                           cpuProcessor: {
-                           	maxlength: 50
-                           },
-                           purchasePrice: {
-                           	number: true,
-                           	maxlength: 11
-                           },
-                           operatingFrequency: {
-                           	number: true,
-                           	maxlength: 7
-                           },
-                           memory: {
-                           	number: true,
-                           	maxlength: 7
-                           },
-                           memoryUpgarde: {
-                           	number: true,
-                           	maxlength: 7
-                           },
-                           hdd: {
-                           	number: true,
-                           	maxlength: 7
-                           },
-                           hddUpgarde: {
-                           	number: true,
-                           	maxlength: 7
-                           },
-                           macLan: {
-                           	maxlength: 25
-                           },
-                           macWireless: {
-                           	maxlength: 25
-                           },
-                           other: {
-                           	maxlength: 100
-                           },
-                           securityBios: {
-                           	maxlength: 25
-                           },
-                           securityHdd: {
-                           	maxlength: 25
-                           },
-                           adminAccountId: {
-                           	maxlength: 25
-                           },
-                           adminAccountPwd: {
-                           	maxlength: 25
-                           }
-                       },
-                       messages: {
-                       	kubunCode : {
-                       		required : "区分を選択"
-                       	},
-                       	purchaseDate: {
-                               required: "日付を入力"
-                           },
-                           statusCode: {
-                           	required: "状態を選択"
-                           }
-                       },
-                       errorPlacement: function(error, element) {
-                           if (element.attr("name") == "purchaseDate") {
-                             error.insertAfter("#am_myDatepicker");
-                           } else {
-                             error.insertAfter(element);
-                           }
-                       }
-                   });
-   				// 付属品の有効性検証
-				 accform.validate({
-          			rules: {
-  	                    accQuantity1 : {
-  	                    	number: true
-  	                       	},
-  	                    accQuantity2 : {
-  	                    	number: true
-  	                       	},
-  	                    accQuantity3 : {
-   	                    	number: true
-    	                       	},
-   	                    accQuantity4 : {
-   	                    	number: true
-   	                       	},
-   	                    accQuantity5 : {
-   	                    	number: true
-   	                       	},
-   	                    accQuantity6 : {
-   	                    	number: true
-   	                       	},
-   	                    accQuantity7 : {
-    	                    number: true
-     	                       	},
-   	                    accQuantity8 : {
-   	                    	number: true
-   	                       	},
-   	                    accQuantity9 : {
-   	                    	number: true
-   	                       	},
- 	          	        accQuantity10 : {
-  	                    	number: true
-                      	}
+		// 有効性検証
+       $(function(){
+       	// 数量文字入力制限
+       	$('#am_table1 tbody').on('keyup','#am_itemQuantity', function() {
+       	    if (/\D/.test(this.value)) {
+       	        this.value = this.value.replace(/\D/g, '')
+       	        alert('半角数字のみ入力');
+       	    }
+       	});
+
+		// 実施日文字入力制限
+       	$('#am_table2 tbody').on('keyup','#am_implementationDate', function() {
+       	    if (/\D/.test(this.value)) {
+       	        this.value = this.value.replace(/\D/g, '')
+       	        alert('半角数字のみ入力');
+       	    }
+       	});
+
+   		var assform = $('#am_updateForm');
+   		var accform = $('#accForm');
+		var mhform = $('#mhForm');
+		// 資産変更モーダルの変更バトン
+       	$('#sisanupdate').click(function(){
+  			// 主要な資産の有効性検証
+                  assform.validate({
+                      rules: {
+                      	kubunCode : {
+                      		required : true
+                      	},
+                      	purchaseDate: {
+                              required: true
+                          },
+                          statusCode: {
+                          	required: true
+                          },
+                          warrantyPeriod: {
+                          	number: true,
+                          	maxlength: 2
+                          },
+                          buyTo: {
+                          	maxlength: 15
+                          },
+                          storageLocation: {
+                          	maxlength: 15
+                          },
+                          makerName: {
+                          	maxlength: 25
+                          },
+                          modelName: {
+                          	maxlength: 25
+                          },
+                          serialNum: {
+                          	maxlength: 100
+                          },
+                          interFaceCol: {
+                          	maxlength: 25
+                          },
+                          osName: {
+                          	maxlength: 50
+                          },
+                          osProductKey: {
+                          	maxlength: 50
+                          },
+                          cpuProcessor: {
+                          	maxlength: 50
+                          },
+                          purchasePrice: {
+                          	number: true,
+                          	maxlength: 11
+                          },
+                          operatingFrequency: {
+                          	number: true,
+                          	maxlength: 7
+                          },
+                          memory: {
+                          	number: true,
+                          	maxlength: 7
+                          },
+                          memoryUpgarde: {
+                          	number: true,
+                          	maxlength: 7
+                          },
+                          hdd: {
+                          	number: true,
+                          	maxlength: 7
+                          },
+                          hddUpgarde: {
+                          	number: true,
+                          	maxlength: 7
+                          },
+                          macLan: {
+                          	maxlength: 25
+                          },
+                          macWireless: {
+                          	maxlength: 25
+                          },
+                          other: {
+                          	maxlength: 100
+                          },
+                          securityBios: {
+                          	maxlength: 25
+                          },
+                          securityHdd: {
+                          	maxlength: 25
+                          },
+                          adminAccountId: {
+                          	maxlength: 25
+                          },
+                          adminAccountPwd: {
+                          	maxlength: 25
+                          }
+                      },
+                      messages: {
+                      	kubunCode : {
+                      		required : "区分を選択"
+                      	},
+                      	purchaseDate: {
+                              required: "日付を入力"
+                          },
+                          statusCode: {
+                          	required: "状態を選択"
+                          }
+                      },
+                      errorPlacement: function(error, element) {
+                          if (element.attr("name") == "purchaseDate") {
+                            error.insertAfter("#am_myDatepicker");
+                          } else {
+                            error.insertAfter(element);
+                          }
                       }
-          		 	});
-   				// 有効性検査成功時
-                if (assform.valid() && accform.valid()) {
-                   	// number基本値セッティング
-                       assform.find('.numVal').each(function( ) {
-                       	if($(this).val() == '') {
-                       		$(this).val('0');
-                       	}
-                       });
+                  });
+  			// /主要な資産の有効性検証
+  			// 付属品の有効性検証
+			accform.validate({
+         			rules: {
+ 	                    accQuantity1 : {
+ 	                    	number: true
+ 	                       	},
+ 	                    accQuantity2 : {
+ 	                    	number: true
+ 	                       	},
+ 	                    accQuantity3 : {
+  	                    	number: true
+   	                       	},
+  	                    accQuantity4 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity5 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity6 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity7 : {
+   	                    number: true
+    	                       	},
+  	                    accQuantity8 : {
+  	                    	number: true
+  	                       	},
+  	                    accQuantity9 : {
+  	                    	number: true
+  	                       	},
+	          	        accQuantity10 : {
+ 	                    	number: true
+                     	}
+                     }
+         		 	});
+				// /付属品の有効性検証
+  				// 有効性検査成功時
+				if (assform.valid() && accform.valid()) {
+                  	// number基本値セッティング
+                      assform.find('.numVal').each(function( ) {
+                      	if($(this).val() == '') {
+                      		$(this).val('0');
+                      	}
+                      });
+				// 付属品の既存目録サイズ
+	       		var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+	 	      	// 故障・廃棄履歴の既存目録サイズ
+	       		var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+				//　変更confirm
+				if(confirm('資産情報を変更しますか。')){
+	        		if(acclength < 1){
+	        			accinsert();
+	        		} else{
+	        			accupdate(),accinsert();
+	        		}
+	        		if(mhlength < 1){
+	        			mhinsert();
+	        		} else{
+	        			mhupdate(), mhinsert();
+	        		}
+	        		assupdate();
+	        	} else{
+	        		return false;
+	        	}
+			}
+            // 有効性検査成功時
+       	});
+	// /資産変更モーダルの変更バトン
 
-        		var acclength = Object.keys([[${asset.accessoriesList}]]).length;
-        		var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+	// 主要な資産情報変更
+       	function assupdate() {
+       		// 送信
+               $.ajax({
+                   url: assform.attr('action'),
+                   type: assform.attr('method'),
+                   data: assform.serialize(),
+                   success: function(result, textStatus, xhr) {
+                   	if(result == 0){
+                   		alert('エラーが発生しました。');
+                   	}else{
+                   		alert('変更されました。');
+                   		location.href = '/asset';
+                   	}
+                   },
+                   // 通信失敗時の処理
+                   error: function(xhr, textStatus, error) {
+                   	alert('通信失敗');
+                   }
+               });
+       	}
+	// /主要な資産情報変更
 
-					if(confirm('資産情報を変更しますか。')){
-		        		if(acclength < 1){
-		        			accinsert();
-		        		} else{
-		        			accupdate(),accinsert();
-		        		}
-		        		if(mhlength < 1){
-		        			mhinsert();
-		        		} else{
-		        			mhupdate(), mhinsert();
-		        		}
-		        		assupdate();
-		        	} else{
-		        		return false;
-		        	}
-                }// 有効性 if end
-        	});//資産変更モーダルの変更バトンEND
-
-        	function assupdate() {
-        		// 送信
-                $.ajax({
-                    url: assform.attr('action'),
-                    type: assform.attr('method'),
-                    data: assform.serialize(),
-                    success: function(result, textStatus, xhr) {
-                    	if(result == 0){
-                    		alert('エラーが発生しました。');
-                    	}else{
-                    		alert('変更されました。');
-                    		location.href = '/asset';
-                    	}
-                    },
-                    // 通信失敗時の処理
-                    error: function(xhr, textStatus, error) {
-                    	alert('通信失敗');
-                    }
-                });
-        	}
-
-		//付属品変更・削除プロセス
-			function accupdate() {
-				var selectTr1 = $(accupdate1);
-				var acclength = Object.keys([[${asset.accessoriesList}]]).length;
- 				//accessories update
-				for(var i = 1; i < acclength + 1 ; i++){
-					var am_itemName = '#am_itemName'+i;
-					var am_itemSpec = '#am_itemSpec'+i;
-					var am_itemQuantity = '#am_itemQuantity'+i;
-					var am_remarks = '#am_remarks'+i;
-					var am_acckey = '#am_acckey'+i;
-
-					var accessories ={
-	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	            			"accessoriesSeq" : selectTr1.find(am_acckey).val(),
-	            			"itemName" : selectTr1.find(am_itemName).val(),
-	            			"itemSpec" : selectTr1.find(am_itemSpec).val(),
-	            			"itemQuantity" : selectTr1.find(am_itemQuantity).val(),
-	            			"remarks" : selectTr1.find(am_remarks).val()
-	            	};
-					// 付属品削除プロセス
-					if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""
-						&& selectTr1.find(am_itemQuantity).val() == "" && selectTr1.find(am_remarks).val() ==""){
-	                	var accessories ={
-	                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	                			"accessoriesSeq" :  selectTr1.find(am_acckey).val()
-	                	};
-	                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
+	// 付属品変更・削除プロセス
+		function accupdate() {
+			var selectTr1 = $(accupdate1);
+			var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+			// 各付属品のリスト処理FOR文
+			for(var i = 1; i < acclength + 1 ; i++){
+				var am_itemName = '#am_itemName'+i;
+				var am_itemSpec = '#am_itemSpec'+i;
+				var am_itemQuantity = '#am_itemQuantity'+i;
+				var am_remarks = '#am_remarks'+i;
+				var am_acckey = '#am_acckey'+i;
+				var accessories ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"accessoriesSeq" : selectTr1.find(am_acckey).val(),
+            			"itemName" : selectTr1.find(am_itemName).val(),
+            			"itemSpec" : selectTr1.find(am_itemSpec).val(),
+            			"itemQuantity" : selectTr1.find(am_itemQuantity).val(),
+            			"remarks" : selectTr1.find(am_remarks).val()
+            	};
+			// 付属品削除プロセス
+				if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""
+					&& selectTr1.find(am_itemQuantity).val() == "" && selectTr1.find(am_remarks).val() ==""){
+                	var accessories ={
+                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+                			"accessoriesSeq" :  selectTr1.find(am_acckey).val()
+                	};
+                	$.ajax(/*[[@{/asset/deleteAccessories}]]*/ 'asset/deleteAccessories',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(accessories)
+    					}
+                	)
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました。');
+    					} else {
+    						selectTr.remove();
+    						alert('削除しました');
+    					}
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗accdelete');
+                    });
+				}
+				// /付属品削除プロセス
+				// 付属品変更プロセス
+				else{
+					$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
 	    					{
 	    						type: "POST",
 	    						dataType: "json",
@@ -811,110 +853,119 @@
 	    					if(result == 0) {
 	    						alert('エラーが発生しました。');
 	    					} else {
-	    						selectTr.remove();
-	    						alert('削除しました');
+								console.log('付属品変更行目：'+ i-1 +'行目');
 	    					}
 	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗accdelete');
+	                    	alert('通信失敗:付属品変更');
 	                    });
-					}//削除if
-					//付属品変更プロセス
-					else{
-						$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
-		    					{
-		    						type: "POST",
-		    						dataType: "json",
-		    						contentType: 'application/JSON',
-		    						data : JSON.stringify(accessories)
-		    					}
-		                	)
-		    				.success(function(result) {
-		    					if(result == 0) {
-		    						alert('エラーが発生しました。');
-		    					} else {
-									console.log('付属品変更行目：'+ i-1 +'行目');
-		    					}
-		    				}).error(function(xhr, textStatus, error) {
-		                    	alert('通信失敗accupdate');
-		                    });//ajax end
-	           		}//変更else
-	            };//for end
-			}//function accupdate
+           		}
+				// /付属品変更プロセス
+            };
+            // /各付属品のリスト処理FOR文
+		}
+		// /付属品変更・削除プロセス
 
-			//付属品登録プロセス
-			function accinsert() {
-	            var selectTr2 = $(accupdate2);
-	        	var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+		// 付属品登録プロセス
+		function accinsert() {
+            var selectTr2 = $(accupdate2);
+        	var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+        	// 付属品登録処理FOR文
+			for(var i = acclength+1; i < 11 ; i++){
+				var am_accessoriesSeq = '#am_accessoriesSeq'+i;
+				var am_itemName = '#am_itemName'+i;
+				var am_itemSpec = '#am_itemSpec'+i;
+				var am_itemQuantity = '#am_itemQuantity'+i;
+				var am_remarks = '#am_remarks'+i;
+				var accessories ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"accessoriesSeq" : selectTr2.find(am_accessoriesSeq).text(),
+            			"itemName" : selectTr2.find(am_itemName).val(),
+            			"itemSpec" : selectTr2.find(am_itemSpec).val(),
+            			"itemQuantity" : selectTr2.find(am_itemQuantity).val(),
+            			"remarks" : selectTr2.find(am_remarks).val()
+            	};
+				// 全項目空きったら、付属品登録しない
+				if(selectTr2.find(am_itemName).val() == "" && selectTr2.find(am_itemSpec).val() == ""
+					&& selectTr2.find(am_itemQuantity).val() == "" && selectTr2.find(am_remarks).val() == ""){
+					continue;
+				}
+				// /全項目空きったら、付属品登録しない
+				// 付属品登録プロセス
+				else{
+					$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+	    					{
+	    						type: "POST",
+	    						dataType: "json",
+	    						contentType: 'application/JSON',
+	    						data : JSON.stringify(accessories)
+	    					}
+	                	)
+	    				.success(function(result) {
+	    					if(result == 0) {
+	    						alert('エラーが発生しました。');
+	    					} else {
 
-				for(var i = acclength+1; i < 11 ; i++){
-					var am_accessoriesSeq = '#am_accessoriesSeq'+i;
-					var am_itemName = '#am_itemName'+i;
-					var am_itemSpec = '#am_itemSpec'+i;
-					var am_itemQuantity = '#am_itemQuantity'+i;
-					var am_remarks = '#am_remarks'+i;
+	    					}
+	    				}).error(function(xhr, textStatus, error) {
+	                    	alert('通信失敗:付属品登録');
+	                    });
+				}
+				// /付属品登録プロセス
+            };
+        	 // /付属品登録処理FOR文
+		}
+		// 付属品登録プロセス
 
-					var accessories ={
-	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	            			"accessoriesSeq" : selectTr2.find(am_accessoriesSeq).text(),
-	            			"itemName" : selectTr2.find(am_itemName).val(),
-	            			"itemSpec" : selectTr2.find(am_itemSpec).val(),
-	            			"itemQuantity" : selectTr2.find(am_itemQuantity).val(),
-	            			"remarks" : selectTr2.find(am_remarks).val()
-	            	};
-					if(selectTr2.find(am_itemName).val() == "" && selectTr2.find(am_itemSpec).val() == ""
-						&& selectTr2.find(am_itemQuantity).val() == "" && selectTr2.find(am_remarks).val() == ""){
-						continue;
-					} else{
-						$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
-		    					{
-		    						type: "POST",
-		    						dataType: "json",
-		    						contentType: 'application/JSON',
-		    						data : JSON.stringify(accessories)
-		    					}
-		                	)
-		    				.success(function(result) {
-		    					if(result == 0) {
-		    						alert('エラーが発生しました。');
-		    					} else {
+		// 故障・廃棄履歴変更・削除プロセス
+		function mhupdate() {
+			var selectTr1 = $(mhupdate1);
+			var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+			// 故障・廃棄履歴変更・削除処理FOR文
+			for(var i = 1; i < mhlength + 1 ; i++){
+				var am_implementationDate = '#am_implementationDate'+i;
+				var am_implementationDetail = '#am_implementationDetail'+i;
+				var am_repId = '#am_repId'+i;
+				var am_approverId = '#am_approverId'+i;
+				var am_mhkey = '#am_mhkey'+i;
 
-		    					}
-		    				}).error(function(xhr, textStatus, error) {
-		                    	alert('通信失敗accinsert');
-		                    });//ajax end
-					}//else
-	            };//for end
+				var maintenanceHistory ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"historySeq" : selectTr1.find(am_mhkey).val(),
+            			"implementationDate" : selectTr1.find(am_implementationDate).val(),
+            			"implementationDetail" : selectTr1.find(am_implementationDetail).val(),
+            			"repId" : selectTr1.find(am_repId).val(),
+            			"approverId" : selectTr1.find(am_approverId).val(),
+            	};
+				// 保守削除プロセス
+				if(selectTr1.find(am_implementationDate).val() == "" && selectTr1.find(am_implementationDetail).val() == ""
+						&& selectTr1.find(am_repId).val() == "" && selectTr1.find(am_approverId).val() == ""){
+                	var  maintenanceHistory ={
+                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+                			"historySeq" :  selectTr1.find(am_mhkey).val()
+                	};
 
-			}//function accinsert
-			//保守履歴変更・削除
-			function mhupdate() {
-				var selectTr1 = $(mhupdate1);
-				var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
- 				//mh update
-				for(var i = 1; i < mhlength + 1 ; i++){
-					var am_implementationDate = '#am_implementationDate'+i;
-					var am_implementationDetail = '#am_implementationDetail'+i;
-					var am_repId = '#am_repId'+i;
-					var am_approverId = '#am_approverId'+i;
-					var am_mhkey = '#am_mhkey'+i;
-
-					var maintenanceHistory ={
-	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	            			"historySeq" : selectTr1.find(am_mhkey).val(),
-	            			"implementationDate" : selectTr1.find(am_implementationDate).val(),
-	            			"implementationDetail" : selectTr1.find(am_implementationDetail).val(),
-	            			"repId" : selectTr1.find(am_repId).val(),
-	            			"approverId" : selectTr1.find(am_approverId).val(),
-	            	};
-					// 保守削除プロセス
-					if(selectTr1.find(am_implementationDate).val() == "" && selectTr1.find(am_implementationDetail).val() == ""
-							&& selectTr1.find(am_repId).val() == "" && selectTr1.find(am_approverId).val() == ""){
-	                	var  maintenanceHistory ={
-	                			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	                			"historySeq" :  selectTr1.find(am_mhkey).val()
-	                	};
-
-	                	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
+                	$.ajax(/*[[@{/asset/deleteMaintenanceHistory}]]*/ 'asset/deleteMaintenanceHistory',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(maintenanceHistory)
+    					}
+                	)
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました。');
+    					} else {
+    						selectTr.remove();
+    					}
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗mhdelete');
+                    });
+				}
+				// /故障・廃棄履歴削除プロセス
+				// 故障・廃棄履歴変更プロセス
+				else{
+					$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
 	    					{
 	    						type: "POST",
 	    						dataType: "json",
@@ -926,79 +977,59 @@
 	    					if(result == 0) {
 	    						alert('エラーが発生しました。');
 	    					} else {
-	    						selectTr.remove();
+
 	    					}
 	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗mhdelete');
+	                    	alert('通信失敗mhupdate');
 	                    });
-					}//削除if
-					else{
-						$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
-		    					{
-		    						type: "POST",
-		    						dataType: "json",
-		    						contentType: 'application/JSON',
-		    						data : JSON.stringify(maintenanceHistory)
-		    					}
-		                	)
-		    				.success(function(result) {
-		    					if(result == 0) {
-		    						alert('エラーが発生しました。');
-		    					} else {
+           		}
+				// /故障・廃棄履歴変更プロセス
+            };
+			// /故障・廃棄履歴変更・削除処理FOR文
+		}
+		// /故障・廃棄履歴変更・削除プロセス
 
-		    					}
-		    				}).error(function(xhr, textStatus, error) {
-		                    	alert('通信失敗mhupdate');
-		                    });//ajax end
-	           		}//変更else
-	            };//for end
-			}//function mhupdate
+		// 故障・廃棄履歴登録プロセス
+		function mhinsert() {
+            var selectTr2 = $(mhupdate2);
+        	var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+            // 故障・廃棄履歴登録処理FOR文
+			for(var i = mhlength+1; i < 11 ; i++){
+				var am_historySeq = '#am_historySeq'+i;
+				var am_implementationDate = '#am_implementationDate'+i;
+				var am_implementationDetail = '#am_implementationDetail'+i;
+				var am_repId = '#am_repId'+i;
+				var am_approverId = '#am_approverId'+i;
+				var  maintenanceHistory ={
+            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
+            			"historySeq" : selectTr2.find(am_historySeq).text(),
+            			"implementationDate" : selectTr2.find(am_implementationDate).val(),
+            			"implementationDetail" : selectTr2.find(am_implementationDetail).val(),
+            			"repId" : selectTr2.find(am_repId).val(),
+            			"approverId" : selectTr2.find(am_approverId).val()
+            	};
+				$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(maintenanceHistory)
+    					}
+                	)
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました。'+i);
+    					} else {
 
-			function mhinsert() {
-	            var selectTr2 = $(mhupdate2);
-	        	var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
-
-	          //maintainenthistory insert
-				for(var i = mhlength+1; i < 11 ; i++){
-					var am_historySeq = '#am_historySeq'+i;
-					var am_implementationDate = '#am_implementationDate'+i;
-					var am_implementationDetail = '#am_implementationDetail'+i;
-					var am_repId = '#am_repId'+i;
-					var am_approverId = '#am_approverId'+i;
-
-					var  maintenanceHistory ={
-	            			"assetSeq" : /*[[${asset.assetSeq}]]*/,
-	            			"historySeq" : selectTr2.find(am_historySeq).text(),
-	            			"implementationDate" : selectTr2.find(am_implementationDate).val(),
-	            			"implementationDetail" : selectTr2.find(am_implementationDetail).val(),
-	            			"repId" : selectTr2.find(am_repId).val(),
-	            			"approverId" : selectTr2.find(am_approverId).val()
-	            	};
-
-						$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
-		    					{
-		    						type: "POST",
-		    						dataType: "json",
-		    						contentType: 'application/JSON',
-		    						data : JSON.stringify(maintenanceHistory)
-		    					}
-		                	)
-		    				.success(function(result) {
-		    					if(result == 0) {
-		    						alert('エラーが発生しました。'+i);
-		    					} else {
-
-		    					}
-		    				}).error(function(xhr, textStatus, error) {
-		                    	alert('通信失敗mhinsert');
-		                    });//ajax end
-
-	            };//for end
-
-			}//function mhinsert
-
-
-        })
+    					}
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗mhinsert');
+                    });//ajax end
+            };
+         // /故障・廃棄履歴登録処理FOR文
+		}
+		// /故障・廃棄履歴登録プロセス
+      })
     /*]]>*/
     </script>
 

@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class Dashboard {
-//	資産現況パラメータ
+//	資産状況パラメータ
 	private int typeCnt;
 	private String typeName;
 	private int newItem;

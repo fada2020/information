@@ -18,6 +18,7 @@
 			a.status_code,
 			r.storage_Location,
 			r.bp_Name,
+			r.approver,
 			r.rental_no,
 			a.kubun_code,
 			c.code_detail_name
@@ -37,8 +38,8 @@
 				<if test="rentalDayS != null and rentalDayE !=null">
 					AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 				</if>
-				<if test="codeDetailName != null and codeDetailName !=null">
-					AND c.code_detail_name  LIKE '%${codeDetailName}%'
+				<if test="item1 != null and item1 !=null">
+					AND c.item1  LIKE '%${item1}%'
 				</if>
 				AND r.return_day is null
 				and c.code_master_id=#{codeMasterId}
@@ -68,8 +69,8 @@
 		<if test="rentalDayS != null and rentalDayE !=null">
 			AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
 		</if>
-		<if test="codeDetailName != null and codeDetailName !=null">
-			AND c.code_detail_name  LIKE '%${codeDetailName}%'
+		<if test="item1 != null and item1 !=null">
+			AND c.item1  LIKE '%${item1}%'
 		</if>
 		and r.return_day is null
 		and c.code_master_id=#{codeMasterId}
@@ -95,6 +96,7 @@
 		r.rental_day,
 		r.rental_user_id,
 		r.purpose,
+		r.approver,
 		r.speciality,
 		r.applicant_id,
 		r.return_day,
@@ -199,6 +201,7 @@
 			rental_Seq,
 			asset_Seq,
 			rental_day,
+			approver,
 			rental_User_id,
 			purpose,
 			storage_Location,
@@ -218,6 +221,7 @@
 					IFNULL(MAX(r.rental_seq) + 1, 1) FROM rental r),
 					#{item.assetSeq},
 					#{item.rentalDay},
+					#{item.approver},
 					#{item.rentalUserId},
 					#{item.purpose},
 					#{item.storageLocation},
@@ -269,6 +273,7 @@
 		update rental set
 		rental_day =#{rentalDay},
 		rental_User_id=#{rentalUserId},
+		approver=#{approver},
 		purpose=#{purpose},
 		storage_Location=#{storageLocation},
 		speciality=#{speciality},

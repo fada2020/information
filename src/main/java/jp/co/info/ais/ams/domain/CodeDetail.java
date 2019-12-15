@@ -27,8 +27,6 @@ public class CodeDetail {
 	//ページング
 	private int length = 10;
 	private int start;
-	private String codeMasterIdOld;
-	private String codeDetailIdOld;
 	private int checkId;
 
 	public CodeDetail() {}

@@ -12,10 +12,10 @@ public interface DashboardMapper {
 
 	public ArrayList<Dashboard> possession();	// 資産種別保有数量
 
-	public int newItem();						// 今月購入した装置数量
+	public int newItem();						// 今月購入した資産数量
 
-	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸与現況
+	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸与状況
 
-	public int kosyouItem();					// 故障した装置数
+	public int kosyouItem();					// 故障した資産数
 
 }
