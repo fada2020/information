@@ -179,11 +179,8 @@ public class CodeMasterController {
 	    public List<CodeDetail> infoAjax(@RequestBody String codeMasterId) {
 	    	List<CodeDetail>array = new ArrayList<CodeDetail>();
 	    	try {
-	    		logger.debug("++++++++++++++++++++++++++++++++++++"+codeMasterId);
-
-
 	    		array = codeDetailService.selectCodeDetailList(new CodeDetail(codeMasterId, null, null,appConstant.USE_CODE) );
-	    		logger.debug("++++++++++++++++++++++++++++++++++++"+array);
+
 	    	}catch (Exception e) {
 	    		logger.error(e.getMessage());
 			}
