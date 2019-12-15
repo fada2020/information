@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.info.ais.ams.mapper.DashboardMapper">
 
-	<!-- 資産タイプ別保有現況 -->
+	<!-- 資産タイプ別保有状況 -->
 
-	<!-- 総ハードウェア、総ソフトウェア、今月購入した装置 -->
+	<!-- 総ハードウェア、総ソフトウェア、今月購入した資産 -->
 	<select id="possession" resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code
@@ -20,7 +20,7 @@
 		ORDER BY typeName, typeCnt DESC
 	</select>
 
-	<!-- 故障状態の装置数 -->
+	<!-- 故障状態の資産数 -->
 	<select id="kosyouItem" resultType="int">
 	SELECT COUNT(asset_seq) AS kosyouCnt
 		FROM asset
@@ -28,14 +28,14 @@
 		WHERE status_code = "03"
 	</select>
 
-	<!-- 今月購入した装置数量 -->
+	<!-- 今月購入した資産数量 -->
 	<select id="newItem" resultType="int">
 		SELECT COUNT(asset_number) AS newItem
 		FROM asset
 		WHERE DATE_FORMAT(STR_TO_DATE(purchase_date,'%Y%m%d'),'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
 	</select>
 
-	<!-- 資産種別貸与現況 -->
+	<!-- 資産種別貸与状況 -->
 	<select id="rslist" resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code AS kubunCode

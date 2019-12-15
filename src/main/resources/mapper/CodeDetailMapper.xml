@@ -7,7 +7,7 @@
 	<!-- リスト照会 -->
 	<select id="selectCodeDetailList"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
-		SELECT A.* FROM(
+		
 		SELECT
 		code_master_id
 		,code_detail_id
@@ -19,9 +19,6 @@
 		,item5
 		,use_flag
 		FROM code_detail
-		ORDER BY
-		code_master_id ASC
-		)A
 		where 1=1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
@@ -35,6 +32,8 @@
 		<if test="useFlag != null and !useFlag.equals('')">
 			AND use_flag =#{useFlag}
 		</if>
+		ORDER BY
+		code_master_id ASC
 		LIMIT #{length} OFFSET #{start}
 	</select>
 

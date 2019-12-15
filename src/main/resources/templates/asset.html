@@ -118,16 +118,16 @@
                 <div class="col-md-12"><br></div>
 
                 <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">Maker</span>
+                    <span class="pull-right" style="font-size: 18px;">メーカー</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Maker" id="maker_search">
+                    <input type="text" class="form-control" placeholder="メーカー" id="maker_search">
                 </div>
                 <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">Model</span>
+                    <span class="pull-right" style="font-size: 18px;">モデル</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Model" id="model_search">
+                    <input type="text" class="form-control" placeholder="モデル" id="model_search">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">購入期間</span>
@@ -161,8 +161,8 @@
                         <tr>
                           <th class="col-md-2">管理番号</th>
                           <th class="col-md-1">区分</th>
-                          <th class="col-md-2">Model</th>
-                          <th class="col-md-1">Maker</th>
+                          <th class="col-md-2">モデル</th>
+                          <th class="col-md-1">メーカー</th>
                           <th class="col-md-2">購入日</th>
                           <th class="col-md-1">保管位置</th>
                           <th class="col-md-1">状態</th>
@@ -229,7 +229,7 @@
 						  						<span id="buyTo_view"></span>
 						  					</div>
 						  					<div class="col-md-2">
-						  						<span>購入金額</span>
+						  						<span>購入金額(円)</span>
 						  					</div>
 						  					<div class="col-md-4 text-center">
 						  						<span id="purchasePrice_view"></span>
@@ -239,13 +239,13 @@
 						  			<div class="col-md-6">
 						  				<div class="row">
 						  					<div class="col-md-2">
-						  						<span>保管位置</span>
+						  						<span>保管場所</span>
 						  					</div>
 						  					<div class="col-md-4 text-center">
 						  						<span id="storageLocation_view"></span>
 						  					</div>
 							  				<div class="col-md-2">
-							  					<span>保証期間</span>
+							  					<span>保証期間(年)</span>
 							  				</div>
 							  				<div class="col-md-4 text-center">
 							  					<span id="warrantyPeriod_view"></span>
@@ -256,13 +256,13 @@
 						  			<div class="col-md-6">
 						  				<div class="row">
 						  					<div class="col-md-2">
-						  						<span>Maker</span>
+						  						<span>メーカー</span>
 						  					</div>
 						  					<div class="col-md-4 text-center">
 						  						<span id="maker_view"></span>
 						  					</div>
 						  					<div class="col-md-2">
-						  						<span>Model</span>
+						  						<span>モデル</span>
 						  					</div>
 						  					<div class="col-md-4 text-center">
 						  						<span id="model_view"></span>
@@ -319,17 +319,17 @@
 						  				<span id="CPUProcessor_view"></span>
 						  			</div>
 						  			<div class="col-md-2">
-						  				<span>動作周波数</span>
+						  				<span>動作周波数(㎓)</span>
 						  			</div>
 						  			<div class="col-md-4 text-center">
 						  				<span id="operatingFrequency_view"></span>
 						  			</div>
 
 						  			<div class="col-md-6">
-						  				<span>Memory</span>
+						  				<span>メモリ(GB)</span>
 						  			</div>
 						  			<div class="col-md-6">
-						  				<span>HDD</span>
+						  				<span>HDD/SSD(GB)</span>
 						  			</div>
 						  			<div class="col-md-2 text-center">
 						  				<span id="memory_view"></span>
@@ -376,7 +376,7 @@
 						  				<span id="securityBIOS_view"></span>
 						  			</div>
 						  			<div class="col-md-3">
-						  				<span>HDD</span>
+						  				<span>HDD/SSD(GB)</span>
 						  			</div>
 						  			<div class="col-md-3 text-center">
 						  				<span id="securityHDD_view"></span>
@@ -417,7 +417,7 @@
 							  		</div>
 
 							  		<div class="col-md-12">
-							  			<h5>保守履歴</h5>
+							  			<h5>故障・廃棄履歴</h5>
 					  					<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 											<table class="table table-bordered jambo_table bulk_action text-center" id="maintenTable">
 												<thead>
@@ -481,7 +481,7 @@
 										  				</div>
 										  				<div class="col-md-4">
 														<div class="input-group date" id="myDatepicker">
-															<input type="text" class="form-control" name="purchaseDate">
+															<input type="text" class="form-control" id="purchaseDate" name="purchaseDate">
 															<span class="input-group-addon">
 																<span class="glyphicon glyphicon-calendar"></span>
 														 	</span>
@@ -514,13 +514,13 @@
 								  			<div class="col-md-6">
 								  				<div class="row">
 								  					<div class="col-md-2">
-								  						<span>購入金額</span>
+								  						<span>購入金額(円)</span>
 								  					</div>
 								  					<div class="col-md-4">
 								  						<input type="text" class="form-control numVal" name="purchasePrice" value="0">
 								  					</div>
 								  					<div class="col-md-2">
-								  						<span>保管位置</span>
+								  						<span>保管場所</span>
 								  					</div>
 								  					<div class="col-md-4">
 								  						<input type="text" class="form-control" name="storageLocation">
@@ -530,13 +530,13 @@
 								  			<div class="col-md-6">
 								  				<div class="row">
 									  				<div class="col-md-2">
-									  					<span>保証期間</span>
+									  					<span>保証期間(年)</span>
 									  				</div>
 									  				<div class="col-md-4">
 									  					<input type="text" class="form-control numVal" name="warrantyPeriod" value="0">
 									  				</div>
 								  					<div class="col-md-2">
-								  						<span>Maker</span>
+								  						<span>メーカー</span>
 								  					</div>
 								  					<div class="col-md-4">
 								  						<input type="text" class="form-control" name="makerName">
@@ -549,7 +549,7 @@
 								  			<div class="col-md-6">
 								  				<div class="row">
 								  					<div class="col-md-2">
-								  						<span>Model</span>
+								  						<span>モデル</span>
 								  					</div>
 								  					<div class="col-md-4">
 								  						<input type="text" class="form-control" name="modelName">
@@ -622,7 +622,7 @@
 									  				<input type="text" class="form-control" name="cpuProcessor">
 									  			</div>
 									  			<div class="col-md-2">
-									  				<span>動作周波数</span>
+									  				<span>動作周波数(㎓)</span>
 									  			</div>
 									  			<div class="col-md-4">
 									  				<input type="text" class="form-control numVal" name="operatingFrequency" value="0">
@@ -976,7 +976,7 @@
                 .draw();
             });
 
-			// maker検索
+			// メーカー検索
             $('#maker_search').on( 'keyup', function () {
             	$('#maker_search').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
@@ -985,7 +985,7 @@
                 .draw();
             });
 
-			// model検索
+			// モデル検索
             $('#model_search').on( 'keyup', function () {
             	$('#model_search').val(this.value.replace(new RegExp("'", 'g'), ''));
             	modalesectiontable
@@ -1015,7 +1015,7 @@
             $('#table1 tbody').on( 'click', 'tr td', function () {
             	var rowData = modalesectiontable.row( this ).data();
             	if(this._DT_CellIndex.column < 7) {
-            		// 付属品、保守履歴リスト初期化
+            		// 付属品、故障・廃棄履歴リスト初期化
             		$('#accTable > tbody').empty();
             		$('#maintenTable > tbody').empty();
 
@@ -1088,7 +1088,7 @@
                     			$('#accTable tbody').append('<tr><td colspan="5">データなし</td></tr>');
                     		}
 
-                    		// 保守履歴セッティング
+                    		// 故障・廃棄履歴セッティング
                     		data.maintenanceHistoryList.forEach(function( data ) {
 								$('#maintenTable tbody').append(
 									 '<tr>'
@@ -1100,7 +1100,7 @@
 								);
                         	});
 
-                    		// 保守履歴データがないとき
+                    		// 故障・廃棄履歴データがないとき
                     		if( data.maintenanceHistoryList == '' ){
                     			$('#maintenTable tbody').append('<tr><td colspan="4">データなし</td></tr>');
                     		}
@@ -1127,9 +1127,7 @@
                     	kubunCode : {
                     		required : true
                     	},
-                    	purchaseDate: {
-                            required: true
-                        },
+
                         statusCode: {
                         	required: true
                         },
@@ -1214,18 +1212,9 @@
                     	kubunCode : {
                     		required : "区分を選択"
                     	},
-                    	purchaseDate: {
-                            required: "日付を入力"
-                        },
+
                         statusCode: {
                         	required: "状態を選択"
-                        }
-                    },
-                    errorPlacement: function(error, element) {
-                        if (element.attr("name") == "purchaseDate") {
-                          error.insertAfter("#myDatepicker");
-                        } else {
-                          error.insertAfter(element);
                         }
                     }
                 });
@@ -1236,6 +1225,15 @@
                     form.find('.numVal').each(function( ) {
                     	if($(this).val() == '') {
                     		$(this).val('0');
+                    	}
+                    });
+                    form.find('#purchaseDate').each(function( ) {
+                    	if($(this).val() == '') {
+                    		var today = new Date();
+                			var dd = today.getDate();
+                			var mm = today.getMonth()+1; //January is 0!
+                			var yyyy = today.getFullYear();
+                    		$(this).val(yyyy+"-"+mm+"-"+dd);
                     	}
                     });
 
