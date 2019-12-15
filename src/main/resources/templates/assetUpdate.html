@@ -435,6 +435,7 @@
 												<tbody>
 												<!-- START故障・廃棄履歴10個項目 -->
 													<!-- START既存 故障・廃棄履歴 -->
+
 													<tr id="mhupdate1"
 														th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
 														<input type="hidden" th:id="${#ids.seq('am_mhkey')}"
@@ -463,6 +464,7 @@
 													</tr>
 													<!-- END既存 故障・廃棄履歴 -->
 													<!-- START故障・廃棄履歴を追加ため空欄 -->
+
 													<tr id="mhupdate2"
 														th:if="${#lists.size(asset.maintenanceHistoryList) < 10}"
 														th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
@@ -490,6 +492,7 @@
 											</table>
 										</form>
 									<!-- END故障・廃棄履歴変更フォーム -->
+
 									</div>
 								</div>
 							</div>
@@ -545,7 +548,9 @@
 
   		$('.mhDatepicker').datetimepicker({
 			format: 'YYYY-MM-DD'
+
 		});	// 故障・廃棄履歴の実施日
+
   		// /datetimepicker format
 
   		// 区分コードMap
@@ -748,6 +753,7 @@
 				// 付属品の既存目録サイズ
 	       		var acclength = Object.keys([[${asset.accessoriesList}]]).length;
 	 	      	// 故障・廃棄履歴の既存目録サイズ
+
 	       		var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
 				//　変更confirm
 				if(confirm('資産情報を変更しますか。')){
@@ -921,6 +927,7 @@
 			var selectTr1 = $(mhupdate1);
 			var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
 			// 故障・廃棄履歴変更・削除処理FOR文
+
 			for(var i = 1; i < mhlength + 1 ; i++){
 				var am_implementationDate = '#am_implementationDate'+i;
 				var am_implementationDetail = '#am_implementationDetail'+i;
@@ -962,8 +969,10 @@
                     	alert('通信失敗mhdelete');
                     });
 				}
+
 				// /故障・廃棄履歴削除プロセス
 				// 故障・廃棄履歴変更プロセス
+
 				else{
 					$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
 	    					{
@@ -983,6 +992,7 @@
 	                    	alert('通信失敗mhupdate');
 	                    });
            		}
+
 				// /故障・廃棄履歴変更プロセス
             };
 			// /故障・廃棄履歴変更・削除処理FOR文
@@ -994,6 +1004,7 @@
             var selectTr2 = $(mhupdate2);
         	var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
             // 故障・廃棄履歴登録処理FOR文
+
 			for(var i = mhlength+1; i < 11 ; i++){
 				var am_historySeq = '#am_historySeq'+i;
 				var am_implementationDate = '#am_implementationDate'+i;
@@ -1029,6 +1040,7 @@
          // /故障・廃棄履歴登録処理FOR文
 		}
 		// /故障・廃棄履歴登録プロセス
+
       })
     /*]]>*/
     </script>
