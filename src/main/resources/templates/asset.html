@@ -90,7 +90,7 @@
                     <span class="pull-right" style="font-size: 18px;">管理番号</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search">
+                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">区分</span>
@@ -127,13 +127,13 @@
                     <span class="pull-right" style="font-size: 18px;">メーカー</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="メーカー" id="maker_search">
+                    <input type="text" class="form-control" placeholder="メーカー" id="maker_search" maxlength="15">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">モデル</span>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="モデル" id="model_search">
+                    <input type="text" class="form-control" placeholder="モデル" id="model_search" maxlength="15">
                 </div>
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">購入期間</span>
@@ -928,7 +928,10 @@
                     }},
                     { targets: 4, data: function ( d ) {
                     	var str = d.purchaseDate;
-                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
+                    	if(str== ''){
+                    		return '-';
+                    	}else{
+                    	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);}
                     }},
                     { targets: 5, data: function ( d ) {
                     	if(d.storageLocation == '') {
@@ -1041,8 +1044,11 @@
                     		$('#psNum_view').text(productCodeMap.get(data.kubunCode));
 
                     		var str = data.purchaseDate;
-
-                    		$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
+							if(str==''){
+								$('#purchaseDate_view').text(str);
+							}else{
+                    			$('#purchaseDate_view').text(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8));
+                    		}
                     		$('#warrantyPeriod_view').text(data.warrantyPeriod + "年");
 
                     		$('#buyTo_view').text(changeNull(data.buyTo));
@@ -1233,18 +1239,7 @@
                     		$(this).val('0');
                     	}
                     });
-                    form.find('#purchaseDate').each(function( ) {
-                    	if($(this).val() == '') {
-                    		var today = new Date();
-                			var dd = today.getDate();
-                			var mm = today.getMonth()+1; //January is 0!
-                			var yyyy = today.getFullYear();
-                			if(dd<10) {
-               				 dd='0'+dd
-               			}
-                    		$(this).val(yyyy+"-"+mm+"-"+dd);
-                    	}
-                    });
+              
 
                 	// 送信
                     $.ajax({
