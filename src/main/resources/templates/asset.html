@@ -97,12 +97,8 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="psNum_search">
-                		<option value="00">
-                			全体
-                		</option>
-                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">
-                			[[${code.codeDetailName}]]
-                		</option>
+                		<option value="00">全体</option>
+                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
                 <div class="col-md-1">
@@ -110,19 +106,13 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="sNumber_search">
-						<option value="00">
-							全体
-						</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">
-                			[[${code.codeDetailName}]]
-                		</option>
+						<option value="00">全体</option>
+                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
                 <div class="col-md-3">
                 </div>
-
                 <div class="col-md-12"><br></div>
-
                 <div class="col-md-1">
                     <span class="pull-right" style="font-size: 18px;">メーカー</span>
                 </div>
@@ -487,10 +477,9 @@
 										  				</div>
 										  				<div class="col-md-4">
 														<div class="input-group date" id="myDatepicker">
+															<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 															<input type="text" class="form-control" id="purchaseDate" name="purchaseDate">
-															<span class="input-group-addon">
-																<span class="glyphicon glyphicon-calendar"></span>
-														 	</span>
+
 														</div>
 														<div class="messages"></div>
 										  				</div>
@@ -1239,7 +1228,7 @@
                     		$(this).val('0');
                     	}
                     });
-              
+
 
                 	// 送信
                     $.ajax({
