@@ -24,21 +24,17 @@
 												<span>管理番号</span>
 											</div>
 											<div class="col-md-4">
-												<input type="hidden" class="form-control" name="assetSeq"
-													th:value="${asset.assetSeq}"> <input type="text"
-													class="form-control" name="assetNumber"
-													th:value="${asset.assetNumber}" disabled>
+												<input type="hidden" class="form-control" name="assetSeq" th:value="${asset.assetSeq}">
+												<input type="text" class="form-control" name="assetNumber" th:value="${asset.assetNumber}" disabled>
 											</div>
 											<div class="col-md-2">
 												<span>区分</span>
 											</div>
 											<div class="col-md-4">
-												<select name="kubunCode" class="form-control"
-													id="am_psNum_search">
-													<option th:each="code : ${productCode}"
-														th:value="${code.codeDetailId}"
-														th:selected="${code.codeDetailId == asset.kubunCode}"
-														th:inline="text">[[${code.codeDetailName}]]</option>
+												<select name="kubunCode" class="form-control" id="am_psNum_search">
+													<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.kubunCode}" th:inline="text">
+														[[${code.codeDetailName}]]
+													</option>
 												</select>
 											</div>
 										</div>
@@ -49,23 +45,20 @@
 												<span>購入日</span>
 											</div>
 											<div class="col-md-4">
-												<div class="input-group date" id="am_myDatepicker">
-													<input type="text" class="form-control input-group-addon"
-														name="purchaseDate" th:value="${asset.purchaseDate}">
-												</div>
+													<div class="input-group date" id="am_myDatepicker">
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														<input type="text" class="form-control input-group-addon" name="purchaseDate" th:value="${asset.purchaseDate}">
+													</div>
 											</div>
 											<div class="col-md-2">
 												<span>状態</span>
 											</div>
 											<div class="col-md-4">
-												<input type="hidden" class="form-control"
-													name="preStatusCode" th:value="${asset.statusCode}">
-												<select name="statusCode" class="form-control"
-													id="am_sNumber_search">
-													<option th:each="code : ${stateCode}"
-														th:value="${code.codeDetailId}"
-														th:selected="${code.codeDetailId == asset.statusCode}"
-														th:inline="text">[[${code.codeDetailName}]]</option>
+												<input type="hidden" class="form-control" name="preStatusCode" th:value="${asset.statusCode}">
+												<select name="statusCode" class="form-control" id="am_sNumber_search">
+													<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:selected="${code.codeDetailId == asset.statusCode}" th:inline="text">
+														[[${code.codeDetailName}]]
+													</option>
 												</select>
 											</div>
 										</div>
@@ -77,15 +70,13 @@
 												<span>購入先</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="buyTo"
-													th:value="${asset.buyTo}">
+												<input type="text" class="form-control" name="buyTo" th:value="${asset.buyTo}">
 											</div>
 											<div class="col-md-2">
 												<span>購入金額(円)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control numVal"
-													name="purchasePrice" th:value="${asset.purchasePrice}">
+												<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
 											</div>
 										</div>
 									</div>
@@ -95,15 +86,13 @@
 												<span>保管場所</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control"
-													name="storageLocation" th:value="${asset.storageLocation}">
+												<input type="text" class="form-control" name="storageLocation" th:value="${asset.storageLocation}">
 											</div>
 											<div class="col-md-2">
 												<span>保証期間(年)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control numVal"
-													name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
+												<input type="text" class="form-control numVal" name="warrantyPeriod" th:value="${asset.warrantyPeriod}">
 											</div>
 										</div>
 									</div>
@@ -118,15 +107,13 @@
 												<span>メーカー</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="makerName"
-													th:value="${asset.makerName}">
+												<input type="text" class="form-control" name="makerName" th:value="${asset.makerName}">
 											</div>
 											<div class="col-md-2">
 												<span>モデル</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="modelName"
-													th:value="${asset.modelName}">
+												<input type="text" class="form-control" name="modelName" th:value="${asset.modelName}">
 											</div>
 										</div>
 									</div>
@@ -136,15 +123,13 @@
 												<span>S/N</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="serialNum"
-													th:value="${asset.serialNum}">
+												<input type="text" class="form-control" name="serialNum" th:value="${asset.serialNum}">
 											</div>
 											<div class="col-md-2">
 												<span>I/F</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="interFaceCol"
-													th:value="${asset.interFaceCol}">
+												<input type="text" class="form-control" name="interFaceCol" th:value="${asset.interFaceCol}">
 											</div>
 										</div>
 									</div>
@@ -152,8 +137,7 @@
 										<br> <span>その他</span>
 									</div>
 									<div class="col-md-12">
-										<textarea class="form-control" name="other"
-											th:text="${asset.other}"></textarea>
+										<textarea class="form-control" name="other" th:text="${asset.other}"></textarea>
 									</div>
 								</div>
 								<div class="x_panel">
@@ -161,8 +145,7 @@
 										<div class="row">
 											<h2>PC仕様詳細変更</h2>
 											<ul class="nav navbar-right">
-												<li><a class="collapse-link-update"><i
-														class="fa fa-chevron-down"></i></a></li>
+												<li><a class="collapse-link-update"><i class="fa fa-chevron-down"></i></a></li>
 											</ul>
 										</div>
 									</div>
@@ -178,15 +161,13 @@
 												<span>名(Edition)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="osName"
-													th:value="${asset.osName}">
+												<input type="text" class="form-control" name="osName" th:value="${asset.osName}">
 											</div>
 											<div class="col-md-2">
 												<span>Product Key</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="osProductKey"
-													th:value="${asset.osProductKey}">
+												<input type="text" class="form-control" name="osProductKey" th:value="${asset.osProductKey}">
 											</div>
 										</div>
 										<div class="row well">
@@ -200,16 +181,13 @@
 												<span>Processor</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control" name="cpuProcessor"
-													th:value="${asset.cpuProcessor}">
+												<input type="text" class="form-control" name="cpuProcessor" th:value="${asset.cpuProcessor}">
 											</div>
 											<div class="col-md-2">
 												<span>動作周波数(㎓)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control numVal"
-													name="operatingFrequency"
-													th:value="${asset.operatingFrequency}">
+												<input type="text" class="form-control numVal" name="operatingFrequency" th:value="${asset.operatingFrequency}">
 											</div>
 										</div>
 										<div class="row well">
@@ -222,15 +200,13 @@
 														<br>
 													</div>
 													<div class="col-md-4">
-														<input type="text" class="form-control numVal"
-															name="memory" th:value="${asset.memory}">
+														<input type="text" class="form-control numVal" name="memory" th:value="${asset.memory}">
 													</div>
 													<div class="col-md-4">
 														<span>Upgarde</span>
 													</div>
 													<div class="col-md-4">
-														<input type="text" class="form-control numVal"
-															name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
+														<input type="text" class="form-control numVal" name="memoryUpgarde" th:value="${asset.memoryUpgarde}">
 													</div>
 												</div>
 											</div>
@@ -243,15 +219,13 @@
 														<br>
 													</div>
 													<div class="col-md-4">
-														<input type="text" class="form-control numVal" name="hdd"
-															th:value="${asset.hdd}">
+														<input type="text" class="form-control numVal" name="hdd" th:value="${asset.hdd}">
 													</div>
 													<div class="col-md-4">
 														<span>Upgarde</span>
 													</div>
 													<div class="col-md-4">
-														<input type="text" class="form-control numVal"
-															name="hddUpgarde" th:value="${asset.hddUpgarde}">
+														<input type="text" class="form-control numVal" name="hddUpgarde" th:value="${asset.hddUpgarde}">
 													</div>
 												</div>
 											</div>
@@ -267,15 +241,13 @@
 												<span>LAN</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control" name="macLan"
-													th:value="${asset.macLan}">
+												<input type="text" class="form-control" name="macLan" th:value="${asset.macLan}">
 											</div>
 											<div class="col-md-3">
 												<span>Wireless</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control" name="macWireless"
-													th:value="${asset.macWireless}">
+												<input type="text" class="form-control" name="macWireless" th:value="${asset.macWireless}">
 											</div>
 										</div>
 										<div class="row well">
@@ -289,15 +261,13 @@
 												<span>BIOS</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control" name="securityBios"
-													th:value="${asset.securityBios}">
+												<input type="text" class="form-control" name="securityBios" th:value="${asset.securityBios}">
 											</div>
 											<div class="col-md-3">
 												<span>HDD</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control" name="securityHdd"
-													th:value="${asset.securityHdd}">
+												<input type="text" class="form-control" name="securityHdd" th:value="${asset.securityHdd}">
 											</div>
 										</div>
 										<div class="row well">
@@ -311,15 +281,13 @@
 												<span>ID</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control"
-													name="adminAccountId" th:value="${asset.adminAccountId}">
+												<input type="text" class="form-control" name="adminAccountId" th:value="${asset.adminAccountId}">
 											</div>
 											<div class="col-md-3">
 												<span>PW</span>
 											</div>
 											<div class="col-md-3">
-												<input type="text" class="form-control"
-													name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
+												<input type="text" class="form-control" name="adminAccountPwd" th:value="${asset.adminAccountPwd}">
 											</div>
 										</div>
 									</div>
@@ -338,9 +306,7 @@
 										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 									<!-- START付属品変更フォーム -->
 										<form id="accForm">
-											<table
-												class="table table-striped jambo_table bulk_action text-center"
-												id="am_table1">
+											<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
 												<thead>
 													<tr class="headings">
 														<th class="col-md-1">No</th>
@@ -354,48 +320,23 @@
 												<tbody>
 												<!-- START付属品10個項目 -->
 													<!-- START既存 付属品 -->
-													<tr id="accupdate1"
-														th:each="accessories, accnum : ${asset.accessoriesList}">
-														<input type="hidden" th:id="${#ids.seq('am_acckey')}"
-															th:value="${accessories.accessoriesSeq}">
-														<td th:id="${#ids.seq('am_accessoriesSeq')}"
-															th:text="${accnum.index+1}"></td>
-														<td><input type="text" class="form-control"
-															maxlength="25" th:name="${#ids.seq('accName')}"
-															th:id="${#ids.seq('am_itemName')}"
-															th:value="${accessories.itemName}"></td>
-														<td><input type="text" maxlength="25"
-															th:name="${#ids.seq('accSpec')}" class="form-control"
-															th:id="${#ids.seq('am_itemSpec')}"
-															th:value="${accessories.itemSpec}"></td>
-														<td><input type="text" maxlength="11"
-															th:name="${#ids.seq('accQuantity')}" class="form-control"
-															th:id="${#ids.seq('am_itemQuantity')}"
-															th:value="${accessories.itemQuantity}"></td>
-														<td><input type="text" maxlength="100"
-															th:name="${#ids.seq('accRemarks')}" class="form-control"
-															th:id="${#ids.seq('am_remarks')}"
-															th:value="${accessories.remarks}"></td>
+													<tr id="accupdate1" th:each="accessories, accnum : ${asset.accessoriesList}">
+														<input type="hidden" th:id="${#ids.seq('am_acckey')}" th:value="${accessories.accessoriesSeq}">
+														<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${accnum.index+1}"></td>
+														<td><input type="text" maxlength="25" th:name="${#ids.seq('accName')}" class="form-control" th:id="${#ids.seq('am_itemName')}" th:value="${accessories.itemName}"></td>
+														<td><input type="text" maxlength="25" th:name="${#ids.seq('accSpec')}" class="form-control" th:id="${#ids.seq('am_itemSpec')}" th:value="${accessories.itemSpec}"></td>
+														<td><input type="text" maxlength="3" th:name="${#ids.seq('accQuantity')}" class="form-control" th:id="${#ids.seq('am_itemQuantity')}" th:value="${accessories.itemQuantity}"></td>
+														<td><input type="text" maxlength="100" th:name="${#ids.seq('accRemarks')}" class="form-control" th:id="${#ids.seq('am_remarks')}" th:value="${accessories.remarks}"></td>
 													</tr>
 													<!-- END既存 付属品 -->
 													<!-- STATRT付属品を追加ため空欄 -->
-													<tr id="accupdate2"
-														th:if="${#lists.size(asset.accessoriesList) < 10}"
+													<tr id="accupdate2" th:if="${#lists.size(asset.accessoriesList) < 10}"
 														th:each="index:${#numbers.sequence(1,10-#lists.size(asset.accessoriesList))}">
-														<td th:id="${#ids.seq('am_accessoriesSeq')}"
-															th:text="${index+#lists.size(asset.accessoriesList)}"></td>
-														<td><input type="text" class="form-control"
-															maxlength="25" th:name="${#ids.seq('accName')}"
-															th:id="${#ids.seq('am_itemName')}"></td>
-														<td><input type="text" maxlength="25"
-															th:name="${#ids.seq('accSpec')}" class="form-control"
-															th:id="${#ids.seq('am_itemSpec')}"></td>
-														<td><input type="text" class="form-control"
-															maxlength="11" th:name="${#ids.seq('accQuantity')}"
-															th:id="${#ids.seq('am_itemQuantity')}"></td>
-														<td><input type="text" maxlength="100"
-															th:name="${#ids.seq('accRemarks')}" class="form-control"
-															th:id="${#ids.seq('am_remarks')}"></td>
+														<td th:id="${#ids.seq('am_accessoriesSeq')}" th:text="${index+#lists.size(asset.accessoriesList)}"></td>
+														<td><input type="text" maxlength="25" class="form-control" th:name="${#ids.seq('accName')}" th:id="${#ids.seq('am_itemName')}"></td>
+														<td><input type="text" maxlength="25" class="form-control" th:name="${#ids.seq('accSpec')}"th:id="${#ids.seq('am_itemSpec')}"></td>
+														<td><input type="text" maxlength="3" class="form-control" th:name="${#ids.seq('accQuantity')}" th:id="${#ids.seq('am_itemQuantity')}"></td>
+														<td><input type="text" maxlength="100" class="form-control" th:name="${#ids.seq('accRemarks')}" th:id="${#ids.seq('am_remarks')}"></td>
 													</tr>
 													<!-- END付属品を追加ため空欄 -->
 												<!-- END付属品10個項目 -->
@@ -416,12 +357,10 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content" style="display: block;">
-									<div
-										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 									<!-- START故障・廃棄履歴変更フォーム -->
 										<form id="mhForm">
-											<table class="table table-striped jambo_table bulk_action"
-												id="am_table2">
+											<table class="table table-striped jambo_table bulk_action" id="am_table2">
 												<thead>
 													<tr class="headings">
 														<th class="col-md-1">No</th>
@@ -436,55 +375,31 @@
 												<!-- START故障・廃棄履歴10個項目 -->
 													<!-- START既存 故障・廃棄履歴 -->
 
-													<tr id="mhupdate1"
-														th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
-														<input type="hidden" th:id="${#ids.seq('am_mhkey')}"
-															th:value="${maintenance.historySeq}">
-														<td th:id="${#ids.seq('am_historySeq')}"
-															th:text="${mhnum.index+1}"></td>
+													<tr id="mhupdate1" th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
+														<input type="hidden" th:id="${#ids.seq('am_mhkey')}" th:value="${maintenance.historySeq}">
+														<td th:id="${#ids.seq('am_historySeq')}" th:text="${mhnum.index+1}"></td>
 														<td>
 															<div class="input-group date mhDatepicker">
-																<input type="text" class="form-control" maxlength="10"
-																	name="mhDate"
-																	th:id="${#ids.seq('am_implementationDate')}"
-																	th:value="${maintenance.implementationDate}">
+																<input type="text" class="form-control" maxlength="10" name="mhDate" th:id="${#ids.seq('am_implementationDate')}" th:value="${maintenance.implementationDate}">
 															</div>
 														</td>
-														<td><input type="text" class="form-control"
-															maxlength="100" name="mhDetail"
-															th:id="${#ids.seq('am_implementationDetail')}"
-															th:value="${maintenance.implementationDetail}"></td>
-														<td><input type="text" maxlength="10" name="mhrepId"
-															class="form-control" th:id="${#ids.seq('am_repId')}"
-															th:value="${maintenance.repId}"></td>
-														<td><input type="text" maxlength="10"
-															name="mhapproverId" class="form-control"
-															th:id="${#ids.seq('am_approverId')}"
-															th:value="${maintenance.approverId}"></td>
+														<td><input type="text" class="form-control" maxlength="100" name="mhDetail" th:id="${#ids.seq('am_implementationDetail')}" th:value="${maintenance.implementationDetail}"></td>
+														<td><input type="text" maxlength="10" name="mhrepId" class="form-control" th:id="${#ids.seq('am_repId')}" th:value="${maintenance.repId}"></td>
+														<td><input type="text" maxlength="10" name="mhapproverId" class="form-control" th:id="${#ids.seq('am_approverId')}" th:value="${maintenance.approverId}"></td>
 													</tr>
 													<!-- END既存 故障・廃棄履歴 -->
 													<!-- START故障・廃棄履歴を追加ため空欄 -->
 
-													<tr id="mhupdate2"
-														th:if="${#lists.size(asset.maintenanceHistoryList) < 10}"
-														th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
-														<td th:id="${#ids.seq('am_historySeq')}"
-															th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
+													<tr id="mhupdate2" th:if="${#lists.size(asset.maintenanceHistoryList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
+														<td th:id="${#ids.seq('am_historySeq')}" th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
 														<td>
 															<div class="input-group date mhDatepicker">
-																<input type="text" class="form-control" maxlength="10"
-																	name="mhDate"
-																	th:id="${#ids.seq('am_implementationDate')}">
+																<input type="text" class="form-control" maxlength="10" name="mhDate" th:id="${#ids.seq('am_implementationDate')}">
 															</div>
 														</td>
-														<td><input type="text" class="form-control"
-															maxlength="100" name="mhDetail"
-															th:id="${#ids.seq('am_implementationDetail')}"></td>
-														<td><input type="text" maxlength="10" name="mhrepId"
-															class="form-control" th:id="${#ids.seq('am_repId')}"></td>
-														<td><input type="text" maxlength="10"
-															name="mhapproverId" class="form-control"
-															th:id="${#ids.seq('am_approverId')}"></td>
+														<td><input type="text" class="form-control" maxlength="100" name="mhDetail" th:id="${#ids.seq('am_implementationDetail')}"></td>
+														<td><input type="text" maxlength="10" name="mhrepId" class="form-control" th:id="${#ids.seq('am_repId')}"></td>
+														<td><input type="text" maxlength="10" name="mhapproverId" class="form-control" th:id="${#ids.seq('am_approverId')}"></td>
 													</tr>
 													<!-- END故障・廃棄履歴を追加ため空欄 -->
 												<!-- END故障・廃棄履歴10個項目 -->
@@ -503,10 +418,8 @@
 			<!-- START modal-footer -->
 				<div class="modal-footer">
 					<div class="col-md-12 text-left">
-						<button type="button" class="btn btn-secondary pull-right"
-							data-dismiss="modal">戻る</button>
-						<button type="button" id="sisanupdate"
-							class="btn btn-primary btn-warning">変更</button>
+						<button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">戻る</button>
+						<button type="button" id="sisanupdate" class="btn btn-primary btn-warning">変更</button>
 					</div>
 				</div>
 			<!-- END modal-footer -->
@@ -603,9 +516,7 @@
                       	kubunCode : {
                       		required : true
                       	},
-                      	purchaseDate: {
-                              required: true
-                          },
+
                           statusCode: {
                           	required: true
                           },
@@ -690,9 +601,7 @@
                       	kubunCode : {
                       		required : "区分を選択"
                       	},
-                      	purchaseDate: {
-                              required: "日付を入力"
-                          },
+
                           statusCode: {
                           	required: "状態を選択"
                           }
@@ -837,7 +746,7 @@
     					if(result == 0) {
     						alert('エラーが発生しました。');
     					} else {
-    						selectTr.remove();
+    						selectTr1.remove();
     						alert('削除しました');
     					}
     				}).error(function(xhr, textStatus, error) {
@@ -859,7 +768,7 @@
 	    					if(result == 0) {
 	    						alert('エラーが発生しました。');
 	    					} else {
-								console.log('付属品変更行目：'+ i-1 +'行目');
+
 	    					}
 	    				}).error(function(xhr, textStatus, error) {
 	                    	alert('通信失敗:付属品変更');
@@ -963,7 +872,7 @@
     					if(result == 0) {
     						alert('エラーが発生しました。');
     					} else {
-    						selectTr.remove();
+    						selectTr1.remove();
     					}
     				}).error(function(xhr, textStatus, error) {
                     	alert('通信失敗mhdelete');

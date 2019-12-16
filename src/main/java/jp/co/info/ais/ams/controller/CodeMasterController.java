@@ -1,6 +1,5 @@
 package jp.co.info.ais.ams.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -169,22 +168,6 @@ public class CodeMasterController {
 			}
 	        return result;
 	    }
-		/**
-		 * もダル化
-		 * @param codeMasterId マスターコード
-		 * @return CodeDetail
-		 */
-	    @RequestMapping(value = "/infoAjax", method = RequestMethod.POST)
-	    @ResponseBody
-	    public List<CodeDetail> infoAjax(@RequestBody String codeMasterId) {
-	    	List<CodeDetail>array = new ArrayList<CodeDetail>();
-	    	try {
-	    		array = codeDetailService.selectCodeDetailList(new CodeDetail(codeMasterId, null, null,appConstant.USE_CODE) );
-
-	    	}catch (Exception e) {
-	    		logger.error(e.getMessage());
-			}
-	        return array;
-	    }
+	
 
 }
