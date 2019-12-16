@@ -195,8 +195,10 @@ public class AssetService {
 			}
 		}
     	// 空白及び'-'除去
-    	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
-		// その他改行
+		if(asset.getPurchaseDate()!=null) {
+			asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
+		}
+    	// その他改行
 		String other = asset.getOther();
 		if(null != other && !other.equals("")) {
 			other = other.replaceAll("\n", "<br>");
