@@ -40,9 +40,7 @@
 		.leader{
 			font-size:18px;
 		}
-			#datatable-list tbody tr{
-		    cursor:pointer;
-		}
+	
 </style>
 
 </head>
@@ -84,7 +82,7 @@
 													<span class="pull-right leader" for="search_id">コードID</span>
 												</div>
 												<div class="col-sm-6 ">
-													<input type="text" id="search_id" class="form-control " placeholder="コードID">
+													<input type="text" id="search_id" class="form-control " placeholder="コードID" maxlength="15">
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -92,7 +90,7 @@
 													<span class="pull-right leader" for="search_name">コード名</span>
 												</div>
 												<div class="col-sm-6 ">
-													<input type="text" id="search_name" class="form-control "placeholder="コード名">
+													<input type="text" id="search_name" class="form-control "placeholder="コード名" maxlength="15">
 												</div>
 											</div>
 										</div>
@@ -202,37 +200,6 @@
 		</div>
 	</div>
 	<!-- /.Modal Part :: Register End -->
-		<!-- Modal Part コードマスタ変更 -->
-	<div id="modal3d" class="modal" tabindex="-1"role="dialog" >
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h3 class="modal-title"> <i class="fa fa-pencil-square" aria-hidden="true" ></i> マスターコード詳細</h3>
-				</div>
-				<div class="modal-body">
-						<table id="table1"class="table table-bordered table-hover jambo_table dataTable table-lg text-center"style="width: 100%">
-						<thead>
-							<tr class="headings">
-				 				<th class="column-title txt_center">マスターコード</th>
-				 				<th class="column-title txt_center">詳細コードID</th>
-				 				<th class="column-title txt_center">詳細コード名</th>
-				 				<th class="column-title txt_center">アイテム1</th>
-				 				<th class="column-title txt_center">アイテム2</th>
-				 				<th class="column-title txt_center">アイテム3</th>
-				 				<th class="column-title txt_center">アイテム4</th>
-				 				<th class="column-title txt_center">アイテム5</th>
-				 			</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /.Modal Part :: Register End -->
 
 	<!-- Modal Part コードマスタ変更 -->
 	<div id="modalCodeMaster_update" class="modal" tabindex="-1"role="dialog" data-backdrop="static">
@@ -320,6 +287,8 @@
 		/*<![CDATA[*/
 		var modalesectiondata = null;
 
+		$.validator.messages.number = '有効な数字を入力';
+    	$.validator.messages.maxlength = '{0} 文字以下を入力';
 		function codeInsert() {
 			var form = $('#antoform');
 
@@ -334,7 +303,8 @@
 						rangelength : [ 3, 3 ]
 					},
 					codeMasterName : {
-						required : true
+						required : true,
+						maxlength : 15
 					}
 				},
 				messages : {
@@ -473,50 +443,7 @@
 	            } );
 
 
-			  $('#datatable-list tbody').on( 'click', 'tr td', function () {
-	            	var rowData = modalesectiontable.row( this ).data();
-	            	if(this._DT_CellIndex.column < 3) {
-	            	
-	            		$('#table1 > tbody').empty();
-
-
-	            		$('#modal3d').modal();
-
-	                	$.ajax(/*[[@{/codemaster/infoAjax}]]*/ 'codemaster/infoAjax',
-	        					{
-	        						type: "POST",
-	        						dataType: "json",
-	        						contentType: 'application/JSON',
-	        						data : rowData.codeMasterId
-	        					}
-	                    	)
-	        				.done(function(data) {
-								
-		                    		data.forEach(function( data ) {
-		                    			
-										$('#table1 tbody').append(
-
-											 '<tr>'
-											 +'<td>'+changeNull(data.codeMasterId)+'</td>'
-											 +'<td>'+changeNull(data.codeDetailId)+'</td>'
-											 +'<td>'+changeNull(data.codeDetailName)+'</td>'
-											 +'<td>'+changeNull(data.item1)+'</td>'
-											 +'<td>'+changeNull(data.item2)+'</td>'
-											 +'<td>'+changeNull(data.item3)+'</td>'
-											 +'<td>'+changeNull(data.item4)+'</td>'
-											 +'<td>'+changeNull(data.item5)+'</td>'
-											 +'</tr>'
-										);
-		                        	});
-		                    		 if( data == '' ){
-		                    			$('#table1 tbody').append('<tr><td colspan="8">データなし</td></tr>');
-		                    		} 
-	                    		
-
-
-	        				});
-	            	}
-			  });
+		
 
 		})
 
@@ -574,7 +501,8 @@
 							rangelength : [ 3, 3 ]
 						},
 						codeMasterName_update : {
-							required : true
+							required : true,
+							maxlength : 15
 						}
 					},
 					messages : {
