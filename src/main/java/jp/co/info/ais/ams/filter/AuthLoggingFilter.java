@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
 public class AuthLoggingFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession(true);
         if (session != null) {
