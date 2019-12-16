@@ -1,5 +1,6 @@
 package jp.co.info.ais.ams.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.Page;
+import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.CodeMaster;
+import jp.co.info.ais.ams.service.CodeDetailService;
 import jp.co.info.ais.ams.service.CodeMasterService;
 
 @Controller
@@ -26,7 +29,8 @@ public class CodeMasterController {
 	private static final Logger logger = LogManager.getLogger(CodeMasterController.class);
 	@Autowired
 	private CodeMasterService codeMasterService;
-
+	@Autowired
+	private CodeDetailService codeDetailService;
 	@Autowired
 	HttpSession session;
 	@Autowired
@@ -87,7 +91,9 @@ public class CodeMasterController {
 			condition.setUseFlag(appConstant.USE_CODE);
 			// リスト照会
 			List<CodeMaster> CodeList = codeMasterService.selectCodeMasterList(condition);
-
+			for(CodeMaster code :CodeList ) {
+				code.setCheckId(codeMasterService.deleteCodeBefore(new CodeDetail(code.getCodeMasterId(), null, null,appConstant.USE_CODE)));
+			}
 			// データをページオブジェクトにセット
 			page.setData(CodeList);
 
@@ -109,7 +115,7 @@ public class CodeMasterController {
 		public int CodeListCheck(@RequestBody CodeMaster masterCode) {
 			int num = 0;
 
-		
+
 
 			logger.debug(masterCode);
 
@@ -156,12 +162,29 @@ public class CodeMasterController {
 	    	try {
 	    		logger.debug(codeMasterId);
 	    		//結果が正しい場合削除メソッド実行してresultに含める
-		    	result = codeMasterService.deleteMasterCode(codeMasterId);
+
+		    	result = codeMasterService.deleteMasterCode(new CodeDetail(codeMasterId, null, null,appConstant.USE_CODE) );
 	    	}catch (Exception e) {
 	    		logger.error(e.getMessage());
 			}
 	        return result;
 	    }
+		/**
+		 * もダル化
+		 * @param codeMasterId マスターコード
+		 * @return CodeDetail
+		 */
+	    @RequestMapping(value = "/infoAjax", method = RequestMethod.POST)
+	    @ResponseBody
+	    public List<CodeDetail> infoAjax(@RequestBody String codeMasterId) {
+	    	List<CodeDetail>array = new ArrayList<CodeDetail>();
+	    	try {
+	    		array = codeDetailService.selectCodeDetailList(new CodeDetail(codeMasterId, null, null,appConstant.USE_CODE) );
 
+	    	}catch (Exception e) {
+	    		logger.error(e.getMessage());
+			}
+	        return array;
+	    }
 
 }

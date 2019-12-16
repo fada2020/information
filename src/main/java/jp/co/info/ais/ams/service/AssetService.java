@@ -113,9 +113,9 @@ public class AssetService {
 	}
 
 	/**
-	 * 保守履歴情報登録
+	 * 故障・廃棄履歴情報登録
 	 *
-	 * @param MaintenanceHistory 保守履歴情報
+	 * @param MaintenanceHistory 故障・廃棄履歴情報
 	 */
 	public void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
 		assetMapper.insertMaintenanceHistory(maintenanceHistory);
@@ -142,9 +142,9 @@ public class AssetService {
 	}
 
 	/**
-	 * 保守履歴情報修正
+	 * 故障・廃棄履歴情報修正
 	 *
-	 * @param Accessories 保守履歴情報
+	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
 	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
@@ -152,9 +152,9 @@ public class AssetService {
 	}
 
 	/**
-	 * 保守履歴情報削除
+	 * 故障・廃棄履歴情報削除
 	 *
-	 * @param Accessories 保守履歴情報
+	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
 	public int deleteMaintenanceHistory(MaintenanceHistory maintenanceHistory) {

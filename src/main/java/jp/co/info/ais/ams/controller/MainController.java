@@ -30,10 +30,10 @@ public class MainController {
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String index(Model model) {
 		try {
-			// 保有現況装置
-			ArrayList<Dashboard> dash = dashboardService.possession();	// HW, SW 装置数量
-			int newItem = dashboardService.newItem();	// 今月購入した装置数量
-			int kosyouCnt = dashboardService.kosyouItem();	//故障した装置
+			// 保有状況資産
+			ArrayList<Dashboard> dash = dashboardService.possession();	// HW, SW 資産数量
+			int newItem = dashboardService.newItem();	// 今月購入した資産数量
+			int kosyouCnt = dashboardService.kosyouItem();	//故障した資産
 			int hwCnt = 0;
 			int swCnt = 0;
 			for (Dashboard item : dash) {
@@ -43,12 +43,12 @@ public class MainController {
 					swCnt += item.getTypeCnt();
 				}
 			}
-			model.addAttribute("hwCnt", hwCnt);		// HW 装置数量
-			model.addAttribute("swCnt", swCnt);		// SW 装置数量
-			model.addAttribute("kosyouCnt", kosyouCnt);	//故障した装置
-			model.addAttribute("newItem", newItem);	// 今月購入した装置数量
+			model.addAttribute("hwCnt", hwCnt);		// HW 資産数量
+			model.addAttribute("swCnt", swCnt);		// SW 資産数量
+			model.addAttribute("kosyouCnt", kosyouCnt);	//故障した資産
+			model.addAttribute("newItem", newItem);	// 今月購入した資産数量
 
-			// 保有現況グラフ
+			// 保有状況グラフ
 			int i = 0, j = 0, hw = 0, sw = 0;	// i, j, hw, sw 値を初期化
 			int hw5Total = 0, sw5Total =0; // hw5Total, sw5Total 値を初期化
 			String[] hardTop = new String[20];
@@ -80,22 +80,22 @@ public class MainController {
 			model.addAttribute("hardTop", hardTop);		// HW Top5 Graph list
 			model.addAttribute("softTop", softTop);		// SW Top5 Graph list
 			model.addAttribute("hardCnt", hardCnt);		// HW Top5 Graph Cnt
-			model.addAttribute("hwsonotaCnt", hwCnt-hw5Total);	// HWその他の装置
+			model.addAttribute("hwsonotaCnt", hwCnt-hw5Total);	// HWその他の資産
 			model.addAttribute("softCnt", softCnt);		// SW Top5 Graph Cnt
-			model.addAttribute("swsonotaCnt", swCnt-sw5Total);	// SWその他の装置
+			model.addAttribute("swsonotaCnt", swCnt-sw5Total);	// SWその他の資産
 			model.addAttribute("colorTop", colorTop);	// color list
 			model.addAttribute("hw", hw);		// 登録したHW種数
 			model.addAttribute("sw", sw);		// 登録したSW種数
 
-			// 貸与現況グラフ
+			// 貸与状況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 			rslist = dashboardService.rslist();
 			int rsize = dashboardService.rslist().size();
-			// 【目録】貸与現況グラフ
+			// 【目録】貸与状況グラフ
 			AppConstant rentlist = new AppConstant();	// 常数
 			model.addAttribute("rentlist", rentlist);
 			model.addAttribute("rsize", rsize);
-			// 【数量】貸与現況グラフ：保有、貸与
+			// 【数量】貸与状況グラフ：保有、貸与
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);
 			model.addAttribute("TBL001", 0); model.addAttribute("TBL002", 0);

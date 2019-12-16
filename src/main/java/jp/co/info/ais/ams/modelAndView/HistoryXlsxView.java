@@ -37,8 +37,8 @@ public class HistoryXlsxView extends AbstractXlsxView {
 		// create header
         Row row = sheet.createRow(0);
 
-        row.createCell(0).setCellValue("装置");
-        row.createCell(3).setCellValue("使用現況");
+        row.createCell(0).setCellValue("資産");
+        row.createCell(3).setCellValue("使用状況");
 
         sheet.addMergedRegion(new CellRangeAddress(0,0,0,2));
         sheet.addMergedRegion(new CellRangeAddress(0,0,3,11));

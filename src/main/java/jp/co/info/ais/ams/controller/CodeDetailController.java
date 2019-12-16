@@ -45,6 +45,9 @@ public class CodeDetailController {
 			codeDetail.setUseFlag(appconstant.USE_CODE);
 			model.addAttribute("masterid",codeDetailService.codeMasterList(codemaster));
 			model.addAttribute("countId",codeDetailService.selectCount(codeDetail));
+			codeDetail.setCodeMasterId(appconstant.MASTER_CLASS);
+			logger.debug(codeDetailService.selectCodeDetailList(codeDetail));
+			model.addAttribute("HWSWCode",codeDetailService.selectCodeDetailList(codeDetail));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -79,7 +82,9 @@ public class CodeDetailController {
 						condition.setUseFlag(appconstant.USE_CODE);
 			// リスト照会
 			List<CodeDetail> CodeDetailList = codeDetailService.selectCodeDetailList(condition);
-
+			for(CodeDetail code :CodeDetailList ) {
+				code.setCheckId(codeDetailService.deleteBefore(code));
+			}
 			page.setData(CodeDetailList);
 
 			int totalCount = codeDetailService.selectCount(condition);
