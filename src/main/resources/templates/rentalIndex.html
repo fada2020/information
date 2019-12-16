@@ -469,7 +469,7 @@
 									<!--START 貸与ボタンと戻るボタン -->
 									<div class="modal-footer">
 										<input type="button"class="btn btn-primary pull-left btn-success"id="insertButton" value="貸与" onclick="rentalItem();" />
-										<button type="button" class="btn btn-secondary"onclick="cancelInsert()">戻る</button>
+										<button type="button" class="btn btn-secondary" id="canelButton">戻る</button>
 									</div>
 									<!--END 貸与ボタンと戻るボタン -->
 								</div>
@@ -556,28 +556,7 @@
     		statusCode.forEach(function( value ) {
     		statusCodeMap.set(value.codeDetailId, value.codeDetailName);
     		});
-	    /*登録を取り消したら作動するメソッド  */
-		function cancelInsert(){
-	    	//貸与目録をリセットする
-			$('#selectedAsset > tbody').empty();
-	    	//登録フォームのテキストをリセットする
-	        $('#insertForm').find('input[type="text"], textarea').val('');
-	     	//登録フォームのセレクトをリセットする
-			$('select').find('option:first').attr('selected', 'selected');
-	     	//START登録フォームのデートをリセットする
-			var today = new Date();
-			var dd = today.getDate();
-			var mm = today.getMonth()+1; //January is 0!
-			var yyyy = today.getFullYear();
-			if(dd<10) {
-				 dd='0'+dd
-			}
-			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
-			//END登録フォームのデートをリセットする
-			   $('#storageLocation').val('自社');
-			   $('#purpose').val('勤務');
-			   $('#modal3d2').modal("hide");
-	    }
+
 
 
 
@@ -707,6 +686,30 @@
                     }
                 ]
             });
+
+    	    /*登録を取り消したら作動するメソッド  */
+    	  $("#canelButton").on("click", function() {
+    	    	//貸与目録をリセットする
+    	 	$('#selectedAsset > tbody').empty();
+    	    	//登録フォームのテキストをリセットする
+    	    $('#insertForm').find('input[type="text"], textarea').val('');
+    	     	//登録フォームのセレクトをリセットする
+    		$('select').find('option:first').attr('selected', 'selected');
+    	     	//START登録フォームのデートをリセットする
+    			var today = new Date();
+    			var dd = today.getDate();
+    			var mm = today.getMonth()+1; //January is 0!
+    			var yyyy = today.getFullYear();
+    			if(dd<10) {
+    				 dd='0'+dd
+    			}
+    			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
+    			//END登録フォームのデートをリセットする
+    			   $('#storageLocation').val('自社');
+    			   $('#purpose').val('勤務');
+
+    	    	  $('#modal3d2').modal("hide");
+    	    });
         	//END データテーブルをセッティングする
             /*資産ナンバーを貰ってメイン画面のデータを変える*/
             $('#assetNumber_search').on( 'keyup', function () {
@@ -734,6 +737,7 @@
     </script>
 	<script th:inline="javascript">
 	/*<![CDATA[*/
+
 	/*データのupdateメソッド
 	引数はrentalのドメインを作ってajaxを利用する
 	戻り値も無し
@@ -1059,6 +1063,18 @@ function researchRental(assetSeq){
                  	speciality : {
                  		maxlength : 200
                 	},
+                	singleSelect: {
+
+                 		required : true
+                	},
+                	sub_singleSelect: {
+
+                 		required : true
+                	},
+                	sub_subSelect: {
+
+                 		required : true
+                	},
                 	approver : {
                  		maxlength : 15,
                  		required : true
@@ -1090,6 +1106,15 @@ function researchRental(assetSeq){
                 	},
                 	purpose : {
                 		required : "用途を入力してください"
+                	},
+                	singleSelect : {
+                		required : "分類を選択してください"
+                	},
+                	sub_singleSelect : {
+                		required : "種類を選択してください"
+                	},
+                	sub_subSelect: {
+                		required : "物を選択してください"
                 	},
                 	storageLocation : {
                 		required : "場所を入力してください"
