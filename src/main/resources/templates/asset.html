@@ -97,9 +97,12 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="psNum_search">
-                		<option value="00">全体</option>
-                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
-                		th:inline="text">[[${code.codeDetailName}]]</option>
+                		<option value="00">
+                			全体
+                		</option>
+                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">
+                			[[${code.codeDetailName}]]
+                		</option>
 					</select>
                 </div>
                 <div class="col-md-1">
@@ -107,9 +110,12 @@
                 </div>
                 <div class="col-md-2">
                 	<select class="form-control" id="sNumber_search">
-						<option value="00">全体</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}"
-                		th:inline="text">[[${code.codeDetailName}]]</option>
+						<option value="00">
+							全体
+						</option>
+                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">
+                			[[${code.codeDetailName}]]
+                		</option>
 					</select>
                 </div>
                 <div class="col-md-3">
@@ -455,7 +461,6 @@
 					        </button>
 					        <h3 class="modal-title">
 					        	<i class="fa fa-pencil-square" aria-hidden="true"></i> 資産情報登録
-
 					        </h3>
 					      </div>
 					      <form action="/asset/insert" id="insertForm" method="POST" role="form" class="form-horizontal">
@@ -471,8 +476,9 @@
 										  			</div>
 										  			<div class="col-md-4">
 									                	<select name="kubunCode" class="form-control" id="psNum_search">
-									                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}"
-									                		th:inline="text">[[${code.codeDetailName}]]</option>
+									                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">
+									                			[[${code.codeDetailName}]]
+									                		</option>
 														</select>
 										  			</div>
 										  			<div class="form-group">
