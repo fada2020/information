@@ -101,14 +101,20 @@
                 		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 					</select>
                 </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">状態</span>
+               <div class="col-md-1">
+                    <span class="pull-right" style="font-size: 18px;">購入期間</span>
                 </div>
                 <div class="col-md-2">
-                	<select class="form-control" id="sNumber_search">
-						<option value="00">全体</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
-					</select>
+					<fieldset>
+						<div class="control-group ">
+							<div class="controls">
+								<div class="input-prepend input-group">
+									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+									<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control">
+								</div>
+							</div>
+						</div>
+					</fieldset>
                 </div>
                 <div class="col-md-3">
                 </div>
@@ -125,21 +131,16 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" placeholder="モデル" id="model_search" maxlength="15">
                 </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">購入期間</span>
+                      <div class="col-md-1">
+                    <span class="pull-right" style="font-size: 18px;">状態</span>
                 </div>
                 <div class="col-md-2">
-					<fieldset>
-						<div class="control-group ">
-							<div class="controls">
-								<div class="input-prepend input-group">
-									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-									<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control">
-								</div>
-							</div>
-						</div>
-					</fieldset>
+                	<select class="form-control" id="sNumber_search">
+						<option value="00">全体</option>
+                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+					</select>
                 </div>
+
             <!-- END 検索条件 -->
 			<!--START 登録ボタン -->
                 <div class="col-md-3">
@@ -642,7 +643,7 @@
 								  			<div class="row well">
 								  				<div class="row">
 										  			<div class="col-md-12">
-										  				<span>HDD(GB)</span>
+										  				<span>HDD/SSD(GB)</span>
 										  			</div>
 										  			<div class="col-md-4">
 										  				<input type="text" class="form-control numVal" name="hdd" value="0">
