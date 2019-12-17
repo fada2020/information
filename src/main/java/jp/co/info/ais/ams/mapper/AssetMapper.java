@@ -3,6 +3,7 @@ package jp.co.info.ais.ams.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import jp.co.info.ais.ams.domain.Accessories;
 import jp.co.info.ais.ams.domain.Asset;
@@ -23,15 +24,15 @@ public interface AssetMapper {
 
 	int updateAsset(Asset asset);
 
-	void insertAccessories(Accessories accessories);
+	int insertAccessories(@Param ("itemList") List<Accessories> accinsertList);
 
-	void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+	int insertMaintenanceHistory(@Param ("itemList") List<MaintenanceHistory> mhinsertList);
 
-	int updateAccessories(Accessories accessories);
+	int updateAccessories(@Param ("itemList") List<Accessories> accupdateList);
 
 	int deleteAccessories(Accessories accessories);
 
-	int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory);
+	int updateMaintenanceHistory(@Param ("itemList") List<MaintenanceHistory> mhupdateList);
 
 	void insertAsset(Asset asset);
 

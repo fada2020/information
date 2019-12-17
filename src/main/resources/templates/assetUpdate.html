@@ -374,7 +374,6 @@
 												<tbody>
 												<!-- START故障・廃棄履歴10個項目 -->
 													<!-- START既存 故障・廃棄履歴 -->
-
 													<tr id="mhupdate1" th:each="maintenance, mhnum : ${asset.maintenanceHistoryList}">
 														<input type="hidden" th:id="${#ids.seq('am_mhkey')}" th:value="${maintenance.historySeq}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${mhnum.index+1}"></td>
@@ -389,7 +388,6 @@
 													</tr>
 													<!-- END既存 故障・廃棄履歴 -->
 													<!-- START故障・廃棄履歴を追加ため空欄 -->
-
 													<tr id="mhupdate2" th:if="${#lists.size(asset.maintenanceHistoryList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
 														<td>
@@ -712,6 +710,7 @@
 		function accupdate() {
 			var selectTr1 = $(accupdate1);
 			var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+			var accupdateList = new Array();
 			// 各付属品のリスト処理FOR文
 			for(var i = 1; i < acclength + 1 ; i++){
 				var am_itemName = '#am_itemName'+i;
@@ -725,7 +724,9 @@
             			"itemName" : selectTr1.find(am_itemName).val(),
             			"itemSpec" : selectTr1.find(am_itemSpec).val(),
             			"itemQuantity" : selectTr1.find(am_itemQuantity).val(),
-            			"remarks" : selectTr1.find(am_remarks).val()
+            			"remarks" : selectTr1.find(am_remarks).val(),
+            			"insertId" :  /*[[${session.id}]]*/ ,
+            			"updateId" :  /*[[${session.id}]]*/
             	};
 			// 付属品削除プロセス
 				if(selectTr1.find(am_itemName).val() == "" && selectTr1.find(am_itemSpec).val() == ""
@@ -756,27 +757,29 @@
 				// /付属品削除プロセス
 				// 付属品変更プロセス
 				else{
-					$.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
-	    					{
-	    						type: "POST",
-	    						dataType: "json",
-	    						contentType: 'application/JSON',
-	    						data : JSON.stringify(accessories)
-	    					}
-	                	)
-	    				.success(function(result) {
-	    					if(result == 0) {
-	    						alert('エラーが発生しました。');
-	    					} else {
-
-	    					}
-	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗:付属品変更');
-	                    });
+					accupdateList.push(accessories);
            		}
 				// /付属品変更プロセス
+
             };
             // /各付属品のリスト処理FOR文
+            $.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
+					{
+						type: "POST",
+						dataType: "json",
+						contentType: 'application/JSON',
+						data : JSON.stringify(accupdateList)
+					}
+            	)
+				.success(function(result) {
+					if(result == 0) {
+						alert('エラーが発生しました。');
+					} else {
+
+					}
+				}).error(function(xhr, textStatus, error) {
+                	alert('通信失敗:付属品変更');
+                });
 		}
 		// /付属品変更・削除プロセス
 
@@ -784,6 +787,7 @@
 		function accinsert() {
             var selectTr2 = $(accupdate2);
         	var acclength = Object.keys([[${asset.accessoriesList}]]).length;
+        	var accinsertList = new Array();
         	// 付属品登録処理FOR文
 			for(var i = acclength+1; i < 11 ; i++){
 				var am_accessoriesSeq = '#am_accessoriesSeq'+i;
@@ -797,7 +801,9 @@
             			"itemName" : selectTr2.find(am_itemName).val(),
             			"itemSpec" : selectTr2.find(am_itemSpec).val(),
             			"itemQuantity" : selectTr2.find(am_itemQuantity).val(),
-            			"remarks" : selectTr2.find(am_remarks).val()
+            			"remarks" : selectTr2.find(am_remarks).val(),
+            			"insertId" :  /*[[${session.id}]]*/ ,
+            			"updateId" :  /*[[${session.id}]]*/
             	};
 				// 全項目空きったら、付属品登録しない
 				if(selectTr2.find(am_itemName).val() == "" && selectTr2.find(am_itemSpec).val() == ""
@@ -807,12 +813,17 @@
 				// /全項目空きったら、付属品登録しない
 				// 付属品登録プロセス
 				else{
+					accinsertList.push(accessories);
+				}
+				if(JSON.stringify(accinsertList) == "[]"){
+
+				} else{
 					$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
 	    					{
 	    						type: "POST",
 	    						dataType: "json",
 	    						contentType: 'application/JSON',
-	    						data : JSON.stringify(accessories)
+	    						data : JSON.stringify(accinsertList)
 	    					}
 	                	)
 	    				.success(function(result) {
@@ -835,8 +846,8 @@
 		function mhupdate() {
 			var selectTr1 = $(mhupdate1);
 			var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+			var mhupdateList = new Array();
 			// 故障・廃棄履歴変更・削除処理FOR文
-
 			for(var i = 1; i < mhlength + 1 ; i++){
 				var am_implementationDate = '#am_implementationDate'+i;
 				var am_implementationDetail = '#am_implementationDetail'+i;
@@ -851,6 +862,8 @@
             			"implementationDetail" : selectTr1.find(am_implementationDetail).val(),
             			"repId" : selectTr1.find(am_repId).val(),
             			"approverId" : selectTr1.find(am_approverId).val(),
+            			"insertId" :  /*[[${session.id}]]*/ ,
+            			"updateId" :  /*[[${session.id}]]*/
             	};
 				// 保守削除プロセス
 				if(selectTr1.find(am_implementationDate).val() == "" && selectTr1.find(am_implementationDetail).val() == ""
@@ -878,33 +891,36 @@
                     	alert('通信失敗mhdelete');
                     });
 				}
-
 				// /故障・廃棄履歴削除プロセス
 				// 故障・廃棄履歴変更プロセス
-
 				else{
-					$.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
-	    					{
-	    						type: "POST",
-	    						dataType: "json",
-	    						contentType: 'application/JSON',
-	    						data : JSON.stringify(maintenanceHistory)
-	    					}
-	                	)
-	    				.success(function(result) {
-	    					if(result == 0) {
-	    						alert('エラーが発生しました。');
-	    					} else {
-
-	    					}
-	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗mhupdate');
-	                    });
+					mhupdateList.push(maintenanceHistory);
            		}
-
 				// /故障・廃棄履歴変更プロセス
             };
 			// /故障・廃棄履歴変更・削除処理FOR文
+			if(JSON.stringify(mhupdateList) == "[]"){
+
+			} else{
+				 $.ajax(/*[[@{/asset/updateMaintenanceHistory}]]*/ 'asset/updateMaintenanceHistory',
+							{
+								type: "POST",
+								dataType: "json",
+								contentType: 'application/JSON',
+								data : JSON.stringify(mhupdateList)
+							}
+		            	)
+						.success(function(result) {
+							if(result == 0) {
+								alert('エラーが発生しました。mhupdate');
+							} else {
+
+							}
+						}).error(function(xhr, textStatus, error) {
+		                	alert('通信失敗mhupdate');
+		                });
+			}
+
 		}
 		// /故障・廃棄履歴変更・削除プロセス
 
@@ -912,6 +928,7 @@
 		function mhinsert() {
             var selectTr2 = $(mhupdate2);
         	var mhlength = Object.keys([[${asset.maintenanceHistoryList}]]).length;
+			var mhinsertList = new Array();
             // 故障・廃棄履歴登録処理FOR文
 
 			for(var i = mhlength+1; i < 11 ; i++){
@@ -926,26 +943,41 @@
             			"implementationDate" : selectTr2.find(am_implementationDate).val(),
             			"implementationDetail" : selectTr2.find(am_implementationDetail).val(),
             			"repId" : selectTr2.find(am_repId).val(),
-            			"approverId" : selectTr2.find(am_approverId).val()
+            			"approverId" : selectTr2.find(am_approverId).val(),
+            			"insertId" :  /*[[${session.id}]]*/ ,
+            			"updateId" :  /*[[${session.id}]]*/
             	};
-				$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
-    					{
-    						type: "POST",
-    						dataType: "json",
-    						contentType: 'application/JSON',
-    						data : JSON.stringify(maintenanceHistory)
-    					}
-                	)
-    				.success(function(result) {
-    					if(result == 0) {
-    						alert('エラーが発生しました。'+i);
-    					} else {
+				if(selectTr2.find(am_implementationDate).val() == "" && selectTr2.find(am_implementationDetail).val() == ""
+					&& selectTr2.find(am_repId).val() == "" && selectTr2.find(am_approverId).val() == ""){
+					continue;
+				} else{
+					mhinsertList.push(maintenanceHistory);
+				}
 
-    					}
-    				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗mhinsert');
-                    });//ajax end
-            };
+			}//for
+
+			if(JSON.stringify(mhinsertList) == "[]"){
+
+			} else{
+				$.ajax(/*[[@{/asset/addMaintenanceHistory}]]*/ 'asset/addMaintenanceHistory',
+	   					{
+	   						type: "POST",
+	   						dataType: "json",
+	   						contentType: 'application/JSON',
+	   						data : JSON.stringify(mhinsertList)
+	   					}
+	               	)
+	   				.success(function(result) {
+	   					if(result == 0) {
+	   						alert('エラーが発生しました。mhinsert');
+	   					} else {
+
+	   					}
+	   				}).error(function(xhr, textStatus, error) {
+	                   	alert('通信失敗mhinsert');
+	                   });//ajax end
+			}
+
          // /故障・廃棄履歴登録処理FOR文
 		}
 		// /故障・廃棄履歴登録プロセス
