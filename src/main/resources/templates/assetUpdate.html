@@ -1,3 +1,11 @@
+<style>
+
+.bootstrap-datetimepicker-widget{
+position: fixed;
+
+z-index: 99999 !important; }
+</style>
+
 <div class="mmodal">
 	<div class="modal-dialog modal-xl" style="width: 70%;" role="document">
 		<div class="modal-content" role="main">
@@ -306,7 +314,7 @@
 										class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 									<!-- START付属品変更フォーム -->
 										<form id="accForm">
-											<table class="table table-striped jambo_table bulk_action text-center" id="am_table1">
+											<table class="table text-center" id="am_table1">
 												<thead>
 													<tr class="headings">
 														<th class="col-md-1">No</th>
@@ -356,11 +364,11 @@
 									<h2>故障・廃棄履歴</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content" style="display: block;">
+								<div class="x_content" >
 									<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 									<!-- START故障・廃棄履歴変更フォーム -->
 										<form id="mhForm">
-											<table class="table table-striped jambo_table bulk_action" id="am_table2">
+											<table class="table text-center" id="am_table2">
 												<thead>
 													<tr class="headings">
 														<th class="col-md-1">No</th>
@@ -378,8 +386,9 @@
 														<input type="hidden" th:id="${#ids.seq('am_mhkey')}" th:value="${maintenance.historySeq}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${mhnum.index+1}"></td>
 														<td>
-															<div class="input-group date mhDatepicker">
-																<input type="text" class="form-control" maxlength="10" name="mhDate" th:id="${#ids.seq('am_implementationDate')}" th:value="${maintenance.implementationDate}">
+															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker">
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}" th:value="${maintenance.implementationDate}">
 															</div>
 														</td>
 														<td><input type="text" class="form-control" maxlength="100" name="mhDetail" th:id="${#ids.seq('am_implementationDetail')}" th:value="${maintenance.implementationDetail}"></td>
@@ -391,8 +400,9 @@
 													<tr id="mhupdate2" th:if="${#lists.size(asset.maintenanceHistoryList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
 														<td>
-															<div class="input-group date mhDatepicker">
-																<input type="text" class="form-control" maxlength="10" name="mhDate" th:id="${#ids.seq('am_implementationDate')}">
+															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker" >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}">
 															</div>
 														</td>
 														<td><input type="text" class="form-control" maxlength="100" name="mhDetail" th:id="${#ids.seq('am_implementationDetail')}"></td>
@@ -428,6 +438,8 @@
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
+
+
 		// collapse-link event
 	    $('.collapse-link-update').on('click', function() {
 	        var $BOX_PANEL = $(this).closest('.x_panel'),
@@ -458,7 +470,9 @@
 		});	// 購入日
 
   		$('.mhDatepicker').datetimepicker({
+
 			format: 'YYYY-MM-DD'
+
 
 		});	// 故障・廃棄履歴の実施日
 
