@@ -9,7 +9,9 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class Column {
+	//ページのデータ
 	String data;
+	//ページのデータの条件
 	@NotNull
 	Search search;
 }
