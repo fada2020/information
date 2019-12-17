@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class TestDBResultLog {
 
 	private static final Logger logger = LogManager.getLogger(TestDBResultLog.class);
-
+	//DBと繋がると記録に残せるためのメソッド
     @AfterReturning(pointcut = "execution(* jp.co.info.ais.*..*Mapper.*(..))", returning= "result")
     public void DBResultLog(JoinPoint joinPoint, Object result) {
     	if(!(null == result)) {

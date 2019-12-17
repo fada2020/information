@@ -31,12 +31,12 @@ public class UserFilter implements Filter {
 			logger.debug("url::" + url);
 			logger.debug("url::" + queryString);
 		}
-
+		
 		Object loginId = ((HttpServletRequest) servletRequest).getSession().getAttribute("id");
 		if( loginId == null ) {
 			HttpServletResponse res = (HttpServletResponse)servletResponse;
-	        res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-	        res.setHeader("Location", "/");
+		    res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+		    res.setHeader("Location", "/");
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
