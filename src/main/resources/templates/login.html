@@ -2,97 +2,172 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
-	<!-- page script -->
+<!-- page script -->
 <script type="text/javascript">
-function check() {}
- document.addEventListener("DOMContentLoaded", function() {
-    var elements = document.getElementsByTagName("INPUT");
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].oninvalid = function(e) {
-            e.target.setCustomValidity("");
-            if (!e.target.validity.valid) {
-                e.target.setCustomValidity("必須入力項目です。入力してください。");
-            }
-        };
-        elements[i].oninput = function(e) {
-            e.target.setCustomValidity("");
-        };
+	function check() {
+	}
+	document.addEventListener("DOMContentLoaded", function() {
+		var elements = document.getElementsByTagName("INPUT");
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].oninvalid = function(e) {
+				e.target.setCustomValidity("");
+				if (!e.target.validity.valid) {
+					e.target.setCustomValidity("必須入力項目です。入力してください。");
+				}
+			};
+			elements[i].oninput = function(e) {
+				e.target.setCustomValidity("");
+			};
 
-    }
-})
+		}
+	})
 </script>
 
-  <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>IT資産管理</title>
+<title>IT資産管理</title>
 
-    <!-- favicons -->
-	<link rel="icon" href="../images/aisRogo.png">
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-     <!-- logincss -->
-    <link href="../vendors/bootstrap/dist/css/logincss.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+<!-- favicons -->
+<link rel="icon" href="../images/aisRogo.png">
+<!-- Bootstrap -->
+<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- logincss -->
+<link href="../vendors/bootstrap/dist/css/logincss.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- Animate.css -->
+<link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-
-
-
-
-  </head>
-
-  <body class="login">
-    <div>
+<!-- Custom Theme Style -->
+<link href="../build/css/custom.min.css" rel="stylesheet">
 
 
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
 
-           <!--th:object="${login}"-->
-            <form method="POST" action="/loginprocess" class="form-horizontal" name = "frm" >
 
-                <div>
-                  <h1>IT資産管理システム </h1>
+</head>
 
-                </div>
-				<!-- errorMessage表示 -->
-				<div style = "width : 250px; height : 30px; " id = "test">[[${errorMessage}]]</div>
-              <div>
+<body class="login">
+	<div>
 
-              	<fieldset>
-                	<input type="text" class="form-control" placeholder="社員番号" id="assetId" name="assetId" required />
-              	</fieldset>
-              </div>
-              <div>
-           	   	 <fieldset>
-            	    <input type="password" class="form-control" placeholder="パスワード"id="assetPass" name="assetPass" required/>
-             	 </fieldset>
-              </div>
-			<div id = "loginb" >
-				<div id ="logininb">
-					<input type ="submit" value="Login"id="submit_button" class="btn btn-success" />
-				</div>
+
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content">
+
+					<!--th:object="${login}"-->
+						<div>
+							<h1>IT資産管理システム</h1>
+
+						</div>
+						<!-- errorMessage表示 -->
+						
+						<div class="alert alert-danger alert-dismissable text-left"
+								id="idErr" hidden="true">
+								<button aria-hidden="true" data-dismiss="alert" class="close"
+									type="button">×</button>
+								This ID is not registered.
+							</div>
+							<div class="alert alert-danger alert-dismissable text-left"
+								id="pwdErr" hidden="true">
+								<button aria-hidden="true" data-dismiss="alert" class="close"
+									type="button">×</button>
+								Invalid password.
+							</div>
+						<div>
+
+							<fieldset>
+								<input type="text" class="form-control" placeholder="社員番号"
+									id="assetId" name="assetId" required />
+							</fieldset>
+						</div>
+						<div>
+							<fieldset>
+								<input type="password" class="form-control" placeholder="パスワード"
+									id="assetPass" name="assetPass" required />
+							</fieldset>
+						</div>
+						<div id="loginb">
+							<div id="logininb">
+								<input type="button" value="Login" id="submit_button" onclick="candoit();"
+									class="btn btn-success" />
+							</div>
+						</div>
+					<!-- /logincheckform -->
+				</section>
 			</div>
+			<!-- animate form login_form -->
+		</div>
+		<!-- login_wrapper -->
+	</div>
+	<!-- login -->
+</body>
+<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- jquery-validation-1.19.1 -->
+	<script src="../vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- jquery-ui -->
+	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/DataTables-1.10.20/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/DataTables-1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-datetimepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/moment/locale/ja.js"></script>
 
-            </form>
-             <!-- /logincheckform -->
-          </section>
-       		  				 </div><!-- animate form login_form -->
-               			</div><!-- login_wrapper -->
-        	  		</div><!-- login -->
-			   </body>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+
+
+	   function candoit() {
+
+			 var login = new Object();
+			 login.empId=$('#assetId').val();
+			 login.passwd=$('#assetPass').val();
+			 $.ajax({
+				   type  : "POST",
+				   url : "/loginprocess",
+					dataType : "json",
+					"contentType" : "application/JSON",
+					 scriptCharset: 'utf-8',
+					data : JSON.stringify(login)
+			}).success(function(d){
+				   if(d == 1){
+			            $("#idErr")[0].hidden = false;
+			        }else if(d == 2){
+			            $("#pwdErr")[0].hidden = false;
+			        }else{
+			        	location.href="/dashboard";
+			        }
+			}).error(function(d){
+				
+			});
+	  }
+
+ /*]]>*/
+ </script>
+
 </html>
