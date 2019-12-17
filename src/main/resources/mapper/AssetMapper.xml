@@ -244,24 +244,44 @@
 
     <insert id="insertAccessories" useGeneratedKeys="true" keyProperty="accessoriesSeq">
         INSERT INTO accessories(
-        accessories_seq, asset_seq, item_name, item_spec, item_quantity, remarks,
-        insert_id, update_id
+	        accessories_seq
+	        , asset_seq
+	        , item_name
+	        , item_spec
+	        , item_quantity
+	        , remarks
+	        , insert_id
+	        , update_id
+	        )
+        VALUES
+        <foreach item="item" collection="itemList" separator=",">
+        (
+	        (SELECT IFNULL(MAX(accessories_seq) + 1, 1)
+	        	FROM accessories b WHERE asset_seq = #{item.assetSeq})
+	        , #{item.assetSeq}
+	        , #{item.itemName}
+	        , #{item.itemSpec}
+	        , #{item.itemQuantity}
+	        , #{item.remarks}
+	        , #{item.insertId}
+	        , #{item.updateId}
         )
-        VALUES (
-        (SELECT IFNULL(MAX(accessories_seq) + 1, 1) FROM accessories b WHERE asset_seq = #{assetSeq}),
-        #{assetSeq}, #{itemName}, #{itemSpec}, #{itemQuantity}, #{remarks},
-        #{insertId}, #{updateId})
+        </foreach>
     </insert>
 
     <update id="updateAccessories">
-		UPDATE accessories SET
-			item_name = #{itemName},
-			item_spec = #{itemSpec},
-			item_quantity = #{itemQuantity},
-			remarks = #{remarks},
-			update_id = #{updateId}
-		WHERE accessories_seq = #{accessoriesSeq}
-		AND asset_seq = #{assetSeq}
+		<foreach item="item" collection="itemList" separator=";">
+		UPDATE accessories
+			<set>
+				item_name = #{item.itemName},
+				item_spec = #{item.itemSpec},
+				item_quantity = #{item.itemQuantity},
+				remarks = #{item.remarks},
+				update_id = #{item.updateId}
+			</set>
+			WHERE accessories_seq = #{item.accessoriesSeq}
+			AND asset_seq = #{item.assetSeq}
+		</foreach>
     </update>
 
     <delete id="deleteAccessories">
@@ -270,26 +290,47 @@
 		AND asset_seq = #{assetSeq}
     </delete>
 
-    <insert id="insertMaintenanceHistory" useGeneratedKeys="true" keyProperty="historySeq">
+    <insert id="insertMaintenanceHistory" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="historySeq">
         INSERT INTO maintenance_history(
-        history_seq, asset_seq, implementation_date, implementation_detail, rep_id, approver_id,
-        insert_id, update_id
+	        history_seq
+	        , asset_seq
+	        , implementation_date
+	        , implementation_detail
+	        , rep_id
+	        , approver_id
+	        , insert_id
+	        , update_id
         )
-        VALUES (
-        (SELECT IFNULL(MAX(history_seq) + 1, 1) FROM maintenance_history b WHERE asset_seq = #{assetSeq}),
-        #{assetSeq}, #{implementationDate}, #{implementationDetail}, #{repId}, #{approverId},
-        #{insertId}, #{updateId})
+        VALUES
+        <foreach item="item" collection="itemList" separator=",">
+        (
+	        (SELECT
+	        	IFNULL(MAX(b.history_seq) + 1, 1)
+	        	FROM maintenance_history b WHERE asset_seq = #{item.assetSeq})
+	        , #{item.assetSeq}
+	        , #{item.implementationDate}
+	        , #{item.implementationDetail}
+	        , #{item.repId}
+	        , #{item.approverId}
+	        , #{item.insertId}
+	        , #{item.updateId}
+	     )
+        </foreach>
     </insert>
 
-    <update id="updateMaintenanceHistory">
-		UPDATE maintenance_history SET
-			implementation_date = #{implementationDate},
-			implementation_detail = #{implementationDetail},
-			rep_id = #{repId},
-			approver_id = #{approverId},
-			update_id = #{updateId}
-		WHERE history_seq = #{historySeq}
-		AND asset_seq = #{assetSeq}
+    <update id="updateMaintenanceHistory" parameterType="java.util.List">
+    	<foreach item="item" collection="itemList" separator=";">
+			UPDATE maintenance_history
+				<set>
+					implementation_date = #{item.implementationDate},
+					implementation_detail = #{item.implementationDetail},
+					rep_id = #{item.repId},
+					approver_id = #{item.approverId},
+					update_id = #{item.updateId}
+				</set>
+			WHERE history_seq = #{item.historySeq}
+			AND asset_seq = #{item.assetSeq}
+		</foreach>
     </update>
 
     <delete id="deleteMaintenanceHistory">
