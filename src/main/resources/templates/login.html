@@ -65,25 +65,25 @@
 		<div class="login_wrapper">
 			<div class="animate form login_form">
 				<section class="login_content">
-
+					<form>
 					<!--th:object="${login}"-->
 						<div>
 							<h1>IT資産管理システム</h1>
 
 						</div>
 						<!-- errorMessage表示 -->
-						
+
 						<div class="alert alert-danger alert-dismissable text-left"
 								id="idErr" hidden="true">
-								<button aria-hidden="true" data-dismiss="alert" class="close"
+								<button onclick="hide();" class="close"
 									type="button">×</button>
-								This ID is not registered.
+								IDをご確認ください。
 							</div>
 							<div class="alert alert-danger alert-dismissable text-left"
 								id="pwdErr" hidden="true">
-								<button aria-hidden="true" data-dismiss="alert" class="close"
+								<button onclick="hide();" class="close"
 									type="button">×</button>
-								Invalid password.
+								PWをご確認ください。
 							</div>
 						<div>
 
@@ -105,6 +105,7 @@
 							</div>
 						</div>
 					<!-- /logincheckform -->
+					</form>
 				</section>
 			</div>
 			<!-- animate form login_form -->
@@ -155,6 +156,9 @@
 					 scriptCharset: 'utf-8',
 					data : JSON.stringify(login)
 			}).success(function(d){
+				$("#idErr")[0].hidden = true;
+				$("#pwdErr")[0].hidden = true;
+
 				   if(d == 1){
 			            $("#idErr")[0].hidden = false;
 			        }else if(d == 2){
@@ -163,9 +167,14 @@
 			        	location.href="/dashboard";
 			        }
 			}).error(function(d){
-				
+
 			});
 	  }
+
+	function hide(){
+		$("#idErr")[0].hidden = true;
+		$("#pwdErr")[0].hidden = true;
+	}
 
  /*]]>*/
  </script>
