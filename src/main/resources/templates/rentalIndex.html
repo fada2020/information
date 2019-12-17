@@ -751,9 +751,9 @@
 			 var datatimeRegexp = /[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/;
 	         var form = $('#updateForm');
 			 /*START 貸与日と返却予定日の差を計る */
-	         var startDate = $( "input[name='rentalDay']" ).val(); //2017-12-10
+	         var startDate = $('#rentalDay_view').val(); //2017-12-10
 	         var startDateArr = startDate.split('-');
-	         var endDate = $( "input[name='returnPeriod']" ).val(); //2017-12-09
+	         var endDate = $('#returnPeriod_view').val(); //2017-12-09
 	         var endDateArr = endDate.split('-');
 	         var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
 	         var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);

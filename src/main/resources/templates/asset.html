@@ -86,67 +86,76 @@
               <div class="col">
               	<div class="col-md-12"><br></div>
               <!--START 検索条件  -->
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">管理番号</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
-                </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">区分</span>
-                </div>
-                <div class="col-md-2">
-                	<select class="form-control" id="psNum_search">
-                		<option value="00">全体</option>
-                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
-					</select>
-                </div>
-               <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">購入期間</span>
-                </div>
-                <div class="col-md-2">
-					<fieldset>
-						<div class="control-group ">
-							<div class="controls">
-								<div class="input-prepend input-group">
-									<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-									<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control">
+              	<div class="row">
+	                <div class="col-md-2">
+	                    <span class="pull-right" style="font-size: 18px;">管理番号</span>
+	                </div>
+	                <div class="col-md-2">
+	                    <input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
+	                </div>
+	                <div class="col-md-2">
+	                    <span class="pull-right" style="font-size: 18px;">メーカー</span>
+	                </div>
+	                <div class="col-md-2">
+	                    <input type="text" class="form-control" placeholder="メーカー" id="maker_search" maxlength="15">
+	                </div>
+	                <div class="col-md-1">
+	                    <span class="pull-right" style="font-size: 18px;">モデル</span>
+	                </div>
+	                <div class="col-md-2">
+	                    <input type="text" class="form-control" placeholder="モデル" id="model_search" maxlength="15">
+	                </div>
+           
+       			</div>
+       			
+                <div class="clearfix"><br></div>
+                <div class="row">
+                	<div class="col-md-2">
+	                    <span class="pull-right" style="font-size: 18px;">購入期間</span>
+	                </div>
+	                <div class="col-md-2">
+						<fieldset>
+							<div class="control-group ">
+								<div class="controls">
+									<div class="input-prepend input-group">
+										<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+										<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control">
+									</div>
 								</div>
 							</div>
-						</div>
-					</fieldset>
-                </div>
-                <div class="col-md-3">
-                </div>
-                <div class="col-md-12"><br></div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">メーカー</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="メーカー" id="maker_search" maxlength="15">
-                </div>
-                <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">モデル</span>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="モデル" id="model_search" maxlength="15">
-                </div>
-                      <div class="col-md-1">
-                    <span class="pull-right" style="font-size: 18px;">状態</span>
-                </div>
-                <div class="col-md-2">
-                	<select class="form-control" id="sNumber_search">
-						<option value="00">全体</option>
-                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
-					</select>
-                </div>
-
+						</fieldset>
+	                </div>
+	                <div class="col-md-1 col-md-offset-1">
+	                    <span class="pull-right" style="font-size: 18px;">区分</span>
+	                </div>
+	                <div class="col-md-2">
+	                	<select class="form-control" id="psNum_search">
+	                		<option value="00">全体</option>
+	                		<option th:each="code : ${productCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+						</select>
+	                </div>
+	                      <div class="col-md-1">
+	                    <span class="pull-right" style="font-size: 18px;">状態</span>
+	                </div>
+	                <div class="col-md-2">
+	                	<select class="form-control" id="sNumber_search">
+							<option value="00">全体</option>
+	                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+						</select>
+	                </div>
+	    			
+                 </div>
+                	<div class="clear_fix"><br></div>
             <!-- END 検索条件 -->
 			<!--START 登録ボタン -->
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-success pull-right" id="insertBtn">
-                    	<i class="fa fa-pencil-square" aria-hidden="true"></i> 資産登録
-                    </button>
+			    <div class="row">
+	                <div class="col-md-10">
+	                </div>
+	                <div class="col-md-1">
+	                    <button type="button" class="btn btn-success col-md-offset-1" id="insertBtn">
+	                    	<i class="fa fa-pencil-square" aria-hidden="true"></i> 資産登録
+	                    </button>
+	                </div>
                 </div>
 			<!-- END 登録ボタン -->
                 <div class="x_panel">
