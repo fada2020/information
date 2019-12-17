@@ -108,8 +108,8 @@ public class AssetService {
 	 *
 	 * @param Accessories 付属品情報
 	 */
-	public void insertAccessories(Accessories accessories) {
-		assetMapper.insertAccessories(accessories);
+	public int insertAccessories(List<Accessories> accinsertList) {
+		return assetMapper.insertAccessories(accinsertList);
 	}
 
 	/**
@@ -117,8 +117,8 @@ public class AssetService {
 	 *
 	 * @param MaintenanceHistory 故障・廃棄履歴情報
 	 */
-	public void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
-		assetMapper.insertMaintenanceHistory(maintenanceHistory);
+	public int insertMaintenanceHistory(List<MaintenanceHistory> mhinsertList) {
+		return assetMapper.insertMaintenanceHistory(mhinsertList);
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class AssetService {
 	 * @param Accessories 付属品情報
 	 * @return int 結果値
 	 */
-	public int updateAccessories(Accessories accessories) {
-		return assetMapper.updateAccessories(accessories);
+	public int updateAccessories(List<Accessories> accupdateList) {
+		return assetMapper.updateAccessories(accupdateList);
 	}
 
 	/**
@@ -147,8 +147,8 @@ public class AssetService {
 	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
-	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
-		return assetMapper.updateMaintenanceHistory(maintenanceHistory);
+	public int updateMaintenanceHistory(List<MaintenanceHistory> mhupdateList) {
+		return assetMapper.updateMaintenanceHistory(mhupdateList);
 	}
 
 	/**
