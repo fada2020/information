@@ -14,7 +14,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import jp.co.info.ais.ams.domain.History;
-
+//EXCELをダウンロードする為の設定
 public class HistoryXlsxView extends AbstractXlsxView {
 
 	@Override
@@ -28,7 +28,7 @@ public class HistoryXlsxView extends AbstractXlsxView {
 		statusCode.put("01", "保管");
 		statusCode.put("02", "貸与");
 		statusCode.put("03", "故障");
-		statusCode.put("01", "廃棄");
+		statusCode.put("04", "廃棄");
 		statusCode.put(null, "-");
 
 

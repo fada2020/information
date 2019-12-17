@@ -396,36 +396,39 @@
 															<!--END 資産管理番号の選択-->
 														</div>
 														<!--END BP社名の入力と資産管理番号の選択-->
-														<!--START 貸出者と使用者と承認者の入力 -->
 														<div class="form-group row">
-															<!--START 貸出者の入力 -->
-															<label class="control-label col-md-2" style="float: left">貸出者<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-2 input-group " style="float: left">
-																<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-3" />
+															<div class="fomr-group col-md-5">
+																<!--START 貸出者の入力 -->
+																<label class="control-label col-md-5" style="float: left">貸出者<span style="color: red; font-size: 18px;">*</span></label>
+																<div class="col-md-7 input-group " style="float: left">
+																	<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-3" />
+																</div>
+																<!--END 貸出者の入力 -->
+																<!--START 使用者の入力 -->
+																<label class="control-label col-md-5" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
+																<div class="col-md-7 input-group " style="float: left">
+																	<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-3" />
+																</div>
+																<!--END 使用者の入力 -->
+																<!--START 承認者の入力 -->
+																<label class="control-label col-md-5" style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
+																<div class="col-md-7 input-group " style="float: left">
+																	<input type="text" name="approver" id="approver" required class="form-control col-md-3" />
+																</div>
+																<!--END 承認者の入力 -->
 															</div>
-															<!--END 貸出者の入力 -->
-															<!--START 使用者の入力 -->
-																<label class="control-label col-md-1" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-2 input-group " style="float: left">
-																<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-4" />
+
+															<div class="fomr-group col-md-6">
+																<!--START 特記事項の入力 -->
+																<div class="form-group row">
+																	<label class="control-label col-md-4  ">特記事項</label>
+																	<div class="col-md-8 input-group table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+																		<textarea id="speciality" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
+																	</div>
+																</div>
+																<!--END 特記事項の入力 -->
 															</div>
-															<!--END 使用者の入力 -->
-															<!--START 承認者の入力 -->
-															<label class="control-label col-md-1" style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-2 input-group " style="float: left">
-																<input type="text" name="approver" id="approver" required class="form-control col-md-4" />
-															</div>
-															<!--END 承認者の入力 -->
 														</div>
-														<!--END 場所とBP社名の入力 -->
-														<!--START 特記事項の入力 -->
-														<div class="form-group row">
-															<label class="control-label col-md-2  ">特記事項</label>
-															<div class="col-md-9 input-group table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
-																<textarea id="speciality" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
-															</div>
-														</div>
-														<!--END 特記事項の入力 -->
 														<!--START 追加ボタン -->
 														<div class="form-group row">
 															<div class="col-md-12  ">

@@ -160,7 +160,7 @@
 									<label class="col-sm-3 control-label"> マスターコード<span style="color: red; font-size: 18px;">*</span></label>
 									<div class="col-md-9 "th:if="${masterid} != null">
 										<select class="form-control" id="codeMasterId"name="codeMasterId" onchange="">
-											<option value="">選択</option>
+											<option value="" >選択</option>
 											<option th:each="CodeMaster : ${masterid}"th:value="${CodeMaster.codeMasterId}"th:text="${CodeMaster.codeMasterName}"></option>
 										</select>
 									</div>
@@ -529,30 +529,36 @@
             } );
 
 		    $('#codeMasterId').on( 'change', function () {
-		    	 $('#antoform').find('label').detach(".error");
-				 $('#antoform').find('input').val('');
-					$('#item3').attr('readonly', false);
-		    	$.ajax(
-						/*[[@{/codedetail/checkNumber}]]*/'codedetail/checkNumber', {
-							type : "POST",
-							dataType : "json",
-							contentType : 'application/JSON',
-							data :  $('#codeMasterId').val()
-						}).success(function(result) {
-							var selecctedItem = $('#codeMasterId option:selected').val();
-							if(selecctedItem=="002"){
-							$('#item3').val('0');
-							$('#item3').attr('readonly', true);
-							}
-							if(result<9){
-								$('#codeDetailId').val("0"+(result+1));
-							}else{
-							$('#codeDetailId').val(result+1);}
-						}).error(function(xhr, textStatus, error) {
-							alert('通信失敗');
-						});
 
+
+		    	if($(this).val()!=''){
+
+			    	$('#antoform').find('label').detach(".error");
+					$('#antoform').find('input').val('');
+					$('#item3').attr('readonly', false);
+			    	$.ajax(
+							/*[[@{/codedetail/checkNumber}]]*/'codedetail/checkNumber', {
+								type : "POST",
+								dataType : "json",
+								contentType : 'application/JSON',
+								data :  $('#codeMasterId').val()
+							}).success(function(result) {
+								var selecctedItem = $('#codeMasterId option:selected').val();
+								if(selecctedItem=="002"){
+								$('#item3').val('0');
+								$('#item3').attr('readonly', true);
+								}
+								if(result<9){
+									$('#codeDetailId').val("0"+(result+1));
+								}else{
+								$('#codeDetailId').val(result+1);}
+							}).error(function(xhr, textStatus, error) {
+								alert('通信失敗');
+							});
+
+		    	  }
 			});
+
 
 		});
 		 function deleteButton(button) {
@@ -737,6 +743,9 @@
 
 					form.validate({
 						rules : {
+							codeMasterId : {
+								required : true
+							},
 							codeDetailName : {
 								maxlength : 10,
 								required : true
@@ -761,6 +770,9 @@
 							}
 						},
 						messages : {
+							codeMasterId : {
+								required : "マスターコードを選択してください"
+							},
 							codeDetailName : {
 								required : "詳細コード名を入力してください"
 							}

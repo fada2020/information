@@ -45,9 +45,10 @@
 												<span>購入日</span>
 											</div>
 											<div class="col-md-4">
-												<div class="input-group date" id="am_myDatepicker">
-													<input type="text" class="form-control input-group-addon" name="purchaseDate" th:value="${asset.purchaseDate}">
-												</div>
+													<div class="input-group date" id="am_myDatepicker">
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														<input type="text" class="form-control input-group-addon" name="purchaseDate" th:value="${asset.purchaseDate}">
+													</div>
 											</div>
 											<div class="col-md-2">
 												<span>状態</span>
@@ -513,9 +514,7 @@
                       	kubunCode : {
                       		required : true
                       	},
-                      	purchaseDate: {
-                              required: true
-                          },
+
                           statusCode: {
                           	required: true
                           },
@@ -600,9 +599,7 @@
                       	kubunCode : {
                       		required : "区分を選択"
                       	},
-                      	purchaseDate: {
-                              required: "日付を入力"
-                          },
+
                           statusCode: {
                           	required: "状態を選択"
                           }
