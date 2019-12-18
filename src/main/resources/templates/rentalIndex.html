@@ -1053,6 +1053,10 @@ function researchRental(assetSeq){
                 alert("貸与日と返却予定日を確認してください。");
                 return false;
             }
+        	if($('#sub_subSelect option:selected').val()==""){
+        		alert("貸与できる資産がありません。");
+        		return false;
+        	}
             /*START 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
             form.validate({
                 rules: {
@@ -1067,18 +1071,7 @@ function researchRental(assetSeq){
                  	speciality : {
                  		maxlength : 200
                 	},
-                	singleSelect: {
-
-                 		required : true
-                	},
-                	sub_singleSelect: {
-
-                 		required : true
-                	},
-                	sub_subSelect: {
-
-                 		required : true
-                	},
+                	
                 	approver : {
                  		maxlength : 15,
                  		required : true
@@ -1111,15 +1104,7 @@ function researchRental(assetSeq){
                 	purpose : {
                 		required : "用途を入力してください"
                 	},
-                	singleSelect : {
-                		required : "分類を選択してください"
-                	},
-                	sub_singleSelect : {
-                		required : "種類を選択してください"
-                	},
-                	sub_subSelect: {
-                		required : "物を選択してください"
-                	},
+                	
                 	storageLocation : {
                 		required : "場所を入力してください"
                 	},
