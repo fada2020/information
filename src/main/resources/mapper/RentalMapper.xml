@@ -36,7 +36,7 @@
 					AND a.asset_number LIKE '%${assetNumber}%'
 				</if>
 				<if test="rentalDayS != null and rentalDayE !=null">
-					AND r.rental_day BETWEEN #{rentalDayS} AND #{rentalDayE}
+					AND r.return_period BETWEEN #{rentalDayS} AND #{rentalDayE}
 				</if>
 				<if test="item1 != null and item1 !=null">
 					AND c.item1  LIKE '%${item1}%'

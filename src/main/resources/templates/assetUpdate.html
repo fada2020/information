@@ -1,9 +1,11 @@
 <style>
 
-.bootstrap-datetimepicker-widget{
-position: fixed;
+ .top{
 
-z-index: 99999 !important; }
+	position: fixed;
+	z-index: 99999 !important; 
+}
+
 </style>
 
 <div class="mmodal">
@@ -84,7 +86,7 @@ z-index: 99999 !important; }
 												<span>購入金額(円)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
+												<input type="text" class="form-control numVal"id="purchasePrice" name="purchasePrice" th:value="${asset.purchasePrice}">
 											</div>
 										</div>
 									</div>
@@ -202,7 +204,7 @@ z-index: 99999 !important; }
 											<div class="col-md-6">
 												<div class="row well">
 													<div class="col-md-12">
-														<span>Memory(GB)</span>
+														<span>メモリ(GB)</span>
 													</div>
 													<div class="col-md-12">
 														<br>
@@ -374,8 +376,8 @@ z-index: 99999 !important; }
 														<th class="col-md-1">No</th>
 														<th class="col-md-2">実施日</th>
 														<th class="col-md-5">実施内容</th>
-														<th class="col-md-2">担当</th>
-														<th class="col-md-2">承認</th>
+														<th class="col-md-2">担当者</th>
+														<th class="col-md-2">承認者</th>
 														<th colspan="2"></th>
 													</tr>
 												</thead>
@@ -438,7 +440,16 @@ z-index: 99999 !important; }
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
+    	function specialCharRemove(obj) {
 
+			/* var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi; */
+			//タグ削除
+			var re = /[,][.]/gi;
+			if(re.test(obj)){
+				obj = obj.replace(re,"");
+			}
+			return obj;
+		}
 
 		// collapse-link event
 	    $('.collapse-link-update').on('click', function() {
@@ -522,13 +533,13 @@ z-index: 99999 !important; }
 		var mhform = $('#mhForm');
 		// 資産変更モーダルの変更バトン
        	$('#sisanupdate').click(function(){
+       	
   			// 主要な資産の有効性検証
                   assform.validate({
                       rules: {
                       	kubunCode : {
                       		required : true
                       	},
-
                           statusCode: {
                           	required: true
                           },
