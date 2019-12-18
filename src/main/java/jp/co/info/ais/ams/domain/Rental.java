@@ -56,8 +56,8 @@ public class Rental {
 	private String rentalDayS;
 	//返却予定日の検索終わり
 	private String rentalDayE;
-
-
+	//承認者
+	private String approver;
 	//IT資産ナンバー
 	private String assetNumber;
 	//コード詳細ID
@@ -68,6 +68,7 @@ public class Rental {
 	private String codeDetailName;
 	//IT資産の区分コード
 	private String kubunCode;
+	private String item1; 
 	//IT資産の資産名
 	private String item2;
 
@@ -89,4 +90,5 @@ public class Rental {
 		this.statusCode=statusCode;
 		this.updateId=updateId;
 	}
+	
 }

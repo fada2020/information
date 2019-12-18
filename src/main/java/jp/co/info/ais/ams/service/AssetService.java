@@ -108,17 +108,17 @@ public class AssetService {
 	 *
 	 * @param Accessories 付属品情報
 	 */
-	public void insertAccessories(Accessories accessories) {
-		assetMapper.insertAccessories(accessories);
+	public int insertAccessories(List<Accessories> accinsertList) {
+		return assetMapper.insertAccessories(accinsertList);
 	}
 
 	/**
-	 * 保守履歴情報登録
+	 * 故障・廃棄履歴情報登録
 	 *
-	 * @param MaintenanceHistory 保守履歴情報
+	 * @param MaintenanceHistory 故障・廃棄履歴情報
 	 */
-	public void insertMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
-		assetMapper.insertMaintenanceHistory(maintenanceHistory);
+	public int insertMaintenanceHistory(List<MaintenanceHistory> mhinsertList) {
+		return assetMapper.insertMaintenanceHistory(mhinsertList);
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class AssetService {
 	 * @param Accessories 付属品情報
 	 * @return int 結果値
 	 */
-	public int updateAccessories(Accessories accessories) {
-		return assetMapper.updateAccessories(accessories);
+	public int updateAccessories(List<Accessories> accupdateList) {
+		return assetMapper.updateAccessories(accupdateList);
 	}
 
 	/**
@@ -142,19 +142,19 @@ public class AssetService {
 	}
 
 	/**
-	 * 保守履歴情報修正
+	 * 故障・廃棄履歴情報修正
 	 *
-	 * @param Accessories 保守履歴情報
+	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
-	public int updateMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
-		return assetMapper.updateMaintenanceHistory(maintenanceHistory);
+	public int updateMaintenanceHistory(List<MaintenanceHistory> mhupdateList) {
+		return assetMapper.updateMaintenanceHistory(mhupdateList);
 	}
 
 	/**
-	 * 保守履歴情報削除
+	 * 故障・廃棄履歴情報削除
 	 *
-	 * @param Accessories 保守履歴情報
+	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
 	public int deleteMaintenanceHistory(MaintenanceHistory maintenanceHistory) {
@@ -195,8 +195,10 @@ public class AssetService {
 			}
 		}
     	// 空白及び'-'除去
-    	asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
-		// その他改行
+		if(asset.getPurchaseDate()!=null) {
+			asset.setPurchaseDate(asset.getPurchaseDate().replaceAll("-", ""));
+		}
+    	// その他改行
 		String other = asset.getOther();
 		if(null != other && !other.equals("")) {
 			other = other.replaceAll("\n", "<br>");

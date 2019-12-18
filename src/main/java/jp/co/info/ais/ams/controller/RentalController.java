@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.info.ais.ams.common.AppConstant;
 import jp.co.info.ais.ams.common.Page;
 import jp.co.info.ais.ams.domain.Asset;
+import jp.co.info.ais.ams.domain.CodeDetail;
 import jp.co.info.ais.ams.domain.Rental;
+import jp.co.info.ais.ams.service.CodeDetailService;
 import jp.co.info.ais.ams.service.RentalService;
 
 @Controller
@@ -31,6 +33,8 @@ public class RentalController {
 	@Autowired
 	AppConstant appConstant;
 
+	@Autowired
+	private CodeDetailService codeDetailService;
 	//ログイン情報を得るための宣言
 
 	@Autowired
@@ -59,6 +63,7 @@ public class RentalController {
 			//今日の日付を習得
 			Date date = new Date();
 			model.addAttribute("date", date);
+			model.addAttribute("codeDetailList",codeDetailService.selectCodeDetailList(new CodeDetail(appConstant.MASTER_CLASS, null, null, appConstant.USE_CODE)));
 		} catch (Exception e) {
 
 			logger.debug(e.getMessage());
@@ -165,10 +170,10 @@ public class RentalController {
 			if (null != rentalNo && !rentalNo.equals("")) {
 				rental.setRentalNo(rentalNo);
 			}
-			//もし貸与品目を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
-			String codeDetailName = page.getColumns().get(3).getSearch().getValue();
-			if (null != codeDetailName && !codeDetailName.equals("")) {
-				rental.setCodeDetailName(codeDetailName);
+			//もし貸与区分を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
+			String item1 = page.getColumns().get(3).getSearch().getValue();
+			if (null != item1 && !item1.equals("")) {
+				rental.setItem1(item1);
 			}
 			rental.setCodeMasterId(appConstant.MASTER_DETAIL);
 			//貸与情報に該当するリストを取り出すメソッド

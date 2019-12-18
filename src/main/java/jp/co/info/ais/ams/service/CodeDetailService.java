@@ -115,8 +115,8 @@ public class CodeDetailService {
 		 return num;
 	}
 
-	public int deleteDetailCode(CodeDetail codeDetail) {
-	int num=0;
+	public int deleteBefore(CodeDetail codeDetail) {
+		int num=0;
 		try {
 			Asset asset =new Asset();
 			if(codeDetail.getCodeMasterId().equals(appConstant.MASTER_STATE)) {
@@ -130,6 +130,15 @@ public class CodeDetailService {
 			}else {
 				num=0;
 			}
+		}catch(Exception e) {
+			logger.debug(e.getMessage());
+		}
+		return num;
+	}
+	public int deleteDetailCode(CodeDetail codeDetail) {
+	int num=0;
+		try {
+			num=deleteBefore(codeDetail);
 		if(num==0) {
 			codeDetail.setUseFlag(appConstant.UNUSE_CODE);
 			codeDetailMapper.deleteDetailCode(codeDetail);
@@ -145,8 +154,8 @@ public class CodeDetailService {
 		try {
 		num = codeDetailMapper.codeDetailListCheck(codeMDetail);
 		if (num == 0) {
-			if(codeMDetail.getCodeMasterId().equals("002")&&codeMDetail.getItem1()!=null) {
-						codeMDetail.setItem1("01");
+			if(codeMDetail.getCodeMasterId().equals(appConstant.MASTER_DETAIL)&&codeMDetail.getItem1()==null) {
+						codeMDetail.setItem1(appConstant.STATE_STORAGE);
 
 					}
 			codeDetailMapper.codeDetailInsert(codeMDetail);

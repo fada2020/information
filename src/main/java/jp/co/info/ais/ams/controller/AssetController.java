@@ -268,17 +268,15 @@ public class AssetController {
 	 */
     @RequestMapping(value = "/addAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public Accessories addAccessories(@RequestBody Accessories accessories) {
+    public int addAccessories(@RequestBody List<Accessories> accinsertList) {
+    	int result = 0;
     	try {
-	    	//セッションにあるID値セッティング
-	    	String id = (String) session.getAttribute("id");
-	    	accessories.setInsertId(id); accessories.setUpdateId(id);
 	    	// 付属品登録
-	    	assetService.insertAccessories(accessories);
+	    	result = assetService.insertAccessories(accinsertList);
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
-        return accessories;
+        return result;
     }
 
 	/**
@@ -289,14 +287,11 @@ public class AssetController {
 	 */
     @RequestMapping(value = "/updateAccessories", method = RequestMethod.POST)
     @ResponseBody
-    public int updateAccessories(@RequestBody Accessories accessories) {
+    public int updateAccessories(@RequestBody List<Accessories> accupdateList) {
     	int result = 0;
     	try {
-	    	//セッションにあるID値セッティング
-	    	String id = (String) session.getAttribute("id");
-	    	accessories.setInsertId(id); accessories.setUpdateId(id);
 	    	// 付属品更新
-	    	result = assetService.updateAccessories(accessories);
+	    	result = assetService.updateAccessories(accupdateList);
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
@@ -323,42 +318,19 @@ public class AssetController {
     }
 
 	/**
-	 * 保守履歴情報登録
+	 * 故障・廃棄履歴情報登録
 	 *
-	 * @param MaintenanceHistory 保守履歴情報
+	 * @param mhinsertList 故障・廃棄履歴情報
 	 * @return MaintenanceHistory 結果値
 	 */
     @RequestMapping(value = "/addMaintenanceHistory", method = RequestMethod.POST)
     @ResponseBody
-    public MaintenanceHistory addMaintenanceHistory(@RequestBody MaintenanceHistory maintenanceHistory) {
-    	try {
-	    	//セッションにあるID値セッティング
-	    	String id = (String) session.getAttribute("id");
-	    	maintenanceHistory.setInsertId(id); maintenanceHistory.setUpdateId(id);
-	    	// 保守履歴登録
-	    	assetService.insertMaintenanceHistory(maintenanceHistory);
-    	}catch (Exception e) {
-    		logger.error(e.getMessage());
-		}
-        return maintenanceHistory;
-    }
-
-	/**
-	 * 保守履歴情報修正
-	 *
-	 * @param Accessories 保守履歴情報
-	 * @return int 結果値
-	 */
-    @RequestMapping(value = "/updateMaintenanceHistory", method = RequestMethod.POST)
-    @ResponseBody
-    public int updateMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
+    public int addMaintenanceHistory(@RequestBody List<MaintenanceHistory> mhinsertList) {
     	int result = 0;
     	try {
-	    	//セッションにあるID値セッティング
-	    	String id = (String) session.getAttribute("id");
-	    	maintenanceHistory.setInsertId(id); maintenanceHistory.setUpdateId(id);
-	    	// 保守履歴更新
-	    	result = assetService.updateMaintenanceHistory(maintenanceHistory);
+	    	// 故障・廃棄履歴登録
+	    	result = assetService.insertMaintenanceHistory(mhinsertList);
+	    	logger.debug("MaintenanceHistory:{}",result);
     	}catch (Exception e) {
     		logger.error(e.getMessage());
 		}
@@ -366,9 +338,28 @@ public class AssetController {
     }
 
 	/**
-	 * 保守履歴情報削除
+	 * 故障・廃棄履歴情報修正
 	 *
-	 * @param Accessories 保守履歴情報
+	 * @param Accessories 故障・廃棄履歴情報
+	 * @return int 結果値
+	 */
+    @RequestMapping(value = "/updateMaintenanceHistory", method = RequestMethod.POST)
+    @ResponseBody
+    public int updateMaintenanceHistory(Model model, @RequestBody List<MaintenanceHistory> mhupdateList) {
+    	int result = 0;
+    	try {
+	    	// 故障・廃棄履歴更新
+	    	result = assetService.updateMaintenanceHistory(mhupdateList);
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+		}
+        return result;
+    }
+
+	/**
+	 * 故障・廃棄履歴情報削除
+	 *
+	 * @param Accessories 故障・廃棄履歴情報
 	 * @return int 結果値
 	 */
     @RequestMapping(value = "/deleteMaintenanceHistory", method = RequestMethod.POST)
@@ -376,7 +367,7 @@ public class AssetController {
     public int deleteMaintenanceHistory(Model model, @RequestBody MaintenanceHistory maintenanceHistory) {
     	int result = 0;
     	try {
-	    	// 保守履歴削除
+	    	// 故障・廃棄履歴削除
 	    	result = assetService.deleteMaintenanceHistory(maintenanceHistory);
     	}catch (Exception e) {
     		logger.error(e.getMessage());

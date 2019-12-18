@@ -4,12 +4,10 @@
 
 <mapper namespace="jp.co.info.ais.ams.mapper.CodeDetailMapper">
 
-
-
 	<!-- リスト照会 -->
 	<select id="selectCodeDetailList"
 		resultType="jp.co.info.ais.ams.domain.CodeDetail">
-		SELECT A.* FROM(
+		
 		SELECT
 		code_master_id
 		,code_detail_id
@@ -21,9 +19,6 @@
 		,item5
 		,use_flag
 		FROM code_detail
-		ORDER BY
-		code_master_id ASC
-		)A
 		where 1=1
 		<if test="codeMasterId != null and !codeMasterId.equals('')">
 			AND code_master_id like '%${codeMasterId}%'
@@ -37,9 +32,10 @@
 		<if test="useFlag != null and !useFlag.equals('')">
 			AND use_flag =#{useFlag}
 		</if>
+		ORDER BY
+		code_master_id ASC
 		LIMIT #{length} OFFSET #{start}
 	</select>
-
 
 	<!-- ページング -->
 	<select id="selectCount" resultType="int" parameterType="jp.co.info.ais.ams.domain.CodeDetail">
@@ -70,7 +66,6 @@
 		code_master_id
 		FROM code_detail
 	</select>
-
 
 	<!-- マスターコードIDで選択 (code_masterテーブルから)-->
 	<select id="selectCode"
@@ -106,7 +101,6 @@
 		WHERE code_detail_id = #{codeDetailId} and code_Master_Id=#{codeMasterId}
 	</update>
 
-
 	<!-- 詳細新規登録 -->
 	<insert id="codeDetailInsert"
 		parameterType="jp.co.info.ais.ams.domain.CodeDetail">
@@ -131,7 +125,6 @@
 		, #{item5}
 		)
 	</insert>
-
 
 	<!-- Listを確認してINTタイプで送る -->
 	<select id="codeDetailListCheck"

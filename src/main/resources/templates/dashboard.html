@@ -69,7 +69,7 @@
 					</div>
 					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style="padding: 10px 0px 0px;">
 						<div class="text-center">
-							<h3><b>故障した装置</b>
+							<h3><b>故障した資産</b>
 							</h3>
 							<div class="count">
 								<i class="fa fa-cubes"></i>[[${kosyouCnt}]] 個
@@ -78,7 +78,7 @@
 						</div>
 					<div class="col-md-0 col-sm-3 col-xs-6 tile_stats_count" style="padding: 10px 0px 0px;">
 						<div class="text-center">
-							<h3><b>今月購入した装置</b></h3>
+							<h3><b>今月購入した資産</b></h3>
 							<div class="count">
 								<i class="fa fa-plus"></i> [[${newItem}]] 個
 							</div>
@@ -90,11 +90,11 @@
 				<!-- Graph  -->
 				<div class="col-md-12 col-sm-8 col-xs-12">
 					<div class="row">
-						<!-- ハードウェア保有現況  -->
+						<!-- ハードウェア  -->
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="x_panel tile fixed_height_320 overflow_hidden">
 								<div class="x_title">
-									<h2><b>ハードウェア保有現況</b></h2>
+									<h2><b>ハードウェア</b></h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -102,16 +102,16 @@
 										<table class="" style="width: 100%">
 											<tr>
 												<th style="width: 37%;">
-													<h4>&nbsp;&nbsp;<b>トップ５</b></h4>
+													<h4>&nbsp;&nbsp;<b>比率</b></h4>
 												</th>
 												<th>
 													<table class="tile_info">
 														<tr>
 															<th>
-																<h4><b>ハードウェア種別</b></h4>
+																<h4><b>区分</b></h4>
 															</th>
 															<th>
-																<h4><b>保有量</b></h4>
+																<h4><b>保有数</b></h4>
 															</th>
 														</tr>
 													</table>
@@ -161,12 +161,12 @@
 								</div>
 							</div>
 						</div>
-						<!-- /ハードウェア保有現況 -->
-						<!-- ソフトウェア保有現況  -->
+						<!-- /ハードウェア -->
+						<!-- ソフトウェア  -->
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="x_panel tile fixed_height_320 overflow_hidden">
 								<div class="x_title">
-									<h2><b>ソフトウェア保有現況</b></h2>
+									<h2><b>ソフトウェア</b></h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -174,16 +174,16 @@
 										<table style="width: 100%">
 											<tr>
 												<th style="width: 37%;">
-													<h4>&nbsp;&nbsp;<b>トップ５</b></h4>
+													<h4>&nbsp;&nbsp;<b>比率</b></h4>
 												</th>
 												<th>
 													<table class="tile_info">
 														<tr>
 															<th>
-																<h4><b>ソフトウェア種別</b></h4>
+																<h4><b>区分</b></h4>
 															</th>
 															<th>
-																<h4><b>保有量</b></h4>
+																<h4><b>保有数</b></h4>
 															</th>
 														</tr>
 													</table>
@@ -235,14 +235,14 @@
 							</div>
 						</div>
 					</div>
-					<!-- /ソフトウェア保有現況 -->
-					<!-- 資産貸与現況 -->
+					<!-- /ソフトウェア -->
+					<!-- 資産貸与状況 -->
 					<div class="row">
 						<!-- bar charts group -->
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2><b>資産貸与現況</b></h2>
+									<h2><b>資産貸与状況</b></h2>
 									<div class="clearfix"></div>
 								</div>
 								<!-- データあり -->
@@ -281,7 +281,7 @@
 						</div>
 						<!-- /bar charts group -->
 					</div>
-					<!-- /資産貸与現況 -->
+					<!-- /資産貸与状況 -->
 				</div>
 				<!--/Graph  -->
 			</div>
@@ -320,7 +320,7 @@ $(document).ready(function() {
 	init_chart_doughnut1(), init_chart_doughnut2(), init_morris_charts_dashboard()
 	});
 
-// 保有現況グラフ：ハードウェア
+// 保有状況グラフ：ハードウェア
 function init_chart_doughnut1() {
 	if ("undefined" != typeof Chart && (console.log("init_chart_doughnut1"), $(".canvasDoughnut1").length)) {
 
@@ -347,7 +347,7 @@ function init_chart_doughnut1() {
     }
 }
 
-// 保有現況グラフ：ソフトウェア
+// 保有状況グラフ：ソフトウェア
 function init_chart_doughnut2() {
     if ("undefined" != typeof Chart && (console.log("init_chart_doughnut2"), $(".canvasDoughnut2").length)) {
         var a = {
@@ -373,7 +373,7 @@ function init_chart_doughnut2() {
     }
 }
 
-//貸与現況グラフ
+//貸与状況グラフ
 	function init_morris_charts_dashboard() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",

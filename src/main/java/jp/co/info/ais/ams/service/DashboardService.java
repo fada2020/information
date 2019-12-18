@@ -14,7 +14,7 @@ public class DashboardService {
 	@Autowired
 	private DashboardMapper dashboardMapper;
 	/**
-	 * 保有現況数値
+	 * 保有状況数値
 	 * @return ArrayList<Dashboard>
 	 * @throws Exception
 	 */
@@ -25,7 +25,7 @@ public class DashboardService {
 	}
 
 	/**
-	 * 今月購入した装置
+	 * 今月購入した資産
 	 * @return int
 	 * @throws Exception
 	 */
@@ -35,7 +35,7 @@ public class DashboardService {
 	}
 
 	/**
-	 * 貸与現況
+	 * 貸与状況
 	 * @return ArrayList<Dashboard>
 	 * @throws Exception
 	 */
@@ -46,7 +46,11 @@ public class DashboardService {
 	}
 
 	public int kosyouItem() {
-		int kosyouItem = dashboardMapper.kosyouItem();
-		return kosyouItem;
+		try {
+			int kosyouItem = dashboardMapper.kosyouItem();
+			return kosyouItem;
+		} catch(NullPointerException e) {
+			return 0;
+		}
 	}
 }

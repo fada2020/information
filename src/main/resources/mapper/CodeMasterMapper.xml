@@ -113,11 +113,9 @@
 	<update id="updateCodeMaster"
 		parameterType="jp.co.info.ais.ams.domain.CodeMaster">
 		UPDATE code_master SET
-		code_master_id = #{codeMasterId},
 		code_master_name=#{codeMasterName},
-		remarks=#{remarks},
-		use_Flag=#{useFlag}
-		WHERE code_master_id = #{codeMasterIdOld}
+		remarks=#{remarks}
+		WHERE code_master_id = #{codeMasterId}
 
 	</update>
 
