@@ -57,7 +57,7 @@
 											<div class="col-md-4">
 													<div class="input-group date" id="am_myDatepicker">
 														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-														<input type="text" class="form-control input-group-addon" name="purchaseDate" th:value="${asset.purchaseDate}">
+														<input type="text" class="form-control datepicker-form" name="purchaseDate" th:value="${asset.purchaseDate}">
 													</div>
 											</div>
 											<div class="col-md-2">
@@ -388,7 +388,7 @@
 														<input type="hidden" th:id="${#ids.seq('am_mhkey')}" th:value="${maintenance.historySeq}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${mhnum.index+1}"></td>
 														<td>
-															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker">
+															<div class="input-group date mhDatepicker" id="myDatepicker" name="myDatepicker">
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}" th:value="${maintenance.implementationDate}">
 															</div>
@@ -402,7 +402,7 @@
 													<tr id="mhupdate2" th:if="${#lists.size(asset.maintenanceHistoryList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
 														<td>
-															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker" >
+															<div class="input-group date mhDatepicker" id="myDatepicker" name="myDatepicker" >
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}">
 															</div>
@@ -533,7 +533,7 @@
 		var mhform = $('#mhForm');
 		// 資産変更モーダルの変更バトン
        	$('#sisanupdate').click(function(){
-       	
+
   			// 主要な資産の有効性検証
                   assform.validate({
                       rules: {
@@ -770,13 +770,12 @@
                 	)
     				.success(function(result) {
     					if(result == 0) {
-    						alert('エラーが発生しました。');
+    						alert('エラーが発生しました:付属品削除');
     					} else {
     						selectTr1.remove();
-    						alert('削除しました');
     					}
     				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗accdelete');
+                    	alert('通信失敗:付属品削除');
                     });
 				}
 				// /付属品削除プロセス
@@ -788,23 +787,27 @@
 
             };
             // /各付属品のリスト処理FOR文
-            $.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(accupdateList)
-					}
-            	)
-				.success(function(result) {
-					if(result == 0) {
-						alert('エラーが発生しました。');
-					} else {
+            if(JSON.stringify(accupdateList) == "[]"){
 
-					}
-				}).error(function(xhr, textStatus, error) {
-                	alert('通信失敗:付属品変更');
-                });
+			} else{
+	            $.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
+						{
+							type: "POST",
+							dataType: "json",
+							contentType: 'application/JSON',
+							data : JSON.stringify(accupdateList)
+						}
+	            	)
+					.success(function(result) {
+						if(result == 0) {
+							alert('エラーが発生しました:付属品変更');
+						} else {
+
+						}
+					}).error(function(xhr, textStatus, error) {
+	                	alert('通信失敗:付属品変更');
+	                });
+			}
 		}
 		// /付属品変更・削除プロセス
 
@@ -840,30 +843,28 @@
 				else{
 					accinsertList.push(accessories);
 				}
-				if(JSON.stringify(accinsertList) == "[]"){
+			}// /付属品登録処理FOR文
+			if(JSON.stringify(accinsertList) == "[]"){
 
-				} else{
-					$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
-	    					{
-	    						type: "POST",
-	    						dataType: "json",
-	    						contentType: 'application/JSON',
-	    						data : JSON.stringify(accinsertList)
-	    					}
-	                	)
-	    				.success(function(result) {
-	    					if(result == 0) {
-	    						alert('エラーが発生しました。');
-	    					} else {
+			} else{
+				$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(accinsertList)
+    					}
+                	)
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました:付属品登録');
+    					} else {
 
-	    					}
-	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗:付属品登録');
-	                    });
-				}
-				// /付属品登録プロセス
-            };
-        	 // /付属品登録処理FOR文
+    					}
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗:付属品登録');
+                    });
+			}// /付属品登録プロセス
 		}
 		// 付属品登録プロセス
 
@@ -908,12 +909,12 @@
                 	)
     				.success(function(result) {
     					if(result == 0) {
-    						alert('エラーが発生しました。');
+    						alert('エラーが発生しました:故障・廃棄履歴削除');
     					} else {
     						selectTr1.remove();
     					}
     				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗mhdelete');
+                    	alert('通信失敗:故障・廃棄履歴削除');
                     });
 				}
 				// /故障・廃棄履歴削除プロセス
@@ -937,12 +938,12 @@
 		            	)
 						.success(function(result) {
 							if(result == 0) {
-								alert('エラーが発生しました。mhupdate');
+								alert('エラーが発生しました:故障・廃棄履歴変更');
 							} else {
 
 							}
 						}).error(function(xhr, textStatus, error) {
-		                	alert('通信失敗mhupdate');
+		                	alert('通信失敗:故障・廃棄履歴変更');
 		                });
 			}
 
@@ -994,12 +995,12 @@
 	               	)
 	   				.success(function(result) {
 	   					if(result == 0) {
-	   						alert('エラーが発生しました。mhinsert');
+	   						alert('エラーが発生しました:故障・廃棄履歴登録');
 	   					} else {
 
 	   					}
 	   				}).error(function(xhr, textStatus, error) {
-	                   	alert('通信失敗mhinsert');
+	                   	alert('通信失敗:故障・廃棄履歴登録');
 	                   });//ajax end
 			}
 
