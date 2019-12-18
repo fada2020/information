@@ -45,7 +45,7 @@ public class RentalController {
 	private RentalService rentalService;
 
 	/**
-	 * 貸与管理ルトー
+	 * 貸出管理ルトー
 	 *
 	 * @param Model
 	 * @return 住所の"rentalIndex"
@@ -60,6 +60,8 @@ public class RentalController {
 			model.addAttribute("statusCode", rentalService.selectStatusCode());
 			//区分コードの習得
 			model.addAttribute("kubun", rentalService.selectCode());
+
+
 			//今日の日付を習得
 			Date date = new Date();
 			model.addAttribute("date", date);
@@ -73,7 +75,7 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与管理単一の資産の情報を持ち出す
+	 * 貸出管理単一の資産の情報を持ち出す
 	 * @param String assetNumber
 	 * @return Asset 資産の情報
 	 * */
@@ -94,8 +96,8 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与管理単一の資産をデータテーブルに入れ込む
-	 * @param  List<Rental> 貸与情報のリスト
+	 * 貸出管理単一の資産をデータテーブルに入れ込む
+	 * @param  List<Rental> 貸出情報のリスト
 	 *
 	 * */
 	@RequestMapping(value = "/addRental", method = RequestMethod.POST)
@@ -103,7 +105,7 @@ public class RentalController {
 	public void addRental(Model model, @RequestBody List<Rental> rentalList) {
 
 		try {
-			//ウェブから貸与リストを取り込んでサービス処理をする
+			//ウェブから貸出リストを取り込んでサービス処理をする
 			rentalService.addRental(rentalList);
 
 		} catch (Exception e) {
@@ -114,7 +116,7 @@ public class RentalController {
 
 
 	/**
-	 * 貸与メイン画面表示
+	 * 貸出メイン画面表示
 	 *資産のデータの状態が001と引数に該当するデータを持ち出す
 	 * @param   String 区分コード
 	 * @return List<Asset> 資産情報のリスト
@@ -134,10 +136,10 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与メイン画面表示
-	 * 貸与リストのデータの状態が002に該当するデータを持ち出す
+	 * 貸出メイン画面表示
+	 * 貸出リストのデータの状態が002に該当するデータを持ち出す
 	 * ページングする為の処理もする
-	 * 貸与データを十個ずつ表示する
+	 * 貸出データを十個ずつ表示する
 	 * 検索条件のString assetNumberやString rentalPeriodも入っている
 	 * @param  Page<Rental> page
 	 * @returnPage<Rental> page
@@ -156,7 +158,7 @@ public class RentalController {
 			if (null != assetNumber && !assetNumber.equals("")) {
 				rental.setAssetNumber(assetNumber);
 			}
-			//もし貸与期間を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
+			//もし貸出期間を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String rentalPeriod = page.getColumns().get(1).getSearch().getValue();
 			if (null != rentalPeriod && !rentalPeriod.equals("")) {
 				//rentalPeriodに数字以外の文字が入っていると除去する
@@ -165,18 +167,18 @@ public class RentalController {
 				rental.setRentalDayS(dateArr[0]);
 				rental.setRentalDayE(dateArr[1]);
 			}
-			//もし貸与ナンバーを検索したらrentalのオブジェクトに入れて該当するデータを取り出す
+			//もし貸出ナンバーを検索したらrentalのオブジェクトに入れて該当するデータを取り出す
 			String rentalNo = page.getColumns().get(2).getSearch().getValue();
 			if (null != rentalNo && !rentalNo.equals("")) {
 				rental.setRentalNo(rentalNo);
 			}
-			//もし貸与区分を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
-			String item1 = page.getColumns().get(3).getSearch().getValue();
-			if (null != item1 && !item1.equals("")) {
-				rental.setItem1(item1);
+			//もし貸出区分を検索したらrentalのオブジェクトに入れて該当するデータを取り出す
+			String codeDetailId = page.getColumns().get(3).getSearch().getValue();
+			if (null != codeDetailId && !codeDetailId.equals("")) {
+				rental.setCodeDetailId(codeDetailId);
 			}
 			rental.setCodeMasterId(appConstant.MASTER_DETAIL);
-			//貸与情報に該当するリストを取り出すメソッド
+			//貸出情報に該当するリストを取り出すメソッド
 			List<Rental> list = rentalService.selectAll(rental);
 			//ページのセッティング
 			page.setData(list);
@@ -193,8 +195,8 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与した資産を返却する
-	 * htmlから assetSeqを持ち込んで該当する貸与データの状態を002から001に変える
+	 * 貸出した資産を返却する
+	 * htmlから assetSeqを持ち込んで該当する貸出データの状態を002から001に変える
 	 * @param  int 資産シークエンス
 	 * @return 無し
 	 * */
@@ -206,10 +208,10 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与画面で変更したい貸与情報があったら変更する為探す
-	 *貸与データから変更したい情報を資産情報を元にして状態が002になっている貸与情報を持ち出す
+	 * 貸出画面で変更したい貸出情報があったら変更する為探す
+	 *貸出データから変更したい情報を資産情報を元にして状態が002になっている貸出情報を持ち出す
 	 * @param  int 資産シークエンス
-	 * @return Rental 貸与情報
+	 * @return Rental 貸出情報
 	 * */
 	@RequestMapping(value = "/researchRental", method = RequestMethod.POST)
 	@ResponseBody
@@ -227,10 +229,10 @@ public class RentalController {
 	}
 
 	/**
-	 * 貸与画面で変更する情報を持ち込む
-	 *htmlから変更する全ての情報を持ち込んで貸与データに入れ替える
+	 * 貸出画面で変更する情報を持ち込む
+	 *htmlから変更する全ての情報を持ち込んで貸出データに入れ替える
 	 * @param  int 資産シークエンス
-	 * @return Rental 貸与情報
+	 * @return Rental 貸出情報
 	 * */
 	@RequestMapping(value = "/updateRental", method = RequestMethod.POST)
 	@ResponseBody

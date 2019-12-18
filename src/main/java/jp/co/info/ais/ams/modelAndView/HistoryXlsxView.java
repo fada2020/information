@@ -26,13 +26,13 @@ public class HistoryXlsxView extends AbstractXlsxView {
 
 		HashMap<String, String> statusCode = new HashMap<String, String>();
 		statusCode.put("01", "保管");
-		statusCode.put("02", "貸与");
+		statusCode.put("02", "貸出");
 		statusCode.put("03", "故障");
 		statusCode.put("04", "廃棄");
 		statusCode.put(null, "-");
 
 
-		Sheet sheet = workbook.createSheet("貸与履歴");
+		Sheet sheet = workbook.createSheet("貸出履歴");
 
 		// create header
         Row row = sheet.createRow(0);
@@ -48,13 +48,14 @@ public class HistoryXlsxView extends AbstractXlsxView {
         row.createCell(1).setCellValue("メーカー");
         row.createCell(2).setCellValue("モデル");
         row.createCell(3).setCellValue("状態");
-        row.createCell(4).setCellValue("貸与番号");
+        row.createCell(4).setCellValue("貸出番号");
         row.createCell(5).setCellValue("用途");
-        row.createCell(6).setCellValue("場所（Site名）");
+        row.createCell(6).setCellValue("場所");
         row.createCell(7).setCellValue("貸出者");
         row.createCell(8).setCellValue("使用者");
+        row.createCell(8).setCellValue("承認者");
         row.createCell(9).setCellValue("BP社名");
-        row.createCell(10).setCellValue("貸与日");
+        row.createCell(10).setCellValue("貸出日");
         row.createCell(11).setCellValue("返却日");
 
 		// create body
@@ -76,14 +77,15 @@ public class HistoryXlsxView extends AbstractXlsxView {
             row.createCell(6).setCellValue(aHistory.getStorageLocation());
             row.createCell(7).setCellValue(aHistory.getApplicantId());
             row.createCell(8).setCellValue(aHistory.getRentalUserId());
-            row.createCell(9).setCellValue(aHistory.getBpName());
+            row.createCell(9).setCellValue(aHistory.getApprover());
+            row.createCell(10).setCellValue(aHistory.getBpName());
 
 			String rentalDay = aHistory.getRentalDayS();
 			if(rentalDay == null) {
-				row.createCell(10).setCellValue(aHistory.getRentalDayS());
+				row.createCell(11).setCellValue(aHistory.getRentalDayS());
 			}else {
 				rentalDay = rentalDay.trim();
-				row.createCell(10).setCellValue(rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8));
+				row.createCell(12).setCellValue(rentalDay.substring(0, 4) + "-" + rentalDay.substring(4, 6) + "-" + rentalDay.substring(6, 8));
 			}
 
 			String returnDay = aHistory.getReturnDayS();
@@ -91,7 +93,7 @@ public class HistoryXlsxView extends AbstractXlsxView {
 				row.createCell(11).setCellValue(aHistory.getReturnDayS());
 			}else {
 				returnDay = returnDay.trim();
-				row.createCell(11).setCellValue(returnDay.substring(0, 4) + "-" + returnDay.substring(4, 6) + "-" + returnDay.substring(6, 8));
+				row.createCell(12).setCellValue(returnDay.substring(0, 4) + "-" + returnDay.substring(4, 6) + "-" + returnDay.substring(6, 8));
 			}
         }
 

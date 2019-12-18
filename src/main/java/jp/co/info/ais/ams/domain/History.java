@@ -24,7 +24,7 @@ public class History {
 	String returnDayS;
 	String returnDayE;
 	String rentalSeq;
-
+	String approver;
 	int length = 10;
 	int start;
 }

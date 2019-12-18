@@ -109,7 +109,7 @@
 									<input type="text" class="form-control" placeholder="管理番号" id="assetNumber_search" maxlength="15">
 								</div>
 								<div class="col-md-2">
-									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">貸与期間</span></p>
+									<p class ="insert-_history"><span class="pull-right" style="margin-left: -10%;">貸出期間</span></p>
 								</div>
 								<div class="col-md-2">
 									<fieldset>
@@ -176,20 +176,21 @@
 										<thead class="thead-light">
 											<tr class="headings">
 												<th colspan="3">資産</th>
-												<th colspan="10">使用状況</th>
+												<th colspan="11">使用状況</th>
 											</tr>
 											<tr class="headings">
 												<th>管理番号</th>
 												<th>メーカー</th>
 												<th>モデル</th>
 												<th>状態</th>
-												<th>貸与番号</th>
+												<th>貸出番号</th>
 												<th>用途</th>
-												<th>場所(Site名)</th>
+												<th>場所</th>
 												<th>貸出者</th>
 												<th>使用者</th>
+												<th>承認者</th>
 												<th>BP社名</th>
-												<th>貸与日</th>
+												<th>貸出日</th>
 												<th>返却日</th>
 												<th style="width: 40px;">
 													<button id="deleteHistory" class="btn btn-danger" title="チェックした履歴情報を削除" style="font-size: 12px; font-weight: bolder;">削除</button>
@@ -259,7 +260,7 @@
         }
     	//オンロード
         $(function(){
-        	//貸与のデートピッカー
+        	//貸出のデートピッカー
         	$('#rental_search').daterangepicker({
 			 locale: {
 			      applyLabel: '選択',
@@ -370,7 +371,7 @@
                     { targets: 3, data: function ( d ) {
                     	return stateCodeMap.get(d.statusCode);
                     }},
-                    //貸与番号
+                    //貸出番号
                     { targets: 4, data: function(d){
                     	if(d.rentalNo == '999999999999'){
                     		return '-';
@@ -412,14 +413,22 @@
                     }},
                     //BP社名
                     { targets: 9, data: function(d){
+                    	if(d.approver == '' || d.approver == null){
+                    		return '-';
+                    	} else{
+                    		return d.approver;
+                    	}
+                    }},
+                    //BP社名
+                    { targets: 10, data: function(d){
                     	if(d.bpName == '' || d.bpName == null){
                     		return '-';
                     	} else{
                     		return d.bpName;
                     	}
                     }},
-                    //貸与日
-                    { targets: 10, data: function ( d ) {
+                    //貸出日
+                    { targets: 11, data: function ( d ) {
                     	if( d.rentalDayS =='' || d.rentalDayS == null){
                     		return '-';
                     	}else{
@@ -429,7 +438,7 @@
 
                     }},
                     //返却日
-                    { targets: 11, data: function ( d ) {
+                    { targets: 12, data: function ( d ) {
                     	if( d.returnDayS =='' || d.returnDayS == null){
                     		return '-';
                     	}else{
@@ -439,11 +448,11 @@
 
                     }},
 					//削除チェックボックス
-                    {targets: 12,
+                    {targets: 13,
                     	render: function( data, type, row, meta ){
 
-                    		if(row.returnDayS=="" || row.returnDayS == null){//貸与状態の場合
-                    			return '<input type="checkbox" class="flat" disabled="disabled" title="保管の項目は履歴を削除できません。">';
+                    		if(row.returnDayS=="" || row.returnDayS == null){//貸出状態の場合
+                    			return '<input type="checkbox" class="flat" disabled="disabled" title="現状は削除対象ではありません。">';
                     		} else{//その他の場合
                     			return '<input type="checkbox" class="flat" onClick="deleteAct(this)" value="/' + row.rentalSeq + '">';
                     		}

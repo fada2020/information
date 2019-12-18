@@ -102,16 +102,16 @@
 										<table class="" style="width: 100%">
 											<tr>
 												<th style="width: 37%;">
-													<h4>&nbsp;&nbsp;<b>比率</b></h4>
+													<div class="col-md-1"></div><h4><b>比率</b></h4>
 												</th>
 												<th>
 													<table class="tile_info">
 														<tr>
 															<th>
-																<h4><b>区分</b></h4>
+																<h4 style="text-align:center;"><b>区分</b></h4>
 															</th>
 															<th>
-																<h4><b>保有数</b></h4>
+																<h4 class="pull-right"><b>保有数</b></h4>
 															</th>
 														</tr>
 													</table>
@@ -174,16 +174,16 @@
 										<table style="width: 100%">
 											<tr>
 												<th style="width: 37%;">
-													<h4>&nbsp;&nbsp;<b>比率</b></h4>
+													<div class="col-md-1"></div><h4><b>比率</b></h4>
 												</th>
 												<th>
 													<table class="tile_info">
 														<tr>
 															<th>
-																<h4><b>区分</b></h4>
+																<h4 style="text-align:center;"><b>区分</b></h4>
 															</th>
 															<th>
-																<h4><b>保有数</b></h4>
+																<h4 class="pull-right"><b>保有数</b></h4>
 															</th>
 														</tr>
 													</table>
@@ -236,13 +236,13 @@
 						</div>
 					</div>
 					<!-- /ソフトウェア -->
-					<!-- 資産貸与状況 -->
+					<!-- 資産貸出状況 -->
 					<div class="row">
 						<!-- bar charts group -->
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2><b>資産貸与状況</b></h2>
+									<h2><b>資産貸出状況</b></h2>
 									<div class="clearfix"></div>
 								</div>
 								<!-- データあり -->
@@ -256,7 +256,7 @@
 												<p style="font-size: 15px;"><i class="fa fa-square" style="color: #3498DB;"></i>保管</p>
 											</td>
 											<td width="200px">
-												<p style="font-size: 15px;"><i class="fa fa-square" style="color: #E74C3C;"></i>貸与</p>
+												<p style="font-size: 15px;"><i class="fa fa-square" style="color: #E74C3C;"></i>貸出</p>
 											</td>
 										</tr>
 									</table>
@@ -281,7 +281,7 @@
 						</div>
 						<!-- /bar charts group -->
 					</div>
-					<!-- /資産貸与状況 -->
+					<!-- /資産貸出状況 -->
 				</div>
 				<!--/Graph  -->
 			</div>
@@ -373,7 +373,7 @@ function init_chart_doughnut2() {
     }
 }
 
-//貸与状況グラフ
+//貸出状況グラフ
 	function init_morris_charts_dashboard() {
 	    "undefined" != typeof Morris && (console.log("init_morris_charts_dashboard"), $("#bargraph").length && Morris.Bar({
 	        element: "bargraph",
@@ -410,7 +410,7 @@ function init_chart_doughnut2() {
 	        ykeys: ["y", "z"],
 	        barColors: ["#3498DB", "#E74C3C"],
 	        hideHover: "auto",
-	        labels: ["保管", "貸与"],
+	        labels: ["保管", "貸出"],
 	        resize: !0
 	    }).on("click", function(a, b) {
 	        console.log(a, b)

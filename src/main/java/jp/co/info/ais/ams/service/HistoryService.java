@@ -60,7 +60,7 @@ public class HistoryService{
 	/**
 	 * 履歴情報削除
 	 *
-	 * @param ArrayList<String>　削除対象の貸与シークエンス
+	 * @param ArrayList<String>　削除対象の貸出シークエンス
 	 * @return int　削除されたデータの数
 	 */
 	public int deleteHistory(ArrayList<String> deleteList) {

@@ -14,7 +14,7 @@ public interface DashboardMapper {
 
 	public int newItem();						// 今月購入した資産数量
 
-	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸与状況
+	public ArrayList<Dashboard> rslist();		// 主要ハードウェアの貸出状況
 
 	public int kosyouItem();					// 故障した資産数
 
