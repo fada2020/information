@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter @Setter
 public class AppConstant {
 	String companyCode;
-	// ダッシュボード貸与状況のリスト名称
+	// ダッシュボード貸出状況のリスト名称
 	public final static String fixed_rent_list01 = "Desktop";
 	public final static String fixed_rent_list02 = "Notebook";
 	public final static String fixed_rent_list03 = "Tablet";
@@ -21,7 +21,7 @@ public class AppConstant {
 	public final static String fixed_rent_list07 = "Mouse";
 	//保管状態
 	public final static String STATE_STORAGE = "01";
-	//貸与状態
+	//貸出状態
 	public final static String STATE_RENTAL = "02";
 	//故障状態
 	public final static String STATE_BREAKDOWN = "03";

@@ -69,7 +69,7 @@ public class HistoryController {
     /**
      * 履歴情報削除
      *
-     * @param ArrayList<String>　削除対象の貸与シークエンス
+     * @param ArrayList<String>　削除対象の貸出シークエンス
      * @return int　削除されたデータの数
      */
     @RequestMapping("/deleteHistory")
@@ -115,7 +115,7 @@ public class HistoryController {
         	String statusCode = page.getColumns().get(2).getSearch().getValue();
         	condition.setStatusCode(statusCode);
 
-        	//検索条件設定-貸与期間
+        	//検索条件設定-貸出期間
         	String rentalPeriod = page.getColumns().get(3).getSearch().getValue();
         	if(null != rentalPeriod && !rentalPeriod.equals("")) {
         		rentalPeriod = rentalPeriod.replaceAll("[ /]", "");

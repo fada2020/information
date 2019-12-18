@@ -16,13 +16,13 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Rental {
 
-	//貸与情報管理のPrimaryKey
+	//貸出情報管理のPrimaryKey
 	private int rentalSeq;
 	//IT資産管理のPrimaryKey
 	private int assetSeq;
-	//貸与ナンバー
+	//貸出ナンバー
 	private String rentalNo;
-	//貸与日
+	//貸出日
 	private String rentalDay;
 	//使用者
 	private String rentalUserId;
@@ -68,10 +68,11 @@ public class Rental {
 	private String codeDetailName;
 	//IT資産の区分コード
 	private String kubunCode;
-	private String item1; 
+	private String item1;
 	//IT資産の資産名
 	private String item2;
-
+	//IT資産のカウント
+	private String item3;
 	//ページに10個ずつ表す
 	private int length = 10;
 	//ページのスタート
@@ -90,5 +91,5 @@ public class Rental {
 		this.statusCode=statusCode;
 		this.updateId=updateId;
 	}
-	
+
 }

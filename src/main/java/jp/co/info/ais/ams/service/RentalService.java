@@ -33,7 +33,7 @@ public class RentalService {
 	private static final Logger logger = LogManager.getLogger(RentalController.class);
 
 	/**
-	 * 全ての貸与情報を取り出す
+	 * 全ての貸出情報を取り出す
 	 *
 	 * @param Rental
 	 * @return List<Rental>
@@ -45,7 +45,7 @@ public class RentalService {
 	}
 
 	/**
-	 * 全ての貸与情報が何個か数える
+	 * 全ての貸出情報が何個か数える
 	 *
 	 * @param Rental
 	 * @return int
@@ -67,7 +67,7 @@ public class RentalService {
 	}
 
 	/**
-	 * 単一の貸与情報を取り出す
+	 * 単一の貸出情報を取り出す
 	 *
 	 * @param int
 	 * @return Rental
@@ -136,7 +136,7 @@ public class RentalService {
 	}
 
 	/**
-	 *リスト上にあるデータを取り込んで貸与データテーブルに書き込む
+	 *リスト上にあるデータを取り込んで貸出データテーブルに書き込む
 	 *
 	 * @param  List<Rental>
 	 * @return int
@@ -172,7 +172,7 @@ public class RentalService {
 	}
 
 	/**
-	 *返却する為の情報を取り込んで貸与データテーブルと資産データテーブルの情報を変える
+	 *返却する為の情報を取り込んで貸出データテーブルと資産データテーブルの情報を変える
 	 *
 	 * @param Rental
 	 * @param String
@@ -240,7 +240,7 @@ public class RentalService {
 	/**
 	 *アップデートする為のメソッド
 	 *
-	 * @param Rental 貸与情報
+	 * @param Rental 貸出情報
 	 * @param String アップデートアカウント
 	 *  @return int 戻り値
 	 */

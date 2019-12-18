@@ -87,15 +87,15 @@ public class MainController {
 			model.addAttribute("hw", hw);		// 登録したHW種数
 			model.addAttribute("sw", sw);		// 登録したSW種数
 
-			// 貸与状況グラフ
+			// 貸出状況グラフ
 			ArrayList<Dashboard> rslist = new ArrayList<Dashboard>();
 			rslist = dashboardService.rslist();
 			int rsize = dashboardService.rslist().size();
-			// 【目録】貸与状況グラフ
+			// 【目録】貸出状況グラフ
 			AppConstant rentlist = new AppConstant();	// 常数
 			model.addAttribute("rentlist", rentlist);
 			model.addAttribute("rsize", rsize);
-			// 【数量】貸与状況グラフ：保有、貸与
+			// 【数量】貸出状況グラフ：保有、貸出
 			model.addAttribute("DT001", 0);	model.addAttribute("DT002", 0);	//初期化
 			model.addAttribute("NB001", 0); model.addAttribute("NB002", 0);
 			model.addAttribute("TBL001", 0); model.addAttribute("TBL002", 0);
@@ -110,7 +110,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("DT001", item.getTypeCnt());
 					}
-					// Desktop貸与
+					// Desktop貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DT002", item.getTypeCnt());
 					}
@@ -120,7 +120,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("NB001", item.getTypeCnt());
 					}
-					// Notebook貸与
+					// Notebook貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("NB002", item.getTypeCnt());
 					}
@@ -130,7 +130,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("TBL001", item.getTypeCnt());
 					}
-					// Tablet貸与
+					// Tablet貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("TBL002", item.getTypeCnt());
 					}
@@ -140,7 +140,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("MD001", item.getTypeCnt());
 					}
-					// Mobile貸与
+					// Mobile貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MD002", item.getTypeCnt());
 					}
@@ -150,7 +150,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("DP001", item.getTypeCnt());
 					}
-					// Monitor貸与
+					// Monitor貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("DP002", item.getTypeCnt());
 					}
@@ -160,7 +160,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("KBD001", item.getTypeCnt());
 					}
-					// Keyboard貸与
+					// Keyboard貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("KBD002", item.getTypeCnt());
 					}
@@ -170,7 +170,7 @@ public class MainController {
 					if(item.getStatusCode().equals("01")) {
 						model.addAttribute("MS001", item.getTypeCnt());
 					}
-					// Keyboard貸与
+					// Keyboard貸出
 					if(item.getStatusCode().equals("02")) {
 						model.addAttribute("MS002", item.getTypeCnt());
 					}
