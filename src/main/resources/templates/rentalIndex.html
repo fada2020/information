@@ -308,7 +308,7 @@
 								<div class="modal-content">
 									<div class="modal-header">
 										<!--START 変更モーダルの戻るボタン -->
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+										<button type="button" id="closeModalInsert" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 										<!--END 変更モーダルの戻るボタン -->
 										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸出登録</h3>
 									</div>
@@ -698,7 +698,9 @@
                 ]
             });
             /*登録を取り消したら作動するメソッド  */
-      	  $(".close").on("click", function() {
+
+      	  $("#closeModalInsert").on("click", function() {
+
       	    	//貸与目録をリセットする
       	 	$('#selectedAsset > tbody').empty();
       	    	//登録フォームのテキストをリセットする
@@ -720,7 +722,6 @@
 
       	    	  $('#modal3d2').modal("hide");
       	    });
-
 
 
     	    /*登録を取り消したら作動するメソッド  */
