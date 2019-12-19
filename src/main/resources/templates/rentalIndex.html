@@ -320,7 +320,7 @@
 														<div class="form-group row ">
 															<!--START 貸出日の入力 -->
 															<label class="control-label col-md-2">貸出日<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-3">
+															<div class="col-md-3"style="padding:0px;">
 																<div class="input-group date" id="rentalsDay_search" name="rentalsDay_search">
 																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="rentalDay" id="todayDate" th:value="${#dates.format(date,'yyyy-MM-dd')}">
@@ -329,7 +329,7 @@
 															<!--END 貸出日の入力 -->
 															<!--START 返却予定日の入力 -->
 															<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-3">
+															<div class="col-md-4" style="padding:0px;">
 																<div class="input-group date" id="myDatepicker" name="myDatepicker" style="float: left">
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod" />
@@ -396,37 +396,43 @@
 															<!--END 資産管理番号の選択-->
 														</div>
 														<!--END BP社名の入力と資産管理番号の選択-->
-															<div class="fomr-group col-md-5">
-																<!--START 貸出者の入力 -->
-																<label class="control-label col-md-4" style="float: left">貸出者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-3" />
-																</div>
-																<!--END 貸出者の入力 -->
-																<!--START 使用者の入力 -->
-																<label class="control-label col-md-4" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-3" />
-																</div>
-																<!--END 使用者の入力 -->
-																<!--START 承認者の入力 -->
-																<label class="control-label col-md-4" style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="approver" id="approver" required class="form-control col-md-3" />
-																</div>
-																<!--END 承認者の入力 -->
+														<!--START 貸出者,使用者,承認者,特記事項の入力 -->
+														<div class="fomr-group col-md-5">
+														<!--START 貸出者の入力 -->
+														<div class="form-group row " style="clear:left;">
+															<label class="control-label col-md-4"style="float: left; padding-fight:20;">貸出者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-9" />
 															</div>
+														</div>
+														<!--END 貸出者の入力 -->
 
-															<div class="fomr-group col-md-6">
-																<!--START 特記事項の入力 -->
-																<div class="form-group row">
-																	<label class="control-label col-md-4  ">特記事項</label>
-																	<div class="col-md-8 input-group table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
-																		<textarea id="speciality" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
-																	</div>
-																</div>
-																<!--END 特記事項の入力 -->
+														<!--START 使用者の入力 -->
+														<div class="form-group row "  style="clear:left;">
+															<label class="control-label col-md-4" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-9" />
 															</div>
+														</div>
+														<!--END 使用者の入力 -->
+														<!--START 承認者の入力 -->
+														<div class="form-group row "  style="clear:left;">
+															<label class="control-label col-md-4"style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="approver" id="approver" required class="form-control col-md-9" />
+															</div>
+														</div>
+														<!--END 承認者の入力 -->
+														</div>
+														<!--START 特記事項の入力 -->
+														<div class="fomr-group col-md-7">
+															<div class="form-group row ">
+																<label class="control-label col-md-3">特記事項</label>
+																<textarea id="speciality" name="speciality" class="form-control col-md-8" style="margin-left:18px;height:150px;width:58%; "></textarea>
+															</div>
+														</div>
+														<!--END 特記事項の入力 -->
+														<!--END 貸出者,使用者,承認者,特記事項の入力-->
 														<!--START 追加ボタン -->
 														<div class="form-group row">
 															<div class="col-md-12  ">
@@ -1072,7 +1078,7 @@ function researchRental(assetSeq){
                  	speciality : {
                  		maxlength : 200
                 	},
-                	
+
                 	approver : {
                  		maxlength : 15,
                  		required : true
@@ -1105,7 +1111,7 @@ function researchRental(assetSeq){
                 	purpose : {
                 		required : "用途を入力してください"
                 	},
-                	
+
                 	storageLocation : {
                 		required : "場所を入力してください"
                 	},
