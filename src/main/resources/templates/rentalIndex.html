@@ -697,6 +697,30 @@
                     }
                 ]
             });
+            /*登録を取り消したら作動するメソッド  */
+      	  $(".close").on("click", function() {
+      	    	//貸与目録をリセットする
+      	 	$('#selectedAsset > tbody').empty();
+      	    	//登録フォームのテキストをリセットする
+      	    $('#insertForm').find('input[type="text"], textarea').val('');
+      	     	//登録フォームのセレクトをリセットする
+      		$('select').find('option:first').attr('selected', 'selected');
+      	     	//START登録フォームのデートをリセットする
+      			var today = new Date();
+      			var dd = today.getDate();
+      			var mm = today.getMonth()+1; //January is 0!
+      			var yyyy = today.getFullYear();
+      			if(dd<10) {
+      				 dd='0'+dd
+      			}
+      			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
+      			//END登録フォームのデートをリセットする
+      			   $('#storageLocation').val('自社');
+      			   $('#purpose').val('勤務');
+
+      	    	  $('#modal3d2').modal("hide");
+      	    });
+
 
 
     	    /*登録を取り消したら作動するメソッド  */
