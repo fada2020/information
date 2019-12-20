@@ -480,7 +480,7 @@
 									<!--START 貸出ボタンと戻るボタン -->
 									<div class="modal-footer">
 										<input type="button"class="btn btn-primary pull-left btn-success"id="insertButton" value="貸出" onclick="rentalItem();" />
-										<button type="button" class="btn btn-secondary" id="canelButton">戻る</button>
+										<button type="button" class="btn btn-secondary" id="cancelButton">戻る</button>
 									</div>
 									<!--END 貸出ボタンと戻るボタン -->
 								</div>
@@ -721,11 +721,12 @@
       			   $('#purpose').val('勤務');
 
       	    	  $('#modal3d2').modal("hide");
+      	    		assetKey.clear();
       	    });
 
 
     	    /*登録を取り消したら作動するメソッド  */
-    	  $("#canelButton").on("click", function() {
+    	  $("#cancelButton").on("click", function() {
     	    	//貸与目録をリセットする
     	 	$('#selectedAsset > tbody').empty();
     	    	//登録フォームのテキストをリセットする
@@ -746,6 +747,7 @@
     			   $('#purpose').val('勤務');
 
     	    	  $('#modal3d2').modal("hide");
+    	    		assetKey.clear();
     	    });
         	//END データテーブルをセッティングする
             /*資産ナンバーを貰ってメイン画面のデータを変える*/
