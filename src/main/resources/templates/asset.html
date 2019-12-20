@@ -57,7 +57,7 @@
 	      background-color: lavender;
 		}
 		#am_table1, #am_table2, thead, th {text-align: center;}
-	
+
 	</style>
 
   </head>
@@ -106,9 +106,9 @@
 	                <div class="col-md-2">
 	                    <input type="text" class="form-control" placeholder="モデル" id="model_search" maxlength="15">
 	                </div>
-           
+
        			</div>
-       			
+
                 <div class="clearfix"><br></div>
                 <div class="row">
                 	<div class="col-md-2">
@@ -144,7 +144,7 @@
 	                		<option th:each="code : ${stateCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 						</select>
 	                </div>
-	    			
+
                  </div>
                 	<div class="clear_fix"><br></div>
             <!-- END 検索条件 -->
@@ -168,8 +168,8 @@
                         <tr>
                           <th class="col-md-2">管理番号</th>
                           <th class="col-md-1">区分</th>
-                          <th class="col-md-2">モデル</th>
                           <th class="col-md-1">メーカー</th>
+                          <th class="col-md-2">モデル</th>
                           <th class="col-md-2">購入日</th>
                           <th class="col-md-1">保管位置</th>
                           <th class="col-md-1">状態</th>
@@ -326,7 +326,7 @@
 						  				<span id="CPUProcessor_view"></span>
 						  			</div>
 						  			<div class="col-md-2">
-						  				<span>動作周波数(㎓)</span>
+						  				<span>動作周波数(GHz)</span>
 						  			</div>
 						  			<div class="col-md-4 text-center">
 						  				<span id="operatingFrequency_view"></span>
@@ -431,8 +431,8 @@
 													<tr class="headings">
 														<th class="col-md-2">実施日 </th>
 														<th class="col-md-6">実施内容 </th>
-														<th class="col-md-2">担当 </th>
-														<th class="col-md-2">承認 </th>
+														<th class="col-md-2">担当者 </th>
+														<th class="col-md-2">承認者 </th>
 													</tr>
 												</thead>
 												<tbody>
@@ -628,7 +628,7 @@
 									  				<input type="text" class="form-control" name="cpuProcessor">
 									  			</div>
 									  			<div class="col-md-2">
-									  				<span>動作周波数(㎓)</span>
+									  				<span>動作周波数(GHz)</span>
 									  			</div>
 									  			<div class="col-md-4">
 									  				<input type="text" class="form-control numVal" name="operatingFrequency" value="0">
@@ -637,7 +637,7 @@
 								  			<div class="row well">
 								  				<div class="row">
 										  			<div class="col-md-12">
-										  				<span>Memory(GB)</span>
+										  				<span>メモリ(GB)</span>
 										  			</div>
 										  			<div class="col-md-4">
 										  				<input type="text" class="form-control numVal" name="memory" value="0">
@@ -913,19 +913,20 @@
                     	return productCodeMap.get(d.kubunCode);
                     }},
                     { targets: 2, data: function ( d ) {
-                    	if(d.modelName == '') {
-                    		return '-';
-                    	} else {
-                    		return d.modelName;
-                    	}
-                    }},
-                    { targets: 3, data: function ( d ) {
                     	if(d.makerName == '') {
                     		return '-';
                     	} else {
                     		return d.makerName;
                     	}
                     }},
+                    { targets: 3, data: function ( d ) {
+                    	if(d.modelName == '') {
+                    		return '-';
+                    	} else {
+                    		return d.modelName;
+                    	}
+                    }},
+
                     { targets: 4, data: function ( d ) {
                     	var str = d.purchaseDate;
                     	if(str== ''){
@@ -950,7 +951,7 @@
                         var html = '<button class="btn btn-warning" data-toggle="modal" data-target="#assetUpdateModal" onClick="assetUpdateF('+ row.assetSeq +')">変更</button>&nbsp;<button type="button" class="btn btn-danger deleteBtn"' +
                         	' id="' + row.assetSeq;
                         	if(row.statusCode=="02") {
-                        		html += '" disabled title="貸与の項目は削除できません。">削除</button>';
+                        		html += '" disabled title="貸出の項目は削除できません。">削除</button>';
                         	} else {
                         		html += '">削除</button>';
                         	}

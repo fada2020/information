@@ -35,7 +35,7 @@
 		WHERE DATE_FORMAT(STR_TO_DATE(purchase_date,'%Y%m%d'),'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
 	</select>
 
-	<!-- 資産種別貸与状況 -->
+	<!-- 資産種別貸出状況 -->
 	<select id="rslist" resultType="jp.co.info.ais.ams.domain.Dashboard">
 		SELECT COUNT(asset_seq) AS typeCnt
 			, kubun_code AS kubunCode

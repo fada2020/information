@@ -83,25 +83,25 @@
 				<div class="clearfix"></div>
 				<!--START 検索メソッド -->
 				<div class="row">
-					<!--START 貸与番号検索 -->
+					<!--START 貸出番号検索 -->
 					<div class="col-md-2">
-						<span class="pull-right" style="font-size: 18px;">貸与番号</span>
+						<span class="pull-right" style="font-size: 18px;">貸出番号</span>
 					</div>
 					<div class="col-md-2 ">
-						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸与番号" maxlength="15">
+						<input type="text" class="form-control" id="rentalNo_search"placeholder="貸出番号" maxlength="15">
 					</div>
-					<!--END 貸与番号検索 -->
+					<!--END 貸出番号検索 -->
 					<!--START 返却予定日検索 -->
 					<div class="col-md-2">
 						<span class="pull-right" style="font-size: 18px;">返却予定日</span>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 
 							<div class="control-group pull-left">
 								<div class="controls">
 									<div class="input-prepend input-group pull-left">
 										<span class="add-on input-group-addon "><i class="glyphicon glyphicon-calendar fa fa-calendar "></i></span>
-										<input type="text" style="width: 180px;" name="rental_search"id="rental_search" class="form-control ">
+										<input type="text"  name="rental_search"id="rental_search" class="form-control ">
 									</div>
 								</div>
 							</div>
@@ -128,7 +128,7 @@
 					<div class="col-md-2">
 						<select class="form-control" id="asset_search" style="width: 120px;">
 							<option value="">全体</option>
-							<option th:each="code : ${codeDetailList}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
+							<option th:each="code : ${kubunCode}" th:value="${code.codeDetailId}" th:inline="text">[[${code.codeDetailName}]]</option>
 						</select>
 					</div>
 					<!--END 管理番号検索 -->
@@ -137,27 +137,28 @@
 				<div class="clearfix"></div>
 				<!--START 検索の三行目  -->
 				<div class="row">
-					<!--START 貸与登録ボタン -->
-					<div class="col-md-2 pull-right">
-						<button type="button" id="deleteButton" class="btn btn-success pull-right" onclick="modalInsert()"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</button>
+					<!--START 貸出登録ボタン -->
+					<div class="col-md-10"></div>
+					<div class="col-md-1 ">
+						<button type="button" id="deleteButton" class="btn btn-success col-md-offset-1" onclick="modalInsert()"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸出登録</button>
 					</div>
 				</div>
-				<!--END 貸与登録ボタン -->
+				<!--END 貸出登録ボタン -->
 				<!--END 検索の三行目 -->
 						<div class="clearfix"></div>
-				<!--START 貸与リスト -->
+				<!--START 貸出リスト -->
 				<div class="row">
 					<div class="x_panel">
 						<div class="x_content">
 							<table class="table table-bordered jambo_table bulk_action" id="table1" style="width: 100%; text-align: center;">
 								<thead class="thead-light">
 									<tr class="headings">
-										<th class="col-md-1">貸与番号</th>
+										<th class="col-md-1">貸出番号</th>
 										<th class="col-md-1">管理番号</th>
 										<th class="col-md-1">区分</th>
 										<th class="col-md-1">場所</th>
 										<th class="col-md-1">使用者</th>
-										<th class="col-md-1">貸与日</th>
+										<th class="col-md-1">貸出日</th>
 										<th class="col-md-1">返却予定日</th>
 										<th class="col-md-2"></th>
 									</tr>
@@ -167,7 +168,7 @@
 							</table>
 						</div>
 					</div>
-					<!--END 貸与リスト -->
+					<!--END 貸出リスト -->
 					<!--update modal -->
 					<div class="row">
 						<div class="modal" id="modal3d" tabindex="-1" role="dialog"style="display: none;" aria-hidden="true">
@@ -177,7 +178,7 @@
 									<!--START 変更モーダルの戻るボタン -->
 										<button type="button" class="close" data-dismiss="modal"aria-label="Close"><span aria-hidden="true">×</span></button>
 									<!--END 変更モーダルの戻るボタン -->
-										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true" ></i> 貸与情報変更</h3>
+										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true" ></i> 貸出情報変更</h3>
 									</div>
 									<div class="modal-body">
 										<div class="container-fluid">
@@ -187,9 +188,9 @@
 														<div class="x_content">
 														<!--START 変更モーダルのフォーム -->
 															<form action="" id="updateForm" method="POST" role="form"class="form-horizontal">
-															<!--START 貸与日と返却予定日の変更 -->
+															<!--START 貸出日と返却予定日の変更 -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
+																	<label class="control-label col-md-2">貸出日<span style="color: red; font-size: 18px;">*</span></label>
 																	<div class="col-md-3">
 																		<div class="input-group date" id="rentalDay_search">
 																			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -204,12 +205,12 @@
 																		</div>
 																	</div>
 																</div>
-																<!--END 貸与日と返却予定日の変更 -->
+																<!--END 貸出日と返却予定日の変更 -->
 
 																<!--START 貸出者の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">貸出者<span style="color: red; font-size: 18px;">*</span></label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="applicantId_view" name="applicantId_view" class="form-control" />
 																	</div>
 																</div>
@@ -217,7 +218,7 @@
 																	<!--START 使用者の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">使用者<span style="color: red; font-size: 18px;">*</span></label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="rentalUserId_view" name="rentalUserId_view" class="form-control" />
 																	</div>
 																</div>
@@ -225,23 +226,23 @@
 																		<!--START 承認者の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">承認者<span style="color: red; font-size: 18px;">*</span></label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="approver_view" name="approver_view" class="form-control" />
 																	</div>
 																</div>
 																<!--END 承認者の変更 -->
-																<!--START 貸与番号の表示（変更不可能） -->
+																<!--START 貸出番号の表示（変更不可能） -->
 																<div class="form-group row">
-																	<label class="control-label col-md-2">貸与番号</label>
-																	<div class="col-md-9">
+																	<label class="control-label col-md-2">貸出番号</label>
+																	<div class="col-md-8">
 																		<input type="text" id="rentalNo_view" name="rentalNo_view"readonly="readonly" class="form-control" />
 																	</div>
 																</div>
-																<!--END 貸与番号の表示（変更不可能） -->
+																<!--END 貸出番号の表示（変更不可能） -->
 																<!--START 管理番号の表示（変更不可能） -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">管理番号</label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="assetNumber_view" name="assetNumber_view" readonly="readonly" class="form-control" />
 																	</div>
 																</div>
@@ -249,7 +250,7 @@
 																<!--START 区分と貸出者の変更（変更不可能） -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">区分</label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="codeDetailName_view" name="codeDetailName_view"readonly="readonly" class="form-control" />
 																	</div>
 																</div>
@@ -257,7 +258,7 @@
 																<!--START 用途の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">用途<span style="color: red; font-size: 18px;">*</span></label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="purpose_view" name="purpose_view" class="form-control" />
 																	</div>
 																</div>
@@ -265,7 +266,7 @@
 																<!--START 場所の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">場所<span style="color: red; font-size: 18px;">*</span></label>
-																	<div class="col-md-9">
+																	<div class="col-md-8">
 																		<input type="text" id="storageLocation_view" name="storageLocation_view" class="form-control" />
 																	</div>
 																</div>
@@ -273,7 +274,7 @@
 																<!--START 特記事項の変更 -->
 																<div class="form-group row">
 																	<label class="control-label col-md-2">特記事項</label>
-																	<div class="col-md-9 table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
+																	<div class="col-md-8 table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
 																		<textarea id="speciality_view" name="speciality_view" class="form-control col-md-9" style="height:100px;"></textarea>
 																	</div>
 																</div>
@@ -307,29 +308,29 @@
 								<div class="modal-content">
 									<div class="modal-header">
 										<!--START 変更モーダルの戻るボタン -->
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+										<button type="button" id="closeModalInsert" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 										<!--END 変更モーダルの戻るボタン -->
-										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸与登録</h3>
+										<h3 class="modal-title"><i class="fa fa-pencil-square" aria-hidden="true"></i> 貸出登録</h3>
 									</div>
 									<div class="modal-body" id="insert_modalBody">
 											<div class="x_panel" style="padding:0;">
 												<div class="x_content">
 													<!--START 登録フォーム -->
 													<form action="" id="insertForm" method="POST" role="form">
-														<!--START 貸与日と返却予定日の入力 -->
+														<!--START 貸出日と返却予定日の入力 -->
 														<div class="form-group row ">
-															<!--START 貸与日の入力 -->
-															<label class="control-label col-md-2">貸与日<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-3">
+															<!--START 貸出日の入力 -->
+															<label class="control-label col-md-2">貸出日<span style="color: red; font-size: 18px;">*</span></label>
+															<div class="col-md-3"style="padding:0px;">
 																<div class="input-group date" id="rentalsDay_search" name="rentalsDay_search">
 																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="rentalDay" id="todayDate" th:value="${#dates.format(date,'yyyy-MM-dd')}">
 																</div>
 															</div>
-															<!--END 貸与日の入力 -->
+															<!--END 貸出日の入力 -->
 															<!--START 返却予定日の入力 -->
 															<label class="control-label col-md-2">返却予定日<span style="color: red; font-size: 18px;">*</span></label>
-															<div class="col-md-3">
+															<div class="col-md-4" style="padding:0px;">
 																<div class="input-group date" id="myDatepicker" name="myDatepicker" style="float: left">
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																	<input type="text" class="form-control date_check" name="returnPeriod" id="returnPeriod" />
@@ -337,7 +338,7 @@
 															</div>
 															<!--END 返却予定日の入力 -->
 														</div>
-														<!--END 貸与日と返却予定日の入力 -->
+														<!--END 貸出日と返却予定日の入力 -->
 														<!--START 場所入力とマスタコードの選択 -->
 														<div class="form-group row">
 															<!--START 場所入力 -->
@@ -396,37 +397,43 @@
 															<!--END 資産管理番号の選択-->
 														</div>
 														<!--END BP社名の入力と資産管理番号の選択-->
-															<div class="fomr-group col-md-5">
-																<!--START 貸出者の入力 -->
-																<label class="control-label col-md-4" style="float: left">貸出者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-3" />
-																</div>
-																<!--END 貸出者の入力 -->
-																<!--START 使用者の入力 -->
-																<label class="control-label col-md-4" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-3" />
-																</div>
-																<!--END 使用者の入力 -->
-																<!--START 承認者の入力 -->
-																<label class="control-label col-md-4" style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
-																<div class="col-md-offset-1 col-md-7 input-group " style="float: left">
-																	<input type="text" name="approver" id="approver" required class="form-control col-md-3" />
-																</div>
-																<!--END 承認者の入力 -->
+														<!--START 貸出者,使用者,承認者,特記事項の入力 -->
+														<div class="fomr-group col-md-5">
+														<!--START 貸出者の入力 -->
+														<div class="form-group row " style="clear:left;">
+															<label class="control-label col-md-4"style="float: left; padding-fight:20;">貸出者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="applicantId" id="applicantId" required class="form-control col-md-9" />
 															</div>
+														</div>
+														<!--END 貸出者の入力 -->
 
-															<div class="fomr-group col-md-6">
-																<!--START 特記事項の入力 -->
-																<div class="form-group row">
-																	<label class="control-label col-md-4  ">特記事項</label>
-																	<div class="col-md-8 input-group table-responsive table-wrapper-scroll-y my-custom-scrollbar-update">
-																		<textarea id="speciality" name="speciality" class="form-control col-md-9" style="height:100px;"></textarea>
-																	</div>
-																</div>
-																<!--END 特記事項の入力 -->
+														<!--START 使用者の入力 -->
+														<div class="form-group row "  style="clear:left;">
+															<label class="control-label col-md-4" style="float: left">使用者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="rentalUserId" id="rentalUserId" required class="form-control col-md-9" />
 															</div>
+														</div>
+														<!--END 使用者の入力 -->
+														<!--START 承認者の入力 -->
+														<div class="form-group row "  style="clear:left;">
+															<label class="control-label col-md-4"style="float: left">承認者<span style="color: red; font-size: 18px;">*</span></label>
+															<div class=" col-md-7 input-group " style="width:61.7%;margin-left:4%;float: left;">
+																<input type="text" name="approver" id="approver" required class="form-control col-md-9" />
+															</div>
+														</div>
+														<!--END 承認者の入力 -->
+														</div>
+														<!--START 特記事項の入力 -->
+														<div class="fomr-group col-md-7">
+															<div class="form-group row ">
+																<label class="control-label col-md-3">特記事項</label>
+																<textarea id="speciality" name="speciality" class="form-control col-md-8" style="margin-left:18px;height:150px;width:58%; "></textarea>
+															</div>
+														</div>
+														<!--END 特記事項の入力 -->
+														<!--END 貸出者,使用者,承認者,特記事項の入力-->
 														<!--START 追加ボタン -->
 														<div class="form-group row">
 															<div class="col-md-12  ">
@@ -438,10 +445,10 @@
 													<!--END 登録フォーム -->
 												</div>
 											</div>
-										<!--START 貸与目録 -->
+										<!--START 貸出目録 -->
 										<div class="x_panel" style="padding:0;">
 											<div class="x_title">
-												<h2>貸与目録</h2>
+												<h2>貸出目録</h2>
 												<div class="clearfix"></div>
 											</div>
 											<div class="x_content">
@@ -457,7 +464,7 @@
 																<th class="col-md-1" id="purpose_insert">用途</th>
 																<th class="col-md-1" id="storageLocation_insert">場所</th>
 																<th class="col-md-1" id="bpName_insert">BP社名</th>
-																<th class="col-md-1" id="rentalDay_insert">貸与日</th>
+																<th class="col-md-1" id="rentalDay_insert">貸出日</th>
 																<th class="col-md-1" id="returnPeriod_insert">返却予定日</th>
 																<th class="col-md-1" id="cancel_insert"></th>
 															</tr>
@@ -468,14 +475,14 @@
 												</div>
 											</div>
 										</div>
-										<!--END 貸与目録 -->
+										<!--END 貸出目録 -->
 									</div>
-									<!--START 貸与ボタンと戻るボタン -->
+									<!--START 貸出ボタンと戻るボタン -->
 									<div class="modal-footer">
-										<input type="button"class="btn btn-primary pull-left btn-success"id="insertButton" value="貸与" onclick="rentalItem();" />
+										<input type="button"class="btn btn-primary pull-left btn-success"id="insertButton" value="貸出" onclick="rentalItem();" />
 										<button type="button" class="btn btn-secondary" id="canelButton">戻る</button>
 									</div>
-									<!--END 貸与ボタンと戻るボタン -->
+									<!--END 貸出ボタンと戻るボタン -->
 								</div>
 							</div>
 						</div>
@@ -566,11 +573,11 @@
 
    		 //START ONLOADのメソッド
         $(function(){
-        	//登録フォームの貸与日のカーレンダー
+        	//登録フォームの貸出日のカーレンダー
        	 	$('#rentalsDay_search').datetimepicker({
                  format: 'YYYY-MM-DD'
              });
-       		//変更フォームの貸与日のカーレンダー
+       		//変更フォームの貸出日のカーレンダー
             $('#rentalDay_search').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
@@ -596,7 +603,7 @@
 			       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			   }
 			});
-        	/*!貸与日で貸与情報を探す */
+        	/*!貸出日で貸出情報を探す */
     		$('#rental_search').on('cancel.daterangepicker', function(ev, picker) {
 				  //do something, like clearing an input
 					$('#rental_search').val('');
@@ -606,7 +613,7 @@
 				    .search(date)
 				    .draw();
 			});
-        	/*カーレンダーで期間を無くして今貸与されてるものを全部見えることにする */
+        	/*カーレンダーで期間を無くして今貸出されてるものを全部見えることにする */
         	$('#rental_search').val('');
      		//START データテーブルをセッティングする
             var modalesectiontable = $("#table1").DataTable({
@@ -639,7 +646,7 @@
                 	data: function ( d ) {
 					/*二つの検索条件
 					 *1.資産ナンバーで探す
-					 *2.貸与日で探す
+					 *2.貸出日で探す
 					 */
                 		d.columns[0].search.value = $('#assetNumber_search').val();
                    		d.columns[1].search.value = $('#rental_search').val();
@@ -653,7 +660,7 @@
 				},
 				/*コンローラーで貰ったデータを元にしてデータを見せる  */
                 "columnDefs": [
-                	/* 貸与ナンバー */
+                	/* 貸出ナンバー */
                 	{ targets: 0, data: "rentalNo"},
                 	/* 資産ナンバー */
                     { targets: 1, data: "assetNumber"},
@@ -670,7 +677,7 @@
                     	}
                     }},
                     { targets: 4, data: "rentalUserId"},
-                    /* 貸与日 */
+                    /* 貸出日 */
                     { targets: 5, data: function ( d ) {
                     	var str = d.rentalDay;
                     	return str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8);
@@ -690,6 +697,32 @@
                     }
                 ]
             });
+            /*登録を取り消したら作動するメソッド  */
+
+      	  $("#closeModalInsert").on("click", function() {
+
+      	    	//貸与目録をリセットする
+      	 	$('#selectedAsset > tbody').empty();
+      	    	//登録フォームのテキストをリセットする
+      	    $('#insertForm').find('input[type="text"], textarea').val('');
+      	     	//登録フォームのセレクトをリセットする
+      		$('select').find('option:first').attr('selected', 'selected');
+      	     	//START登録フォームのデートをリセットする
+      			var today = new Date();
+      			var dd = today.getDate();
+      			var mm = today.getMonth()+1; //January is 0!
+      			var yyyy = today.getFullYear();
+      			if(dd<10) {
+      				 dd='0'+dd
+      			}
+      			$('#todayDate').val(yyyy+"-"+mm+"-"+dd);
+      			//END登録フォームのデートをリセットする
+      			   $('#storageLocation').val('自社');
+      			   $('#purpose').val('勤務');
+
+      	    	  $('#modal3d2').modal("hide");
+      	    });
+
 
     	    /*登録を取り消したら作動するメソッド  */
     	  $("#canelButton").on("click", function() {
@@ -1053,6 +1086,10 @@ function researchRental(assetSeq){
                 alert("貸与日と返却予定日を確認してください。");
                 return false;
             }
+        	if($('#sub_subSelect option:selected').val()==""){
+        		alert("貸与できる資産がありません。");
+        		return false;
+        	}
             /*START 計算した貸与日と返却予定日の差がプラスであれば下の有個性検査を行う  */
             form.validate({
                 rules: {
@@ -1067,18 +1104,7 @@ function researchRental(assetSeq){
                  	speciality : {
                  		maxlength : 200
                 	},
-                	singleSelect: {
 
-                 		required : true
-                	},
-                	sub_singleSelect: {
-
-                 		required : true
-                	},
-                	sub_subSelect: {
-
-                 		required : true
-                	},
                 	approver : {
                  		maxlength : 15,
                  		required : true
@@ -1111,15 +1137,7 @@ function researchRental(assetSeq){
                 	purpose : {
                 		required : "用途を入力してください"
                 	},
-                	singleSelect : {
-                		required : "分類を選択してください"
-                	},
-                	sub_singleSelect : {
-                		required : "種類を選択してください"
-                	},
-                	sub_subSelect: {
-                		required : "物を選択してください"
-                	},
+
                 	storageLocation : {
                 		required : "場所を入力してください"
                 	},

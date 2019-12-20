@@ -17,6 +17,7 @@
 				null applicant_id,
 				null rental_user_id,
 				null bp_name,
+				null approver,
 				null rentalDayS,
 				null returnDayS,
 				null rental_seq
@@ -37,6 +38,7 @@
 				rt.applicant_id,
 				rt.rental_user_id,
 				rt.bp_name,
+				rt.approver,
 				rt.rental_day rentalDayS,
 				rt.return_day returnDayS,
 				rt.rental_seq
@@ -85,6 +87,7 @@
 				null applicant_id,
 				null rental_user_id,
 				null bp_name,
+				null approver,
 				null rentalDayS,
 				null returnDayS,
 				null rental_seq
@@ -105,6 +108,7 @@
 				rt.applicant_id,
 				rt.rental_user_id,
 				rt.bp_name,
+				rt.approver,
 				rt.rental_day rentalDayS,
 				rt.return_day returnDayS,
 				rt.rental_seq
@@ -142,6 +146,7 @@
 				null applicant_id,
 				null rental_user_id,
 				null bp_name,
+				null approver,
 				null rentalDayS,
 				null returnDayS,
 				null rental_seq
@@ -159,6 +164,7 @@
 				rt.applicant_id,
 				rt.rental_user_id,
 				rt.bp_name,
+				rt.approver,
 				rt.rental_day rentalDayS,
 				rt.return_day returnDayS,
 				rt.rental_seq

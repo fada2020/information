@@ -1,9 +1,11 @@
 <style>
 
-.bootstrap-datetimepicker-widget{
-position: fixed;
+ .top{
 
-z-index: 99999 !important; }
+	position: fixed;
+	z-index: 99999 !important; 
+}
+
 </style>
 
 <div class="mmodal">
@@ -55,7 +57,7 @@ z-index: 99999 !important; }
 											<div class="col-md-4">
 													<div class="input-group date" id="am_myDatepicker">
 														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-														<input type="text" class="form-control input-group-addon" name="purchaseDate" th:value="${asset.purchaseDate}">
+														<input type="text" class="form-control datepicker-form" name="purchaseDate" th:value="${asset.purchaseDate}">
 													</div>
 											</div>
 											<div class="col-md-2">
@@ -84,7 +86,7 @@ z-index: 99999 !important; }
 												<span>購入金額(円)</span>
 											</div>
 											<div class="col-md-4">
-												<input type="text" class="form-control numVal" name="purchasePrice" th:value="${asset.purchasePrice}">
+												<input type="text" class="form-control numVal"id="purchasePrice" name="purchasePrice" th:value="${asset.purchasePrice}">
 											</div>
 										</div>
 									</div>
@@ -202,7 +204,7 @@ z-index: 99999 !important; }
 											<div class="col-md-6">
 												<div class="row well">
 													<div class="col-md-12">
-														<span>Memory(GB)</span>
+														<span>メモリ(GB)</span>
 													</div>
 													<div class="col-md-12">
 														<br>
@@ -374,8 +376,8 @@ z-index: 99999 !important; }
 														<th class="col-md-1">No</th>
 														<th class="col-md-2">実施日</th>
 														<th class="col-md-5">実施内容</th>
-														<th class="col-md-2">担当</th>
-														<th class="col-md-2">承認</th>
+														<th class="col-md-2">担当者</th>
+														<th class="col-md-2">承認者</th>
 														<th colspan="2"></th>
 													</tr>
 												</thead>
@@ -386,7 +388,7 @@ z-index: 99999 !important; }
 														<input type="hidden" th:id="${#ids.seq('am_mhkey')}" th:value="${maintenance.historySeq}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${mhnum.index+1}"></td>
 														<td>
-															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker">
+															<div class="input-group date mhDatepicker" id="myDatepicker" name="myDatepicker">
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}" th:value="${maintenance.implementationDate}">
 															</div>
@@ -400,7 +402,7 @@ z-index: 99999 !important; }
 													<tr id="mhupdate2" th:if="${#lists.size(asset.maintenanceHistoryList) < 10}" th:each="index:${#numbers.sequence(1,10-#lists.size(asset.maintenanceHistoryList))}">
 														<td th:id="${#ids.seq('am_historySeq')}" th:text="${index+#lists.size(asset.maintenanceHistoryList)}"></td>
 														<td>
-															<div class="input-group mhDatepicker" id="myDatepicker" name="myDatepicker" >
+															<div class="input-group date mhDatepicker" id="myDatepicker" name="myDatepicker" >
 																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 																<input type="text" class="form-control datepicker-form"name="mhDate" th:id="${#ids.seq('am_implementationDate')}">
 															</div>
@@ -438,7 +440,16 @@ z-index: 99999 !important; }
 	<!-- page script -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
+    	function specialCharRemove(obj) {
 
+			/* var pattern = /[^(\u30a0-\u30ff\u3040-\u309f\u3005-\u3006\u30e0-\u9fcfㅣa-zA-Z0-9ㅣ\n)]/gi; */
+			//タグ削除
+			var re = /[,][.]/gi;
+			if(re.test(obj)){
+				obj = obj.replace(re,"");
+			}
+			return obj;
+		}
 
 		// collapse-link event
 	    $('.collapse-link-update').on('click', function() {
@@ -522,13 +533,13 @@ z-index: 99999 !important; }
 		var mhform = $('#mhForm');
 		// 資産変更モーダルの変更バトン
        	$('#sisanupdate').click(function(){
+
   			// 主要な資産の有効性検証
                   assform.validate({
                       rules: {
                       	kubunCode : {
                       		required : true
                       	},
-
                           statusCode: {
                           	required: true
                           },
@@ -759,13 +770,12 @@ z-index: 99999 !important; }
                 	)
     				.success(function(result) {
     					if(result == 0) {
-    						alert('エラーが発生しました。');
+    						alert('エラーが発生しました:付属品削除');
     					} else {
     						selectTr1.remove();
-    						alert('削除しました');
     					}
     				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗accdelete');
+                    	alert('通信失敗:付属品削除');
                     });
 				}
 				// /付属品削除プロセス
@@ -777,23 +787,27 @@ z-index: 99999 !important; }
 
             };
             // /各付属品のリスト処理FOR文
-            $.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
-					{
-						type: "POST",
-						dataType: "json",
-						contentType: 'application/JSON',
-						data : JSON.stringify(accupdateList)
-					}
-            	)
-				.success(function(result) {
-					if(result == 0) {
-						alert('エラーが発生しました。');
-					} else {
+            if(JSON.stringify(accupdateList) == "[]"){
 
-					}
-				}).error(function(xhr, textStatus, error) {
-                	alert('通信失敗:付属品変更');
-                });
+			} else{
+	            $.ajax(/*[[@{/asset/updateAccessories}]]*/ 'asset/updateAccessories',
+						{
+							type: "POST",
+							dataType: "json",
+							contentType: 'application/JSON',
+							data : JSON.stringify(accupdateList)
+						}
+	            	)
+					.success(function(result) {
+						if(result == 0) {
+							alert('エラーが発生しました:付属品変更');
+						} else {
+
+						}
+					}).error(function(xhr, textStatus, error) {
+	                	alert('通信失敗:付属品変更');
+	                });
+			}
 		}
 		// /付属品変更・削除プロセス
 
@@ -829,30 +843,28 @@ z-index: 99999 !important; }
 				else{
 					accinsertList.push(accessories);
 				}
-				if(JSON.stringify(accinsertList) == "[]"){
+			}// /付属品登録処理FOR文
+			if(JSON.stringify(accinsertList) == "[]"){
 
-				} else{
-					$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
-	    					{
-	    						type: "POST",
-	    						dataType: "json",
-	    						contentType: 'application/JSON',
-	    						data : JSON.stringify(accinsertList)
-	    					}
-	                	)
-	    				.success(function(result) {
-	    					if(result == 0) {
-	    						alert('エラーが発生しました。');
-	    					} else {
+			} else{
+				$.ajax(/*[[@{/asset/addAccessories}]]*/ 'asset/addAccessories',
+    					{
+    						type: "POST",
+    						dataType: "json",
+    						contentType: 'application/JSON',
+    						data : JSON.stringify(accinsertList)
+    					}
+                	)
+    				.success(function(result) {
+    					if(result == 0) {
+    						alert('エラーが発生しました:付属品登録');
+    					} else {
 
-	    					}
-	    				}).error(function(xhr, textStatus, error) {
-	                    	alert('通信失敗:付属品登録');
-	                    });
-				}
-				// /付属品登録プロセス
-            };
-        	 // /付属品登録処理FOR文
+    					}
+    				}).error(function(xhr, textStatus, error) {
+                    	alert('通信失敗:付属品登録');
+                    });
+			}// /付属品登録プロセス
 		}
 		// 付属品登録プロセス
 
@@ -897,12 +909,12 @@ z-index: 99999 !important; }
                 	)
     				.success(function(result) {
     					if(result == 0) {
-    						alert('エラーが発生しました。');
+    						alert('エラーが発生しました:故障・廃棄履歴削除');
     					} else {
     						selectTr1.remove();
     					}
     				}).error(function(xhr, textStatus, error) {
-                    	alert('通信失敗mhdelete');
+                    	alert('通信失敗:故障・廃棄履歴削除');
                     });
 				}
 				// /故障・廃棄履歴削除プロセス
@@ -926,12 +938,12 @@ z-index: 99999 !important; }
 		            	)
 						.success(function(result) {
 							if(result == 0) {
-								alert('エラーが発生しました。mhupdate');
+								alert('エラーが発生しました:故障・廃棄履歴変更');
 							} else {
 
 							}
 						}).error(function(xhr, textStatus, error) {
-		                	alert('通信失敗mhupdate');
+		                	alert('通信失敗:故障・廃棄履歴変更');
 		                });
 			}
 
@@ -983,12 +995,12 @@ z-index: 99999 !important; }
 	               	)
 	   				.success(function(result) {
 	   					if(result == 0) {
-	   						alert('エラーが発生しました。mhinsert');
+	   						alert('エラーが発生しました:故障・廃棄履歴登録');
 	   					} else {
 
 	   					}
 	   				}).error(function(xhr, textStatus, error) {
-	                   	alert('通信失敗mhinsert');
+	                   	alert('通信失敗:故障・廃棄履歴登録');
 	                   });//ajax end
 			}
 

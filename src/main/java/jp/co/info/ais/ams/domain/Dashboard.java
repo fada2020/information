@@ -13,7 +13,7 @@ public class Dashboard {
 	private int newItem;
 	private String kubunName;
 
-//	資産貸与パラメータ
+//	資産貸出パラメータ
 	private String kubunCode;
 	private String statusCode;
 }

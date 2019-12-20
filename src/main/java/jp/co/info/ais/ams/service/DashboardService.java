@@ -35,7 +35,7 @@ public class DashboardService {
 	}
 
 	/**
-	 * 貸与状況
+	 * 貸出状況
 	 * @return ArrayList<Dashboard>
 	 * @throws Exception
 	 */
