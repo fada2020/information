@@ -895,10 +895,10 @@
          				"contentType" : "application/JSON",
          				data : JSON.stringify(rental),
         				success : function(data){
-		/* もしアップデートが良くできたら0以上の数字をもらえる  */
-        if(data>0){
-        	location.href = '/rental';
-        }
+						/* もしアップデートが良くできたら0以上の数字をもらえる  */
+					        if(data>0){
+					        	location.href = '/rental';
+					        }
         				},
         				"Error" : function(){
         					alert("変更不可能");
@@ -1175,7 +1175,8 @@ function researchRental(assetSeq){
     			   			"data" : number,
     			   			"contentType": "application/JSON",
     			   		 	"success" : function(data){
-    			   		 	$('#selectedAsset tbody').append('<tr style="text-align:center;" title="特記事項： '+specialCharRemove($("#speciality").val())+'"><td id="applicantId_i">'
+    			   		 		if(!assetKey.has(data.assetSeq)){
+    			   		 			$('#selectedAsset tbody').append('<tr style="text-align:center;" title="特記事項： '+specialCharRemove($("#speciality").val())+'"><td id="applicantId_i">'
     			   					+specialCharRemove($('#applicantId').val())+'</td><td id="rentalUserId_i">'
     			   					+specialCharRemove($("#rentalUserId").val())+'</td><td id="approver_i">'
     			   					+specialCharRemove($("#approver").val())+'</td><td>'
@@ -1189,7 +1190,11 @@ function researchRental(assetSeq){
     				   				+$("#todayDate").val()+'</td><td id="returnPeriod_i">'
     				   				+$("#returnPeriod").val()+'</td><td><button value="'+data.assetSeq+'"class="btn btn-warning" id="cancelitem" onclick="deleteRow(this)">削除</button></td></tr>');
     			   		 			assetKey.set(data.assetSeq,data.assetNumber);
-    			   					$(function(){  $('select').find('option:first').attr('selected', 'selected');})
+    			   					$(function(){  $('select').find('option:first').attr('selected', 'selected');
+    			   					})
+    			   		 		}else{
+		   							alert("すでにあります。");
+		   						}
     			   	 		},
     						"Error" : function(){
     							alert("貸与不可能");
